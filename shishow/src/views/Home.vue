@@ -1,7 +1,7 @@
 <template>
   <div id="root">
     <navi></navi>
-    <banner v-bind='{top_pixel: "120px", left_pixel: "50px;"}'></banner>
+    <banner></banner>
   </div>
 </template>
 

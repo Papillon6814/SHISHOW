@@ -3,7 +3,6 @@
 </template>
 
 <style lang="scss">
-  @import url('../../static/scss/ColorSettings.scss');
 
   $header_color: #ff6f61;
   $dark_color: #104f58;
