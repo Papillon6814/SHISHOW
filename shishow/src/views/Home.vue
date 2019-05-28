@@ -8,7 +8,7 @@
 <script>
 // @ is an alias to /src
 import navi from '../components/NavigationBar.vue'
-import banner from '../components/Banner.vue'
+import banner from '../components/MyBanner.vue'
 
 export default {
   name: 'home',
