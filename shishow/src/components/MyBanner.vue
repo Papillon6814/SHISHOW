@@ -7,16 +7,7 @@
 <script>
 
 export default {
-  name: 'myBanner',
-  props: {
-    'top': String,
-    'left': String
-  },
-  computed: {
-    style() {
-      return 'top:'+this.top+';left:'+this.left;
-    }
-  }
+  name: 'myBanner'
 }
 
 </script>
@@ -28,9 +19,6 @@ export default {
 
     //top: 120px;
     //left: 50px;
-
-    width: $myBanner_width;
-    height: $myBanner_height;
 
     background-color: $banner_color;
   }
