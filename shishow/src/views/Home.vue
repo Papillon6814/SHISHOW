@@ -1,7 +1,7 @@
 <template>
   <div id="root">
     <navi></navi>
-    <banner></banner>
+    <banner top="120px" left="50px"></banner>
   </div>
 </template>
 
