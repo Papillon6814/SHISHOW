@@ -2,16 +2,23 @@
   <div class="banner">
     <span class="iconPicPosition">
       <div class="iconPic"></div>
-      <div class="achievementPosition1">
-        <div class="achievement"></div>
-      </div>
-      <div class="achievementPosition2">
-        <div class="achievement"></div>
-      </div>
-      <div class="achievementPosition3">
-        <div class="achievement"></div>
-      </div>
     </span>
+
+    <div class="achievementPosition1">
+      <div class="achievement"></div>
+    </div>
+    <div class="achievementPosition2">
+      <div class="achievement"></div>
+    </div>
+    <div class="achievementPosition3">
+      <div class="achievement"></div>
+    </div>
+
+    <span id="pullDownProperties">
+      <i class="fas fa-caret-down"></i>
+    </span>
+
+
   </div>
 </template>
 
@@ -54,7 +61,7 @@ export default {
       position: relative;
 
       top: 2vh;
-      left: 7vh;
+      left: 5vh;
     }
 
     .achievement {
@@ -96,22 +103,40 @@ export default {
     .achievementPosition1 {
       position: relative;
 
-      top: -1.3vh;
-      left: -1.8vh;
+      //top: -1.3vh;
+      //left: -1.8vh;
+      left: 3vh
     }
 
     .achievementPosition2 {
       position: relative;
 
-      top: -4.4vh;
-      left: 5.9vh;
+      //top: -4.4vh;
+      //left: 5.9vh;
+      top: -2vh;
+      left: 10.8vh;
     }
 
     .achievementPosition3 {
       position: relative;
 
-      top: -12.46vh;
-      left: 14vh;
+      //top: -12.46vh;
+      //left: 14vh;
+      top: -11vh;
+      left: 18.7vh
+    }
+
+    #pullDownProperties {
+      position: absolute;
+
+      bottom: -1vh;
+      left: 2vh;
+
+      font-size: 5em;
+    }
+
+    #pullDownProperties:hover {
+      color: $header_color;
     }
   }
 
