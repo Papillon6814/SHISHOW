@@ -1,20 +1,22 @@
 <template>
   <div id="root">
     <navi></navi>
-    <banner top="120px" left="50px"></banner>
+    <div id="myBannerPosition">
+      <myBanner></myBanner>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import navi from '../components/NavigationBar.vue'
-import banner from '../components/MyBanner.vue'
+import myBanner from '../components/MyBanner.vue'
 
 export default {
   name: 'home',
   components: {
     navi,
-    banner
+    myBanner
   }
 }
 </script>
@@ -26,6 +28,13 @@ export default {
     margin: 0;
 
     background-color: $dark_color;
+  }
+
+  #myBannerPosition {
+    position: relative;
+    //temporary top
+    top: 45px;
+    left: 10%;
   }
 
 </style>
