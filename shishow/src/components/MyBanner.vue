@@ -2,8 +2,16 @@
   <div class="banner">
     <span class="iconPicPosition">
       <div class="iconPic"></div>
+      <div class="achievementPosition1">
+        <div class="achievement"></div>
+      </div>
+      <div class="achievementPosition2">
+        <div class="achievement"></div>
+      </div>
+      <div class="achievementPosition3">
+        <div class="achievement"></div>
+      </div>
     </span>
-    <div class="achievement"></div>
   </div>
 </template>
 
@@ -21,9 +29,13 @@ export default {
 
     width: 80%;
     //temporary height
-    height: 320px;
+    height: 340px;
 
     background-color: $banner_color;
+
+    border: solid;
+    border-width: 5px;
+    border-color: $header_color;
     z-index: 2;
 
     //children
@@ -41,46 +53,65 @@ export default {
     .iconPicPosition {
       position: relative;
 
-      top: 7%;
-      left: 5%;
+      top: 2vh;
+      left: 7vh;
     }
 
     .achievement {
-      display: block;
-
+      position: relative;
       width: $achievement_width;
-      height: $achievement_height;
+      height: $achievement_height; //√3
+      background-color: #ffffff;
+      margin: $root_twelve 0;
 
-      //temporary color
-      background-color: #fff;
+      /* border-left: dashed;
+      border-right: dashed;
+      border-color: #111;
+      border-width: 1.5px; */
     }
 
-    /*.achievement::before, .achievement::after {
+    .achievement:before,
+    .achievement:after {
+      content: "";
       position: absolute;
 
-      content: '';
-      top: 0;
       left: 0;
 
-      width: 100%;
-      height: 100%;
-
-      background-color: #fff;
-      z-index: 0;
-    }*/
-
-    .achievement::before {
-      transform: rotate(60deg);
+      width: 0;
+      border-left: $a_half_width solid transparent;
+      border-right: $a_half_width solid transparent;
     }
 
-    .achievement::after {
-      transform:: rotate(60deg);
+    .achievement:before {
+      bottom: 100%;
+      border-bottom: $root_twelve solid #ffffff;
     }
 
-    .achievementPosition {
+    .achievement:after {
+      top: 100%;
+      width: 0;
+      border-top: $root_twelve solid #ffffff;
+    }
+
+    .achievementPosition1 {
       position: relative;
 
+      top: -1.3vh;
+      left: -1.8vh;
+    }
 
+    .achievementPosition2 {
+      position: relative;
+
+      top: -4.4vh;
+      left: 5.9vh;
+    }
+
+    .achievementPosition3 {
+      position: relative;
+
+      top: -12.46vh;
+      left: 14vh;
     }
   }
 
