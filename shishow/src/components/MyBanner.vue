@@ -3,22 +3,21 @@
     <span class="iconPicPosition">
       <div class="iconPic"></div>
     </span>
-
     <div class="achievementPosition1">
-      <div class="achievement"></div>
+      <div class="achievement">
+      </div>
     </div>
     <div class="achievementPosition2">
-      <div class="achievement"></div>
+      <div class="achievement">
+      </div>
     </div>
     <div class="achievementPosition3">
-      <div class="achievement"></div>
+      <div class="achievement">
+      </div>
     </div>
-
     <span id="pullDownProperties">
-      <i class="fas fa-caret-down"></i>
+     <i class="fas fa-caret-down"></i>
     </span>
-
-
   </div>
 </template>
 
@@ -36,7 +35,7 @@ export default {
 
     width: 80%;
     //temporary height
-    height: 340px;
+    height: 280px;
 
     background-color: $banner_color;
 
@@ -55,13 +54,16 @@ export default {
       background-color: #fff;
 
       border-radius: 50%;
+      border: solid;
+      border-width: 2px;
+      border-color: $header_color;
     }
 
     .iconPicPosition {
-      position: relative;
+      position: absolute;
 
-      top: 2vh;
-      left: 5vh;
+      top: 15px;
+      left: 34.1611111px;
     }
 
     .achievement {
@@ -86,7 +88,7 @@ export default {
 
       width: 0;
       border-left: $a_half_width solid transparent;
-      border-right: $a_half_width solid transparent;
+      border-right: $a_half_width dashed transparent;
     }
 
     .achievement:before {
@@ -97,46 +99,47 @@ export default {
     .achievement:after {
       top: 100%;
       width: 0;
-      border-top: $root_twelve solid #ffffff;
+      border-top: $root_twelve dashed #fff;
     }
 
     .achievementPosition1 {
-      position: relative;
+      position: absolute;
 
       //top: -1.3vh;
       //left: -1.8vh;
-      left: 3vh
+      top: 145px;
+      left: 16.1611111px;
     }
 
     .achievementPosition2 {
-      position: relative;
+      position: absolute;
 
       //top: -4.4vh;
       //left: 5.9vh;
-      top: -2vh;
-      left: 10.8vh;
+      top: 160px;
+      left: 77.6611111px;
     }
 
     .achievementPosition3 {
-      position: relative;
+      position: absolute;
 
       //top: -12.46vh;
       //left: 14vh;
-      top: -11vh;
-      left: 18.7vh
+      top: 145px;
+      left: 139.161111px;
     }
 
     #pullDownProperties {
       position: absolute;
 
-      bottom: -1vh;
-      left: 2vh;
+      top: 225px;
+      left: 15px;
 
-      font-size: 5em;
+      font-size: 58px;
     }
 
     #pullDownProperties:hover {
-      color: $header_color;
+      color: $pulldown_color;
     }
   }
 

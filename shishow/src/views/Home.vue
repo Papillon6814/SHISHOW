@@ -1,10 +1,10 @@
 <template>
-  <div id="root">
-    <navi></navi>
-    <div id="myBannerPosition">
-      <myBanner></myBanner>
+    <div id="root">
+      <navi></navi>
+      <div id="myBannerPosition">
+        <myBanner></myBanner>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -26,6 +26,8 @@ export default {
   body {
     padding: 0;
     margin: 0;
+    width: 100%;
+    overflow: hidden;
 
     background-color: $dark_color;
   }
@@ -36,5 +38,10 @@ export default {
     top: 45px;
     left: 10%;
   }
+
+  /*.wrap{
+    width:100%;
+    overflow: visible;
+  }*/
 
 </style>
