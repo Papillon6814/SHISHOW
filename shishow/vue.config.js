@@ -3,6 +3,7 @@ module.exports = {
     loaderOptions: {
       sass: {
         data: '@import "./static/scss/BaseSettings.scss";'
+      }
     }
   }
 }
