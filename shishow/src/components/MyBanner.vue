@@ -15,6 +15,25 @@
       <div class="achievement">
       </div>
     </div>
+    <div class="usernamePosition">
+      <div class="username">
+        Nobuyuki
+      </div>
+    </div>
+    <div class="idPosition">
+      <div class="id">
+        qawsedrftgyhujkolp
+      </div>
+    </div>
+    <div class="profilePosition">
+      <div class="profile">
+        新しいことにチャレンジすることが好き!
+        テニス、スキー、スノーボード、ゴルフ、
+        それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
+        最近では、予想外の趣味に没頭中！
+      </div>
+    </div>
+    <button>Panic button</button>
     <span id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
@@ -33,7 +52,7 @@ export default {
   .banner {
     position: absolute;
 
-    width: 80%;
+    width: $banner_width;
     //temporary height
     height: 280px;
 
@@ -41,7 +60,7 @@ export default {
 
     border: solid;
     border-width: 5px;
-    border-color: $header_color;
+    border-color: $banner_flame;
     z-index: 2;
 
     //children
@@ -93,13 +112,13 @@ export default {
 
     .achievement:before {
       bottom: 100%;
-      border-bottom: $root_twelve solid #ffffff;
+      border-bottom: $root_twelve solid #fff;
     }
 
     .achievement:after {
       top: 100%;
       width: 0;
-      border-top: $root_twelve dashed #fff;
+      border-top: $root_twelve solid #fff;
     }
 
     .achievementPosition1 {
@@ -141,6 +160,67 @@ export default {
     #pullDownProperties:hover {
       color: $pulldown_color;
     }
+
+    .username{
+      width: $user_width;
+      height: $user_height;
+
+      background-color: #fff;
+
+      border: solid;
+      border-width: 3px;
+      border-color: $banner_flame;
+    }
+
+    .usernamePosition{
+      position: absolute;
+
+      top: 30px;
+      left: 202px;
+      right: 0px;
+    }
+
+    .id{
+      width: $id_width;
+      height: $id_height;
+
+      background-color: #fff;
+
+      border: solid;
+      border-width: 3px;
+      border-color: $banner_flame;
+    }
+
+    .idPosition{
+      position: absolute;
+
+      top: 100px;
+      left: 202px;
+      right: 0px;
+    }
+
+    .profile{
+      width: $profile_width;
+      height: $profile_height;
+
+      background-color: #fff;
+
+      border: solid;
+      border-width: 3px;
+      border-color: $banner_flame;
+    }
+
+    .profilePosition{
+      position: absolute;
+
+      top: 150px;
+      left: 202px;
+      right: 25px;
+    }
+
+    /*.editBioButton{
+
+    }*/
   }
 
 </style>
