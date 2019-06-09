@@ -1,28 +1,43 @@
 <template>
   <div class="banner">
-    <span class="iconPicPosition">
-      <div class="iconPic"></div>
+
+    <span class="iconCirclePosition">
+      <div class="iconCircle">
+        <div class="iconDashedCircle">
+          <div class="plusPosition">
+            <i class="fas fa-plus"></i>
+          </div>
+          <input class="iconFile" type="file">
+        </div>
+      </div>
     </span>
+
     <div class="achievementPosition1">
       <div class="achievement">
       </div>
     </div>
+
     <div class="achievementPosition2">
       <div class="achievement">
       </div>
     </div>
+
     <div class="achievementPosition3">
       <div class="achievement">
       </div>
     </div>
+
     <div class="usernamePosition">
       <input class="username" type="text" placeholder="E-mail" v-model="e_mail">
     </div>
+
     <div class="idPosition">
       <input class="password" type="password" placeholder="PASSWORD" v-model="password">
     </div>
+
     <div class="profilePosition">
     </div>
+
     <button @click="signUp">Register</button>
 
     <!--
@@ -76,7 +91,7 @@ export default {
 
     //children
 
-    .iconPic {
+    .iconCircle {
       width: $icon_width;
       height: $icon_height;
 
@@ -87,9 +102,51 @@ export default {
       border: solid;
       border-width: 2px;
       border-color: $header_color;
+
+      cursor: pointer;
+
+      .iconDashedCircle {
+        position: relative;
+
+        top: 4.5%;
+        left: 4.5%;
+
+        width: 90%;
+        height: 90%;
+
+        font-size: 70px;
+
+        background-color: rgba(0,0,0,0);
+
+        border-radius: 50%;
+        border: dashed;
+        border-width: 1px;
+        border-color: #000;
+
+        cursor: pointer;
+
+        .plusPosition {
+          position: absolute;
+
+          left: 49.5%;
+          top: 50%;
+          -webkit-transform: translate(-50%, -50%);
+	        -moz-transform: translate(-50%, -50%);
+	        transform: translate(-50%, -50%);
+        }
+
+        .iconFile {
+          height: 100%;
+          width: 100%;
+
+          opacity: 0;
+
+          cursor: pointer;
+        }
+      }
     }
 
-    .iconPicPosition {
+    .iconCirclePosition {
       position: absolute;
 
       top: 15px;
