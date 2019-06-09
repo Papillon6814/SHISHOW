@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import dbtest from './views/forDatabase.vue'
+import Signup from './views/Signup.vue'
 import dbtest2 from './views/forDatabase2.vue'
 import firebase from 'firebase'
 
@@ -17,9 +17,9 @@ let router = new Router({
       component: Home
     },
     {
-      path: '/dbtest',
-      name: 'dbtest',
-      component: dbtest
+      path: '/signup',
+      name: 'signup',
+      component: Signup
     },
     {
       path: '/dbtest2',
