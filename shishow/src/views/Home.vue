@@ -4,6 +4,9 @@
       <div id="myBannerPosition">
         <myBanner></myBanner>
       </div>
+      <div class="normalBannerPosition">
+        <normalBanner></normalBanner>
+      </div>
     </div>
 </template>
 
@@ -11,12 +14,14 @@
 // @ is an alias to /src
 import navi from '../components/NavigationBar.vue'
 import myBanner from '../components/MyBanner.vue'
+import normalBanner from '../components/NormalBanner.vue'
 
 export default {
   name: 'home',
   components: {
     navi,
-    myBanner
+    myBanner,
+    normalBanner
   }
 }
 </script>
@@ -43,5 +48,12 @@ export default {
     width:100%;
     overflow: visible;
   }*/
+
+  .normalBannerPosition {
+    position: relative;
+
+    top: 400px;
+    left: 10%;
+  }
 
 </style>

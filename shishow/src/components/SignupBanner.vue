@@ -7,7 +7,8 @@
           <div class="plusPosition">
             <i class="fas fa-plus"></i>
           </div>
-          <input class="iconFile" type="file">
+          <img v-show="uploadedImage" :src="uploadedImage" />
+          <input class="iconFile" type="file" @change="onFileChange">
         </div>
       </div>
     </span>
@@ -52,8 +53,9 @@ export default {
   name: 'signupBanner',
   data () {
     return  {
-      username: '',
-      password: ''
+      e_mail: '',
+      password: '',
+      uploadedImage: ''
     }
   },
   methods: {
@@ -65,6 +67,18 @@ export default {
       .catch(error => {
         alert(error.message)
       })
+    },
+    onFileChange(event) {
+      let files = event.target.files || event.dataTransfer.files;
+      this.showImage(files[0]);
+    },
+    // 画像表示
+    showImage(file) {
+      let reader = new FileReader();
+      reader.onload = (event) => {
+        this.uploadedImage = event.target.result;
+      }
+      reader.readAsDataURL(file);
     }
   }
 }
@@ -76,8 +90,7 @@ export default {
     position: absolute;
 
     width: $banner_width;
-    //temporary height
-    height: 280px;
+    height: $banner_height;
 
     background-color: $banner_color;
 
@@ -135,8 +148,6 @@ export default {
         .iconFile {
           height: 100%;
           width: 100%;
-
-          opacity: 0;
 
           cursor: pointer;
         }

@@ -72,7 +72,7 @@ export default {
 
   width: $banner_width;
   //temporary height
-  height: 280px;
+  height: $banner_height;
 
   background-color: $banner_color;
 
