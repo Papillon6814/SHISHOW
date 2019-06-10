@@ -31,14 +31,14 @@
       <input class="username" type="text" placeholder="E-mail" v-model="e_mail">
     </div>
 
-    <div class="idPosition">
+    <div class="passwordPosition">
       <input class="password" type="password" placeholder="PASSWORD" v-model="password">
     </div>
 
     <div class="profilePosition">
     </div>
 
-    <button @click="signUp">Register</button>
+    <button @click="signUp">Sign up</button>
 
     <!--
     <span id="pullDownProperties">
@@ -63,7 +63,7 @@ export default {
     signUp: function () {
       firebase.auth().createUserWithEmailAndPassword(this.e_mail, this.password)
       .then(user => {
-        alert('Create account: ', user.email)
+        alert('Create account: ', user.e_mail)
       })
       .catch(error => {
         alert(error.message)
@@ -259,7 +259,7 @@ export default {
       border-color: $banner_flame;
     }
 
-    .idPosition{
+    .passwordPosition{
       position: absolute;
 
       top: 100px;
