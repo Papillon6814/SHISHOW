@@ -1,49 +1,86 @@
 <template>
   <div class="banner">
-    <span class="iconPicPosition">
-      <div class="iconPic"></div>
+
+    <span class="iconCirclePosition">
+      <div class="iconCircle">
+        <div class="iconDashedCircle">
+          <div class="plusPosition">
+            <i class="fas fa-plus"></i>
+          </div>
+          <img v-show="uploadedImage" :src="uploadedImage" />
+          <input class="iconFile" type="file" @change="onFileChange">
+        </div>
+      </div>
     </span>
+
     <div class="achievementPosition1">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
+
     <div class="achievementPosition2">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
+
     <div class="achievementPosition3">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
+
     <div class="usernamePosition">
-      <div class="username">
-        Nobuyuki
-      </div>
+      <input class="username" type="text" placeholder="E-mail" v-model="e_mail">
     </div>
-    <div class="idPosition">
-      <div class="id">
-        qawsedrftgyhujkolp
-      </div>
+
+    <div class="passwordPosition">
+      <input class="password" type="password" placeholder="PASSWORD" v-model="password">
     </div>
+
     <div class="profilePosition">
-      <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、
-        それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
-        最近では、予想外の趣味に没頭中！
-      </div>
     </div>
-    <button>Panic button</button>
+
+    <button @click="signUp">Sign up</button>
+
+    <!--
     <span id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
+    -->
   </div>
 </template>
 
 <script>
+import firebase from 'firebase'
 
 export default {
-  name: 'myBanner'
+  name: 'signupBanner',
+  data () {
+    return  {
+      e_mail: '',
+      password: '',
+      uploadedImage: ''
+    }
+  },
+  methods: {
+    signUp: function () {
+      firebase.auth().createUserWithEmailAndPassword(this.e_mail, this.password)
+      .then(user => {
+        alert('Create account: ', user.e_mail)
+      })
+      .catch(error => {
+        alert(error.message)
+      })
+    },
+    onFileChange(event) {
+      let files = event.target.files || event.dataTransfer.files;
+      this.showImage(files[0]);
+    },
+    // 画像表示
+    showImage(file) {
+      let reader = new FileReader();
+      reader.onload = (event) => {
+        this.uploadedImage = event.target.result;
+      }
+      reader.readAsDataURL(file);
+    }
+  }
 }
 
 </script>
@@ -53,7 +90,6 @@ export default {
     position: absolute;
 
     width: $banner_width;
-    //temporary height
     height: $banner_height;
 
     background-color: $banner_color;
@@ -65,7 +101,7 @@ export default {
 
     //children
 
-    .iconPic {
+    .iconCircle {
       width: $icon_width;
       height: $icon_height;
 
@@ -76,9 +112,49 @@ export default {
       border: solid;
       border-width: 2px;
       border-color: $header_color;
+
+      cursor: pointer;
+
+      .iconDashedCircle {
+        position: relative;
+
+        top: 4.5%;
+        left: 4.5%;
+
+        width: 90%;
+        height: 90%;
+
+        font-size: 70px;
+
+        background-color: rgba(0,0,0,0);
+
+        border-radius: 50%;
+        border: dashed;
+        border-width: 1px;
+        border-color: #000;
+
+        cursor: pointer;
+
+        .plusPosition {
+          position: absolute;
+
+          left: 49.5%;
+          top: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+
+        .iconFile {
+          height: 100%;
+          width: 100%;
+
+          cursor: pointer;
+        }
+      }
     }
 
-    .iconPicPosition {
+    .iconCirclePosition {
       position: absolute;
 
       top: 15px;
@@ -180,7 +256,7 @@ export default {
       right: 0px;
     }
 
-    .id{
+    .password{
       width: $id_width;
       height: $id_height;
 
@@ -191,7 +267,7 @@ export default {
       border-color: $banner_flame;
     }
 
-    .idPosition{
+    .passwordPosition{
       position: absolute;
 
       top: 100px;
@@ -199,24 +275,6 @@ export default {
       right: 0px;
     }
 
-    .profile{
-      width: $profile_width;
-      height: $profile_height;
-
-      background-color: #fff;
-
-      border: solid;
-      border-width: 3px;
-      border-color: $banner_flame;
-    }
-
-    .profilePosition{
-      position: absolute;
-
-      top: 150px;
-      left: 202px;
-      right: 25px;
-    }
 
     /*.editBioButton{
 

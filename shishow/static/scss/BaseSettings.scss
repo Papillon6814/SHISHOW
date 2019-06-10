@@ -1,15 +1,57 @@
-$header_color: #ff6f61;
-//$dark_color: #104f58;
-$dark_color: #306f78;
-$footer_color: #23272a;
-//$banner_color: #137480;
-$banner_color: #e0eeee;
+/* basic color */
 
+$header_color: #394e8c;
+$dark_color: #687bb3;
+$footer_color: #161e34;
+$banner_color: #abbffb;
+$banner_flame: #202f5a;
+$pulldown_color: #97fff1;
 
 $header_height: 100px;
 
-$myBanner_height: 350px;
-$myBanner_width: 1650px;
+/* --- */
 
-$theirBanner_height: 200px;
-$theirBanner_width: 1000px;
+/* around myBanner */
+
+$banner_width: 80%;
+$banner_height: 280px;
+
+$icon_width: 130px;
+$icon_height: $icon_width;
+
+$achievement_width: 47px;
+$achievement_height: 29px;
+$root_twelve: 13.5516911px;
+$a_half_width: 23.47px;
+
+$user_width: 70%;
+$user_height: 50px;
+
+$id_width: 55%;
+$id_height: 30px;
+
+$profile_width: 100%;
+$profile_height: 100px;
+
+/* --- */
+
+/* around normalBanner */
+
+$n_banner_width: 55%;
+$n_banner_height: 192.5px;
+
+$n_icon_width: 89.375px;
+$n_icon_height: $n_icon_width;
+
+$n_achievement_width: 32.3125px;
+$n_achievement_height: 15.8125px;
+$n_root_twelve: 9.3278px;
+$n_a_half_width: 16.15625px;
+
+$n_user_height: 34.375px;
+
+$n_id_height: 20.625px;
+
+$n_profile_height: 68.75px;
+
+ /* --- */

@@ -1,5 +1,5 @@
 <template>
-  <div class="banner">
+  <div class="normalBanner">
     <span class="iconPicPosition">
       <div class="iconPic"></div>
     </span>
@@ -17,7 +17,7 @@
     </div>
     <div class="usernamePosition">
       <div class="username">
-        Nobuyuki
+        Nakataku
       </div>
     </div>
     <div class="idPosition">
@@ -29,8 +29,6 @@
       <div class="profile">
         新しいことにチャレンジすることが好き!
         テニス、スキー、スノーボード、ゴルフ、
-        それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
-        最近では、予想外の趣味に没頭中！
       </div>
     </div>
     <button>Panic button</button>
@@ -43,18 +41,18 @@
 <script>
 
 export default {
-  name: 'myBanner'
+  name: 'normalBanner'
 }
 
 </script>
 
 <style lang="scss">
-  .banner {
+  .normalBanner {
     position: absolute;
 
-    width: $banner_width;
+    width: $n_banner_width;
     //temporary height
-    height: $banner_height;
+    height: $n_banner_height;
 
     background-color: $banner_color;
 
@@ -66,8 +64,8 @@ export default {
     //children
 
     .iconPic {
-      width: $icon_width;
-      height: $icon_height;
+      width: $n_icon_width;
+      height: $n_icon_height;
 
       //temporary color
       background-color: #fff;
@@ -87,15 +85,10 @@ export default {
 
     .achievement {
       position: relative;
-      width: $achievement_width;
-      height: $achievement_height; //√3
+      width: $n_achievement_width;
+      height: $n_achievement_height; //√3
       background-color: #ffffff;
-      margin: $root_twelve 0;
-
-      /* border-left: dashed;
-      border-right: dashed;
-      border-color: #111;
-      border-width: 1.5px; */
+      margin: $n_root_twelve 0;
     }
 
     .achievement:before,
@@ -106,19 +99,19 @@ export default {
       left: 0;
 
       width: 0;
-      border-left: $a_half_width solid transparent;
-      border-right: $a_half_width dashed transparent;
+      border-left: $n_a_half_width solid transparent;
+      border-right: $n_a_half_width dashed transparent;
     }
 
     .achievement:before {
       bottom: 100%;
-      border-bottom: $root_twelve solid #fff;
+      border-bottom: $n_root_twelve solid #fff;
     }
 
     .achievement:after {
       top: 100%;
       width: 0;
-      border-top: $root_twelve solid #fff;
+      border-top: $n_root_twelve solid #fff;
     }
 
     .achievementPosition1 {
@@ -126,8 +119,8 @@ export default {
 
       //top: -1.3vh;
       //left: -1.8vh;
-      top: 145px;
-      left: 16.1611111px;
+      top: 100.6875px;
+      left: 23.11076388px;
     }
 
     .achievementPosition2 {
@@ -135,8 +128,8 @@ export default {
 
       //top: -4.4vh;
       //left: 5.9vh;
-      top: 160px;
-      left: 77.6611111px;
+      top: 115px;
+      left: 65.392px;
     }
 
     .achievementPosition3 {
@@ -144,17 +137,17 @@ export default {
 
       //top: -12.46vh;
       //left: 14vh;
-      top: 145px;
-      left: 139.161111px;
+      top: 100.6875px;
+      left: 106.673px;
     }
 
     #pullDownProperties {
       position: absolute;
 
-      top: 225px;
-      left: 15px;
+      top: 154.6875px;
+      left: 10.3px;
 
-      font-size: 58px;
+      font-size: 39.875px;
     }
 
     #pullDownProperties:hover {
@@ -163,7 +156,7 @@ export default {
 
     .username{
       width: $user_width;
-      height: $user_height;
+      height: $n_user_height;
 
       background-color: #fff;
 
@@ -182,7 +175,7 @@ export default {
 
     .id{
       width: $id_width;
-      height: $id_height;
+      height: $n_id_height;
 
       background-color: #fff;
 
@@ -194,14 +187,14 @@ export default {
     .idPosition{
       position: absolute;
 
-      top: 100px;
+      top: 80px;
       left: 202px;
       right: 0px;
     }
 
     .profile{
       width: $profile_width;
-      height: $profile_height;
+      height: $n_profile_height;
 
       background-color: #fff;
 
@@ -213,7 +206,7 @@ export default {
     .profilePosition{
       position: absolute;
 
-      top: 150px;
+      top: 120px;
       left: 202px;
       right: 25px;
     }
