@@ -13,18 +13,15 @@
     </span>
 
     <div class="achievementPosition1">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
 
     <div class="achievementPosition2">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
 
     <div class="achievementPosition3">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
 
     <div class="usernamePosition">
@@ -131,8 +128,8 @@ export default {
           left: 49.5%;
           top: 50%;
           -webkit-transform: translate(-50%, -50%);
-	        -moz-transform: translate(-50%, -50%);
-	        transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
         }
 
         .iconFile {
@@ -267,24 +264,6 @@ export default {
       right: 0px;
     }
 
-    .profile{
-      width: $profile_width;
-      height: $profile_height;
-
-      background-color: #fff;
-
-      border: solid;
-      border-width: 3px;
-      border-color: $banner_flame;
-    }
-
-    .profilePosition{
-      position: absolute;
-
-      top: 150px;
-      left: 202px;
-      right: 25px;
-    }
 
     /*.editBioButton{
 
