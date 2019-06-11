@@ -54,11 +54,11 @@ export default {
     //temporary height
     height: $n_banner_height;
 
-    background-color: $banner_color;
+    background-color: $n_banner_color;
 
     border: solid;
     border-width: 5px;
-    border-color: $banner_flame;
+    border-color: $n_banner_flame;
     z-index: 2;
 
     //children
@@ -73,7 +73,7 @@ export default {
       border-radius: 50%;
       border: solid;
       border-width: 2px;
-      border-color: $header_color;
+      border-color: $n_window_flame;
     }
 
     .iconPicPosition {
@@ -162,7 +162,7 @@ export default {
 
       border: solid;
       border-width: 3px;
-      border-color: $banner_flame;
+      border-color: $n_window_flame;
     }
 
     .usernamePosition{
@@ -181,7 +181,7 @@ export default {
 
       border: solid;
       border-width: 3px;
-      border-color: $banner_flame;
+      border-color: $n_window_flame;
     }
 
     .idPosition{
@@ -200,7 +200,7 @@ export default {
 
       border: solid;
       border-width: 3px;
-      border-color: $banner_flame;
+      border-color: $n_window_flame;
     }
 
     .profilePosition{

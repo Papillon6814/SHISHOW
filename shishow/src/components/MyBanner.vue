@@ -75,7 +75,7 @@ export default {
       border-radius: 50%;
       border: solid;
       border-width: 2px;
-      border-color: $header_color;
+      border-color: $window_flame;
     }
 
     .iconPicPosition {
@@ -169,7 +169,7 @@ export default {
 
       border: solid;
       border-width: 3px;
-      border-color: $banner_flame;
+      border-color: $window_flame;
     }
 
     .usernamePosition{
@@ -188,7 +188,7 @@ export default {
 
       border: solid;
       border-width: 3px;
-      border-color: $banner_flame;
+      border-color: $window_flame;
     }
 
     .idPosition{
@@ -207,7 +207,7 @@ export default {
 
       border: solid;
       border-width: 3px;
-      border-color: $banner_flame;
+      border-color: $window_flame;
     }
 
     .profilePosition{
