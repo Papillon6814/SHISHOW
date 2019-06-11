@@ -144,12 +144,7 @@ export default {
           -moz-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
         }
-
-        .trimmedImage {
-          width: 90%;
-          height: 90%;
-        }
-
+        
         .iconFile {
           height: 100%;
           width: 100%;
