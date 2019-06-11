@@ -7,6 +7,13 @@
         <div class="bar"></div>
       </div>
     </div>
+
+    <div id="menuButtons">
+      <img class="dm" src="../assets/dm-button.png" />
+      <img class="game" src="../assets/gameuser-button.png" />
+      <img class="bell" src="../assets/bell-button.png" />
+      <img class="home" src="../assets/home-button.png" />
+    </div>
   </div>
 </template>
 
@@ -122,6 +129,54 @@
     ::selection {
       background: rgba($secondary-color, .3);
       transition: .3s ease;
+    }
+
+    #menuButtons {
+      position: absolute;
+
+      height: 100%;
+
+      right: 0;
+
+      .dm {
+        position: absolute;
+
+        width: $button_width;
+        height: $button_height;
+
+        right: 50px;
+        top: 10px;
+      }
+
+      .game {
+        position: absolute;
+
+        width: $button_width;
+        height: $button_height;
+
+        right: 150px;
+        top: 10px;
+      }
+
+      .bell {
+        position: absolute;
+
+        width: $button_width;
+        height: $button_height;
+
+        right: 250px;
+        top: 10px;
+      }
+
+      .home {
+        position: absolute;
+
+        width: $button_width;
+        height: $button_height;
+
+        right: 350px;
+        top: 10px;
+      }
     }
 
   }
