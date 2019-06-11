@@ -53,7 +53,7 @@ export default {
     signIn: function () {
       firebase.auth().signInWithEmailAndPassword(this.e_mail, this.password).then(
         user => {
-          alert('Success!')
+          alert('Success! Hello, '+user.e_mail)
           this.$router.push('/')
         },
         err => {
@@ -72,7 +72,7 @@ export default {
 
   width: $banner_width;
   //temporary height
-  height: 280px;
+  height: $banner_height;
 
   background-color: $banner_color;
 

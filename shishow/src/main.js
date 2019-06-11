@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import firebase from 'firebase'
 
+
 Vue.config.productionTip = false
 
 import '@fortawesome/fontawesome-free-webfonts/css/fontawesome.css'

@@ -1,3 +1,5 @@
+/* basic color */
+
 $header_color: #394e8c;
 $dark_color: #687bb3;
 $footer_color: #161e34;
@@ -7,12 +9,12 @@ $pulldown_color: #97fff1;
 
 $header_height: 100px;
 
-/*$header_color: #ff6f61;
-$dark_color: #104f58;
-$footer_color: #23272a;
-$banner_color: #137480;*/
+/* --- */
+
+/* around myBanner */
 
 $banner_width: 80%;
+$banner_height: 280px;
 
 $icon_width: 130px;
 $icon_height: $icon_width;
@@ -30,3 +32,31 @@ $id_height: 30px;
 
 $profile_width: 100%;
 $profile_height: 100px;
+
+/* --- */
+
+/* around normalBanner */
+
+$n_banner_width: 55%;
+$n_banner_height: 192.5px;
+
+$n_icon_width: 89.375px;
+$n_icon_height: $n_icon_width;
+
+$n_achievement_width: 32.3125px;
+$n_achievement_height: 15.8125px;
+$n_root_twelve: 9.3278px;
+$n_a_half_width: 16.15625px;
+
+$n_user_height: 34.375px;
+
+$n_id_height: 20.625px;
+
+$n_profile_height: 68.75px;
+
+ /* --- */
+
+ /* menubuttons */
+
+ $button_width: 80px;
+ $button_height: 80px;
