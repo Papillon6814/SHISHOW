@@ -60,6 +60,29 @@ export default {
     signUp: function () {
       firebase.auth().createUserWithEmailAndPassword(this.e_mail, this.password)
       .then(user => {
+        
+        //登録したファイアベースからのユーザ情報を格納
+        var user = firebase.auth().currentUser;
+        //ユーザ情報のための変数定義
+        var name, email, photoUrl, uid, emailVerified;
+        
+        //変数に各情報を格納
+        name = user.displayName;
+        email = user.email;
+        photoUrl = user.photoURL;
+        emailVerified = user.emailVerified;
+        uid = user.uid;
+
+        db.collection("users").doc(uid).set({
+          Icon: user.photoURL,
+          MailAddress: email,
+          Shishow: 0,
+          Student: 0,
+          UID: uid,
+          UserName: name
+
+        })
+
         alert('Create account: ', user.e_mail)
       })
       .catch(error => {
