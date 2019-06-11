@@ -62,19 +62,20 @@ export default {
       .then(user => {
         
         //登録したファイアベースからのユーザ情報を格納
-        var user = firebase.auth().currentUser;
+        var User = firebase.auth().currentUser;
         //ユーザ情報のための変数定義
-        var name, email, photoUrl, uid, emailVerified;
+        var name, email, photoUrl, uid;
         
         //変数に各情報を格納
-        name = user.displayName;
-        email = user.email;
-        photoUrl = user.photoURL;
-        emailVerified = user.emailVerified;
-        uid = user.uid;
+        name = User.displayName;
+        email = User.email;
+        photoUrl = User.photoURL;
+        uid = User.uid;
+
+        var db = firebase.firestore();
 
         db.collection("users").doc(uid).set({
-          Icon: user.photoURL,
+          Icon: photoUrl,
           MailAddress: email,
           Shishow: 0,
           Student: 0,
