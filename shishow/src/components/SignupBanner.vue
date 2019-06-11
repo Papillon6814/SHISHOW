@@ -144,7 +144,6 @@ export default {
           -moz-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
         }
-        
         .iconFile {
           height: 100%;
           width: 100%;
