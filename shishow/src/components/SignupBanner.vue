@@ -66,25 +66,11 @@ export default {
         //登録したファイアベースからのユーザ情報を格納
         var User = firebase.auth().currentUser;
         //ユーザ情報のための変数定義
-        var name, email, photoUrl, uid;
+        var email;
         
         //変数に各情報を格納
-        name = User.displayName;
         email = User.email;
-        photoUrl = User.photoURL;
-        uid = User.uid;
 
-        var db = firebase.firestore();
-
-        db.collection("users").doc(uid).set({
-          Icon: photoUrl,
-          MailAddress: email,
-          Shishow: 0,
-          Student: 0,
-          UID: uid,
-          UserName: name
-
-        })
 
         alert('Create account: '+email);
       })
