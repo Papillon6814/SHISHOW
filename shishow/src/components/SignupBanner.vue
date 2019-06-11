@@ -84,7 +84,7 @@ export default {
 
         })
 
-        alert('Create account: ', user.e_mail)
+        alert('Create account: '+email);
       })
       .catch(error => {
         alert(error.message)
