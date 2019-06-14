@@ -25,8 +25,8 @@
       <div class="achievement"></div>
     </div>
 
-    <div class="usernamePosition">
-      <input class="username" type="text" placeholder="E-mail" v-model="e_mail">
+    <div class="emailPosition">
+      <input class="email" type="text" placeholder="E-mail" v-model="email">
     </div>
 
     <div class="passwordPosition">
@@ -48,19 +48,37 @@
 
 <script>
 import firebase from 'firebase'
+import 'firebase/firestore'
+
+// Your web app's Firebase configuration
+var firebaseConfig = {
+  apiKey: "AIzaSyD2D42pBXU_nXpo2wTd_IFs-4hogXE8Dq0",
+  authDomain: "shishow-7cc37.firebaseapp.com",
+  databaseURL: "https://shishow-7cc37.firebaseio.com",
+  projectId: "shishow-7cc37",
+  storageBucket: "shishow-7cc37.appspot.com",
+  messagingSenderId: "476890822571",
+  appId: "1:476890822571:web:508b49508a91c0d3"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+
+var db = firebase.firestore();
 
 export default {
   name: 'signupBanner',
   data () {
     return  {
-      e_mail: '',
+      email: '',
       password: '',
       uploadedImage: ''
     }
   },
   methods: {
     signUp: function () {
-      firebase.auth().createUserWithEmailAndPassword(this.e_mail, this.password)
+      this.addToDatabase(this.email);
+      firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
       .then(user => {
         alert('Create account: ', user.e_mail)
       })
@@ -68,11 +86,23 @@ export default {
         alert(error.message)
       })
     },
+    addToDatabase(email) {
+      db.collection("USER").add({
+        email: email,
+        username: 'temp'
+      })
+      .then(function(docRef) {
+        console.log('Document written with ID: ', docRef.id);
+      })
+      .catch(function(error) {
+        console.log("Error adding document: ", error);
+      })
+    },
     onFileChange(event) {
       let files = event.target.files || event.dataTransfer.files;
       this.showImage(files[0]);
     },
-    // 画像表示
+    // 画像表示の関数
     showImage(file) {
       let reader = new FileReader();
       reader.onload = (event) => {
@@ -144,7 +174,6 @@ export default {
           -moz-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
         }
-
         .iconFile {
           height: 100%;
           width: 100%;
@@ -237,7 +266,7 @@ export default {
       color: $pulldown_color;
     }
 
-    .username{
+    .email{
       width: $user_width;
       height: $user_height;
 
@@ -248,7 +277,7 @@ export default {
       border-color: $banner_flame;
     }
 
-    .usernamePosition{
+    .emailPosition{
       position: absolute;
 
       top: 30px;
