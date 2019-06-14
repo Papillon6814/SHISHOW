@@ -33,7 +33,7 @@
         最近では、予想外の趣味に没頭中！
       </div>
     </div>
-    <button>Panic button</button>
+    <a href="#" class="btn-circle-3d">江崎スイッチ</a>
     <span id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
@@ -216,6 +216,33 @@ export default {
       top: 150px;
       left: 202px;
       right: 25px;
+    }
+
+    .btn-circle-3d {
+      position: absolute;
+      top: 8px;
+      right: 15px;
+      display: inline-block;
+      text-decoration: none;
+      background: #ff8181;
+      color: #fff;
+      width: 120px;
+      height: 120px;
+      line-height: 120px;
+      border-radius: 50%;
+      text-align: center;
+      font-weight: bold;
+      overflow: hidden;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+      border-bottom: solid 3px #bd6565;
+      transition: .4s;
+    }
+
+    .btn-circle-3d:active {
+      -webkit-transform: translateY(2px);
+      transform: translateY(2px);
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+      border-bottom: none;
     }
 
     /*.editBioButton{

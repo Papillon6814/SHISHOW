@@ -17,7 +17,9 @@
       <img class="dm" src="../assets/dm-button.png" />
       <img class="game" src="../assets/gameuser-button.png" />
       <img class="bell" src="../assets/bell-button.png" />
-      <img class="home" src="../assets/home-button.png" />
+      <router-link to="/">
+        <img class="home" src="../assets/home-button.png" />
+      </router-link>
     </div>
   </div>
 </template>
