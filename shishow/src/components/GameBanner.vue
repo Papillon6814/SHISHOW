@@ -1,7 +1,8 @@
 <template>
   <div class="gamebanner">
     <span class="iconPicPosition">
-      <div class="iconPic"></div>
+      <div class="iconPic">
+      </div>
     </span>
     <div class="gamenamePosition">
       <div class="gamename">
