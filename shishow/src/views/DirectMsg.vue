@@ -22,9 +22,10 @@ export default {
     methods:{
         //メッセージを送る
         sendMsg(){
+            const db = firebase.firestore()
             if(!this.SignIn || !this.msg)return
             //データベースに値をpush
-            firebase.database.ref('/messages/').push({
+            db.collection("USER").add({
                 name:this.userName,
                 text:this.msg,
                 profileImgUrl:this.userImage
@@ -41,22 +42,25 @@ export default {
         },
         //これまでのメッセージをロード
         loadMsg(){
+            const db = firebase.firestore()
             //データベースから値を持ってきてsnapshotに代入
-            firebase.database().ref('/messages/').on('value',(snapshot) =>{
-                if(snapshot){
+            db.collection("USER").get().then((snapshot) =>{
                     //snapshotの値はsnapshot.val()で取得できる
-                    let rootList = snapshot.val()
+                    //let rootList = snapshot.val()
                     let msgList = []
-                    Object.keys(rootList).forEach((val,key)=>{
+                    /*Object.keys(rootList).forEach((val,key)=>{
                         rootList[val].id = val
                         msgList.push(rootList[val])
+                    })*/
+                    snapshot.forEach(function(doc){
+                        msgList = doc.text
                     })
                     this.msgList = msgList
-                }
-            })
+                )
+            }
         }
     }
-}
+
  </script>
 
  <style>
