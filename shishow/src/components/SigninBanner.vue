@@ -1,5 +1,5 @@
 <template>
-  <div class="banner">
+  <div class="signinBanner">
 
     <span class="iconCirclePosition">
       <div class="iconCircle">
@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style lang="scss">
-.banner {
+.signinBanner {
   position: absolute;
 
   width: $banner_width;
