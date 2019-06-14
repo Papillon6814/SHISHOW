@@ -1,28 +1,14 @@
 <template>
-  <div class="banner">
+  <div class="gamebanner">
     <span class="iconPicPosition">
       <div class="iconPic"></div>
     </span>
-    <div class="achievementPosition1">
-      <div class="achievement">
-      </div>
-    </div>
-    <div class="achievementPosition2">
-      <div class="achievement">
-      </div>
-    </div>
-    <div class="achievementPosition3">
-      <div class="achievement">
-      </div>
-    </div>
-    <div class="usernamePosition">
-      <div class="username">
-        Nobuyuki
+    <div class="gamenamePosition">
+      <div class="gamename">
       </div>
     </div>
     <div class="idPosition">
       <div class="id">
-        qawsedrftgyhujkolp
       </div>
     </div>
     <div class="profilePosition">
@@ -33,7 +19,6 @@
         最近では、予想外の趣味に没頭中！
       </div>
     </div>
-    <button>Panic button</button>
     <span id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
@@ -49,18 +34,18 @@ export default {
 </script>
 
 <style lang="scss">
-  .banner {
+  .gamebanner {
     position: absolute;
 
     width: $banner_width;
     //temporary height
     height: $banner_height;
 
-    background-color: $banner_color;
+    background-color: $g_banner_color;
 
     border: solid;
     border-width: 5px;
-    border-color: $banner_flame;
+    border-color: $g_banner_flame;
     z-index: 2;
 
     //children
@@ -72,20 +57,20 @@ export default {
       //temporary color
       background-color: #fff;
 
-      border-radius: 50%;
+      border-radius: 15%;
       border: solid;
       border-width: 2px;
-      border-color: $window_flame;
+      border-color: $g_window_flame;
     }
 
     .iconPicPosition {
       position: absolute;
 
-      top: 15px;
+      top: 35px;
       left: 34.1611111px;
     }
 
-    .achievement {
+    /*.achievement {
       position: relative;
       width: $achievement_width;
       height: $achievement_height; //√3
@@ -95,7 +80,7 @@ export default {
       /* border-left: dashed;
       border-right: dashed;
       border-color: #111;
-      border-width: 1.5px; */
+      border-width: 1.5px;
     }
 
     .achievement:before,
@@ -146,7 +131,7 @@ export default {
       //left: 14vh;
       top: 145px;
       left: 139.161111px;
-    }
+    } */
 
     #pullDownProperties {
       position: absolute;
@@ -161,7 +146,7 @@ export default {
       color: $pulldown_color;
     }
 
-    .username{
+    .gamename{
       width: $user_width;
       height: $user_height;
 
@@ -169,10 +154,10 @@ export default {
 
       border: solid;
       border-width: 3px;
-      border-color: $window_flame;
+      border-color: $g_window_flame;
     }
 
-    .usernamePosition{
+    .gamenamePosition{
       position: absolute;
 
       top: 30px;
@@ -188,7 +173,7 @@ export default {
 
       border: solid;
       border-width: 3px;
-      border-color: $window_flame;
+      border-color: $g_window_flame;
     }
 
     .idPosition{
@@ -207,7 +192,7 @@ export default {
 
       border: solid;
       border-width: 3px;
-      border-color: $window_flame;
+      border-color: $g_window_flame;
     }
 
     .profilePosition{

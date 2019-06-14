@@ -229,7 +229,7 @@ export default {
 
     border: solid;
     border-width: 3px;
-    border-color: $banner_flame;
+    border-color: $window_flame;
   }
 
   .usernamePosition{
@@ -267,7 +267,7 @@ export default {
 
     border: solid;
     border-width: 3px;
-    border-color: $banner_flame;
+    border-color: $window_flame;
   }
 
   .profilePosition{

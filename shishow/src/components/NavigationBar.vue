@@ -1,5 +1,10 @@
 <template>
   <div id="header">
+
+    <div>
+      <img class="logo" src="../assets/logoShishow.png" />
+    </div>
+
     <div class="centered">
       <div class="group">
         <input type="text" id="search" required="required"/>
@@ -38,7 +43,7 @@
       position: absolute;
 
       top: 13px;
-      left: 70px;
+      left: 120px;
 
       //width: $searchbar_width;
       //height: $searchbar_width/2;
@@ -123,6 +128,16 @@
             transition: .3s ease;
           }
       }
+    }
+
+    .logo{
+      position: absolute;
+
+      width: $button_width;
+      height: $button_height;
+
+      top: 10px;
+      left: 20px;
     }
 
 
