@@ -4,14 +4,14 @@ import Home from './views/Home.vue'
 import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
 import firebase from 'firebase'
+import DirectMsg from './components/DirectMsg'
 
 Vue.use(Router)
 
 let router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'home',
       component: Home
@@ -25,20 +25,27 @@ let router = new Router({
       path: '/signin',
       name: 'signin',
       component: Signin
+    },
+    {
+      path: '/DirectMsg',
+      name: 'DirectMsg',
+      component: DirectMsg
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  if(requiresAuth) {
+  if (requiresAuth) {
     firebase.auth().onAuthStateChanged(function (user) {
-      if(user){
+      if (user) {
         next()
       } else {
         next({
           path: '/signin',
-          query: { redirect: to.fullPath }
+          query: {
+            redirect: to.fullPath
+          }
         })
       }
     })

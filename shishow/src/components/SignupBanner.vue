@@ -1,5 +1,5 @@
 <template>
-  <div class="banner">
+  <div class="signupBanner">
 
     <span class="iconCirclePosition">
       <div class="iconCircle">
@@ -25,12 +25,16 @@
       <div class="achievement"></div>
     </div>
 
-    <div class="usernamePosition">
-      <input class="username" type="text" placeholder="E-mail" v-model="e_mail">
+    <div class="emailPosition">
+      <input class="email" type="text" placeholder="E-mail" v-model="email">
     </div>
 
     <div class="passwordPosition">
       <input class="password" type="password" placeholder="PASSWORD" v-model="password">
+    </div>
+
+    <div class="passwordConfirmPosition">
+      <input class="password" type="password" placeholder="CONFIRM PASSWORD" v-model="p_confirm">
     </div>
 
     <div class="profilePosition">
@@ -48,31 +52,65 @@
 
 <script>
 import firebase from 'firebase'
+import 'firebase/firestore'
+
+// Your web app's Firebase configuration
+var firebaseConfig = {
+  apiKey: "AIzaSyD2D42pBXU_nXpo2wTd_IFs-4hogXE8Dq0",
+  authDomain: "shishow-7cc37.firebaseapp.com",
+  databaseURL: "https://shishow-7cc37.firebaseio.com",
+  projectId: "shishow-7cc37",
+  storageBucket: "shishow-7cc37.appspot.com",
+  messagingSenderId: "476890822571",
+  appId: "1:476890822571:web:508b49508a91c0d3"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+var db = firebase.firestore();
 
 export default {
   name: 'signupBanner',
   data () {
     return  {
-      e_mail: '',
+      email: '',
       password: '',
+      p_confirm: '',
       uploadedImage: ''
     }
   },
   methods: {
     signUp: function () {
-      firebase.auth().createUserWithEmailAndPassword(this.e_mail, this.password)
-      .then(user => {
-        alert('Create account: ', user.e_mail)
+      if(this.p_confirm != this.password) {
+        console.log('Password does not match!');
+      } else {
+        this.addToDatabase(this.email);
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+        .then(user => {
+          alert('Create account: ', user.e_mail)
+        })
+        .catch(error => {
+          alert(error.message)
+        })
+      }
+    },
+    addToDatabase(email) {
+      db.collection("USER").add({
+        email: email,
+        username: 'temp'
       })
-      .catch(error => {
-        alert(error.message)
+      .then(function(docRef) {
+        console.log('Document written with ID: ', docRef.id);
+      })
+      .catch(function(error) {
+        console.log("Error adding document: ", error);
       })
     },
     onFileChange(event) {
       let files = event.target.files || event.dataTransfer.files;
       this.showImage(files[0]);
     },
-    // 画像表示
+    // 画像表示の関数
     showImage(file) {
       let reader = new FileReader();
       reader.onload = (event) => {
@@ -86,7 +124,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .banner {
+  .signupBanner {
     position: absolute;
 
     width: $banner_width;
@@ -144,10 +182,11 @@ export default {
           -moz-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
         }
-
         .iconFile {
           height: 100%;
           width: 100%;
+
+          opacity: 0;
 
           cursor: pointer;
         }
@@ -237,7 +276,7 @@ export default {
       color: $pulldown_color;
     }
 
-    .username{
+    .email{
       width: $user_width;
       height: $user_height;
 
@@ -248,7 +287,7 @@ export default {
       border-color: $banner_flame;
     }
 
-    .usernamePosition{
+    .emailPosition{
       position: absolute;
 
       top: 30px;
@@ -273,6 +312,13 @@ export default {
       top: 100px;
       left: 202px;
       right: 0px;
+    }
+
+    .passwordConfirmPosition {
+      position: absolute;
+
+      top: 150px;
+      left: 202px;
     }
 
 

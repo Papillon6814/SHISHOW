@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import firebase from 'firebase'
+//import firebase from 'firebase'
 
 
 Vue.config.productionTip = false
@@ -10,6 +10,7 @@ Vue.config.productionTip = false
 import '@fortawesome/fontawesome-free-webfonts/css/fontawesome.css'
 import '@fortawesome/fontawesome-free-webfonts/css/fa-solid.css'
 
+/*
 // Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: "AIzaSyD2D42pBXU_nXpo2wTd_IFs-4hogXE8Dq0",
@@ -22,6 +23,22 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+// var db = firebase.firestore();
+*/
+
+/*
+db.collection("users").add({
+  first: "Ada",
+  last: "Lovelace",
+  born: 1815
+})
+.then(function(docRef) {
+  console.log("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+  console.error("Error adding document: ", error);
+});
+*/
 
 new Vue({
   router,

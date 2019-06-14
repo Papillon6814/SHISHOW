@@ -1,5 +1,5 @@
 <template>
-  <div class="banner">
+  <div class="signinBanner">
 
     <span class="iconCirclePosition">
       <div class="iconCircle">
@@ -53,7 +53,7 @@ export default {
     signIn: function () {
       firebase.auth().signInWithEmailAndPassword(this.e_mail, this.password).then(
         user => {
-          alert('Success!')
+          alert('Success! Hello, '+user.e_mail)
           this.$router.push('/')
         },
         err => {
@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style lang="scss">
-.banner {
+.signinBanner {
   position: absolute;
 
   width: $banner_width;
@@ -229,7 +229,7 @@ export default {
 
     border: solid;
     border-width: 3px;
-    border-color: $banner_flame;
+    border-color: $window_flame;
   }
 
   .usernamePosition{
@@ -267,7 +267,7 @@ export default {
 
     border: solid;
     border-width: 3px;
-    border-color: $banner_flame;
+    border-color: $window_flame;
   }
 
   .profilePosition{
