@@ -1,4 +1,6 @@
 <template>
+  <div id="InputBar">
+  </div>
 </template>
 
 <script>
