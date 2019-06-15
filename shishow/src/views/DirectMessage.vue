@@ -1,21 +1,17 @@
 <template>
   <div id="root">
     <navi></navi>
-    <div class="inputAreaPosition">
-      <inputArea></inputArea>
     </div>
   </div>
 </template>
 
 <script>
 import navi from '../components/NavigationBar.vue'
-import inputArea from '../components/InputArea.vue'
 
 export default {
   name: 'directMessage',
   components: {
     navi,
-    inputArea
   }
 }
 
