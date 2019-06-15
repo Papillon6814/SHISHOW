@@ -19,14 +19,14 @@
 <style lang='scss'>
   #inputBar {
     width: 100%;
-    height: 50px;
+    height: 100%;;
 
     background-color: #ddddff;
 
     .smileEmojiPlace {
       position: absolute;
 
-      left: 5%;
+      left: 3px;
       top: 5px;
 
       font-size: 40px;

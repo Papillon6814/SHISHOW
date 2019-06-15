@@ -29,6 +29,9 @@ export default {
   // temporary position
   top: 300px;
   left: 20%;
+
+  width: 80%;
+  height: 50px;
 }
 
 </style>
