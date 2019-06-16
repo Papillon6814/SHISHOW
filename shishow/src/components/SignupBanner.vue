@@ -2,14 +2,14 @@
   <div class="signupBanner">
 
     <span class="iconCirclePosition">
-      <div class="iconCircle">
-        <div class="iconDashedCircle">
+      <div class="iconCircle" >
+        <img v-show="uploadedImage" :src="uploadedImage" id="icon"/>
+        <div class="iconDashedCircle" v-if="!uploadedImage">
           <div class="plusPosition">
             <i class="fas fa-plus"></i>
           </div>
-          <img v-show="uploadedImage" :src="uploadedImage" />
-          <input class="iconFile" type="file" @change="onFileChange">
         </div>
+        <input class="iconFile" type="file" @change="onFileChange">
       </div>
     </span>
 
@@ -154,7 +154,7 @@ export default {
       cursor: pointer;
 
       .iconDashedCircle {
-        position: relative;
+        position: absolute;
 
         top: 4.5%;
         left: 4.5%;
@@ -182,7 +182,8 @@ export default {
           -moz-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
         }
-        .iconFile {
+      }
+      .iconFile {
           height: 100%;
           width: 100%;
 
@@ -190,7 +191,12 @@ export default {
 
           cursor: pointer;
         }
-      }
+    }
+
+    #icon{
+      position: absolute;
+      width: $icon_width;
+      height: $icon_height;
     }
 
     .iconCirclePosition {
