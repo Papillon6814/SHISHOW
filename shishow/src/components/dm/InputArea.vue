@@ -50,7 +50,7 @@ export default {
   width: 100%;
   height: 100%;
 
-  background-color: #ddddff;
+  background-color: $theme_color_dm;
 
   .smileEmojiPlace {
     position: absolute;

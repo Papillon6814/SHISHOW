@@ -23,10 +23,10 @@ export default {
   #directMessageField {
     position: absolute;
 
-    top: $header_height + 50px;
-    left: 5%;
-
     width: 90%;
     height: 1000px;
+
+    left: 5%;
+    top: $header_height + 30px;
   }
 </style>

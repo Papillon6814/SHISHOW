@@ -40,6 +40,8 @@
 
     background-color: $header_color;
 
+    z-index: 10;
+
 
     .centered {
       position: absolute;

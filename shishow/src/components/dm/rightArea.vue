@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <div id="rightArea"></div>
+</template>
 
 <script>
 import firebase from "firebase";
@@ -34,4 +36,15 @@ export default {
 </script>
 
 <style lang='scss'>
+  #rightArea {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    width: 55%;
+    height: 100%;
+
+    background-color: $theme_color_dm;
+  }
 </style>

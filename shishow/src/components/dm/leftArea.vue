@@ -1,9 +1,27 @@
 <template>
+  <div id="leftArea">
+  </div>
 </template>
 
 <script>
 </script>
 
 <style lang='scss'>
+#leftArea {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  width: 45%;
+
+  background-color: $theme_color_dm;
+
+  border-right: solid;
+  border-width: 5px;
+  border-color: #666;
+
+  z-index: 3;
+}
 
 </style>
