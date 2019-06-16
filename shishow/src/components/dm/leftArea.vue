@@ -1,9 +1,18 @@
 <template>
   <div id="leftArea">
+    <dmBanner></dmBanner>
   </div>
 </template>
 
 <script>
+import dmBanner from'./dmBanner.vue'
+
+export default {
+  name: 'leftArea',
+  components: {
+    dmBanner
+  }
+}
 </script>
 
 <style lang='scss'>

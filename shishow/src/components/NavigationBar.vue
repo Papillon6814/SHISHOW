@@ -27,7 +27,7 @@
 <style lang="scss">
 
   $secondary-color: #2196f3;
-  $searchbar_width: 450px;
+  $searchbar_width: 400px;
 
   #header {
     position: absolute;
@@ -47,7 +47,7 @@
       position: absolute;
 
       top: 13px;
-      left: 120px;
+      left: 100px;
 
       //width: $searchbar_width;
       //height: $searchbar_width/2;
@@ -141,7 +141,7 @@
       height: $button_height;
 
       top: 10px;
-      left: 20px;
+      left: 10px;
     }
 
 
