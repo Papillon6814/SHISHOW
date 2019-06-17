@@ -3,7 +3,7 @@
     <div class="smileEmojiPlace">
       <i class="fas fa-smile"></i>
     </div>
-    <input type="text" class="inputText">
+    <input v-model="msg" type="text" class="inputText">
     <div class="checkEmojiPlace">
       <i class="fas fa-check"></i>
     </div>

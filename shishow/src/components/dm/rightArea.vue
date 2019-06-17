@@ -29,6 +29,7 @@ export default {
           snapshot.forEach(function(doc) {
             msgList = doc.text;
           });
+          this.msgList = msgList;
         });
     }
   }
@@ -36,15 +37,15 @@ export default {
 </script>
 
 <style lang='scss'>
-  #rightArea {
-    position: absolute;
+#rightArea {
+  position: absolute;
 
-    top: 0;
-    right: 0;
+  top: 0;
+  right: 0;
 
-    width: 55%;
-    height: 100%;
+  width: 55%;
+  height: 100%;
 
-    background-color: $theme_color_dm;
-  }
+  background-color: $theme_color_dm;
+}
 </style>
