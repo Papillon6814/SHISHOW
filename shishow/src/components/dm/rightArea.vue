@@ -1,5 +1,7 @@
 <template>
-  <div id="rightArea"></div>
+  <div id="rightArea">
+    <div v-for="msg in msgList">{{msg}}</div>
+  </div>
 </template>
 
 <script>
