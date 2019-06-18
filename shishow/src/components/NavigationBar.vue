@@ -13,6 +13,10 @@
       </div>
     </div>
 
+    <div class="logoSentence">
+      SHISHOW
+    </div>
+
     <div id="menuButtons">
       <router-link to="/directMessage">
         <img class="dm" src="../assets/dm-button.png" />
@@ -27,6 +31,7 @@
 </template>
 
 <style lang="scss">
+  @import url('https://fonts.googleapis.com/css?family=Pangolin&display=swap');
 
   $secondary-color: #2196f3;
   $searchbar_width: 400px;
@@ -144,6 +149,20 @@
 
       top: 10px;
       left: 10px;
+    }
+
+    .logoSentence {
+      position: absolute;
+
+      font-family: 'Pangolin', cursive;
+      top: 20px;
+      font-size: 60px;
+
+      left: 50%;
+      transform: translate(-50%,0);
+      -webkit-transform: translate(-50%, 0);
+
+      color: $logo_sentence_color;
     }
 
 
