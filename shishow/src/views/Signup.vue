@@ -4,6 +4,9 @@
     <div id="signupBannerPosition">
       <signupBanner></signupBanner>
     </div>
+    <div class="trimmingButtonPosition">
+      <trimmingButton></trimmingButton>
+    </div>
   </div>
 </template>
 
@@ -11,12 +14,14 @@
 // @ is an alias to /src
 import navi from '../components/NavigationBar.vue'
 import signupBanner from '../components/SignupBanner.vue'
+import trimmingButton from '../components/trimmingButton.vue'
 
 export default {
   name: 'signup',
   components: {
     navi,
-    signupBanner
+    signupBanner,
+    trimmingButton
   }
 }
 
@@ -30,6 +35,8 @@ export default {
     width: 100%;
     overflow: hidden;
 
+    height: 2000px;
+
     background-color: $dark_color;
   }
 
@@ -38,6 +45,13 @@ export default {
     //temporary top
     top: 45px;
     left: 10%;
+  }
+
+  .trimmingButtonPosition {
+    position: absolute;
+
+    top: 450px;
+    left: 45%;
   }
 
 </style>
