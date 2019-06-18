@@ -14,7 +14,9 @@
     </div>
 
     <div id="menuButtons">
-      <img class="dm" src="../assets/dm-button.png" />
+      <router-link to="/directMessage">
+        <img class="dm" src="../assets/dm-button.png" />
+      </router-link>
       <img class="game" src="../assets/gameuser-button.png" />
       <img class="bell" src="../assets/bell-button.png" />
       <router-link to="/">
