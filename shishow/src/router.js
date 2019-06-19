@@ -6,6 +6,7 @@ import Signin from './views/Signin.vue'
 import firebase from 'firebase'
 import DirectMessage from './views/DirectMessage.vue'
 
+
 Vue.use(Router)
 
 let router = new Router({

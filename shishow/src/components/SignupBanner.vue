@@ -12,7 +12,7 @@
         <input class="iconFile" type="file" @change="onFileChange">
       </div>
     </span>
-
+    <button id="test" type="button" @click="save">{{dirname}}</button> 
     <div class="achievementPosition1">
       <div class="achievement"></div>
     </div>
@@ -50,6 +50,8 @@
   </div>
 </template>
 
+
+
 <script>
 import firebase from 'firebase'
 import 'firebase/firestore'
@@ -76,7 +78,8 @@ export default {
       email: '',
       password: '',
       p_confirm: '',
-      uploadedImage: ''
+      uploadedImage: '',
+      dirname:__dirname,
     }
   },
   methods: {
@@ -117,6 +120,11 @@ export default {
         this.uploadedImage = event.target.result;
       }
       reader.readAsDataURL(file);
+    },
+
+    save(){
+      
+
     }
   }
 }
