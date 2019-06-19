@@ -1,5 +1,5 @@
 <template>
-  <div id="#app" v-bind:class="{ 'banner': isA, 'extend': isB }">
+  <div class="banner" v-bind:class="{ 'banner': isA, 'extend': isB }">
     <span class="iconPicPosition">
       <div class="iconPic"></div>
     </span>
@@ -44,7 +44,6 @@
 
 export default {
   name: 'myBanner',
-  el:'app',
   data:function(){
     return{
       isA:true,
@@ -79,7 +78,7 @@ export default {
     //children
   }
 
-  
+
 
   .extend{
     position: absolute;
