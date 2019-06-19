@@ -16,8 +16,16 @@
       </div>
     </div>
     <div class="usernamePosition">
-      <div class="username">
-        Nobuyuki
+      <div class="fieldForUserName">
+        <div class="username">
+          Nakataku
+        </div>
+      </div>
+      <div class="fieldForDisplayDeshi">
+        <div class="deshiPosition">
+          <div class="deshi">
+          </div>
+        </div>
       </div>
     </div>
     <div class="idPosition">
@@ -33,7 +41,7 @@
         最近では、予想外の趣味に没頭中！
       </div>
     </div>
-    <a href="#" class="btn-circle-3d">江崎スイッチ</a>
+    <a href="#" class="btn-circle-3d"></a>
     <span id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
@@ -62,6 +70,8 @@ export default {
     border-width: 5px;
     border-color: $banner_flame;
     z-index: 2;
+
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 
     //children
 
@@ -170,6 +180,38 @@ export default {
       border: solid;
       border-width: 3px;
       border-color: $window_flame;
+
+      .fieldForUserName{
+
+      }
+
+      .fieldForDisplayDeshi{
+        .deshiPosition{
+          position: relative;
+          top: 0px;
+          right: 0px;
+          z-index: 99;
+
+          .deshi{
+            width: $deshi_width;
+            height: $deshi_height;
+
+            background-color: $window_flame;
+          }
+
+          .deshi:before{
+            position: absolute;
+            content: '';
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border: none;
+            border-left: solid 40px white;
+            border-bottom: solid 50px transparent;
+          }
+        }
+      }
     }
 
     .usernamePosition{

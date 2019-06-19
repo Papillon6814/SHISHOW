@@ -39,7 +39,7 @@
     height: $header_height;
 
     background-color: $header_color;
-
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
 
     .centered {
       position: absolute;

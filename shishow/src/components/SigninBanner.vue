@@ -1,5 +1,5 @@
 <template>
-  <div class="banner">
+  <div class="signinbanner">
 
     <span class="iconCirclePosition">
       <div class="iconCircle">
@@ -67,18 +67,18 @@ export default {
 </script>
 
 <style lang="scss">
-.banner {
+.signinbanner {
   position: absolute;
 
   width: $banner_width;
   //temporary height
   height: $banner_height;
 
-  background-color: $banner_color;
+  background-color: $si_banner_color;
 
   border: solid;
   border-width: 5px;
-  border-color: $banner_flame;
+  border-color: $si_banner_flame;
   z-index: 2;
 
   //children
@@ -93,7 +93,7 @@ export default {
     border-radius: 50%;
     border: solid;
     border-width: 2px;
-    border-color: $header_color;
+    border-color: $si_window_flame;
 
     cursor: pointer;
 
@@ -229,7 +229,7 @@ export default {
 
     border: solid;
     border-width: 3px;
-    border-color: $window_flame;
+    border-color: $si_window_flame;
   }
 
   .usernamePosition{
@@ -248,7 +248,7 @@ export default {
 
     border: solid;
     border-width: 3px;
-    border-color: $banner_flame;
+    border-color: $si_window_flame;
   }
 
   .passwordPosition{
@@ -267,7 +267,7 @@ export default {
 
     border: solid;
     border-width: 3px;
-    border-color: $window_flame;
+    border-color: $si_window_flame;
   }
 
   .profilePosition{
