@@ -11,12 +11,14 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   name: "inputArea",
   props: ["SignIn", "userName", "userImage"],
   data() {
     return {
-      msg: null
+      msg: ""
     };
   },
   methods: {
@@ -25,21 +27,24 @@ export default {
       const db = firebase.firestore();
       if (!this.SignIn || !this.msg) return;
       //データベースに値をpush
-      db.collection("USER")
-        .add({
-          name: this.userName,
-          text: this.msg,
-          profileImgUrl: this.userImage
-        })
-        //正常な時
-        .then(data => {
-          this.errorMsg = null;
-          this.msg = null;
+      //事実上送信
+      db.collection("USER").add({
+        name: this.userName,
+        text: this.msg,
+        profileImgUrl: this.userImage
+      });
+      //正常な時
+      /*.then(data => {
+          this.errorMsg = "";
+          this.msg = "";
         })
         //エラーの時
         .catch(error => {
           this.errorMsg = "殺す";
-        });
+        });*/
+      //送信後中身を空にする
+      this.msg = "";
+      this.text = "";
     }
   }
 };

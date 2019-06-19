@@ -1,18 +1,24 @@
 <template>
   <div id="rightArea">
-    <div v-for="msg in msgList">{{msg}}</div>
+    <div v-for="msg in msgList" v-bind:key="msg.id">{{msg}}</div>
+    <inputArea class="inputArea"></inputArea>
   </div>
 </template>
 
 <script>
 import firebase from "firebase";
+import inputArea from "./InputArea";
+
 export default {
   data() {
     return {
       msgList: [],
-      msg: null,
-      errorMsg: null
+      msg: "",
+      errorMsg: ""
     };
+  },
+  components: {
+    inputArea
   },
   created() {
     this.loadMsg();
@@ -49,5 +55,7 @@ export default {
   height: 100%;
 
   background-color: $theme_color_dm;
+}
+.inputArea {
 }
 </style>
