@@ -30,7 +30,6 @@
     <div class="usernamePosition">
       <input class="username" type="text" placeholder="Display name" v-model="username">
     </div>
-
     <div class="emailPosition">
       <input class="email" type="text" placeholder="E-mail" v-model="email">
     </div>
@@ -351,7 +350,7 @@ export default {
 
     .passwordConfirmPosition {
       position: absolute;
-
+      
       top: 220px;
       left: 202px;
     }
