@@ -13,8 +13,14 @@
       </div>
     </div>
 
+    <div class="logoSentence">
+      SHISHOW
+    </div>
+
     <div id="menuButtons">
-      <img class="dm" src="../assets/dm-button.png" />
+      <router-link to="/directMessage">
+        <img class="dm" src="../assets/dm-button.png" />
+      </router-link>
       <img class="game" src="../assets/gameuser-button.png" />
       <img class="bell" src="../assets/bell-button.png" />
       <router-link to="/">
@@ -25,9 +31,10 @@
 </template>
 
 <style lang="scss">
+  @import url('https://fonts.googleapis.com/css?family=Pangolin&display=swap');
 
   $secondary-color: #2196f3;
-  $searchbar_width: 450px;
+  $searchbar_width: 400px;
 
   #header {
     position: absolute;
@@ -40,12 +47,13 @@
 
     background-color: $header_color;
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
 
     .centered {
       position: absolute;
 
       top: 13px;
-      left: 120px;
+      left: 100px;
 
       //width: $searchbar_width;
       //height: $searchbar_width/2;
@@ -139,7 +147,21 @@
       height: $button_height;
 
       top: 10px;
-      left: 20px;
+      left: 10px;
+    }
+
+    .logoSentence {
+      position: absolute;
+
+      font-family: 'Pangolin', cursive;
+      top: 20px;
+      font-size: 60px;
+
+      left: 50%;
+      transform: translate(-50%,0);
+      -webkit-transform: translate(-50%, 0);
+
+      color: $logo_sentence_color;
     }
 
 

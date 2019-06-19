@@ -1,5 +1,5 @@
 <template>
-  <div class="signupbanner">
+  <div class="signupBanner">
 
     <span class="iconCirclePosition">
       <div class="iconCircle">
@@ -33,6 +33,10 @@
       <input class="password" type="password" placeholder="PASSWORD" v-model="password">
     </div>
 
+    <div class="passwordConfirmPosition">
+      <input class="password" type="password" placeholder="CONFIRM PASSWORD" v-model="p_confirm">
+    </div>
+
     <div class="profilePosition">
     </div>
 
@@ -63,7 +67,6 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-
 var db = firebase.firestore();
 
 export default {
@@ -72,19 +75,24 @@ export default {
     return  {
       email: '',
       password: '',
+      p_confirm: '',
       uploadedImage: ''
     }
   },
   methods: {
     signUp: function () {
-      this.addToDatabase(this.email);
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-      .then(user => {
-        alert('Create account: ', user.e_mail)
-      })
-      .catch(error => {
-        alert(error.message)
-      })
+      if(this.p_confirm != this.password) {
+        console.log('Password does not match!');
+      } else {
+        this.addToDatabase(this.email);
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+        .then(user => {
+          alert('Create account: ', user.e_mail)
+        })
+        .catch(error => {
+          alert(error.message)
+        })
+      }
     },
     addToDatabase(email) {
       db.collection("USER").add({
@@ -116,7 +124,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .signupbanner {
+  .signupBanner {
     position: absolute;
 
     width: $banner_width;
@@ -177,6 +185,8 @@ export default {
         .iconFile {
           height: 100%;
           width: 100%;
+
+          opacity: 0;
 
           cursor: pointer;
         }
@@ -302,6 +312,13 @@ export default {
       top: 100px;
       left: 202px;
       right: 0px;
+    }
+
+    .passwordConfirmPosition {
+      position: absolute;
+
+      top: 150px;
+      left: 202px;
     }
 
 
