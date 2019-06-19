@@ -1,6 +1,6 @@
 <template>
   <div id="rightArea">
-    <div v-for="msg in msgList" v-bind:key="msg.id">{{msg}}</div>
+    <div v-for="msg in msgList" v-bind:key="msg.id">{{msg.msg}}</div>
     <div class="inputArea">
       <inputArea></inputArea>
     </div>
@@ -60,7 +60,7 @@ export default {
 }
 //下部に表示する
 .inputArea {
-  position: fixed;
+  //position: fixed;
   bottom: 0px;
 }
 </style>

@@ -29,7 +29,7 @@ export default {
       //データベースに値をpush
       //事実上送信
       db.collection("CHAT").add({
-        id: this.userName,
+        username: this.userName,
         msg: this.msg
       });
       //正常な時
