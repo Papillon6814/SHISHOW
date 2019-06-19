@@ -73,10 +73,9 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-var db = firebase.firestore();
+const db = firebase.firestore();
 const storage = firebase.storage();
 const storageRef = storage.ref();
-const icon_imagesRef = storageRef.child("icon_images")
 
 let files;
 
@@ -114,7 +113,6 @@ export default {
           username: username
         })
         .then(function(docRef) {
-          this.saveUserName(this.username);
           console.log('Document written with ID: ', docRef.id);
         })
         .catch(function(error) {
@@ -134,14 +132,9 @@ export default {
           this.uploadedImage = event.target.result;
         }
         reader.readAsDataURL(file);
-      },
-
-      saveUserName(username){
-        db
       }
     }
   }
-
 
 </script>
 
