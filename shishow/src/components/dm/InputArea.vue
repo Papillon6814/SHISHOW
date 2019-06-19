@@ -28,10 +28,9 @@ export default {
       if (!this.SignIn || !this.msg) return;
       //データベースに値をpush
       //事実上送信
-      db.collection("USER").add({
-        name: this.userName,
-        text: this.msg,
-        profileImgUrl: this.userImage
+      db.collection("CHAT").add({
+        id: this.userName,
+        msg: this.msg
       });
       //正常な時
       /*.then(ref => {
