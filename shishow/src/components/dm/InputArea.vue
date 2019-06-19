@@ -34,7 +34,7 @@ export default {
         profileImgUrl: this.userImage
       });
       //正常な時
-      /*.then(data => {
+      /*.then(ref => {
           this.errorMsg = "";
           this.msg = "";
         })
