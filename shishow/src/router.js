@@ -29,18 +29,21 @@ let router = new Router({
     {
       path: '/directMessage',
       name: 'directMessage',
-      component: DirectMessage
+      component: DirectMessage,
+      meta: { requiresAuth: true }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   if (requiresAuth) {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
+        console.log('user is signed in.')
         next()
       } else {
+        console.log('user is not signed in.')
         next({
           path: '/signin',
           query: {

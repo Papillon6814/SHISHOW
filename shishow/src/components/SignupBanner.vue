@@ -39,7 +39,7 @@
     </div>
 
     <div class="passwordConfirmPosition">
-      <input class="password" type="password" placeholder="CONFIRM PASSWORD" v-model="p_confirm">
+      <input class="passwordConfirm" type="password" placeholder="CONFIRM PASSWORD" v-model="p_confirm">
     </div>
 
     <div class="profilePosition">
@@ -325,11 +325,13 @@ export default {
       position: absolute;
 
       top: 100px;
-      left: 202px;
+      left: 202px !important;
       right: 0px;
     }
 
     .password{
+      position: absolute;
+
       width: $id_width;
       height: $id_height;
 
@@ -348,9 +350,17 @@ export default {
       right: 0px;
     }
 
+    .passwordConfirm {
+      position: absolute;
+
+      width: $id_width;
+      height: $id_height;
+
+    }
+
     .passwordConfirmPosition {
       position: absolute;
-      
+
       top: 220px;
       left: 202px;
     }

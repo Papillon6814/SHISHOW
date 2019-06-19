@@ -5,6 +5,10 @@ import store from './store'
 //import firebase from 'firebase'
 
 
+// routerは遷移管理
+// storeは状態管理
+
+
 Vue.config.productionTip = false
 
 import '@fortawesome/fontawesome-free-webfonts/css/fontawesome.css'
