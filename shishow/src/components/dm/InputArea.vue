@@ -5,7 +5,7 @@
     </div>
     <input v-model="msg" type="text" class="inputText">
     <div class="checkEmojiPlace">
-      <i class="fas fa-check"></i>
+      <i class="fas fa-check" @click="sendMsg"></i>
     </div>
   </div>
 </template>
@@ -24,14 +24,21 @@ export default {
   methods: {
     //メッセージを送る
     sendMsg() {
+      console.log("clicked");
       const db = firebase.firestore();
-      if (!this.SignIn || !this.msg) return;
+      //ログインしているかつメッセージがある(今はいらない)
+      //if (!this.SignIn || !this.msg) return;
       //データベースに値をpush
       //事実上送信
-      db.collection("CHAT").add({
-        username: this.userName,
-        msg: this.msg
-      });
+      db.collection("USER")
+        .doc("sample")
+        .collection("friends")
+        .doc("jDIKmCZkXpCmYfqaeuu5")
+        .collection("CHAT")
+        .add({
+          //username: this.userName,
+          msg: this.msg
+        });
       //正常な時
       /*.then(ref => {
           this.errorMsg = "";
