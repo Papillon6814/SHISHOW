@@ -68,6 +68,14 @@ $n_banner_height: 192.5px;
 $n_icon_width: 89.375px;
 $n_icon_height: $n_icon_width;
 
+$i: 1;
+@while $i <= 5{
+  .n#{$i}{
+    top: 200px + (200px * $i);
+  }
+  $i: $i + 1;
+}
+
 $n_achievement_width: 32.3125px;
 $n_achievement_height: 15.8125px;
 $n_root_twelve: 9.3278px;

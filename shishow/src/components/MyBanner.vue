@@ -36,12 +36,11 @@
     <div class="profilePosition">
       <div class="profile">
         新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、
-        それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
+        テニス、スキー、スノーボード、ゴルフ、それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
         最近では、予想外の趣味に没頭中！
       </div>
     </div>
-    <a href="#" class="btn-circle-3d"></a>
+    <a href="#" class="btn-circle-3d">匠</a>
     <span id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
@@ -262,15 +261,15 @@ export default {
 
     .btn-circle-3d {
       position: absolute;
-      top: 8px;
+      top: 15px;
       right: 15px;
       display: inline-block;
       text-decoration: none;
       background: #ff8181;
       color: #fff;
-      width: 120px;
-      height: 120px;
-      line-height: 120px;
+      width: 130px;
+      height: 80px;
+      line-height: 79px;
       border-radius: 50%;
       text-align: center;
       font-weight: bold;
