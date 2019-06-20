@@ -50,6 +50,7 @@ export default {
           snapshot.forEach(function(doc) {
             msgList = doc.text;
           });
+          this.msgList = msgList;
         });
     }
   }

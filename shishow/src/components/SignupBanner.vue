@@ -68,6 +68,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 var db = firebase.firestore();
+const storage = firebase.storage();
 
 export default {
   name: 'signupBanner',
@@ -76,13 +77,18 @@ export default {
       email: '',
       password: '',
       p_confirm: '',
-      uploadedImage: ''
+      uploadedImage: '',
+      uploadRef: '',
+      progressUpload: 0,
+      downloadURL: '',
+      uploadEnd: false
     }
   },
   methods: {
     signUp: function () {
+      // サインアップボタンが押された時の処理
       if(this.p_confirm != this.password) {
-        console.log('Password does not match!');
+        alert('Password does not match!');
       } else {
         this.addToDatabase(this.email);
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
@@ -100,6 +106,7 @@ export default {
         username: 'temp'
       })
       .then(function(docRef) {
+        this.saveFile(this.uploadedImage, docRef);
         console.log('Document written with ID: ', docRef.id);
       })
       .catch(function(error) {
@@ -117,9 +124,30 @@ export default {
         this.uploadedImage = event.target.result;
       }
       reader.readAsDataURL(file);
+    },
+    // 画像保存の関数
+    saveFile(file, docRef){
+      this.uploadRef = storage.ref('icon_images/'+docRef.id+file.name).put(file);
+      }
+    },
+    watch: {
+      uploadRef: function() {
+        this.uploadRef.on('state_changed', sp => {
+          this.progressUpload = Math.floor(sp.bytesTransferred / sp.totalBytes*100)
+        },
+        null,
+        () => {
+          this.uploadRef.snapshot.ref.getDownloadURL()
+          .then(downloadURL => {
+            this.uploadEnd = true
+            this.downloadURL = downloadURL
+            this.$emit('downloadURL', downloadURL)
+          })
+        })
+      }
     }
   }
-}
+
 
 </script>
 
