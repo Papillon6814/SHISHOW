@@ -144,11 +144,11 @@ export default {
     width: $banner_width;
     height: $banner_height;
 
-    background-color: $banner_color;
+    background-color: $su_banner_color;
 
     border: solid;
     border-width: 5px;
-    border-color: $banner_flame;
+    border-color: $su_banner_flame;
     z-index: 2;
 
     //children
@@ -163,7 +163,7 @@ export default {
       border-radius: 50%;
       border: solid;
       border-width: 2px;
-      border-color: $header_color;
+      border-color: $su_window_flame;
 
       cursor: pointer;
 
@@ -318,7 +318,7 @@ export default {
 
       border: solid;
       border-width: 3px;
-      border-color: $banner_flame;
+      border-color: $su_banner_flame;
     }
 
     .emailPosition{
@@ -337,7 +337,7 @@ export default {
 
       border: solid;
       border-width: 3px;
-      border-color: $banner_flame;
+      border-color: $su_banner_flame;
     }
 
     .passwordPosition{

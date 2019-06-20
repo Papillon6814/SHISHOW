@@ -4,10 +4,21 @@
       <div id="myBannerPosition">
         <myBanner></myBanner>
       </div>
-      <!--
       <div class="normalBannerPosition">
-        <normalBanner></normalBanner>
+        <div v-for="N in 10" :key="N" v-bind:class="'n'+N">
+          <normalBanner></normalBanner>
+        </div>
+        <!-- <li class="n2">
+          <normalBanner></normalBanner>
+        </li>
+        <li class="n3">
+          <normalBanner></normalBanner>
+        </li>
+        <li class="n4">
+          <normalBanner></normalBanner>
+        </li> -->
       </div>
+      <!--
       <div class="gameBannerPosition">
         <gameBanner></gameBanner>
       </div> -->
@@ -18,7 +29,7 @@
 // @ is an alias to /src
 import navi from '../components/NavigationBar.vue'
 import myBanner from '../components/MyBanner.vue'
-//import normalBanner from '../components/NormalBanner.vue'
+import normalBanner from '../components/NormalBanner.vue'
 //import gameBanner from '../components/GameBanner.vue'
 
 export default {
@@ -26,10 +37,11 @@ export default {
   components: {
     navi,
     myBanner,
-    //normalBanner,
+    normalBanner,
     //gameBanner
   }
 }
+
 </script>
 
 <style lang="scss">
@@ -46,20 +58,25 @@ export default {
   #myBannerPosition {
     position: relative;
     //temporary top
-    top: 45px;
+    top: 60px;
     left: 10%;
   }
 
   /*.wrap{
-    width:100%;
     overflow: visible;
   }*/
 
   .normalBannerPosition {
-    position: relative;
-
-    top: 400px;
-    left: 10%;
+    $i: 1;
+    @while $i <= 30{
+      .n#{$i}{
+        position: relative;
+        top: 200px + (200px * $i);
+        left: 10%;
+      }
+      $i: $i + 1;
+    }
+    list-style: none;
   }
 
   .gameBannerPosition {
