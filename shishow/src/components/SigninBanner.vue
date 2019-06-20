@@ -32,20 +32,23 @@
     <div class="profilePosition">
     </div>
 
-    <button @click="doLogin">Sign in</button>
+    <button @click="login">Sign in</button>
 
 
   </div>
 </template>
 
 <script>
-import firebase from '../plugin/firestore'
+import firebase from 'firebase'
+import 'firebase/firestore'
+import '@firebase/auth'
 import store from '../store'
+import router from '../router'
 
 export default {
   name: 'Signin',
-  created: function (){
-    firebase.onAuth();
+  created: function() {
+    this.onAuth();
   },
   data: function () {
     return {
@@ -59,12 +62,27 @@ export default {
       return this.$store.getters.user;
     },
     userStatus() {
+      // ログインするとtrue
       return this.$store.getters.isSignedIn;
     }
   },
   methods: {
-    doLogin() {
-      firebase.login();
+    login: function() {
+      firebase.auth().signInWithEmailAndPassword(this.e_mail, this.password)
+      .then(function() {
+        alert('Signed in.');
+        router.push('/')
+      })
+      .catch(function(e) {
+        console.log(e)
+      })
+    },
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user: {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false);
+      })
     }
   }
 }

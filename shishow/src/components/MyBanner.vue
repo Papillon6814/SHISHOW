@@ -42,6 +42,8 @@
 
 <script>
 import firebase from 'firebase'
+import '@firebase/auth'
+import router from '../router'
 
 export default {
   name: 'myBanner',
@@ -57,14 +59,13 @@ export default {
       this.isB = !this.isB
     },
     logout: function() {
-      firebase.auth().onAuthStateChanged( (user) => {
-        firebase.auth().signOut()
-        .then(() => {
-          console.log('User signed out.');
-        })
-        .catch( (error) => {
-          console.log('User failed to sign out. (${error})');
-        })
+      firebase.auth().signOut()
+      .then(function() {
+        alert('Signed out.');
+        router.push('/');
+      })
+      .catch(function(e) {
+        console.log(e)
       })
     }
   }

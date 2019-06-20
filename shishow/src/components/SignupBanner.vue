@@ -353,7 +353,7 @@ export default {
     .passwordConfirm {
       position: absolute;
 
-      width: $id_width;
+      width: 300px;
       height: $id_height;
 
     }
