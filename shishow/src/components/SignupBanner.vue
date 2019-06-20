@@ -1,20 +1,22 @@
 <template>
   <div class="banner">
-
-    <span class="iconCirclePosition">
-      <div class="iconCircle">
-        <div class="iconDashedCircle">
-          <div class="plusPosition">
-            <i class="fas fa-plus"></i>
-          </div>
-          <div class="picPosition">
-            <img id="image" v-show="uploadedImage" :src="uploadedImage" />
+    <div id="trimmingButton">
+      <span class="iconCirclePosition">
+        <div class="iconCircle">
+          <div class="iconDashedCircle">
+            <div class="plusPosition">
+              <i class="fas fa-plus"></i>
+            </div>
+            <div class="picPosition">
+              <img id="image" v-show="uploadedImage" :src="uploadedImage" />
+            </div>
+            <div id="result"></div>
           </div>
           <div id="result" ></div>
           <input class="iconFile" type="file" @change="onFileChange">
         </div>
-      </div>
-    </span>
+      </span>
+    </div>
 
     <div class="achievementPosition1">
       <div class="achievement"></div>
@@ -41,9 +43,10 @@
 
     <button @click="signUp">Sign up</button>
 
-
+    <!--
     <button @click="crop">Crop</button>
-    <button id="button" type="button" >execute</button>
+    <button id="button" type="button">Confirm</button>
+    -->
 
     <!--
     <span id="pullDownProperties">
@@ -66,7 +69,7 @@ export default {
     return  {
       e_mail: '',
       password: '',
-      uploadedImage: ''
+      uploadedImage: '',
     }
   },
   methods: {
@@ -74,12 +77,12 @@ export default {
     signUp: function () {
       firebase.auth().createUserWithEmailAndPassword(this.e_mail, this.password)
       .then(user => {
-        
+
         //登録したファイアベースからのユーザ情報を格納
         var User = firebase.auth().currentUser;
         //ユーザのメールアドレスのための変数定義
         var email;
-        
+
         //変数に情報を格納
         email = User.email;
 
@@ -169,9 +172,11 @@ export default {
   }
 }
 
+
 </script>
 
 <style lang="scss">
+
   .banner {
     position: absolute;
 
