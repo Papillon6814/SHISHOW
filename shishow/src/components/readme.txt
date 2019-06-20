@@ -1,0 +1,1 @@
+viewsの中にあるvueファイルのパーツを格納するディレクトリcomponents
