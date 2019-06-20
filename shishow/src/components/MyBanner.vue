@@ -33,7 +33,7 @@
         最近では、予想外の趣味に没頭中！
       </div>
     </div>
-    <a href="#" class="btn-circle-3d">江崎スイッチ</a>
+    <div @click="logout" class="btn-circle-3d">ログアウト</div>
     <span @click="doExtend" id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
@@ -41,19 +41,32 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+import '@firebase/auth'
+import router from '../router'
 
 export default {
   name: 'myBanner',
-  data:function(){
+  data: function() {
     return{
-      isA:true,
-      isB:false
+      isA: true,
+      isB: false
     }
   },
-  methods:{
-    doExtend:function(){
+  methods: {
+    doExtend: function() {
       this.isA = !this.isA,
       this.isB = !this.isB
+    },
+    logout: function() {
+      firebase.auth().signOut()
+      .then(function() {
+        alert('Signed out.');
+        router.push('/');
+      })
+      .catch(function(e) {
+        console.log(e)
+      })
     }
   }
 }
@@ -267,6 +280,8 @@ export default {
       box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
       border-bottom: solid 3px #bd6565;
       transition: .4s;
+
+      cursor: pointer;
     }
 
     .btn-circle-3d:active {
