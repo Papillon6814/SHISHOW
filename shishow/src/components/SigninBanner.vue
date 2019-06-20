@@ -32,7 +32,7 @@
     <div class="profilePosition">
     </div>
 
-    <button @click="signIn">Sign in</button>
+    <button @click="login">Sign in</button>
 
 
   </div>
@@ -40,26 +40,49 @@
 
 <script>
 import firebase from 'firebase'
+import 'firebase/firestore'
+import '@firebase/auth'
+import store from '../store'
+import router from '../router'
 
 export default {
   name: 'Signin',
+  created: function() {
+    this.onAuth();
+  },
   data: function () {
     return {
       username: '',
-      password: ''
+      password: '',
+      e_mail: ''
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+    userStatus() {
+      // ログインするとtrue
+      return this.$store.getters.isSignedIn;
     }
   },
   methods: {
-    signIn: function () {
-      firebase.auth().signInWithEmailAndPassword(this.e_mail, this.password).then(
-        user => {
-          alert('Success! Hello, '+user.e_mail)
-          this.$router.push('/')
-        },
-        err => {
-          alert(err.message)
-        }
-      )
+    login: function() {
+      firebase.auth().signInWithEmailAndPassword(this.e_mail, this.password)
+      .then(function() {
+        alert('Signed in.');
+        router.push('/')
+      })
+      .catch(function(e) {
+        console.log(e)
+      })
+    },
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user: {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false);
+      })
     }
   }
 }
