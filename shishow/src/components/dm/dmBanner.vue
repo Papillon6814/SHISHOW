@@ -2,10 +2,30 @@
   <div id="dmBanner">
     <div class="dmBannerIcon">
     </div>
+    <div class="dmBannerName"></div>
   </div>
 </template>
 
 <script>
+import firebase from 'firebase'
+import 'firebase/firestore'
+
+var db = firebase.firestore();
+const storage = firebase.storage();
+const storageRef = storage.ref();
+
+
+
+export default {
+  name: 'dmBanner',
+  data() {
+    return {
+      username: '',
+      msg: ''
+    }
+  }
+}
+
 </script>
 
 <style lang="scss">
@@ -38,6 +58,21 @@
       border: solid;
       border-width: 1px;
       border-color: $window_flame;
+    }
+
+    .dmBannerName {
+      position: absolute;
+
+      top: 15px;
+      left: 130px;
+
+      width: 60%;
+      height: 35px;
+
+      // temporary color
+      background-color: #fff;
+
+      font-size: 35px;
     }
   }
 
