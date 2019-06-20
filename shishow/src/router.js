@@ -5,7 +5,7 @@ import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
 import firebase from 'firebase'
 import DirectMessage from './views/DirectMessage.vue'
-
+import Sample from './views/Sample.vue'
 
 Vue.use(Router)
 
@@ -31,7 +31,13 @@ let router = new Router({
       path: '/directMessage',
       name: 'directMessage',
       component: DirectMessage
-    }
+    },
+    {
+      path: '/sample',
+      name: 'sample',
+      component: Sample
+    },
+    
   ]
 })
 
