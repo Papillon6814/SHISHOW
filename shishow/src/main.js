@@ -2,12 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-//import firebase from 'firebase'
-
-
 // routerは遷移管理
 // storeは状態管理
-
 
 Vue.config.productionTip = false
 

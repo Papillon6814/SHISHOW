@@ -32,35 +32,39 @@
     <div class="profilePosition">
     </div>
 
-    <button @click="signIn">Sign in</button>
+    <button @click="doLogin">Sign in</button>
 
 
   </div>
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from '../plugin/firestore'
+import store from '../store'
 
 export default {
   name: 'Signin',
+  created: function (){
+    firebase.onAuth();
+  },
   data: function () {
     return {
       username: '',
-      password: ''
+      password: '',
+      e_mail: ''
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+    userStatus() {
+      return this.$store.getters.isSignedIn;
     }
   },
   methods: {
-    signIn: function () {
-      firebase.auth().signInWithEmailAndPassword(this.e_mail, this.password).then(
-        () => {
-          console.log('User signed in.');
-          alert('Success!')
-          this.$router.push('/')
-        },
-        err => {
-          alert(err.message)
-        }
-      )
+    doLogin() {
+      firebase.login();
     }
   }
 }
