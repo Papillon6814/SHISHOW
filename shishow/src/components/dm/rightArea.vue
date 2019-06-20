@@ -30,7 +30,11 @@ export default {
     loadMsg() {
       const db = firebase.firestore();
       //データベースから値を持ってきてsnapshotに代入
-      db.collection("CHAT")
+      db.collection("USER")
+        .doc("sample")
+        .collection("friends")
+        .doc("jDIKmCZkXpCmYfqaeuu5")
+        .collection("CHAT")
         .get()
         .then(snapshot => {
           //snapshotの値はsnapshot.val()で取得できる
