@@ -24,23 +24,25 @@ export default {
   methods: {
     //メッセージを送る
     sendMsg() {
-      console.log("clicked");
+      //console.log("clicked");
       const db = firebase.firestore();
-      //ログインしているかつメッセージがある(今はいらない)
-      //if (!this.SignIn || !this.msg) return;
+      //ログインしているかの確認(今はいらない)
+      //if (!this.SignIn) return;
       //データベースに値をpush
-      //事実上送信
-      db.collection("USER")
-        .doc("sample")
-        .collection("friends")
-        .doc("jDIKmCZkXpCmYfqaeuu5")
-        .collection("CHAT")
-        .add({
-          //username: this.userName,
-          msg: this.msg
-        });
-      //正常な時
-      /*.then(ref => {
+      //文字が入力されているときにのみ送信
+      let msg = this.msg;
+      if (msg) {
+        db.collection("USER")
+          .doc("sample")
+          .collection("friends")
+          .doc("jDIKmCZkXpCmYfqaeuu5")
+          .collection("CHAT")
+          .add({
+            //username: this.userName,
+            msg: this.msg
+          });
+        //正常な時
+        /*.then(ref => {
           this.errorMsg = "";
           this.msg = "";
         })
@@ -48,9 +50,10 @@ export default {
         .catch(error => {
           this.errorMsg = "殺す";
         });*/
-      //送信後中身を空にする
-      this.msg = "";
-      this.text = "";
+        //送信後中身を空にする
+        this.msg = "";
+        this.text = "";
+      }
     }
   }
 };

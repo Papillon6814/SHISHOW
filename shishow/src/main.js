@@ -1,14 +1,13 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-//import firebase from 'firebase'
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+//import firebase from "firebase";
 
+Vue.config.productionTip = false;
 
-Vue.config.productionTip = false
-
-import '@fortawesome/fontawesome-free-webfonts/css/fontawesome.css'
-import '@fortawesome/fontawesome-free-webfonts/css/fa-solid.css'
+import "@fortawesome/fontawesome-free-webfonts/css/fontawesome.css";
+import "@fortawesome/fontawesome-free-webfonts/css/fa-solid.css";
 
 /*
 // Your web app's Firebase configuration
@@ -44,4 +43,4 @@ new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount("#app");
