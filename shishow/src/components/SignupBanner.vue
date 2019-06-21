@@ -12,7 +12,6 @@
         <input class="iconFile" type="file" @change="onFileChange">
       </div>
     </span>
-    <button id="test" type="button" @click="save">{{dirname}}</button> 
     <div class="achievementPosition1">
       <div class="achievement"></div>
     </div>
@@ -79,18 +78,19 @@ export default {
       password: '',
       p_confirm: '',
       uploadedImage: '',
-      dirname:__dirname,
     }
   },
   methods: {
     signUp: function () {
       if(this.p_confirm != this.password) {
         console.log('Password does not match!');
-      } else {
-        this.addToDatabase(this.email);
+      } else if(this.errorIndication());
+      else {
+        
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
           alert('Create account: ', user.e_mail)
+          this.addToDatabase(this.email);
         })
         .catch(error => {
           alert(error.message)
@@ -100,7 +100,8 @@ export default {
     addToDatabase(email) {
       db.collection("USER").add({
         email: email,
-        username: 'temp'
+        username: 'temp',
+        image:this.uploadedImage,
       })
       .then(function(docRef) {
         console.log('Document written with ID: ', docRef.id);
@@ -111,7 +112,11 @@ export default {
     },
     onFileChange(event) {
       let files = event.target.files || event.dataTransfer.files;
+      if(files[0].type.match(/image/)){
       this.showImage(files[0]);
+      }else{
+        console.log("This is not image")
+      }
     },
     // 画像表示の関数
     showImage(file) {
@@ -122,9 +127,13 @@ export default {
       reader.readAsDataURL(file);
     },
 
-    save(){
-      
-
+    errorIndication(){
+      if(!this.email && !this.uploadedImage){
+        if(!this.email) console.log("there is not email");
+        if(!this.uploadedImage) console.log("there is not image");
+        return true;
+      }
+      return false;
     }
   }
 }
