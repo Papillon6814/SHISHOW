@@ -107,7 +107,7 @@ export default {
       }
     },
     addToDatabase(email,image) {
-      let url = db.collection("USER").doc(""+email).collection("friend").doc();
+      let url = db.collection("USER").doc(""+email).collection("friends").doc();
       url.collection("CHAT").add({
         msg:"",
         date:"",
