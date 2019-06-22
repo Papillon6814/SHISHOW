@@ -1,6 +1,5 @@
 <template>
   <div class="signupBanner">
-
     <span class="iconCirclePosition">
       <div class="iconCircle">
         <div class="iconDashedCircle">

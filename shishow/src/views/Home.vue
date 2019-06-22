@@ -5,7 +5,7 @@
         <myBanner v-if="userStatus"></myBanner>
 
       </div>
-      
+
       <div class="normalBannerPosition">
         <div v-for="N in 10" :key="N" v-bind:class="'n'+N">
           <normalBanner></normalBanner>
@@ -47,7 +47,7 @@ export default {
   components: {
     navi,
     myBanner,
-    normalBanner,
+    normalBanner
     //gameBanner
   },
   computed: {

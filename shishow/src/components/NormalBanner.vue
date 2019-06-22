@@ -31,7 +31,7 @@
         テニス、スキー、スノーボード、ゴルフ、
       </div>
     </div>
-    <button>Panic button</button>
+  　<div @click="logout" class="btn-circle-3d">江崎にフレ申請</div>
     <span id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
@@ -169,7 +169,7 @@ export default {
       position: absolute;
 
       top: 30px;
-      left: 202px;
+      left: 172px;
       right: 0px;
     }
 
@@ -188,7 +188,7 @@ export default {
       position: absolute;
 
       top: 80px;
-      left: 202px;
+      left: 172px;
       right: 0px;
     }
 
@@ -207,8 +207,37 @@ export default {
       position: absolute;
 
       top: 120px;
-      left: 202px;
+      left: 172px;
       right: 25px;
+    }
+
+    .btn-circle-3d {
+      position: relative;
+      top: 32px;
+      left:39%;
+      display: inline-block;
+      text-decoration: none;
+      background: #ff8181;
+      color: #fff;
+      width: 100px;
+      height: 60px;
+      line-height: 63px;
+      border-radius: 50%;
+      text-align: center;
+      font-weight: bold;
+      overflow: hidden;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+      border-bottom: solid 3px #bd6565;
+      transition: .4s;
+
+      cursor: pointer;
+    }
+
+    .btn-circle-3d:active {
+      -webkit-transform: translateY(2px);
+      transform: translateY(2px);
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+      border-bottom: none;
     }
 
     /*.editBioButton{
