@@ -5,6 +5,7 @@
         <myBanner v-if="userStatus"></myBanner>
 
       </div>
+      
       <div class="normalBannerPosition">
         <div v-for="N in 10" :key="N" v-bind:class="'n'+N">
           <normalBanner></normalBanner>
@@ -74,7 +75,7 @@ export default {
 
   html{
     overflow-y:scroll;
-    overflow-x:hidden;
+    /*overflow-x:hidden;*/
   }
 
   body {
@@ -88,23 +89,24 @@ export default {
   #myBannerPosition {
     //position: relative;
     //temporary top
-    padding-top:40px;
-    margin-left:10%;
-    margin-right:10%;
+    padding-top: 70px;
+    margin-left: 10%;
+    margin-right: 10%;
     width:100%;
     position:absolute;
     /*top: 45px;
     left: 10%;*/
   }
 
-
   .normalBannerPosition {
     $i: 1;
     @while $i <= 30{
       .n#{$i}{
-        position: relative;
-        top: 200px + (200px * $i);
-        left: 10%;
+        /*position: relative;*/
+        position: absolute;
+        padding-top: -150px + (200px * $i);
+        margin-left: 10%;
+        width:100%;
       }
       $i: $i + 1;
     }
@@ -112,7 +114,7 @@ export default {
   }
 
   .gameBannerPosition {
-    position: relative;
+    position: absolute;
     //temporary top
     top: 45px;
     left: 10%;
