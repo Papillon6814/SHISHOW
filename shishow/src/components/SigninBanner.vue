@@ -47,9 +47,11 @@ import router from '../router'
 
 export default {
   name: 'Signin',
+
   created: function() {
     this.onAuth();
   },
+
   data: function () {
     return {
       username: '',
@@ -57,6 +59,7 @@ export default {
       e_mail: ''
     }
   },
+
   computed: {
     user() {
       return this.$store.getters.user;
@@ -66,6 +69,7 @@ export default {
       return this.$store.getters.isSignedIn;
     }
   },
+  
   methods: {
     login: function() {
       firebase.auth().signInWithEmailAndPassword(this.e_mail, this.password)

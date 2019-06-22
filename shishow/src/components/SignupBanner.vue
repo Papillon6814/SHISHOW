@@ -73,9 +73,6 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
-const storage = firebase.storage();
-const storageRef = storage.ref();
-
 let files;
 
 export default {
@@ -107,7 +104,7 @@ export default {
       },
 
       addToDatabase(email, username) {
-        db.collection("USER").add({
+        db.collection("USER").doc(email).set({
           email: email,
           username: username
         })

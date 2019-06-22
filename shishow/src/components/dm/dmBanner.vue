@@ -9,21 +9,43 @@
 <script>
 import firebase from 'firebase'
 import 'firebase/firestore'
+import '@firebase/auth'
+import store from '../../store'
 
-var db = firebase.firestore();
-const storage = firebase.storage();
-const storageRef = storage.ref();
+let db = firebase.firestore();
 
-
+let currentUser;
+let friends;
 
 export default {
   name: 'dmBanner',
+
   data() {
     return {
       username: '',
       msg: ''
     }
-  }
+  },
+
+  created() {
+    this.loadFriends();
+  },
+
+  methods: {
+    loadFriends: function() {
+
+      /* firebase初期設定部分 */
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false);
+      })
+      /* --- */
+
+      /* フレンド読み込み */
+      currentUser = firebase.auth().currentUser;
+    }
+  },
 }
 
 </script>
