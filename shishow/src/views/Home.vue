@@ -2,7 +2,8 @@
     <div id="root">
       <navi></navi>
       <div id="myBannerPosition">
-        <myBanner></myBanner>
+        <myBanner v-if="userStatus"></myBanner>
+
       </div>
       <div class="normalBannerPosition">
         <div v-for="N in 10" :key="N" v-bind:class="'n'+N">
@@ -32,13 +33,38 @@ import myBanner from '../components/MyBanner.vue'
 import normalBanner from '../components/NormalBanner.vue'
 //import gameBanner from '../components/GameBanner.vue'
 
+import firebase from 'firebase'
+import 'firebase/firestore'
+import '@firebase/auth'
+import store from '../store'
+
 export default {
   name: 'home',
+  created: function() {
+    this.onAuth();
+  },
   components: {
     navi,
     myBanner,
     normalBanner,
     //gameBanner
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+    userStatus() {
+      return this.$store.getters.isSignedIn;
+    }
+  },
+  methods: {
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false)
+      })
+    }
   }
 }
 
