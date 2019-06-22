@@ -72,25 +72,31 @@ export default {
 
 <style lang="scss">
 
+  html{
+    overflow-y:scroll;
+    overflow-x:hidden;
+  }
+
   body {
     padding: 0;
     margin: 0;
     width: 100%;
-    overflow: hidden;
 
     background-color: $dark_color;
   }
 
   #myBannerPosition {
-    position: relative;
+    //position: relative;
     //temporary top
-    top: 60px;
-    left: 10%;
+    padding-top:40px;
+    margin-left:10%;
+    margin-right:10%;
+    width:100%;
+    position:absolute;
+    /*top: 45px;
+    left: 10%;*/
   }
 
-  /*.wrap{
-    overflow: visible;
-  }*/
 
   .normalBannerPosition {
     $i: 1;
