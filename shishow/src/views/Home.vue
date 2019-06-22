@@ -74,7 +74,7 @@ export default {
 
   html{
     overflow-y:scroll;
-    overflow-x:hidden;
+    //overflow-x:hidden;
   }
 
   body {
@@ -103,8 +103,8 @@ export default {
     @while $i <= 30{
       .n#{$i}{
         position: absolute;
-        top: 200px + (200px * $i);
-        left: 10%;
+        padding-top: 200px + (200px * $i);
+        margin-left: 10%;
       }
       $i: $i + 1;
     }

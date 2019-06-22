@@ -19,39 +19,33 @@ let router = new Router({
       name: 'home',
       component: Home
     },
-
     {
       path: '/signup',
       name: 'signup',
       component: Signup
     },
-
     {
       path: '/signin',
       name: 'signin',
       component: Signin
     },
-
     {
       path: '/notification',
       name: 'notification',
       component: Notification
     },
-
     {
       path: '/directMessage',
       name: 'directMessage',
-      component: DirectMessage
+      component: DirectMessage,
+      meta: { requiresAuth: true }
     },
     {
       path: '/SearchResult',
       name: 'SearchResult',
       component: SearchResult
-    },
-      component: DirectMessage,
-      meta: { requiresAuth: true }
     }
-	}]
+	]
 })
 
 router.beforeEach((to, from, next) => {
