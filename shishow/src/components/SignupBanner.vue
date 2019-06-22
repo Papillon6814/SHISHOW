@@ -82,26 +82,34 @@ export default {
   },
   methods: {
     signUp: function () {
+
+      let url;
+
+      if(!this.uploadedImage){
+          db.collection("Image").doc("SampleImage").get().then(doc =>{
+            url = doc.data()["image"];
+          });
+        }
       if(this.p_confirm != this.password) {
         console.log('Password does not match!');
       } else if(this.errorIndication());
       else {
-        
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
           alert('Create account: ', user.e_mail)
-          this.addToDatabase(this.email);
+          if(!this.uploadedImage) this.uploadedImage = url;
+          this.addToDatabase(this.email,this.uploadedImage);
         })
         .catch(error => {
           alert(error.message)
         })
       }
     },
-    addToDatabase(email) {
+    addToDatabase(email,image) {
       db.collection("USER").add({
         email: email,
         username: 'temp',
-        image:this.uploadedImage,
+        image: image,
       })
       .then(function(docRef) {
         console.log('Document written with ID: ', docRef.id);
@@ -115,7 +123,7 @@ export default {
       if(files[0].type.match(/image/)){
       this.showImage(files[0]);
       }else{
-        console.log("This is not image")
+        console.log("This is not image");
       }
     },
     // 画像表示の関数
@@ -128,9 +136,8 @@ export default {
     },
 
     errorIndication(){
-      if(!this.email && !this.uploadedImage){
+      if(!this.email){
         if(!this.email) console.log("there is not email");
-        if(!this.uploadedImage) console.log("there is not image");
         return true;
       }
       return false;

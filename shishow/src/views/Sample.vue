@@ -28,6 +28,9 @@
    
 
     var db = firebase.firestore();
+   ;
+
+    
 
     export default{
         data(){
@@ -51,7 +54,7 @@
             upload(file){
                 let reader = new FileReader();
                 reader.onload = (event) => {
-                    this.photo.set({image:event.target.result,name:"mikan"});
+                    db.collection("Image").doc("SampleImage").set({image:event.target.result});
                 }
                 reader.readAsDataURL(file);
                 this.name = file.name;
@@ -59,16 +62,23 @@
             },
 
             click(){
+                
+                db.collection("USER").doc("SampleImage").get().then(doc =>{
+                    this.url = doc.data()["image"];
+                })
+                /*
+                
                 if(this.task)console.log
                 this.photo.get().then(doc =>{
                     console.log(doc.data()["name"]);
-                });
+                });*/
                 db.collection("USER").where("email","==",this.text).get().then(querySnapshot => {
-                    this.url = querySnapshot.docs[0].data()["image"];
+                    //this.url = querySnapshot.docs[0].data()["image"];
 
-                    /*querySnapshot.forEach(doc =>{
+                    querySnapshot.forEach(doc =>{
                         this.url = doc.data()["image"]
-                    }*/
+                        //console.log(doc.data()["email"]+"=>"+doc.data()["image"]);
+                    })
                 
                 });
                 
@@ -76,7 +86,7 @@
 
             delete(){
                 db.collection("users").where("name","==","mikan").get().then(querySnapshot => {
-                    db.collection("users").doc(querySnapshot.docs[0].id).delete();
+                    //db.collection("users").doc(querySnapshot.docs[0].id).delete();
 
                     /*querySnapshot.forEach(doc =>{
                         db.collection("users").doc(doc.id).delete();
