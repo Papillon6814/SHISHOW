@@ -1,5 +1,5 @@
 <template>
-  <div class="banner">
+  <div class="banner" v-bind:class="{ 'banner': isA, 'extend': isB }">
     <span class="iconPicPosition">
       <div class="iconPic"></div>
     </span>
@@ -41,7 +41,8 @@
       </div>
     </div>
     <a href="#" class="btn-circle-3d">江崎スイッチ</a>
-    <span id="pullDownProperties">
+    <span @click="doExtend" id="pullDownProperties">
+
      <i class="fas fa-caret-down"></i>
     </span>
   </div>
@@ -50,7 +51,19 @@
 <script>
 
 export default {
-  name: 'myBanner'
+  name: 'myBanner',
+  data:function(){
+    return{
+      isA:true,
+      isB:false
+    }
+  },
+  methods:{
+    doExtend:function(){
+      this.isA = !this.isA,
+      this.isB = !this.isB
+    }
+  }
 }
 
 </script>
@@ -73,8 +86,27 @@ export default {
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 
     //children
+  }
 
-    .iconPic {
+
+
+  .extend{
+    position: absolute;
+
+    width: $banner_width;
+    //temporary height
+    height: $banner_height*2;
+
+    background-color: $banner_color;
+
+    border: solid;
+    border-width: 5px;
+    border-color: $banner_flame;
+    z-index: 2;
+
+  }
+
+      .iconPic {
       width: $icon_width;
       height: $icon_height;
 
@@ -160,7 +192,7 @@ export default {
     #pullDownProperties {
       position: absolute;
 
-      top: 225px;
+      bottom: -5px;
       left: 15px;
 
       font-size: 58px;
@@ -286,9 +318,5 @@ export default {
       border-bottom: none;
     }
 
-    /*.editBioButton{
-
-    }*/
-  }
 
 </style>

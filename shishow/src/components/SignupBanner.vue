@@ -12,6 +12,7 @@
       </div>
     </span>
 
+    <!-- achievements -->
     <div class="achievementPosition1">
       <div class="achievement"></div>
     </div>
@@ -23,7 +24,11 @@
     <div class="achievementPosition3">
       <div class="achievement"></div>
     </div>
+    <!-- ... -->
 
+    <div class="usernamePosition">
+      <input class="username" type="text" placeholder="Display name" v-model="username">
+    </div>
     <div class="emailPosition">
       <input class="email" type="text" placeholder="E-mail" v-model="email">
     </div>
@@ -66,12 +71,17 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-var db = firebase.firestore();
+const db = firebase.firestore();
+const storage = firebase.storage();
+const storageRef = storage.ref();
+
+let files;
 
 export default {
   name: 'signupBanner',
   data () {
     return  {
+      username: '',
       email: '',
       password: '',
       p_confirm: '',
@@ -79,46 +89,50 @@ export default {
     }
   },
   methods: {
-    signUp: function () {
-      if(this.p_confirm != this.password) {
-        console.log('Password does not match!');
-      } else {
-        this.addToDatabase(this.email);
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-        .then(user => {
-          alert('Create account: ', user.e_mail)
+      signUp: function () {
+        // サインアップボタンが押された時の処理
+        if(this.p_confirm != this.password) {
+          alert('Password does not match!');
+        } else {
+          this.addToDatabase(this.email, this.username);
+          firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+          .then(user => {
+            alert('Create account: ', user.e_mail)
+          })
+          .catch(error => {
+            alert(error.message)
+          })
+        }
+      },
+
+      addToDatabase(email, username) {
+        db.collection("USER").add({
+          email: email,
+          username: username
         })
-        .catch(error => {
-          alert(error.message)
+        .then(function(docRef) {
+          console.log('Document written with ID: ', docRef.id);
         })
+        .catch(function(error) {
+          console.log("Error adding document: ", error);
+        })
+      },
+
+      onFileChange(event) {
+        files = event.target.files || event.dataTransfer.files;
+        this.showImage(files[0]);
+      },
+
+      // 画像表示の関数
+      showImage(file) {
+        let reader = new FileReader();
+        reader.onload = (event) => {
+          this.uploadedImage = event.target.result;
+        }
+        reader.readAsDataURL(file);
       }
-    },
-    addToDatabase(email) {
-      db.collection("USER").add({
-        email: email,
-        username: 'temp'
-      })
-      .then(function(docRef) {
-        console.log('Document written with ID: ', docRef.id);
-      })
-      .catch(function(error) {
-        console.log("Error adding document: ", error);
-      })
-    },
-    onFileChange(event) {
-      let files = event.target.files || event.dataTransfer.files;
-      this.showImage(files[0]);
-    },
-    // 画像表示の関数
-    showImage(file) {
-      let reader = new FileReader();
-      reader.onload = (event) => {
-        this.uploadedImage = event.target.result;
-      }
-      reader.readAsDataURL(file);
     }
   }
-}
 
 </script>
 
@@ -275,6 +289,26 @@ export default {
       color: $pulldown_color;
     }
 
+    .username {
+      width: $user_width;
+      height: $user_height;
+
+      // temporary color
+      background-color: #fff;
+
+      border: solid;
+      border-width: 3px;
+      border-color: $banner_flame;
+    }
+
+    .usernamePosition {
+      position: absolute;
+
+      top: 30px;
+      left: 20px;
+      right: 0px;
+    }
+
     .email{
       width: $user_width;
       height: $user_height;
@@ -289,7 +323,7 @@ export default {
     .emailPosition{
       position: absolute;
 
-      top: 30px;
+      top: 100px;
       left: 202px;
       right: 0px;
     }
@@ -308,15 +342,15 @@ export default {
     .passwordPosition{
       position: absolute;
 
-      top: 100px;
+      top: 170px;
       left: 202px;
       right: 0px;
     }
 
     .passwordConfirmPosition {
       position: absolute;
-
-      top: 150px;
+      
+      top: 220px;
       left: 202px;
     }
 
