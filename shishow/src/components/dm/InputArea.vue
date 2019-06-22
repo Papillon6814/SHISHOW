@@ -5,41 +5,52 @@
     </div>
     <input v-model="msg" type="text" class="inputText">
     <div class="checkEmojiPlace">
-      <i class="fas fa-check"></i>
+      <i class="fas fa-check" @click="sendMsg"></i>
     </div>
   </div>
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   name: "inputArea",
   props: ["SignIn", "userName", "userImage"],
   data() {
     return {
-      msg: null
+      msg: ""
     };
   },
   methods: {
     //メッセージを送る
     sendMsg() {
+      console.log("clicked");
       const db = firebase.firestore();
-      if (!this.SignIn || !this.msg) return;
+      //ログインしているかつメッセージがある(今はいらない)
+      //if (!this.SignIn || !this.msg) return;
       //データベースに値をpush
+      //事実上送信
       db.collection("USER")
+        .doc("sample")
+        .collection("friends")
+        .doc("jDIKmCZkXpCmYfqaeuu5")
+        .collection("CHAT")
         .add({
-          name: this.userName,
-          text: this.msg,
-          profileImgUrl: this.userImage
-        })
-        //正常な時
-        .then(data => {
-          this.errorMsg = null;
-          this.msg = null;
+          //username: this.userName,
+          msg: this.msg
+        });
+      //正常な時
+      /*.then(ref => {
+          this.errorMsg = "";
+          this.msg = "";
         })
         //エラーの時
         .catch(error => {
           this.errorMsg = "殺す";
-        });
+        });*/
+      //送信後中身を空にする
+      this.msg = "";
+      this.text = "";
     }
   }
 };

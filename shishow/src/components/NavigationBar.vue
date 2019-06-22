@@ -22,7 +22,9 @@
         <img class="dm" src="../assets/dm-button.png" />
       </router-link>
       <img class="game" src="../assets/gameuser-button.png" />
-      <img class="bell" src="../assets/bell-button.png" />
+      <router-link to="/notification">
+        <img class="bell" src="../assets/bell-button.png" />
+      </router-link>
       <router-link to="/">
         <img class="home" src="../assets/home-button.png" />
       </router-link>

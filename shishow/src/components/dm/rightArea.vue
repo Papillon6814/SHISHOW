@@ -1,18 +1,26 @@
 <template>
   <div id="rightArea">
-    <div v-for="msg in msgList">{{msg}}</div>
+    <div v-for="msg in msgList" v-bind:key="msg.id">{{msg.msg}}</div>
+    <div class="inputArea">
+      <inputArea></inputArea>
+    </div>
   </div>
 </template>
 
 <script>
 import firebase from "firebase";
+import inputArea from "./InputArea";
+
 export default {
   data() {
     return {
       msgList: [],
-      msg: null,
-      errorMsg: null
+      msg: "",
+      errorMsg: ""
     };
+  },
+  components: {
+    inputArea
   },
   created() {
     this.loadMsg();
@@ -23,13 +31,17 @@ export default {
       const db = firebase.firestore();
       //データベースから値を持ってきてsnapshotに代入
       db.collection("USER")
+        .doc("sample")
+        .collection("friends")
+        .doc("jDIKmCZkXpCmYfqaeuu5")
+        .collection("CHAT")
         .get()
         .then(snapshot => {
           //snapshotの値はsnapshot.val()で取得できる
           //let rootList = snapshot.val()
           let msgList = [];
-          snapshot.forEach(function(doc) {
-            msgList = doc.text;
+          snapshot.forEach(doc => {
+            msgList.push(doc.data());
           });
           this.msgList = msgList;
         });
@@ -49,5 +61,10 @@ export default {
   height: 100%;
 
   background-color: $theme_color_dm;
+}
+//下部に表示する
+.inputArea {
+  //position: fixed;
+  bottom: 0px;
 }
 </style>

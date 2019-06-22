@@ -1,5 +1,7 @@
 import firebase from 'firebase'
 import 'firebase/firestore'
+import '@firebase/auth'
+import store from '../store'
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -11,5 +13,25 @@ var firebaseConfig = {
   messagingSenderId: "476890822571",
   appId: "1:476890822571:web:508b49508a91c0d3"
 };
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+
+export default {
+  init() {
+    firebase.initializeApp(firebaseConfig);
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+  },
+  login() {
+
+  },
+  logout() {
+    firebase.auth().signOut();
+  },
+  onAuth() {
+    firebase.auth().onAuthStateChanged(user => {
+      user = user ? user: {};
+      store.commit('onAuthStateChanged', user);
+      store.commit('onUserStatusChanged', user.uid ? true : false);
+    })
+  }
+};
+
+// ゴミ
