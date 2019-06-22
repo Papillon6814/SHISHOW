@@ -22,7 +22,9 @@
         <img class="dm" src="../assets/dm-button.png" />
       </router-link>
       <img class="game" src="../assets/gameuser-button.png" />
-      <img class="bell" src="../assets/bell-button.png" />
+      <router-link to="/notification">
+        <img class="bell" src="../assets/bell-button.png" />
+      </router-link>
       <router-link to="/">
         <img class="home" src="../assets/home-button.png" />
       </router-link>
@@ -46,9 +48,8 @@
     height: $header_height;
 
     background-color: $header_color;
-
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
     z-index: 10;
-
 
     .centered {
       position: absolute;

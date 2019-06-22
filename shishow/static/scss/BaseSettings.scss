@@ -16,6 +16,14 @@ $g_banner_color: #d5beff;
 $g_banner_flame: #3f3453;
 $g_window_flame: #3f2c63;
 
+$su_banner_color: #bcfffa;
+$su_banner_flame: #0e4646;
+$su_window_flame: #0e4644;
+
+$si_banner_color: #c7ffc7;
+$si_banner_flame: #007c74;
+$si_window_flame: #1c5652;
+
 //$g_banner_color: #c7ffc7;
 //$g_banner_flame: #007c74;
 //$g_window_flame: #1c5652;
@@ -41,6 +49,9 @@ $a_half_width: 23.47px;
 $user_width: 70%;
 $user_height: 50px;
 
+$deshi_width: $user_width*0.275;
+$deshi_height: 50px;
+
 $id_width: 55%;
 $id_height: 30px;
 
@@ -56,6 +67,14 @@ $n_banner_height: 192.5px;
 
 $n_icon_width: 89.375px;
 $n_icon_height: $n_icon_width;
+
+$i: 1;
+@while $i <= 5{
+  .n#{$i}{
+    top: 200px + (200px * $i);
+  }
+  $i: $i + 1;
+}
 
 $n_achievement_width: 32.3125px;
 $n_achievement_height: 15.8125px;
@@ -78,6 +97,19 @@ $n_profile_height: 68.75px;
  /* --- */
 
  /* around direct message page */
+
  $theme_color_dm: #ddddff;
  $dm_icon_width: 90px;
  $dm_banner_color: #ccc;
+
+ /* --- */
+
+ /* aruond notification page */
+
+ $not_banner_color: #d5d5d5;
+ $not_banner_flane: #222;
+
+ $not_banner_width: 100%;
+ $not_banner_height: 140px;
+
+ /* --- */

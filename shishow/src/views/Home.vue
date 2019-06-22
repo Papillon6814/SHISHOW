@@ -2,12 +2,24 @@
     <div id="root">
       <navi></navi>
       <div id="myBannerPosition">
-        <myBanner></myBanner>
+        <myBanner v-if="userStatus"></myBanner>
+
+      </div>
+      <div class="normalBannerPosition">
+        <div v-for="N in 10" :key="N" v-bind:class="'n'+N">
+          <normalBanner></normalBanner>
+        </div>
+        <!-- <li class="n2">
+          <normalBanner></normalBanner>
+        </li>
+        <li class="n3">
+          <normalBanner></normalBanner>
+        </li>
+        <li class="n4">
+          <normalBanner></normalBanner>
+        </li> -->
       </div>
       <!--
-      <div class="normalBannerPosition">
-        <normalBanner></normalBanner>
-      </div>
       <div class="gameBannerPosition">
         <gameBanner></gameBanner>
       </div> -->
@@ -18,16 +30,41 @@
 // @ is an alias to /src
 import navi from '../components/NavigationBar.vue'
 import myBanner from '../components/MyBanner.vue'
-//import normalBanner from '../components/NormalBanner.vue'
+import normalBanner from '../components/NormalBanner.vue'
 //import gameBanner from '../components/GameBanner.vue'
+
+import firebase from 'firebase'
+import 'firebase/firestore'
+import '@firebase/auth'
+import store from '../store'
 
 export default {
   name: 'home',
+  created: function() {
+    this.onAuth();
+  },
   components: {
     navi,
     myBanner,
-    //normalBanner,
+    normalBanner,
     //gameBanner
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+    userStatus() {
+      return this.$store.getters.isSignedIn;
+    }
+  },
+  methods: {
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false)
+      })
+    }
   }
 }
 
@@ -60,18 +97,18 @@ export default {
     left: 10%;*/
   }
 
-  /*.wrap{
-    width:100%;
-    //height:100%;
-    //overflow: visible;
-    overflow:hidden;
-  }*/
 
   .normalBannerPosition {
-    position: relative;
-
-    top: 400px;
-    left: 10%;
+    $i: 1;
+    @while $i <= 30{
+      .n#{$i}{
+        position: relative;
+        top: 200px + (200px * $i);
+        left: 10%;
+      }
+      $i: $i + 1;
+    }
+    list-style: none;
   }
 
   .gameBannerPosition {

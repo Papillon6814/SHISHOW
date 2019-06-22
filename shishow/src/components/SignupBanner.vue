@@ -39,7 +39,7 @@
     </div>
 
     <div class="passwordConfirmPosition">
-      <input class="password" type="password" placeholder="CONFIRM PASSWORD" v-model="p_confirm">
+      <input class="passwordConfirm" type="password" placeholder="CONFIRM PASSWORD" v-model="p_confirm">
     </div>
 
     <div class="profilePosition">
@@ -144,11 +144,11 @@ export default {
     width: $banner_width;
     height: $banner_height;
 
-    background-color: $banner_color;
+    background-color: $su_banner_color;
 
     border: solid;
     border-width: 5px;
-    border-color: $banner_flame;
+    border-color: $su_banner_flame;
     z-index: 2;
 
     //children
@@ -163,7 +163,7 @@ export default {
       border-radius: 50%;
       border: solid;
       border-width: 2px;
-      border-color: $header_color;
+      border-color: $su_window_flame;
 
       cursor: pointer;
 
@@ -318,18 +318,20 @@ export default {
 
       border: solid;
       border-width: 3px;
-      border-color: $banner_flame;
+      border-color: $su_banner_flame;
     }
 
     .emailPosition{
       position: absolute;
 
       top: 100px;
-      left: 202px;
+      left: 202px !important;
       right: 0px;
     }
 
     .password{
+      position: absolute;
+
       width: $id_width;
       height: $id_height;
 
@@ -337,7 +339,7 @@ export default {
 
       border: solid;
       border-width: 3px;
-      border-color: $banner_flame;
+      border-color: $su_banner_flame;
     }
 
     .passwordPosition{
@@ -348,9 +350,17 @@ export default {
       right: 0px;
     }
 
+    .passwordConfirm {
+      position: absolute;
+
+      width: 300px;
+      height: $id_height;
+
+    }
+
     .passwordConfirmPosition {
       position: absolute;
-      
+
       top: 220px;
       left: 202px;
     }
