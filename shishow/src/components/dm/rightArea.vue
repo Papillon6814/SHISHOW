@@ -64,7 +64,7 @@ export default {
 }
 //下部に表示する
 .inputArea {
-  //position: fixed;
+  position: fixed;
   bottom: 200px;
 }
 </style>

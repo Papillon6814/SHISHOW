@@ -40,18 +40,30 @@ export default {
           .add({
             //username: this.userName,
             msg: this.msg
-          })
-          //正常な時
-          .then(ref => {
-            //送信後中身を空にする
-            this.msg = "";
-            this.text = "";
-          })
-          //エラーの時
-          .catch(error => {
-            this.errorMsg = "殺す";
           });
+        this.msg = "";
+        this.text = "";
+        this.loadMsg();
       }
+    }, //これまでのメッセージをロード
+    loadMsg() {
+      const db = firebase.firestore();
+      //データベースから値を持ってきてsnapshotに代入
+      db.collection("USER")
+        .doc("sample")
+        .collection("friends")
+        .doc("jDIKmCZkXpCmYfqaeuu5")
+        .collection("CHAT")
+        .get()
+        .then(snapshot => {
+          //snapshotの値はsnapshot.val()で取得できる
+          //let rootList = snapshot.val()
+          let msgList = [];
+          snapshot.forEach(doc => {
+            msgList.push(doc.data());
+          });
+          this.msgList = msgList;
+        });
     }
   }
 };
