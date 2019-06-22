@@ -1,91 +1,92 @@
 <template>
-  <div class="banner" v-bind:class="{ 'banner': isA, 'extend': isB }">
-    <span class="iconPicPosition">
-      <div class="iconPic"></div>
-    </span>
-    <div class="achievementPosition1">
-      <div class="achievement">
+  <div>
+    <div class="instead-banner">
+      <div v-blur="isBlurred" class="banner">
+      <span class="iconPicPosition">
+        <div class="iconPic"></div>
+      </span>
+      <div class="achievementPosition1">
+        <div class="achievement">
+        </div>
+      </div>
+      <div class="achievementPosition2">
+        <div class="achievement">
+        </div>
+      </div>
+      <div class="achievementPosition3">
+        <div class="achievement">
+        </div>
+      </div>
+      <div class="usernamePosition">
+        <div class="username">
+          Nobuyuki
+        </div>
+      </div>
+      <div class="idPosition">
+        <div class="id">
+          qawsedrftgyhujkolp
+        </div>
+      </div>
+      <div class="profilePosition">
+        <div class="profile">
+          新しいことにチャレンジすることが好き!
+          テニス、スキー、スノーボード、ゴルフ、
+          それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
+          最近では、予想外の趣味に没頭中！
+        </div>
+      </div>
+      <a href="#" class="btn-circle-3d">江崎スイッチ</a>
+      <span id="pullDownProperties">
+      <i class="fas fa-caret-down"></i>
+      </span>
+    </div>
+      <div class="warn" v-if="isBlurred === true">
+        {{message}}
       </div>
     </div>
-    <div class="achievementPosition2">
-      <div class="achievement">
-      </div>
-    </div>
-    <div class="achievementPosition3">
-      <div class="achievement">
-      </div>
-    </div>
-    <div class="usernamePosition">
-      <div class="username">
-        Nobuyuki
-      </div>
-    </div>
-    <div class="idPosition">
-      <div class="id">
-        qawsedrftgyhujkolp
-      </div>
-    </div>
-    <div class="profilePosition">
-      <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、
-        それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
-        最近では、予想外の趣味に没頭中！
-      </div>
-    </div>
-    <a href="#" class="btn-circle-3d">江崎スイッチ</a>
-    <span @click="doExtend" id="pullDownProperties">
-     <i class="fas fa-caret-down"></i>
-    </span>
   </div>
 </template>
-
 <script>
 
 export default {
   name: 'myBanner',
-  data:function(){
+  data: function(){
     return{
-      isA:true,
-      isB:false
-    }
-  },
-  methods:{
-    doExtend:function(){
-      this.isA = !this.isA,
-      this.isB = !this.isB
+        isBlurred:true,
+        message:"Create an Account?"
+      }
     }
   }
-}
+
 
 </script>
 
 <style lang="scss">
+  .instead-banner{
+    width: $banner_width;
+    height: $banner_height;
+    position: relative;
+    .warn{
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      width: 80%;
+      height: 3.2rem;
+      z-index: 3;
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      left: 40%;
+    }
+  }
+
   .banner {
     position: absolute;
 
-    width: $banner_width;
+    width:100%;
     //temporary height
-    height: $banner_height;
-
-    background-color: $banner_color;
-
-    border: solid;
-    border-width: 5px;
-    border-color: $banner_flame;
-    //z-index: 9999;
-
-    //children
-  }
-
-
-
-  .extend{
-    position: absolute;
-
-    width: $banner_width;
-    //temporary height
-    height: $banner_height*2;
+    height:100%;
 
     background-color: $banner_color;
 
@@ -94,9 +95,9 @@ export default {
     border-color: $banner_flame;
     z-index: 2;
 
-  }
+    //children
 
-      .iconPic {
+    .iconPic {
       width: $icon_width;
       height: $icon_height;
 
@@ -182,7 +183,7 @@ export default {
     #pullDownProperties {
       position: absolute;
 
-      bottom: -5px;
+      top: 225px;
       left: 15px;
 
       font-size: 58px;
@@ -275,6 +276,11 @@ export default {
       box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
       border-bottom: none;
     }
+
+    /*.editBioButton{
+
+    }*/
+  }
 
 
 </style>

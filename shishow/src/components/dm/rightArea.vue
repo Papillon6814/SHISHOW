@@ -1,10 +1,12 @@
-<template></template>
+<template>
+  <div id="rightArea">
+    <div v-for="msg in msgList">{{msg}}</div>
+  </div>
+</template>
 
 <script>
 import firebase from "firebase";
 export default {
-  name: "Chat",
-  props: ["SignIn", "userName", "userImage"],
   data() {
     return {
       msgList: [],
@@ -16,27 +18,6 @@ export default {
     this.loadMsg();
   },
   methods: {
-    //メッセージを送る
-    sendMsg() {
-      const db = firebase.firestore();
-      if (!this.SignIn || !this.msg) return;
-      //データベースに値をpush
-      db.collection("USER")
-        .add({
-          name: this.userName,
-          text: this.msg,
-          profileImgUrl: this.userImage
-        })
-        //正常な時
-        .then(data => {
-          this.errorMsg = null;
-          this.msg = null;
-        })
-        //エラーの時
-        .catch(error => {
-          this.errorMsg = "殺す";
-        });
-    },
     //これまでのメッセージをロード
     loadMsg() {
       const db = firebase.firestore();
@@ -57,5 +38,16 @@ export default {
 };
 </script>
 
-<style>
+<style lang='scss'>
+#rightArea {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 55%;
+  height: 100%;
+
+  background-color: $theme_color_dm;
+}
 </style>
