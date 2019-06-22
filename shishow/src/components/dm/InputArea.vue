@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import firebase from "firebase";
 
 export default {
@@ -31,6 +32,10 @@ export default {
       //データベースに値をpush
       //文字が入力されているときにのみ送信
       let msg = this.msg;
+      //現在の日時を取得(文字列型)
+      let nowDate = moment()
+        .format("YYYY/MM/DD/k/m/s")
+        .toString();
       if (msg) {
         db.collection("USER")
           .doc("sample")
@@ -39,7 +44,8 @@ export default {
           .collection("CHAT")
           .add({
             //username: this.userName,
-            msg: this.msg
+            msg: this.msg,
+            date: nowDate
           });
         this.msg = "";
         this.text = "";
