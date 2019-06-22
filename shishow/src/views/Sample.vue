@@ -62,25 +62,28 @@
             },
 
             click(){
-                
+                /*
                 db.collection("USER").doc("SampleImage").get().then(doc =>{
                     this.url = doc.data()["image"];
                 })
-                /*
+                
                 
                 if(this.task)console.log
                 this.photo.get().then(doc =>{
                     console.log(doc.data()["name"]);
-                });*/
-                db.collection("USER").where("email","==",this.text).get().then(querySnapshot => {
+                });.where("email","==",this.text)*/
+                db.collection("USER").get().then(querySnapshot => {
                     //this.url = querySnapshot.docs[0].data()["image"];
-
+                    if(!querySnapshot.docs[0])console.log("bbb");
                     querySnapshot.forEach(doc =>{
-                        this.url = doc.data()["image"]
-                        //console.log(doc.data()["email"]+"=>"+doc.data()["image"]);
+                        //this.url = doc.data()["image"]
+                        
+                        console.log(doc.data()["email"]+"=>"+doc.id);
                     })
                 
-                });
+                }).catch(e =>{
+                    console.log("aaa")
+                })
                 
             },
 
