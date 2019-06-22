@@ -50,6 +50,7 @@
 
 <script>
 import firebase from 'firebase'
+import 'firebase/firestore'
 import '@firebase/auth'
 import router from '../router'
 
