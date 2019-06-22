@@ -1,6 +1,7 @@
 <template>
     <div>
         <input type="file" accept="image/*" id="file" @change="filechange">
+        <input type="text" v-model="text">
         <button type="button" @click="click">aaa</button>
         <img :src='url' id="image">
     </div>
@@ -36,6 +37,7 @@
                 name:"",
                 task:"",
                 photo:db.collection('users').doc("photo"),
+                text:"",
             }
         },
         methods: {
@@ -61,7 +63,7 @@
                 this.photo.get().then(doc =>{
                     console.log(doc.data()["name"]);
                 });
-                db.collection("users").where("name","==","mikan").get().then(querySnapshot => {
+                db.collection("USER").where("email","==",this.text).get().then(querySnapshot => {
                     this.url = querySnapshot.docs[0].data()["image"];
 
                     /*querySnapshot.forEach(doc =>{
