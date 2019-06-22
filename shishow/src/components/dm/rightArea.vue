@@ -1,6 +1,11 @@
 <template>
   <div id="rightArea">
-    <div v-for="msg in msgList" v-bind:key="msg.id">{{msg.msg}}</div>
+    <div v-for="msg in msgList" v-bind:key="msg.id">
+      <ul>
+        <li>{{msg.msg}}</li>
+        <li>{{msg.date}}</li>
+      </ul>
+    </div>
     <div class="inputArea">
       <inputArea></inputArea>
     </div>
@@ -43,6 +48,13 @@ export default {
           snapshot.forEach(doc => {
             msgList.push(doc.data());
           });
+          msgList.sort(function(a, b) {
+            if (a.date > b.date) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });
           this.msgList = msgList;
         });
     }
@@ -66,5 +78,8 @@ export default {
 .inputArea {
   position: fixed;
   bottom: 200px;
+}
+li {
+  list-style: none;
 }
 </style>

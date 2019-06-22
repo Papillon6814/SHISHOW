@@ -49,27 +49,7 @@ export default {
           });
         this.msg = "";
         this.text = "";
-        this.loadMsg();
       }
-    }, //これまでのメッセージをロード
-    loadMsg() {
-      const db = firebase.firestore();
-      //データベースから値を持ってきてsnapshotに代入
-      db.collection("USER")
-        .doc("sample")
-        .collection("friends")
-        .doc("jDIKmCZkXpCmYfqaeuu5")
-        .collection("CHAT")
-        .get()
-        .then(snapshot => {
-          //snapshotの値はsnapshot.val()で取得できる
-          //let rootList = snapshot.val()
-          let msgList = [];
-          snapshot.forEach(doc => {
-            msgList.push(doc.data());
-          });
-          this.msgList = msgList;
-        });
     }
   }
 };
