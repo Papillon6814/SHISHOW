@@ -50,6 +50,7 @@
 
 <script>
 import firebase from 'firebase'
+import 'firebase/firestore'
 import '@firebase/auth'
 import router from '../router'
 
@@ -119,11 +120,11 @@ export default {
 
   }
 
-      .iconPic {
+    .iconPic {
       width: $icon_width;
       height: $icon_height;
 
-      //temporary color
+      // temporary color
       background-color: #fff;
 
       border-radius: 50%;

@@ -3,8 +3,11 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
-import firebase from 'firebase'
+import Notification from './views/Notification.vue'
 import DirectMessage from './views/DirectMessage.vue'
+
+
+import firebase from 'firebase'
 
 Vue.use(Router)
 
@@ -16,22 +19,35 @@ let router = new Router({
       name: 'home',
       component: Home
     },
+
     {
       path: '/signup',
       name: 'signup',
       component: Signup
     },
+
     {
       path: '/signin',
       name: 'signin',
       component: Signin
     },
+
+    {
+      path: '/notification',
+      name: 'notification',
+      component: Notification
+    },
+
     {
       path: '/directMessage',
       name: 'directMessage',
       component: DirectMessage,
       meta: { requiresAuth: true }
     }
+
+    
+    
+
   ]
 })
 
