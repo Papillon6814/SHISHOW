@@ -84,7 +84,7 @@
                 }).catch(e =>{
                     console.log("aaa")
                 })
-                
+                db.collection("USER").doc("aaa").collection("user").doc();
             },
 
             delete(){

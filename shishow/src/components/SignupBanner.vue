@@ -55,6 +55,7 @@
 import firebase from 'firebase'
 import 'firebase/firestore'
 
+
 // Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: "AIzaSyD2D42pBXU_nXpo2wTd_IFs-4hogXE8Dq0",
@@ -106,7 +107,23 @@ export default {
       }
     },
     addToDatabase(email,image) {
-      db.collection("USER").add({
+      let url = db.collection("USER").doc(""+email).collection("friend").doc();
+      url.collection("CHAT").add({
+        msg:"",
+        date:"",
+      });
+      url.set({
+        username:""
+      });
+
+      
+      
+
+      db.collection("USER").doc(""+email).collection("incoming").add({username:""});
+      db.collection("USER").doc(""+email).collection("outgoing").add({username:""});
+      
+
+      db.collection("USER").doc(""+email).set({
         email: email,
         username: 'temp',
         image: image,
