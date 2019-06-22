@@ -61,7 +61,7 @@ export default {
     border: solid;
     border-width: 5px;
     border-color: $banner_flame;
-    z-index: 2;
+    //z-index: 9999;
 
     //children
 
