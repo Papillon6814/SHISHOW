@@ -37,7 +37,7 @@ export default {
   components: {
     navi,
     myBanner,
-    normalBanner,
+    normalBanner
     //gameBanner
   }
 }
@@ -70,7 +70,7 @@ export default {
     $i: 1;
     @while $i <= 30{
       .n#{$i}{
-        position: relative;
+        position: absolute;
         top: 200px + (200px * $i);
         left: 10%;
       }

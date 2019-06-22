@@ -40,7 +40,7 @@
         最近では、予想外の趣味に没頭中！
       </div>
     </div>
-    <a href="#" class="btn-circle-3d">匠</a>
+    <a href="#" class="btn-circle-3d">江崎スイッチ</a>
     <span id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
@@ -260,9 +260,9 @@ export default {
     }
 
     .btn-circle-3d {
-      position: absolute;
-      top: 15px;
-      right: 15px;
+      position: relative;
+      top: 30px;
+      left:39%;
       display: inline-block;
       text-decoration: none;
       background: #ff8181;
