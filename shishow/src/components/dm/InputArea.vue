@@ -24,33 +24,46 @@ export default {
   methods: {
     //メッセージを送る
     sendMsg() {
-      console.log("clicked");
+      //console.log("clicked");
       const db = firebase.firestore();
-      //ログインしているかつメッセージがある(今はいらない)
-      //if (!this.SignIn || !this.msg) return;
+      //ログインしているかの確認(今はいらない)
+      //if (!this.SignIn) return;
       //データベースに値をpush
-      //事実上送信
+      //文字が入力されているときにのみ送信
+      let msg = this.msg;
+      if (msg) {
+        db.collection("USER")
+          .doc("sample")
+          .collection("friends")
+          .doc("jDIKmCZkXpCmYfqaeuu5")
+          .collection("CHAT")
+          .add({
+            //username: this.userName,
+            msg: this.msg
+          });
+        this.msg = "";
+        this.text = "";
+        this.loadMsg();
+      }
+    }, //これまでのメッセージをロード
+    loadMsg() {
+      const db = firebase.firestore();
+      //データベースから値を持ってきてsnapshotに代入
       db.collection("USER")
         .doc("sample")
         .collection("friends")
         .doc("jDIKmCZkXpCmYfqaeuu5")
         .collection("CHAT")
-        .add({
-          //username: this.userName,
-          msg: this.msg
+        .get()
+        .then(snapshot => {
+          //snapshotの値はsnapshot.val()で取得できる
+          //let rootList = snapshot.val()
+          let msgList = [];
+          snapshot.forEach(doc => {
+            msgList.push(doc.data());
+          });
+          this.msgList = msgList;
         });
-      //正常な時
-      /*.then(ref => {
-          this.errorMsg = "";
-          this.msg = "";
-        })
-        //エラーの時
-        .catch(error => {
-          this.errorMsg = "殺す";
-        });*/
-      //送信後中身を空にする
-      this.msg = "";
-      this.text = "";
     }
   }
 };
