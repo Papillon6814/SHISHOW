@@ -40,19 +40,17 @@ export default {
           .add({
             //username: this.userName,
             msg: this.msg
+          })
+          //正常な時
+          .then(ref => {
+            //送信後中身を空にする
+            this.msg = "";
+            this.text = "";
+          })
+          //エラーの時
+          .catch(error => {
+            this.errorMsg = "殺す";
           });
-        //正常な時
-        /*.then(ref => {
-          this.errorMsg = "";
-          this.msg = "";
-        })
-        //エラーの時
-        .catch(error => {
-          this.errorMsg = "殺す";
-        });*/
-        //送信後中身を空にする
-        this.msg = "";
-        this.text = "";
       }
     }
   }
