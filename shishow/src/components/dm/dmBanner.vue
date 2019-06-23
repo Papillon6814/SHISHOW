@@ -1,12 +1,12 @@
 <template>
   <div id="dmBanner">
-    <div class="dmBannerIcon">
-    </div>
+    <div class="dmBannerIcon"></div>
     <div class="dmBannerName"></div>
   </div>
 </template>
 
 <script>
+
 import firebase from 'firebase'
 import 'firebase/firestore'
 import '@firebase/auth'
@@ -15,7 +15,7 @@ import store from '../../store'
 let db = firebase.firestore();
 
 let currentUser;
-let friends;
+let myFriends = [];
 
 export default {
   name: 'dmBanner',
@@ -23,7 +23,8 @@ export default {
   data() {
     return {
       username: '',
-      msg: ''
+      msg: '',
+      friends: []
     }
   },
 
@@ -43,7 +44,25 @@ export default {
       /* --- */
 
       /* フレンド読み込み */
+
+      // 現在のユーザー
       currentUser = firebase.auth().currentUser;
+
+      db.collection("USER")
+      .doc(currentUser.email)
+      .collection('friends')
+      .get()
+      .then(querysnapshot => {
+        querysnapshot.forEach(doc => {
+          myFriends.push(doc.data().username);
+        });
+        console.log(myFriends)
+        // myFriendsの中身はusernameの配列
+        this.friends = myFriends;
+      })
+      .catch(e => {
+        console.log(e)
+      })
     }
   },
 }

@@ -1,6 +1,8 @@
 <template>
   <div id="leftArea">
-    <dmBanner></dmBanner>
+    <div v-for="">
+      <dmBanner></dmBanner>
+    </div>
   </div>
 </template>
 
