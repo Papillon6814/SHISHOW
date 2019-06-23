@@ -3,9 +3,8 @@
       <navi></navi>
       <div id="myBannerPosition">
         <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
-
       </div>
-        <div>
+      <div id="moving">
         <div class="normalBannerPosition">
           <div v-for="N in 10" :key="N" v-bind:class="'n'+N">
             <normalBanner></normalBanner>
@@ -25,7 +24,6 @@
           <gameBanner></gameBanner>
         </div> -->
       </div>
-
     </div>
 </template>
 
@@ -45,22 +43,6 @@ export default {
   name: 'home',
   created: function() {
     this.onAuth();
-  },
-  data:function(){
-    return{
-      isActive: false
-    }
-  },
-  methods:{
-    extendOther:function(){
-      var active = true;
-      var move=document.getElementById('moving');
-      move.style.top = "350px";
-      this.active = !this.active;
-      if(this.active === false){
-        move.style.top = "45px"
-      }
-    }
   },
   components: {
     navi,
@@ -83,6 +65,15 @@ export default {
         store.commit('onAuthStateChanged', user);
         store.commit('onUserStatusChanged', user.uid ? true : false)
       })
+    },
+    extendOther:function(){
+      var active = true;
+      var move=document.getElementById('moving');
+      move.style.top = "350px";
+      this.active = !this.active;
+      if(this.active === false){
+        move.style.top = "45px"
+      }
     }
   }
 }

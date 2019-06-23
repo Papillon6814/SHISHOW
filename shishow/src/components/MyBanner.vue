@@ -41,7 +41,7 @@
       </div>
     </div>
     <div @click="logout" class="btn-circle-3d">ログアウト</div>
-    <span @click="doExtend" id="pullDownProperties">
+    <span v-bind:class="{reverse:isC}" @click="doExtend" id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
   </div>
@@ -68,7 +68,6 @@ export default {
       this.isB = !this.isB,
       this.isC = !this.isC,
       this.$emit('extendMyBanner')
-      this.$emit('shrink')
     },
     logout: function() {
       firebase.auth().signOut()
@@ -79,7 +78,6 @@ export default {
       .catch(function(e) {
         console.log(e)
       })
-
     }
   }
 }
