@@ -1,7 +1,7 @@
 <template>
   <div id="leftArea">
     <dmBanner
-     dmBannerUsername=this.friends[0]>
+     dmBannerUsername=friends[0]>
     </dmBanner>
   </div>
 </template>
@@ -60,6 +60,7 @@ export default {
           myFriends.push(doc.data().username);
         });
         console.log(myFriends)
+        console.log(myFriends[0])
         // myFriendsの中身はusernameの配列
         this.friends = myFriends;
       })
