@@ -44,9 +44,11 @@ export default {
           .collection("CHAT")
           .add({
             //username: this.userName,
+            //日付とメッセージの送信
             msg: this.msg,
             date: nowDate
           });
+          //送信した後内容をからにする
         this.msg = "";
         this.text = "";
       }
