@@ -5,7 +5,6 @@ import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
 import Notification from './views/Notification.vue'
 import DirectMessage from './views/DirectMessage.vue'
-import SearchResult from './views/SearchResult.vue'
 
 import firebase from 'firebase'
 
@@ -39,11 +38,6 @@ let router = new Router({
       name: 'directMessage',
       component: DirectMessage,
       meta: { requiresAuth: true }
-    },
-    {
-      path: '/SearchResult',
-      name: 'SearchResult',
-      component: SearchResult
     }
 	]
 })

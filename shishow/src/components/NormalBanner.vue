@@ -31,7 +31,7 @@
         テニス、スキー、スノーボード、ゴルフ、
       </div>
     </div>
-  　<div @click="logout" class="btn-circle-3d">江崎にフレ申請</div>
+  　<div @click="logout" class="btn-circle">江崎にフレ申請</div>
     <span id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
@@ -211,7 +211,7 @@ export default {
       right: 25px;
     }
 
-    .btn-circle-3d {
+    .btn-circle {
       position: relative;
       top: 32px;
       left:39%;
@@ -233,7 +233,7 @@ export default {
       cursor: pointer;
     }
 
-    .btn-circle-3d:active {
+    .btn-circle:active {
       -webkit-transform: translateY(2px);
       transform: translateY(2px);
       box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);

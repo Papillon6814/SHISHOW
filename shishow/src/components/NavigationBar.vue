@@ -5,11 +5,14 @@
     </div>
     <div class="centered">
       <div class="group">
-        <router-link to="/SearchResult">
-          <input type="text" id="search" required="required"/>
+        <div id="get_data">
+          <input type="text" id="search" v-model="search_key" required="required" />
           <label for="search">Search...</label>
           <div class="bar"></div>
-        </router-link>
+          <router-link to="/SearchResult">
+            <img class="sch" src="../assets/search-button.png" />
+          </router-link>
+        </div>
       </div>
     </div>
 
@@ -33,6 +36,43 @@
 </template>
 
 <script>
+/*import firebase from 'firebase'
+import 'firebase/firestore'
+import '@firebase/auth'
+//import signinBanner from '../components/SigninBanner.vue'
+
+var firebaseConfig = {
+  apiKey: "AIzaSyD2D42pBXU_nXpo2wTd_IFs-4hogXE8Dq0",
+  authDomain: "shishow-7cc37.firebaseapp.com",
+  databaseURL: "https://shishow-7cc37.firebaseio.com",
+  projectId: "shishow-7cc37",
+  storageBucket: "shishow-7cc37.appspot.com",
+  messagingSenderId: "476890822571",
+  appId: "1:476890822571:web:508b49508a91c0d3"
+};
+firebase.initializeApp(firebaseConfig);
+
+/*export default ({
+  el: "#get_data",
+  data(){
+    return{
+      search_key: ""
+    }
+    computed: {
+      user() {
+        return this.$store.getters.user;
+      }
+    },
+    methods:{
+      search: function() {
+        firebase.auth().onAuthStateChanged(user => {
+          user = user ? user: {};
+          store.commit('onAuthStateChanged', user);
+          store.commit('onUserStatusChanged', user.uid ? true : false);
+      })
+    }
+  }
+})*/
 
 </script>
 
@@ -142,6 +182,15 @@
             background: #ccc;
 
             transition: .3s ease;
+          }
+          .sch{
+            position: absolute;
+
+            width: 45px;
+            height: 45px;
+
+            left: 355px;
+            top: 22px;
           }
       }
     }
