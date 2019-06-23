@@ -12,6 +12,7 @@
     </div>
     <div id="trimmingButton">
       <span class="iconCirclePosition">
+        <label>
         <div class="iconCircle" >
           <div id="result" ></div>  
           <div class="iconDashedCircle" id='delete'>
@@ -19,11 +20,9 @@
               <i class="fas fa-plus"></i>
             </div>
           </div>
-          <div class="picPosition">
-              
-          </div>
-          <input class="iconFile" type="file" @change="onFileChange">
+          <input hidden class="iconFile" type="file" @change="onFileChange">
         </div>
+        </label>
       </span>
     </div>
 
