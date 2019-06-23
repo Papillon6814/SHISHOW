@@ -42,7 +42,6 @@
     </div>
     <div @click="logout" class="btn-circle-3d">ログアウト</div>
     <span @click="doExtend" id="pullDownProperties">
-
      <i class="fas fa-caret-down"></i>
     </span>
   </div>
@@ -50,6 +49,7 @@
 
 <script>
 import firebase from 'firebase'
+import 'firebase/firestore'
 import '@firebase/auth'
 import router from '../router'
 

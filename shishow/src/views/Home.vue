@@ -75,7 +75,7 @@ export default {
 
   html{
     overflow-y:scroll;
-    /*overflow-x:hidden;*/
+    overflow-x:hidden;
   }
 
   body {
@@ -99,14 +99,14 @@ export default {
   }
 
   .normalBannerPosition {
+    margin-left: 10%;
+    width:100%;
+    position: absolute;
+    padding-top:200px;
     $i: 1;
     @while $i <= 30{
       .n#{$i}{
-        /*position: relative;*/
-        position: absolute;
-        padding-top: -150px + (200px * $i);
-        margin-left: 10%;
-        width:100%;
+        padding-top: 210px;/* + (200px * $i);*/
       }
       $i: $i + 1;
     }
