@@ -1,8 +1,7 @@
 <template>
   <div id="leftArea">
-    <div v-for="">
-      <dmBanner></dmBanner>
-    </div>
+    <dmBanner>
+    </dmBanner>
   </div>
 </template>
 
@@ -18,21 +17,21 @@ export default {
 </script>
 
 <style lang='scss'>
-#leftArea {
-  position: absolute;
-  top: 0;
-  left: 0;
+  #leftArea {
+    position: absolute;
+    top: 0;
+    left: 0;
 
-  height: 100%;
-  width: 45%;
+    height: 100%;
+    width: 45%;
 
-  background-color: $theme_color_dm;
+    background-color: $theme_color_dm;
 
-  border-right: solid;
-  border-width: 5px;
-  border-color: #666;
+    border-right: solid;
+    border-width: 5px;
+    border-color: #666;
 
-  z-index: 3;
-}
+    z-index: 3;
+  }
 
 </style>

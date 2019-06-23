@@ -1,6 +1,6 @@
 <template>
   <div id="dmBanner">
-    <div class="dmBannerIcon"></div>
+    <div class="dmBannerIcon" v-bind=""></div>
     <div class="dmBannerName"></div>
   </div>
 </template>
@@ -65,6 +65,10 @@ export default {
       })
     }
   },
+
+  props: {
+
+  }
 }
 
 </script>
