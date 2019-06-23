@@ -1,5 +1,15 @@
 <template>
   <div class="banner">
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img id="image" v-show="uploadedImage" :src="uploadedImage" />
+                <button @click="crop">Crop</button>
+                <button id="button" type="button">Confirm</button>
+                <input type="button" id="closeBtn" value="close" @click="close">  
+            </div>
+        </div>
+    </div>
     <div id="trimmingButton">
       <span class="iconCirclePosition">
         <div class="iconCircle" >
@@ -10,7 +20,7 @@
             </div>
           </div>
           <div class="picPosition">
-              <img id="image" v-show="uploadedImage" :src="uploadedImage" />
+              
           </div>
           <input class="iconFile" type="file" @change="onFileChange">
         </div>
@@ -42,10 +52,6 @@
 
     <button @click="signUp">Sign up</button>
 
-
-    <button @click="crop">Crop</button>
-    <button id="button" type="button">Confirm</button>
-
     <!--
     <span id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
@@ -71,6 +77,9 @@ export default {
     }
   },
   methods: {
+    close: function(){
+      modal.style.display = 'none';
+    },
     signUp: function () {
       firebase.auth().createUserWithEmailAndPassword(this.e_mail, this.password)
       .then(user => {
@@ -112,6 +121,7 @@ export default {
         this.uploadedImage = event.target.result;
       }
       //読み込み開始
+      modal.style.display = 'block';
       reader.readAsDataURL(file);
 
     },
@@ -173,6 +183,7 @@ export default {
           del.parentNode.removeChild(del);
         }
         cropper.destroy();
+        modal.style.display = 'none';
         root.uploadedImage ='';
 
 
@@ -391,4 +402,22 @@ export default {
 #result{  //cropper
   z-index: 7;
 }
+//modal
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+    }
+    
+    .modal-content{
+    background-color: white;
+    width: 500px;
+    margin: 40% auto;
+    }
 </style>
