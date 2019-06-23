@@ -4,9 +4,8 @@
         <div class="modal-content">
             <div class="modal-body">
                 <img id="image" v-show="uploadedImage" :src="uploadedImage" />
-                <button @click="crop">Crop</button>
                 <button id="button" type="button">Confirm</button>
-                <input type="button" id="closeBtn" value="close" @click="close">  
+                <input type="button" id="closeBtn" value="close">  
             </div>
         </div>
     </div>
@@ -77,9 +76,6 @@ export default {
     }
   },
   methods: {
-    close: function(){
-      modal.style.display = 'none';
-    },
     signUp: function () {
       firebase.auth().createUserWithEmailAndPassword(this.e_mail, this.password)
       .then(user => {
@@ -111,14 +107,14 @@ export default {
 
     // 画像表示
     showImage(file) {
-
       //FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
       let reader = new FileReader();
-
       //ファイルが読み込まれたとき、eventを引数とするアロー関数作動
+      let place =this;
       reader.onload = (event) => {
         //htmlにファイルを反映
         this.uploadedImage = event.target.result;
+        window.setTimeout(place.crop, 1);
       }
       //読み込み開始
       console.log(typeof modal);
@@ -133,6 +129,7 @@ export default {
       var image = document.getElementById('image');
       var button = document.getElementById('button');
       var result = document.getElementById('result');
+      var close = document.getElementById('closeBtn');
       
       var croppable = false;
       
@@ -146,6 +143,11 @@ export default {
           croppable = true;
         },
       });
+      close.onclick = function(){
+        modal.style.display = 'none';
+        cropper.destroy();
+        this.uploadedImage ='';
+      };
       button.onclick = function () {
         var croppedCanvas;
         var roundedImage;
