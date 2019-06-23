@@ -4,8 +4,6 @@
     <div id="signupBannerPosition">
       <signupBanner></signupBanner>
     </div>
-    <div class="trimmingButtonPosition">
-      <trimmingButton></trimmingButton>
     </div>
   </div>
 </template>
@@ -20,8 +18,7 @@ export default {
   name: 'signup',
   components: {
     navi,
-    signupBanner,
-    trimmingButton
+    signupBanner
   }
 }
 

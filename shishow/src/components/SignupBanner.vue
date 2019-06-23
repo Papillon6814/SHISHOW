@@ -2,17 +2,16 @@
   <div class="banner">
     <div id="trimmingButton">
       <span class="iconCirclePosition">
-        <div class="iconCircle">
-          <div class="iconDashedCircle">
+        <div class="iconCircle" >
+          <div id="result" ></div>  
+          <div class="iconDashedCircle" id='delete'>
             <div class="plusPosition">
               <i class="fas fa-plus"></i>
             </div>
-            <div class="picPosition">
-              <img id="image" v-show="uploadedImage" :src="uploadedImage" />
-            </div>
-            <div id="result"></div>
           </div>
-          <div id="result" ></div>
+          <div class="picPosition">
+              <img id="image" v-show="uploadedImage" :src="uploadedImage" />
+          </div>
           <input class="iconFile" type="file" @change="onFileChange">
         </div>
       </span>
@@ -43,10 +42,9 @@
 
     <button @click="signUp">Sign up</button>
 
-    <!--
+
     <button @click="crop">Crop</button>
     <button id="button" type="button">Confirm</button>
-    -->
 
     <!--
     <span id="pullDownProperties">
@@ -58,7 +56,7 @@
 
 <script>
 //使用するjsをインポート
-import firebase from 'firebase'
+import firebase, { functions } from 'firebase'
 import Cropper from 'cropperjs'
 //使用するオリジナルの関数を定義
 export default {
@@ -73,7 +71,6 @@ export default {
     }
   },
   methods: {
-    drawCanvas:function(){},
     signUp: function () {
       firebase.auth().createUserWithEmailAndPassword(this.e_mail, this.password)
       .then(user => {
@@ -120,9 +117,12 @@ export default {
     },
 
     crop:function(){
+      
+      var root = this;
       var image = document.getElementById('image');
       var button = document.getElementById('button');
       var result = document.getElementById('result');
+      
       var croppable = false;
       
       var cropper = new Cropper(image, {
@@ -163,7 +163,20 @@ export default {
         context.fill();
 
         roundedImage.src =canvas.toDataURL();
+        roundedImage.width =130;
+        roundedImage.height =130;
         result.innerHTML = '';
+        
+        var del = document.getElementById('delete');
+        if(del != null){
+          del.textContent = null;
+          del.parentNode.removeChild(del);
+        }
+        cropper.destroy();
+        root.uploadedImage ='';
+
+
+
         result.appendChild(roundedImage);
       };
     },
@@ -245,8 +258,8 @@ export default {
     }
     .picPosition{
       position:absolute;
-      top: 261px;
-      left: -48px;
+      top: 270px;
+      left: -39px;
     }
     .iconCirclePosition {
       position: absolute;
