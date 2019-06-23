@@ -55,7 +55,10 @@ export default {
     doExtend:function(){
       this.isA = !this.isA,
       this.isB = !this.isB,
-      this.isC = !this.isC
+      this.isC = !this.isC,
+      console.log("emit");
+      this.$emit('extendMyBanner')
+      this.$emit('shrink')
     }
   }
 }

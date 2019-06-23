@@ -2,15 +2,17 @@
     <div id="root">
       <navi></navi>
       <div id="myBannerPosition">
-        <myBanner></myBanner>
+        <myBanner @extendMyBanner="extendOther"></myBanner>
       </div>
-      <!--
-      <div class="normalBannerPosition">
-        <normalBanner></normalBanner>
+      
+      <div id="moving">
+        <div class="normalBannerPosition">
+          <normalBanner></normalBanner>
+        </div>
+        <!-- <div class="gameBannerPosition">
+          <gameBanner></gameBanner>
+        </div> -->
       </div>
-      <div class="gameBannerPosition">
-        <gameBanner></gameBanner>
-      </div> -->
     </div>
 </template>
 
@@ -18,15 +20,31 @@
 // @ is an alias to /src
 import navi from '../components/NavigationBar.vue'
 import myBanner from '../components/MyBanner.vue'
-//import normalBanner from '../components/NormalBanner.vue'
+import normalBanner from '../components/NormalBanner.vue'
 //import gameBanner from '../components/GameBanner.vue'
 
 export default {
   name: 'home',
+  data:function(){
+    return{
+      isActive: false
+    }
+  },
+  methods:{
+    extendOther:function(){
+      var active = true;
+      var move=document.getElementById('moving');
+      move.style.top = "350px";
+      this.active = !this.active;
+      if(this.active === false){
+        move.style.top = "45px"
+      }
+    }
+  },
   components: {
     navi,
     myBanner,
-    //normalBanner,
+    normalBanner,
     //gameBanner
   }
 }
@@ -68,5 +86,12 @@ export default {
     top: 45px;
     left: 10%;
   }
+
+  #moving{
+    position: absolute;
+    width: 100%;
+    transition: .3s;
+    }
+
 
 </style>
