@@ -57,12 +57,23 @@ export default {
       .doc(currentUser.email)
       .collection('friends')
       .get()
-      .then(querysnapshot => {
-        querysnapshot.forEach(doc => {
-          myFriends.push(doc.data().username);
+      .then(querysnapshot1 => {
+        querysnapshot1.forEach(doc1 => {
+          myFriends.push(doc1.data().username);
+
+          doc1.data()['CHAT']
+          .get()
+          .then(querysnapshot2 => {
+            querysnapshot2.forEach(doc2 => {
+              console.log(doc2.data())
+            })
+          })
+
         });
+
         console.log(myFriends)
         console.log(myFriends[0])
+
         // myFriendsの中身はusernameの配列
         this.friends = myFriends;
       })
@@ -71,16 +82,11 @@ export default {
       })
 
     },
-    loadTheirMsg: function(num) {
-
-      // メッセージ読み込み
-      friends
-    }
   },
 }
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
   #leftArea {
     position: absolute;
     top: 0;
