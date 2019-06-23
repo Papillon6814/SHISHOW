@@ -63,6 +63,7 @@
 //使用するjsをインポート
 import firebase, { functions } from 'firebase'
 import Cropper from 'cropperjs'
+
 //使用するオリジナルの関数を定義
 export default {
   //名前定義
@@ -120,6 +121,7 @@ export default {
         this.uploadedImage = event.target.result;
       }
       //読み込み開始
+      console.log(typeof modal);
       modal.style.display = 'block';
       reader.readAsDataURL(file);
 
@@ -403,20 +405,20 @@ export default {
 }
 //modal
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.5);
-    }
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
     
-    .modal-content{
-    background-color: white;
-    width: 500px;
-    margin: 40% auto;
-    }
+.modal-content{
+  background-color: white;
+  width: 500px;
+  margin: 40% auto;
+}
 </style>
