@@ -96,7 +96,7 @@ export default {
     border-color: $banner_flame;
     //z-index: 9999;
 
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
 
     //children
   }

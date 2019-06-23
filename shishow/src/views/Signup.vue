@@ -8,7 +8,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
+// @ is an alias to /sonBar.vue'
 import navi from '../components/NavigationBar.vue'
 import signupBanner from '../components/SignupBanner.vue'
 
@@ -27,16 +27,15 @@ export default {
   body {
     padding: 0;
     margin: 0;
-    width: 100%;
-    overflow: hidden;
 
     background-color: $dark_color;
   }
 
   #signupBannerPosition {
-    position: relative;
+    position: absolute;
+    width: 100%;
     //temporary top
-    top: 45px;
+    top: 150px;
     left: 10%;
   }
 

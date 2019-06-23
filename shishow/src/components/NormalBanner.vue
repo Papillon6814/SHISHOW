@@ -1,5 +1,5 @@
 <template>
-  <div class="normalBanner">
+  <div class="normalBanner" v-bind:class="{ 'banner': isA, 'extend': isB }">
     <span class="iconPicPosition">
       <div class="iconPic"></div>
     </span>
@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="n_btn-circle-3d">江崎にフレ申請</div>
-    <span id="pullDownProperties">
+    <span @click="doExtend" id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
   </div>
@@ -41,7 +41,19 @@
 <script>
 
 export default {
-  name: 'normalBanner'
+  name: 'normalBanner',
+  data: function() {
+    return{
+      isA: true,
+      isB: false
+    }
+  },
+  methods: {
+    doExtend: function() {
+      this.isA = !this.isA,
+      this.isB = !this.isB
+    }
+  }
 }
 
 </script>
@@ -61,7 +73,11 @@ export default {
     border-color: $n_banner_flame;
     z-index: 2;
 
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+
     //children
+    
+
 
     .iconPic {
       width: $n_icon_width;
@@ -168,7 +184,7 @@ export default {
     .usernamePosition{
       position: absolute;
 
-      top: 30px;
+      top: 18px;
       left: 172px;
       right: 0px;
     }
@@ -187,7 +203,7 @@ export default {
     .idPosition{
       position: absolute;
 
-      top: 80px;
+      top: 68px;
       left: 172px;
       right: 0px;
     }
@@ -206,7 +222,7 @@ export default {
     .profilePosition{
       position: absolute;
 
-      top: 120px;
+      top: 108px;
       left: 172px;
       right: 25px;
     }

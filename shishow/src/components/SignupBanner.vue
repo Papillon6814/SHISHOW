@@ -29,6 +29,7 @@
     <div class="usernamePosition">
       <input class="username" type="text" placeholder="Display name" v-model="username">
     </div>
+
     <div class="emailPosition">
       <input class="email" type="text" placeholder="E-mail" v-model="email">
     </div>
@@ -145,6 +146,8 @@ export default {
   border-width: 5px;
   border-color: $su_banner_flame;
   z-index: 2;
+
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 
   //children
 
@@ -318,7 +321,7 @@ export default {
   .passwordPosition{
     position: absolute;
 
-    top: 100px;
+    top: 130px;
     left: 202px;
     right: 0px;
   }
