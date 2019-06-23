@@ -3,21 +3,12 @@
       <navi></navi>
       <div id="myBannerPosition">
         <myBanner v-if="userStatus"></myBanner>
-
       </div>
+
       <div class="normalBannerPosition">
         <div v-for="N in 10" :key="N" v-bind:class="'n'+N">
           <normalBanner></normalBanner>
         </div>
-        <!-- <li class="n2">
-          <normalBanner></normalBanner>
-        </li>
-        <li class="n3">
-          <normalBanner></normalBanner>
-        </li>
-        <li class="n4">
-          <normalBanner></normalBanner>
-        </li> -->
       </div>
       <!--
       <div class="gameBannerPosition">
@@ -46,7 +37,7 @@ export default {
   components: {
     navi,
     myBanner,
-    normalBanner,
+    normalBanner
     //gameBanner
   },
   computed: {
@@ -81,7 +72,6 @@ export default {
     padding: 0;
     margin: 0;
     width: 100%;
-    overflow: hidden;
 
     background-color: $dark_color;
   }
@@ -89,20 +79,20 @@ export default {
   #myBannerPosition {
     //position: relative;
     //temporary top
-    /*top: 45px;
-    left: 10%;*/
-    padding-top:40px;
-    margin-left:10%;
-    margin-right:10%;
+    padding-top: 70px;
+    margin-left: 10%;
+    margin-right: 10%;
     width:100%;
     position:absolute;
+    /*top: 45px;
+    left: 10%;*/
   }
 
-  /*.wrap{
-    overflow: visible;
-  }*/
-
   .normalBannerPosition {
+    margin-left: 10%;
+    width:100%;
+    position: absolute;
+    padding-top:200px;
     $i: 1;
     position:absolute;
     width:100%;
@@ -110,17 +100,16 @@ export default {
     top:250px;
     @while $i <= 30{
       .n#{$i}{
-        //position: relative;
-        padding-top: 210px /*+ (200px * $i)*/;
-        //left: 10%;
+        padding-top: 210px;/* + (200px * $i);*/
       }
       $i: $i + 1;
     }
     list-style: none;
+    z-index: -1;
   }
 
   .gameBannerPosition {
-    position: relative;
+    position: absolute;
     //temporary top
     top: 45px;
     left: 10%;

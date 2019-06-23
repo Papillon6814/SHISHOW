@@ -42,7 +42,6 @@
     </div>
     <div @click="logout" class="btn-circle-3d">ログアウト</div>
     <span @click="doExtend" id="pullDownProperties">
-
      <i class="fas fa-caret-down"></i>
     </span>
   </div>
@@ -95,9 +94,9 @@ export default {
     border: solid;
     border-width: 5px;
     border-color: $banner_flame;
-    z-index: 2;
+    //z-index: 9999;
 
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
 
     //children
   }
@@ -306,9 +305,9 @@ export default {
     }
 
     .btn-circle-3d {
-      position: absolute;
-      top: 15px;
-      right: 15px;
+      position: relative;
+      top: 30px;
+      left:39%;
       display: inline-block;
       text-decoration: none;
       background: #ff8181;
