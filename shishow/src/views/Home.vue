@@ -72,6 +72,11 @@ export default {
 
 <style lang="scss">
 
+  html{
+    overflow-y:scroll;
+    overflow-x:hidden;
+  }
+
   body {
     padding: 0;
     margin: 0;
@@ -82,10 +87,15 @@ export default {
   }
 
   #myBannerPosition {
-    position: relative;
+    //position: relative;
     //temporary top
-    top: 60px;
-    left: 10%;
+    /*top: 45px;
+    left: 10%;*/
+    padding-top:40px;
+    margin-left:10%;
+    margin-right:10%;
+    width:100%;
+    position:absolute;
   }
 
   /*.wrap{
@@ -94,11 +104,15 @@ export default {
 
   .normalBannerPosition {
     $i: 1;
+    position:absolute;
+    width:100%;
+    left: 10%;
+    top:250px;
     @while $i <= 30{
       .n#{$i}{
-        position: relative;
-        top: 200px + (200px * $i);
-        left: 10%;
+        //position: relative;
+        padding-top: 210px /*+ (200px * $i)*/;
+        //left: 10%;
       }
       $i: $i + 1;
     }
