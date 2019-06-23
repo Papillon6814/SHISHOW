@@ -1,74 +1,23 @@
 <template>
   <div id="dmBanner">
-    <div class="dmBannerIcon" v-bind=""></div>
-    <div class="dmBannerName"></div>
+    <div class="dmBannerIcon"></div>
+    <div class="dmBannerName">
+      {{ dmBannerUsername }}
+    </div>
+    <div class="dmMsgArea"></div>
   </div>
 </template>
 
 <script>
 
-import firebase from 'firebase'
-import 'firebase/firestore'
-import '@firebase/auth'
-import store from '../../store'
-
-let db = firebase.firestore();
-
-let currentUser;
-let myFriends = [];
-
 export default {
   name: 'dmBanner',
 
-  data() {
-    return {
-      username: '',
-      msg: '',
-      friends: []
-    }
-  },
-
-  created() {
-    this.loadFriends();
-  },
-
-  methods: {
-    loadFriends: function() {
-
-      /* firebase初期設定部分 */
-      firebase.auth().onAuthStateChanged(user => {
-        user = user ? user : {};
-        store.commit('onAuthStateChanged', user);
-        store.commit('onUserStatusChanged', user.uid ? true : false);
-      })
-      /* --- */
-
-      /* フレンド読み込み */
-
-      // 現在のユーザー
-      currentUser = firebase.auth().currentUser;
-
-      db.collection("USER")
-      .doc(currentUser.email)
-      .collection('friends')
-      .get()
-      .then(querysnapshot => {
-        querysnapshot.forEach(doc => {
-          myFriends.push(doc.data().username);
-        });
-        console.log(myFriends)
-        // myFriendsの中身はusernameの配列
-        this.friends = myFriends;
-      })
-      .catch(e => {
-        console.log(e)
-      })
-    }
-  },
-
-  props: {
-
-  }
+  props: [
+    'dmBannerUsername',
+    'dmMsg',
+    'iconPic'
+  ]
 }
 
 </script>
@@ -118,6 +67,18 @@ export default {
       background-color: #fff;
 
       font-size: 35px;
+    }
+
+    .dmMsgArea {
+      position: absolute;
+
+      top: 60px;
+      left: 130px;
+
+      width: 70%;
+      height: 60px;
+
+      background-color: #fff;
     }
   }
 
