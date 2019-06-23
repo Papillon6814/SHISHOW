@@ -12,8 +12,8 @@
       </div>
     </span>
 
-
     <!-- achievements -->
+
 
     <div class="achievementPosition1">
       <div class="achievement"></div>
@@ -57,9 +57,12 @@
 
 
 
+
 <script>
-import firebase from "firebase";
-import "firebase/firestore";
+import firebase from 'firebase'
+import 'firebase/firestore'
+
+
 // Your web app's Firebase configuration
 export const firebaseConfig = {
   apiKey: "AIzaSyD2D42pBXU_nXpo2wTd_IFs-4hogXE8Dq0",
@@ -89,7 +92,9 @@ export default {
     }
   },
   methods: {
-          signUp: function () {
+
+    signUp: function () {
+
 
       let url;
 
@@ -115,10 +120,27 @@ export default {
       },
 
       addToDatabase(email, username,image) {
-        db.collection("USER").doc(email).set({
+        let url = db.collection("USER").doc(""+email).collection("friends").doc();
+      url.collection("CHAT").add({
+        msg:"",
+        date:"",
+      });
+      url.set({
+        username:""
+      });
+
+      
+      
+
+      db.collection("USER").doc(""+email).collection("incoming").add({username:""});
+      db.collection("USER").doc(""+email).collection("outgoing").add({username:""});
+      
+
+      db.collection("USER").doc(""+email).set({
           email: email,
           username: username,
           image: image,
+
         })
         .then(function(docRef) {
           console.log('Document written with ID: ', docRef.id);
@@ -193,8 +215,10 @@ export default {
         position: absolute;
 
 
+
       top: 4.5%;
       left: 4.5%;
+
 
       width: 90%;
       height: 90%;
@@ -227,6 +251,14 @@ export default {
           opacity: 0;
           cursor: pointer;
         }
+
+    }
+
+    #icon{
+      position: absolute;
+      width: $icon_width;
+      height: $icon_height;
+
     }
 
     #icon{
