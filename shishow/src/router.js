@@ -6,6 +6,7 @@ import Signin from './views/Signin.vue'
 import Notification from './views/Notification.vue'
 import DirectMessage from './views/DirectMessage.vue'
 
+
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -39,7 +40,7 @@ let router = new Router({
       component: DirectMessage,
       meta: { requiresAuth: true }
     }
-	]
+  ]
 })
 
 router.beforeEach((to, from, next) => {
