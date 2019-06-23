@@ -2,28 +2,28 @@
     <div id="root">
       <navi></navi>
       <div id="myBannerPosition">
-        <myBanner v-if="userStatus"></myBanner>
-
+        <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
       </div>
-
-      <div class="normalBannerPosition">
-        <div v-for="N in 10" :key="N" v-bind:class="'n'+N">
-          <normalBanner></normalBanner>
+      <div id="moving">
+        <div class="normalBannerPosition">
+          <div v-for="N in 10" :key="N" v-bind:class="'n'+N">
+            <normalBanner></normalBanner>
+          </div>
+          <!-- <li class="n2">
+            <normalBanner></normalBanner>
+          </li>
+          <li class="n3">
+            <normalBanner></normalBanner>
+          </li>
+          <li class="n4">
+            <normalBanner></normalBanner>
+          </li> -->
         </div>
-        <!-- <li class="n2">
-          <normalBanner></normalBanner>
-        </li>
-        <li class="n3">
-          <normalBanner></normalBanner>
-        </li>
-        <li class="n4">
-          <normalBanner></normalBanner>
-        </li> -->
+        <!--
+        <div class="gameBannerPosition">
+          <gameBanner></gameBanner>
+        </div> -->
       </div>
-      <!--
-      <div class="gameBannerPosition">
-        <gameBanner></gameBanner>
-      </div> -->
     </div>
 </template>
 
@@ -65,6 +65,15 @@ export default {
         store.commit('onAuthStateChanged', user);
         store.commit('onUserStatusChanged', user.uid ? true : false)
       })
+    },
+    extendOther:function(){
+      var active = true;
+      var move=document.getElementById('moving');
+      move.style.top = "350px";
+      this.active = !this.active;
+      if(this.active === false){
+        move.style.top = "45px"
+      }
     }
   }
 }
@@ -121,5 +130,12 @@ export default {
     top: 45px;
     left: 10%;
   }
+
+  #moving{
+    position: absolute;
+    width: 100%;
+    transition: .3s;
+    }
+
 
 </style>
