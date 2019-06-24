@@ -2,7 +2,7 @@
   <div id="leftArea">
     <dmBanner
      :dmBannerUsername="friends[0]"
-     :dmMsg="">
+     :dmMsg="msg[0]">
     </dmBanner>
   </div>
 </template>
@@ -18,13 +18,15 @@ let db = firebase.firestore();
 
 let currentUser;
 let myFriends = [];
+let myMsg = [];
 
 export default {
   name: 'leftArea',
 
   data() {
     return {
-      friends: ''
+      friends: '',
+      msg: ''
     }
   },
 
@@ -62,13 +64,25 @@ export default {
         querysnapshot1.forEach(doc1 => {
           myFriends.push(doc1.data().username);
 
+          db.collection("USER")
+          .doc(currentUser.email)
+          .collection("friends")
+          .doc(doc1.id)
+          .collection("CHAT")
+          .get()
+          .then(querysnapshot2=> {
+            querysnapshot2.forEach(doc2 => {
+              myMsg.push(doc2.data().msg);
+            })
+          })
         });
 
-        console.log(myFriends)
         console.log(myFriends[0])
+        console.log(myMsg[0])
 
         // myFriendsの中身はusernameの配列
-        this.friends = myFriends.username;
+        this.friends = myFriends;
+        this.msg = myMsg;
       })
       .catch(e => {
         console.log(e)

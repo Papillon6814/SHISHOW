@@ -5,6 +5,7 @@
       {{ dmBannerUsername }}
     </div>
     <div class="dmMsgArea">
+      {{ dmMsg }}
     </div>
   </div>
 </template>
