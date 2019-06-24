@@ -1,7 +1,7 @@
 <template>
   <div id="leftArea">
     <dmBanner
-     dmBannerUsername=friends[0]>
+     :dmBannerUsername="friends[0]">
     </dmBanner>
   </div>
 </template>
@@ -32,12 +32,12 @@ export default {
   },
 
   created() {
+    this.fireinit();
     this.loadFriends();
   },
 
   methods: {
-    loadFriends: function() {
-
+    fireinit: function() {
       /* firebase初期設定部分 */
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};
@@ -46,42 +46,39 @@ export default {
       })
       /* --- */
 
-      /* フレンド読み込み */
-
       // 現在のユーザー
       currentUser = firebase.auth().currentUser;
+    },
+    loadFriends: function() {
+
+      /* フレンド読み込み */
 
       db.collection("USER")
       .doc(currentUser.email)
       .collection('friends')
       .get()
-      .then(querysnapshot => {
-        querysnapshot.forEach(doc => {
-          db.collection("USER")
-          .doc(currentUser.email)
-          .collection("friends")
-          .doc(doc.id)
-          .collection("CHAT")
-          .get()
-          .then(query => {
-            console.log(doc.data()["date"])
-          })
+      .then(querysnapshot1 => {
+        querysnapshot1.forEach(doc1 => {
+          myFriends.push(doc1.data().username);
+
         });
 
         console.log(myFriends)
         console.log(myFriends[0])
+
         // myFriendsの中身はusernameの配列
-        this.friends = myFriends;
+        this.friends = myFriends.username;
       })
       .catch(e => {
         console.log(e)
       })
-    }
+
+    },
   },
 }
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
   #leftArea {
     position: absolute;
     top: 0;
