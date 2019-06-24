@@ -29,8 +29,10 @@
       <input class="password" type="password" placeholder="PASSWORD" v-model="password">
     </div>
 
-    <div class="profilePosition">
-    </div>
+    <router-link to="/signup">
+      <div class="btn-circle-3d">Sign up</div>
+    </router-link>
+
 
     <button @click="login">Sign in</button>
 
@@ -286,28 +288,34 @@ export default {
     right: 0px;
   }
 
-  .profile{
-    width: $profile_width;
-    height: $profile_height;
-
-    background-color: #fff;
-
-    border: solid;
-    border-width: 3px;
-    border-color: $si_window_flame;
-  }
-
-  .profilePosition{
+  .btn-circle-3d {
     position: absolute;
+    top: 15px;
+    right: 15px;
+    display: inline-block;
+    text-decoration: none;
+    background: #ff8181;
+    color: #fff;
+    width: 130px;
+    height: 80px;
+    line-height: 79px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    overflow: hidden;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+    border-bottom: solid 3px #bd6565;
+    transition: .4s;
 
-    top: 150px;
-    left: 202px;
-    right: 25px;
+    cursor: pointer;
   }
 
-  /*.editBioButton{
-
-  }*/
+  .btn-circle-3d:active {
+    -webkit-transform: translateY(2px);
+    transform: translateY(2px);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+    border-bottom: none;
+  }
 }
 
 </style>
