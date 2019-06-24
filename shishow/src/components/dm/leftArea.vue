@@ -57,8 +57,17 @@ export default {
       .get()
       .then(querysnapshot => {
         querysnapshot.forEach(doc => {
-          myFriends.push(doc.data().username);
+          db.collection("USER")
+          .doc(currentUser.email)
+          .collection("friends")
+          .doc(doc.id)
+          .collection("CHAT")
+          .get()
+          .then(query => {
+            console.log(doc.data()["date"])
+          })
         });
+
         console.log(myFriends)
         console.log(myFriends[0])
         // myFriendsの中身はusernameの配列
