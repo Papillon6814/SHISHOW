@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import moment from "moment";
 import firebase from "firebase";
 
 export default {
@@ -22,7 +21,37 @@ export default {
       msg: ""
     };
   },
+  updated() {
+    this.loadMsg();
+  },
   methods: {
+    //これまでのメッセージをロード
+    loadMsg() {
+      const db = firebase.firestore();
+      //データベースから値を持ってきてsnapshotに代入
+      db.collection("USER")
+        .doc("sample")
+        .collection("friends")
+        .doc("jDIKmCZkXpCmYfqaeuu5")
+        .collection("CHAT")
+        .get()
+        .then(snapshot => {
+          //snapshotの値はsnapshot.val()で取得できる
+          //let rootList = snapshot.val()
+          let msgList = [];
+          snapshot.forEach(doc => {
+            msgList.push(doc.data());
+          });
+          msgList.sort(function(a, b) {
+            if (a.date > b.date) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });
+          this.msgList = msgList;
+        });
+    },
     //メッセージを送る
     sendMsg() {
       //console.log("clicked");
@@ -33,9 +62,7 @@ export default {
       //文字が入力されているときにのみ送信
       let msg = this.msg;
       //現在の日時を取得(文字列型)
-      let nowDate = moment()
-        .format("YYYY/MM/DD/k/m/s")
-        .toString();
+      let now = new Date();
       if (msg) {
         db.collection("USER")
           .doc("sample")
@@ -46,9 +73,9 @@ export default {
             //username: this.userName,
             //日付とメッセージの送信
             msg: this.msg,
-            date: nowDate
+            date: now
           });
-          //送信した後内容をからにする
+        //送信した後内容をからにする
         this.msg = "";
         this.text = "";
       }

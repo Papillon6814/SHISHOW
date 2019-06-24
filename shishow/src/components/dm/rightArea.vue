@@ -3,7 +3,8 @@
     <div v-for="msg in msgList" v-bind:key="msg.id">
       <ul>
         <li>{{msg.msg}}</li>
-        <li>{{msg.date}}</li>
+        <!--日付の変換-->
+        <li>{{msg.date.toDate().toLocaleString()}}</li>
       </ul>
     </div>
     <div class="inputArea">
