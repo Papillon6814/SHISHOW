@@ -329,11 +329,6 @@ export default {
       border-color: $su_banner_flame;
     }
 
-      top: 170px;
-      left: 202px;
-      right: 0px;
-    }
-
     .passwordConfirm {
       position: absolute;
 
