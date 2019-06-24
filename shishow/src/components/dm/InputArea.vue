@@ -21,36 +21,64 @@ export default {
       msg: ""
     };
   },
+  /*updated() {
+    this.loadMsg();
+  },*/
   methods: {
-    //メッセージを送る
-    sendMsg() {
-      console.log("clicked");
+    //これまでのメッセージをロード
+    loadMsg() {
       const db = firebase.firestore();
-      //ログインしているかつメッセージがある(今はいらない)
-      //if (!this.SignIn || !this.msg) return;
-      //データベースに値をpush
-      //事実上送信
+      //データベースから値を持ってきてsnapshotに代入
       db.collection("USER")
         .doc("sample")
         .collection("friends")
         .doc("jDIKmCZkXpCmYfqaeuu5")
         .collection("CHAT")
-        .add({
-          //username: this.userName,
-          msg: this.msg
+        .get()
+        .then(snapshot => {
+          //snapshotの値はsnapshot.val()で取得できる
+          //let rootList = snapshot.val()
+          let msgList = [];
+          snapshot.forEach(doc => {
+            msgList.push(doc.data());
+          });
+          msgList.sort(function(a, b) {
+            if (a.date > b.date) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });
+          this.msgList = msgList;
         });
-      //正常な時
-      /*.then(ref => {
-          this.errorMsg = "";
-          this.msg = "";
-        })
-        //エラーの時
-        .catch(error => {
-          this.errorMsg = "殺す";
-        });*/
-      //送信後中身を空にする
-      this.msg = "";
-      this.text = "";
+    },
+    //メッセージを送る
+    sendMsg() {
+      //console.log("clicked");
+      const db = firebase.firestore();
+      //ログインしているかの確認(今はいらない)
+      //if (!this.SignIn) return;
+      //データベースに値をpush
+      //文字が入力されているときにのみ送信
+      let msg = this.msg;
+      //現在の日時を取得(文字列型)
+      let now = new Date();
+      if (msg) {
+        db.collection("USER")
+          .doc("sample")
+          .collection("friends")
+          .doc("jDIKmCZkXpCmYfqaeuu5")
+          .collection("CHAT")
+          .add({
+            //username: this.userName,
+            //日付とメッセージの送信
+            msg: this.msg,
+            date: now
+          });
+        //送信した後内容をからにする
+        this.msg = "";
+        this.text = "";
+      }
     }
   }
 };
