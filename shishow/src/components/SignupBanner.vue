@@ -1,16 +1,29 @@
 <template>
-  <div class="signupBanner">
-    <span class="iconCirclePosition">
-      <div class="iconCircle" >
-        <img v-show="uploadedImage" :src="uploadedImage" id="icon"/>
-        <div class="iconDashedCircle" v-if="!uploadedImage">
-          <div class="plusPosition">
-            <i class="fas fa-plus"></i>
-          </div>
+  <div class="banner">
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img id="image" v-show="uploadedImage" :src="uploadedImage" />
+                <button id="button" type="button">Confirm</button>
+                <input type="button" id="closeBtn" value="close">  
+            </div>
         </div>
-        <input class="iconFile" type="file" @change="onFileChange">
-      </div>
-    </span>
+    </div>
+    <div id="trimmingButton">
+      <span class="iconCirclePosition">
+        <label>
+        <div class="iconCircle" >
+          <div id="result" ></div>  
+          <div class="iconDashedCircle" id='delete'>
+            <div class="plusPosition">
+              <i class="fas fa-plus"></i>
+            </div>
+          </div>
+          <input hidden class="iconFile" type="file" @change="onFileChange">
+        </div>
+        </label>
+      </span>
+    </div>
 
     <!-- achievements -->
 
@@ -62,7 +75,7 @@
 <script>
 import firebase from 'firebase'
 import 'firebase/firestore'
-
+import Cropper from 'cropperjs'
 
 // Your web app's Firebase configuration
 export const firebaseConfig = {
@@ -81,8 +94,11 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 let files;
 
+//使用するオリジナルの関数を定義
 export default {
+  //名前定義
   name: 'signupBanner',
+  //templateで使用する変数を定義
   data () {
     return  {
       username: '',
@@ -110,7 +126,12 @@ export default {
       else {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
-          alert('Create account: ', user.e_mail)
+
+          var email;
+
+          //変数に情報を格納
+          email = User.email;
+          alert('Create account: '+email);
           if(!this.uploadedImage) this.uploadedImage = url;
           this.addToDatabase(this.email,this.username,this.uploadedImage);
           })
@@ -153,6 +174,7 @@ export default {
 
 
     onFileChange(event) {
+      //file変数定義
       let files = event.target.files || event.dataTransfer.files;
       if(files[0].type.match(/image/)){
       this.showImage(files[0]);
@@ -162,10 +184,18 @@ export default {
     },
     // 画像表示の関数
     showImage(file) {
+      //FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
       let reader = new FileReader();
+      //ファイルが読み込まれたとき、eventを引数とするアロー関数作動
+      let place =this;
       reader.onload = (event) => {
+        //htmlにファイルを反映
         this.uploadedImage = event.target.result;
+        window.setTimeout(place.crop, 1);
       }
+      //読み込み開始
+      console.log(typeof modal);
+      modal.style.display = 'block';
       reader.readAsDataURL(file);
     },
 
@@ -176,8 +206,85 @@ export default {
       }
       return false;
     }
+
+    },
+
+    crop:function(){
+      
+      var root = this;
+      var image = document.getElementById('image');
+      var button = document.getElementById('button');
+      var result = document.getElementById('result');
+      var close = document.getElementById('closeBtn');
+      
+      var croppable = false;
+      
+      var cropper = new Cropper(image, {
+        aspectRatio: 1,         
+        viewMode: 1,            
+                                
+
+        
+        ready: function () { 
+          croppable = true;
+        },
+      });
+      close.onclick = function(){
+        modal.style.display = 'none';
+        cropper.destroy();
+        this.uploadedImage ='';
+      };
+      button.onclick = function () {
+        var croppedCanvas;
+        var roundedImage;
+
+        if (!croppable) {
+          return;
+        }
+        // Crop
+        croppedCanvas = cropper.getCroppedCanvas();
+
+
+        // Show
+        roundedImage = document.createElement('img');
+
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        var width = croppedCanvas.width;
+        var height = croppedCanvas.height;
+        canvas.width = width;
+        canvas.height = height;
+        context.imageSmoothingEnabled = true;
+        context.drawImage(croppedCanvas, 0, 0, width, height);
+        context.globalCompositeOperation = 'destination-in';
+        context.beginPath();
+        context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
+        context.fill();
+
+        roundedImage.src =canvas.toDataURL();
+        roundedImage.width =130;
+        roundedImage.height =130;
+        result.innerHTML = '';
+        
+        var del = document.getElementById('delete');
+        if(del != null){
+          del.textContent = null;
+          del.parentNode.removeChild(del);
+        }
+        cropper.destroy();
+        modal.style.display = 'none';
+        root.uploadedImage ='';
+
+
+
+        result.appendChild(roundedImage);
+      };
+    },
+
+    
   }
 }
+
 
 </script>
 
@@ -257,7 +364,7 @@ export default {
 
     }
 
-    #icon{
+    .iconCirclePosition {
       position: absolute;
       width: $icon_width;
       height: $icon_height;
@@ -408,9 +515,26 @@ export default {
     top: 220px;
     left: 202px;
   }
-
-  .editBioButton{
-
-    }
+}
+#result{  //cropper
+  z-index: 7;
+}
+//modal
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+    
+.modal-content{
+  background-color: white;
+  width: 500px;
+  margin: 40% auto;
 }
 </style>
