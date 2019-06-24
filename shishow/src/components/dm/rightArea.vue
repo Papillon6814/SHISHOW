@@ -16,7 +16,6 @@
 <script>
 import firebase from "firebase";
 import inputArea from "./InputArea";
-//const db = firebase.firestore();
 
 export default {
   data() {
@@ -31,17 +30,6 @@ export default {
   },
   created() {
     this.loadMsg();
-  },
-  firestore() {
-    return {
-      msgList: db
-        .collection("USER")
-        .doc("sample")
-        .collection("friends")
-        .doc("jDIKmCZkXpCmYfqaeuu5")
-        .collection("CHAT")
-        .orderBy("date")
-    };
   },
   methods: {
     //これまでのメッセージをロード
