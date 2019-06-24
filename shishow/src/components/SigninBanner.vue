@@ -69,7 +69,7 @@ export default {
       return this.$store.getters.isSignedIn;
     }
   },
-  
+
   methods: {
     login: function() {
       firebase.auth().signInWithEmailAndPassword(this.e_mail, this.password)
@@ -93,7 +93,7 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .signinBanner {
   position: absolute;
 

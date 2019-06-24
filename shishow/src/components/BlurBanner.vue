@@ -61,7 +61,7 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .instead-banner{
     width: $banner_width;
     height: $banner_height;

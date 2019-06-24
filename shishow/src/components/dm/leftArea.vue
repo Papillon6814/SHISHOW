@@ -1,7 +1,8 @@
 <template>
   <div id="leftArea">
     <dmBanner
-     :dmBannerUsername="friends[0]">
+     :dmBannerUsername="friends[0]"
+     :dmMsg="">
     </dmBanner>
   </div>
 </template>
