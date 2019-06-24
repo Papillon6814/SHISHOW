@@ -16,13 +16,14 @@
 <script>
 import firebase from "firebase";
 import inputArea from "./InputArea";
+//const db = firebase.firestore();
 
 export default {
   data() {
     return {
-      msgList: [],
-      msg: "",
-      errorMsg: ""
+      msgList: []
+      //msg: "",
+      //errorMsg: ""
     };
   },
   components: {
@@ -30,6 +31,17 @@ export default {
   },
   created() {
     this.loadMsg();
+  },
+  firestore() {
+    return {
+      msgList: db
+        .collection("USER")
+        .doc("sample")
+        .collection("friends")
+        .doc("jDIKmCZkXpCmYfqaeuu5")
+        .collection("CHAT")
+        .orderBy("date")
+    };
   },
   methods: {
     //これまでのメッセージをロード
@@ -41,8 +53,7 @@ export default {
         .collection("friends")
         .doc("jDIKmCZkXpCmYfqaeuu5")
         .collection("CHAT")
-        .get()
-        .then(snapshot => {
+        .onSnapshot(snapshot => {
           //snapshotの値はsnapshot.val()で取得できる
           //let rootList = snapshot.val()
           let msgList = [];

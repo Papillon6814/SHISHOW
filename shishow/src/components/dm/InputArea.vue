@@ -21,9 +21,9 @@ export default {
       msg: ""
     };
   },
-  updated() {
+  /*updated() {
     this.loadMsg();
-  },
+  },*/
   methods: {
     //これまでのメッセージをロード
     loadMsg() {
