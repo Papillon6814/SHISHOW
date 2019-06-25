@@ -40,6 +40,7 @@ import normalBanner from '../components/NormalBanner.vue'
 
 import firebase from '../plugin/firestore'
 import 'firebase/firestore'
+import '@firebase/auth'
 import store from '../store'
 
 let db = firebase.firestore();
@@ -97,8 +98,9 @@ export default {
       }
     },
     loadCurrentUser: function() {
-      console.log(db.collection("USER")
-      .doc(currentUser.email))
+      db.collection("USER")
+      .doc(currentUser.email)
+      .data().username;
     }
   }
 }
