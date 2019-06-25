@@ -1,5 +1,5 @@
 <template>
-  <div class="signupBanner">
+  <div class="banner">
     <span class="iconCirclePosition">
       <div class="iconCircle" >
         <img v-show="uploadedImage" :src="uploadedImage" id="icon"/>
@@ -94,10 +94,10 @@ export default {
       let url;
 
       if(!this.uploadedImage){
-          db.collection("Image").doc("SampleImage").get().then(doc =>{
-            url = doc.data()["image"];
-          });
-        }
+        db.collection("Image").doc("SampleImage").get().then(doc =>{
+          url = doc.data()["image"];
+        });
+      }
       if(this.p_confirm != this.password) {
         console.log('Password does not match!');
       } else if(this.errorIndication());
@@ -107,26 +107,43 @@ export default {
           alert('Create account: ', user.e_mail)
           if(!this.uploadedImage) this.uploadedImage = url;
           this.addToDatabase(this.email,this.username,this.uploadedImage);
-          })
-          .catch(error => {
-            alert(error.message)
-          })
-        }
-      },
+        })
+        .catch(error => {
+          alert(error.message)
+        })
+      }
+    },
 
-      addToDatabase(email, username,image) {
-        db.collection("USER").doc(email).set({
-          email: email,
-          username: username,
-          image: image,
-        })
-        .then(function(docRef) {
-          console.log('Document written with ID: ', docRef.id);
-        })
-        .catch(function(error) {
-          console.log("Error adding document: ", error);
-        })
-      },
+    addToDatabase(email, username,image) {
+      let url = db.collection("USER").doc(""+email).collection("friends").doc();
+      url.collection("CHAT").add({
+        msg:"",
+        date:"",
+      });
+      url.set({
+        username:""
+      });
+
+      
+      
+
+      db.collection("USER").doc(""+email).collection("incoming").add({username:""});
+      db.collection("USER").doc(""+email).collection("outgoing").add({username:""});
+      
+
+      db.collection("USER").doc(""+email).set({
+        email: email,
+        username: username,
+        image: image,
+
+      })
+      .then(function(docRef) {
+        console.log('Document written with ID: ', docRef.id);
+      })
+      .catch(function(error) {
+        console.log("Error adding document: ", error);
+      })
+    },
 
 
     onFileChange(event) {
@@ -137,6 +154,7 @@ export default {
         console.log("This is not image");
       }
     },
+
     // 画像表示の関数
     showImage(file) {
       let reader = new FileReader();
@@ -152,14 +170,88 @@ export default {
         return true;
       }
       return false;
-    }
+    },
+
+    crop:function(){
+    
+      var root = this;
+      var image = document.getElementById('image');
+      var button = document.getElementById('button');
+      var result = document.getElementById('result');
+      var close = document.getElementById('closeBtn');
+      
+      var croppable = false;
+      
+      var cropper = new Cropper(image, {
+        aspectRatio: 1,         
+        viewMode: 1,            
+                                
+
+        
+        ready: function () { 
+          croppable = true;
+        },
+      });
+      close.onclick = function(){
+        modal.style.display = 'none';
+        cropper.destroy();
+        this.uploadedImage ='';
+      };
+      button.onclick = function () {
+        var croppedCanvas;
+        var roundedImage;
+
+        if (!croppable) {
+          return;
+        }
+        // Crop
+        croppedCanvas = cropper.getCroppedCanvas();
+
+
+        // Show
+        roundedImage = document.createElement('img');
+
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        var width = croppedCanvas.width;
+        var height = croppedCanvas.height;
+        canvas.width = width;
+        canvas.height = height;
+        context.imageSmoothingEnabled = true;
+        context.drawImage(croppedCanvas, 0, 0, width, height);
+        context.globalCompositeOperation = 'destination-in';
+        context.beginPath();
+        context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
+        context.fill();
+
+        roundedImage.src =canvas.toDataURL();
+        roundedImage.width =130;
+        roundedImage.height =130;
+        result.innerHTML = '';
+        
+        var del = document.getElementById('delete');
+        if(del != null){
+          del.textContent = null;
+          del.parentNode.removeChild(del);
+        }
+        cropper.destroy();
+        modal.style.display = 'none';
+        root.uploadedImage ='';
+
+
+
+        result.appendChild(roundedImage);
+      };
+    } 
   }
 }
+
+
 
 </script>
 
 <style lang="scss">
-.signupBanner {
+.banner {
   position: absolute;
 
   width: $banner_width;
