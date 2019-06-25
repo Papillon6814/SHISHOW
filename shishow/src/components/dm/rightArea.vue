@@ -55,13 +55,6 @@ export default {
           snapshot.forEach(doc => {
             msgList.push(doc.data());
           });
-          /*msgList.sort(function(a, b) {
-            if (a.date > b.date) {
-              return 1;
-            } else {
-              return -1;
-            }
-          });*/
           this.msgList = msgList;
         });
     }
