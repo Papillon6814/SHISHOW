@@ -2,7 +2,11 @@
     <div id="root">
       <navi></navi>
       <div id="myBannerPosition">
-        <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
+        <myBanner
+        :username="username"
+         @extendMyBanner="extendOther"
+         v-if="userStatus">
+       </myBanner>
       </div>
       <div id="moving">
         <div class="normalBannerPosition">
@@ -34,22 +38,35 @@ import myBanner from '../components/MyBanner.vue'
 import normalBanner from '../components/NormalBanner.vue'
 //import gameBanner from '../components/GameBanner.vue'
 
-import firebase from 'firebase'
+import firebase from '../plugin/firestore'
 import 'firebase/firestore'
-import '@firebase/auth'
 import store from '../store'
+
+let db = firebase.firestore();
+
+let currentUser;
 
 export default {
   name: 'home',
+
+  data() {
+    return {
+      username: ''
+    }
+  },
+
   created: function() {
     this.onAuth();
+    this.loadCurrentUser();
   },
+
   components: {
     navi,
     myBanner,
     normalBanner
     //gameBanner
   },
+
   computed: {
     user() {
       return this.$store.getters.user;
@@ -58,6 +75,7 @@ export default {
       return this.$store.getters.isSignedIn;
     }
   },
+
   methods: {
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
@@ -65,15 +83,22 @@ export default {
         store.commit('onAuthStateChanged', user);
         store.commit('onUserStatusChanged', user.uid ? true : false)
       })
+
+      // 現在のユーザー
+      currentUser = firebase.auth().currentUser;
     },
-    extendOther:function(){
+    extendOther: function() {
       var active = true;
-      var move=document.getElementById('moving');
+      var move = document.getElementById('moving');
       move.style.top = "350px";
       this.active = !this.active;
       if(this.active === false){
         move.style.top = "45px"
       }
+    },
+    loadCurrentUser: function() {
+      console.log(db.collection("USER")
+      .doc(currentUser.email))
     }
   }
 }

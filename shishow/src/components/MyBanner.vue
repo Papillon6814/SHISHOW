@@ -18,7 +18,7 @@
     <div class="usernamePosition">
       <div class="fieldForUserName">
         <div class="username">
-          Nakataku
+
         </div>
       </div>
       <div class="fieldForDisplayDeshi">
@@ -30,14 +30,12 @@
     </div>
     <div class="idPosition">
       <div class="id">
-        qawsedrftgyhujkolp
+
       </div>
     </div>
     <div class="profilePosition">
       <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
-        最近では、予想外の趣味に没頭中！
+
       </div>
     </div>
     <div @click="logout" class="btn-circle-3d">ログアウト</div>
@@ -55,13 +53,21 @@ const db = firebase.firestore();
 
 export default {
   name: 'myBanner',
+
   data: function() {
-    return{
+    return {
       isA:true,
       isB:false,
       isC:false
     }
   },
+
+  props: [
+    'username',
+    'icon',
+    'msg'
+  ],
+
   methods: {
     doExtend: function() {
       this.isA = !this.isA,
