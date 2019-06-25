@@ -1,225 +1,225 @@
 <template>
   <div id="header">
-
     <div>
-      <img class="logo" src="../assets/logoShishow.png" />
+      <img class="logo" src="../assets/logoShishow.png">
     </div>
 
     <div class="centered">
       <div class="group">
-        <input type="text" id="search" required="required"/>
+        <input type="text" id="search" required="required">
         <label for="search">Search...</label>
         <div class="bar"></div>
       </div>
     </div>
 
-    <div class="logoSentence">
-      SHISHOW
-    </div>
+    <div class="logoSentence">SHISHOW</div>
 
     <div id="menuButtons">
       <router-link to="/directMessage">
-        <img class="dm" src="../assets/dm-button.png" />
+        <img class="dm" src="../assets/dm-button.png">
       </router-link>
-      <img class="game" src="../assets/gameuser-button.png" />
+      <img class="game" src="../assets/gameuser-button.png">
       <router-link to="/notification">
-        <img class="bell" src="../assets/bell-button.png" />
+        <img class="bell" src="../assets/bell-button.png">
       </router-link>
       <router-link to="/">
-        <img class="home" src="../assets/home-button.png" />
+        <img class="home" src="../assets/home-button.png">
       </router-link>
     </div>
   </div>
 </template>
+<script>
+export default {
+  data: {},
+  methods: {}
+};
+</script>
 
 <style lang="scss">
-  @import url('https://fonts.googleapis.com/css?family=Pangolin&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Pangolin&display=swap");
 
-  $secondary-color: #2196f3;
-  $searchbar_width: 400px;
+$secondary-color: #2196f3;
+$searchbar_width: 400px;
 
-  #header {
+#header {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: $header_height;
+
+  background-color: $header_color;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+
+  .centered {
     position: absolute;
 
-    top: 0;
-    left: 0;
+    top: 13px;
+    left: 100px;
 
-    width: 100%;
-    height: $header_height;
+    //width: $searchbar_width;
+    //height: $searchbar_width/2;
 
-    background-color: $header_color;
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
-    z-index: 10;
+    //margin: auto;
 
-    .centered {
-      position: absolute;
+    .group {
+      position: relative;
 
-      top: 13px;
-      left: 100px;
+      width: 100%;
+      height: $searchbar_width/5;
 
-      //width: $searchbar_width;
-      //height: $searchbar_width/2;
+      overflow: hidden;
 
-      //margin: auto;
+      label {
+        position: absolute;
+        left: 0;
 
-      .group {
-        position: relative;
+        top: $searchbar_width/15;
+        color: #ccc;
+
+        font: 400 $searchbar_width/15 Roboto;
+
+        cursor: text;
+        transition: 0.25s ease;
+      }
+
+      input {
+        display: block;
 
         width: 100%;
-        height: $searchbar_width/5;
 
-        overflow: hidden;
+        padding-top: $searchbar_width/15;
 
-        label {
-          position: absolute;
-          left: 0;
+        border: none;
+        border-radius: 0; // For iOS
 
-          top: $searchbar_width/15;
-          color: #ccc;
+        color: #fff;
+        background: $header_color;
 
-          font: 400 $searchbar_width/15 Roboto;
+        font-size: $searchbar_width/15;
 
-          cursor: text;
-          transition: .25s ease;
+        transition: 0.3s ease;
+
+        &:valid {
+          ~ label {
+            top: 0;
+            font: 700 $searchbar_width/25 Roboto;
+            color: #ccc;
+          }
         }
+        &:focus {
+          outline: none;
 
-        input {
-          display: block;
-
-          width: 100%;
-
-          padding-top: $searchbar_width/15;
-
-          border: none;
-          border-radius: 0; // For iOS
-
-          color: #fff;
-          background: $header_color;
-
-          font-size: $searchbar_width/15;
-
-          transition: .3s ease;
-
-          &:valid {
-            ~label {
-              top: 0;
-              font: 700 $searchbar_width/25 Roboto;
-              color: #ccc;
-            }
-          }
-          &:focus {
-            outline: none;
-
-            ~label {
-              top: 0;
-              font: 700 $searchbar_width/25 Roboto;
-              color: $secondary-color;
-            }
-
-            ~ .bar {
-              background: $secondary-color;
-            }
+          ~ label {
+            top: 0;
+            font: 700 $searchbar_width/25 Roboto;
+            color: $secondary-color;
           }
 
-          &:-webkit-autofill {
-            -webkit-box-shadow: 0 0 0px 1000px $header_color inset;
-            -webkit-text-fill-color: #fff !important;
+          ~ .bar {
+            background: $secondary-color;
           }
         }
 
-          .bar {
-            position: relative;
+        &:-webkit-autofill {
+          -webkit-box-shadow: 0 0 0px 1000px $header_color inset;
+          -webkit-text-fill-color: #fff !important;
+        }
+      }
 
-            content: '';
+      .bar {
+        position: relative;
 
-            width: $searchbar_width;
-            height: $searchbar_width/150;
+        content: "";
 
-            background: #ccc;
+        width: $searchbar_width;
+        height: $searchbar_width/150;
 
-            transition: .3s ease;
-          }
+        background: #ccc;
+
+        transition: 0.3s ease;
       }
     }
+  }
 
-    .logo{
+  .logo {
+    position: absolute;
+
+    width: $button_width;
+    height: $button_height;
+
+    top: 10px;
+    left: 10px;
+  }
+
+  .logoSentence {
+    position: absolute;
+
+    font-family: "Pangolin", cursive;
+    top: 20px;
+    font-size: 60px;
+
+    left: 50%;
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+
+    color: $logo_sentence_color;
+  }
+
+  ::selection {
+    background: rgba($secondary-color, 0.3);
+    transition: 0.3s ease;
+  }
+
+  #menuButtons {
+    position: absolute;
+
+    height: 100%;
+
+    right: 0;
+
+    .dm {
       position: absolute;
 
       width: $button_width;
       height: $button_height;
 
+      right: 50px;
       top: 10px;
-      left: 10px;
     }
 
-    .logoSentence {
+    .game {
       position: absolute;
 
-      font-family: 'Pangolin', cursive;
-      top: 20px;
-      font-size: 60px;
+      width: $button_width;
+      height: $button_height;
 
-      left: 50%;
-      transform: translate(-50%,0);
-      -webkit-transform: translate(-50%, 0);
-
-      color: $logo_sentence_color;
+      right: 150px;
+      top: 10px;
     }
 
-
-    ::selection {
-      background: rgba($secondary-color, .3);
-      transition: .3s ease;
-    }
-
-    #menuButtons {
+    .bell {
       position: absolute;
 
-      height: 100%;
+      width: $button_width;
+      height: $button_height;
 
-      right: 0;
-
-      .dm {
-        position: absolute;
-
-        width: $button_width;
-        height: $button_height;
-
-        right: 50px;
-        top: 10px;
-      }
-
-      .game {
-        position: absolute;
-
-        width: $button_width;
-        height: $button_height;
-
-        right: 150px;
-        top: 10px;
-      }
-
-      .bell {
-        position: absolute;
-
-        width: $button_width;
-        height: $button_height;
-
-        right: 250px;
-        top: 10px;
-      }
-
-      .home {
-        position: absolute;
-
-        width: $button_width;
-        height: $button_height;
-
-        right: 350px;
-        top: 10px;
-      }
+      right: 250px;
+      top: 10px;
     }
 
+    .home {
+      position: absolute;
+
+      width: $button_width;
+      height: $button_height;
+
+      right: 350px;
+      top: 10px;
+    }
   }
-
+}
 </style>
