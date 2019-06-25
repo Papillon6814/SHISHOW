@@ -1,23 +1,11 @@
 <template>
-  <div class="banner">
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-body">
-                <img id="image" v-show="uploadedImage" :src="uploadedImage" />
-                <button id="button" type="button">Confirm</button>
-                <input type="button" id="closeBtn" value="close">  
-            </div>
-        </div>
-    </div>
-    <div id="trimmingButton">
-      <span class="iconCirclePosition">
-        <label>
-        <div class="iconCircle" >
-          <div id="result" ></div>  
-          <div class="iconDashedCircle" id='delete'>
-            <div class="plusPosition">
-              <i class="fas fa-plus"></i>
-            </div>
+  <div class="signupBanner">
+    <span class="iconCirclePosition">
+      <div class="iconCircle" >
+        <img v-show="uploadedImage" :src="uploadedImage" id="icon"/>
+        <div class="iconDashedCircle" v-if="!uploadedImage">
+          <div class="plusPosition">
+            <i class="fas fa-plus"></i>
           </div>
         </div>
         <input class="iconFile" type="file" @change="onFileChange">
