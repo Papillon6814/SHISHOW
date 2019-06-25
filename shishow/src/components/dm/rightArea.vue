@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from "../../plugin/firestore";
 import inputArea from "./InputArea";
 
 export default {
@@ -73,11 +73,19 @@ export default {
   height: 100%;
 
   background-color: $theme_color_dm;
+
+  overflow-y: scroll;
 }
 //下部に表示する
 .inputArea {
   position: fixed;
+
+  width: 45%;
+  height: 50px;
+
   bottom: 200px;
+
+  z-index: 3;
 }
 li {
   list-style: none;

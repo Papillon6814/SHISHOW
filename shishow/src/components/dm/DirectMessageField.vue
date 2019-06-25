@@ -24,7 +24,7 @@ export default {
     position: absolute;
 
     width: 90%;
-    height: 1000px;
+    height: 800px;
 
     left: 5%;
     top: $header_height + 30px;
