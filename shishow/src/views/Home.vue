@@ -105,6 +105,7 @@ export default {
     position:absolute;
     /*top: 45px;
     left: 10%;*/
+    z-index: 1;
   }
 
   .normalBannerPosition {
@@ -121,8 +122,6 @@ export default {
       $i: $i + 1;
     }
     list-style: none;
-
-    z-index: -1
   }
 
   .gameBannerPosition {
