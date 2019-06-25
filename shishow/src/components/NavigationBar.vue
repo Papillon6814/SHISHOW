@@ -6,7 +6,7 @@
     <div class="centered">
       <div class="group">
         <div id="get_data">
-          <input type="text" id="search" v-model="search_key" required="required" />
+          <input type="text" id="search" required="required" />
           <label for="search">Search...</label>
           <div class="bar"></div>
           <router-link to="/SearchResult">
@@ -36,39 +36,12 @@
 </template>
 
 <script>
-/*import firebase from 'firebase'
-import 'firebase/firestore'
-import '@firebase/auth'
-import store from '../store'
-import router from '../router'
-
-//import signinBanner from '../components/SigninBanner.vue'
-
-export default ({
-  el: "#get_data",
-  data(){
-    return{
-      search_key: ''
-    }
-    computed: {
-      user() {
-        return this.$store.getters.user;
-      }
-    },
-    methods:{
-      search: function() {
-        firebase.auth().onAuthStateChanged(user => {
-          user = user ? user: {};
-          store.commit('onAuthStateChanged', user);
-          store.commit('onUserStatusChanged', user.uid ? true : false);
-      })
-    }
+  export default {
+    name:'navi'
   }
-})*/
-
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import url('https://fonts.googleapis.com/css?family=Pangolin&display=swap');
 
   $secondary-color: #2196f3;

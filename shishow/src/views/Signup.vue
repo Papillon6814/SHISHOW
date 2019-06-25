@@ -4,6 +4,7 @@
     <div id="signupBannerPosition">
       <signupBanner></signupBanner>
     </div>
+    </div>
   </div>
 </template>
 
@@ -11,6 +12,7 @@
 // @ is an alias to /sonBar.vue'
 import navi from '../components/NavigationBar.vue'
 import signupBanner from '../components/SignupBanner.vue'
+import trimmingButton from '../components/trimmingButton.vue'
 
 export default {
   name: 'signup',
@@ -28,6 +30,8 @@ export default {
     padding: 0;
     margin: 0;
 
+    height: 2000px;
+
     background-color: $dark_color;
   }
 
@@ -37,6 +41,13 @@ export default {
     //temporary top
     top: 150px;
     left: 10%;
+  }
+
+  .trimmingButtonPosition {
+    position: absolute;
+
+    top: 450px;
+    left: 45%;
   }
 
 </style>
