@@ -1,5 +1,5 @@
 <template>
-  <div id="root">
+  <div id="DirectMessage">
     <navi></navi>
     <dmField></dmField>
   </div>
@@ -20,5 +20,10 @@ export default {
 </script>
 
 <style lang='scss'>
+body {
+  height: 100%;
+  width: 100%;
 
+  overflow-y: hidden;
+}
 </style>

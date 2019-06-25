@@ -65,28 +65,34 @@ export default {
 <style lang='scss' scoped>
 #rightArea {
   position: absolute;
+  margin: 0 auto;
 
   top: 0;
   right: 0;
 
   width: 55%;
-  height: 100%;
+  height: calc(100% - 50px);
 
   background-color: $theme_color_dm;
 
   overflow-y: scroll;
+
+  //下部に表示する
+  .inputArea {
+    position: fixed;
+
+    width: calc(49.5% - 5px);
+    height: 50px;
+
+    left: auto;
+    bottom: 7.4%;
+
+    margin: 0 0 0 5px;
+
+    z-index: 3;
+  }
 }
-//下部に表示する
-.inputArea {
-  position: fixed;
 
-  width: 45%;
-  height: 50px;
-
-  bottom: 200px;
-
-  z-index: 3;
-}
 li {
   list-style: none;
 }

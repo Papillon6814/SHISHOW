@@ -94,7 +94,7 @@ export default {
   .smileEmojiPlace {
     position: absolute;
 
-    left: 3px;
+    left: 3%;
     top: 5px;
 
     font-size: 40px;
@@ -103,17 +103,17 @@ export default {
   .inputText {
     position: absolute;
 
-    left: 45px;
+    left: calc(3% + 40px + 3%);
     top: 10px;
 
-    width: 300px;
+    width: calc(88% - 80px);
     height: 30px;
   }
 
   .checkEmojiPlace {
     position: absolute;
 
-    left: 355px;
+    right: 3%;
     top: 5px;
 
     font-size: 40px;

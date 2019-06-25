@@ -34,7 +34,7 @@ import myBanner from '../components/MyBanner.vue'
 import normalBanner from '../components/NormalBanner.vue'
 //import gameBanner from '../components/GameBanner.vue'
 
-import firebase from 'firebase'
+import firebase from '../plugin/firestore'
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../store'
@@ -50,6 +50,7 @@ export default {
     normalBanner
     //gameBanner
   },
+
   computed: {
     user() {
       return this.$store.getters.user;
@@ -58,6 +59,8 @@ export default {
       return this.$store.getters.isSignedIn;
     }
   },
+
+
   methods: {
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
@@ -83,8 +86,8 @@ export default {
 <style lang="scss">
 
   html{
-    overflow-y:scroll;
-    overflow-x:hidden;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 
   body {
