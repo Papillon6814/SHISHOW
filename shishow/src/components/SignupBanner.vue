@@ -1,5 +1,5 @@
 <template>
-  <div class="banner">
+  <div class="signupBanner">
     <div id="modal" class="modal">
         <div class="modal-content">
             <div class="modal-body">
@@ -269,7 +269,7 @@ export default {
 
 
   }
-}
+
 
 
 </script>

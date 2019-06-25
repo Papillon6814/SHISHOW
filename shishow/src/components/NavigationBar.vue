@@ -6,7 +6,7 @@
     <div class="centered">
       <div class="group">
         <div id="get_data">
-          <input type="text" id="search" v-model="search_key" required="required" />
+          <input type="text" id="search" required="required" />
           <label for="search">Search...</label>
           <div class="bar"></div>
           <router-link to="/SearchResult">
