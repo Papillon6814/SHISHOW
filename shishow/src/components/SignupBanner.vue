@@ -1,18 +1,20 @@
 <template>
   <div class="signupBanner">
     <span class="iconCirclePosition">
-      <div class="iconCircle">
-        <div class="iconDashedCircle">
+      <div class="iconCircle" >
+        <img v-show="uploadedImage" :src="uploadedImage" id="icon"/>
+        <div class="iconDashedCircle" v-if="!uploadedImage">
           <div class="plusPosition">
             <i class="fas fa-plus"></i>
           </div>
-          <img v-show="uploadedImage" :src="uploadedImage">
-          <input class="iconFile" type="file" @change="onFileChange">
         </div>
+        <input class="iconFile" type="file" @change="onFileChange">
       </div>
     </span>
 
+
     <!-- achievements -->
+
     <div class="achievementPosition1">
       <div class="achievement"></div>
     </div>
@@ -54,6 +56,8 @@
   </div>
 </template>
 
+
+
 <script>
 import firebase from "firebase";
 import "firebase/firestore";
@@ -82,19 +86,28 @@ export default {
       email: '',
       password: '',
       p_confirm: '',
-      uploadedImage: ''
+      uploadedImage: '',
     }
   },
   methods: {
-      signUp: function () {
-        // サインアップボタンが押された時の処理
-        if(this.p_confirm != this.password) {
-          alert('Password does not match!');
-        } else {
-          this.addToDatabase(this.email, this.username);
-          firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-          .then(user => {
-            alert('Create account: ', user.e_mail)
+          signUp: function () {
+
+      let url;
+
+      if(!this.uploadedImage){
+          db.collection("Image").doc("SampleImage").get().then(doc =>{
+            url = doc.data()["image"];
+          });
+        }
+      if(this.p_confirm != this.password) {
+        console.log('Password does not match!');
+      } else if(this.errorIndication());
+      else {
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+        .then(user => {
+          alert('Create account: ', user.e_mail)
+          if(!this.uploadedImage) this.uploadedImage = url;
+          this.addToDatabase(this.email,this.username,this.uploadedImage);
           })
           .catch(error => {
             alert(error.message)
@@ -102,10 +115,11 @@ export default {
         }
       },
 
-      addToDatabase(email, username) {
+      addToDatabase(email, username,image) {
         db.collection("USER").doc(email).set({
           email: email,
-          username: username
+          username: username,
+          image: image,
         })
         .then(function(docRef) {
           console.log('Document written with ID: ', docRef.id);
@@ -115,21 +129,33 @@ export default {
         })
       },
 
-      onFileChange(event) {
-        files = event.target.files || event.dataTransfer.files;
-        this.showImage(files[0]);
-      },
 
-      // 画像表示の関数
-      showImage(file) {
-        let reader = new FileReader();
-        reader.onload = (event) => {
-          this.uploadedImage = event.target.result;
-        }
-        reader.readAsDataURL(file);
+    onFileChange(event) {
+      let files = event.target.files || event.dataTransfer.files;
+      if(files[0].type.match(/image/)){
+      this.showImage(files[0]);
+      }else{
+        console.log("This is not image");
       }
+    },
+    // 画像表示の関数
+    showImage(file) {
+      let reader = new FileReader();
+      reader.onload = (event) => {
+        this.uploadedImage = event.target.result;
+      }
+      reader.readAsDataURL(file);
+    },
+
+    errorIndication(){
+      if(!this.email){
+        if(!this.email) console.log("there is not email");
+        return true;
+      }
+      return false;
     }
   }
+}
 
 </script>
 
@@ -165,8 +191,10 @@ export default {
 
     cursor: pointer;
 
-    .iconDashedCircle {
-      position: relative;
+
+      .iconDashedCircle {
+        position: absolute;
+
 
       top: 4.5%;
       left: 4.5%;
@@ -188,22 +216,29 @@ export default {
       .plusPosition {
         position: absolute;
 
-        left: 49.5%;
-        top: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+
+          left: 49.5%;
+          top: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
       }
       .iconFile {
-        height: 100%;
-        width: 100%;
-
-        opacity: 0;
-
-        cursor: pointer;
-      }
+          height: 100%;
+          width: 100%;
+          opacity: 0;
+          cursor: pointer;
+        }
     }
-  }
+
+    #icon{
+      position: absolute;
+      width: $icon_width;
+      height: $icon_height;
+
+    }
+  
 
   .iconCirclePosition {
     position: absolute;
@@ -342,8 +377,8 @@ export default {
     left: 202px;
   }
 
-  /*.editBioButton{
+  .editBioButton{
 
-    }*/
+    }
 }
 </style>

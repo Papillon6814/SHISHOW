@@ -94,6 +94,10 @@ export default {
     position: absolute;
     padding-top:200px;
     $i: 1;
+    position:absolute;
+    width:100%;
+    left: 10%;
+    top:250px;
     @while $i <= 30{
       .n#{$i}{
         padding-top: 210px;/* + (200px * $i);*/
