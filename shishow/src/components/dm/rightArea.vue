@@ -2,9 +2,13 @@
   <div id="rightArea">
     <div v-for="msg in msgList" v-bind:key="msg.id">
       <ul>
-        <li>{{msg.msg}}</li>
+        <div class="chat-msg">
+          <li>{{msg.msg}}</li>
+        </div>
         <!--日付の変換-->
-        <li>{{msg.date.toDate().toLocaleString()}}</li>
+        <div class="caht-date">
+          <li>{{msg.date.toDate().toLocaleString()}}</li>
+        </div>
       </ul>
     </div>
     <div class="inputArea">
@@ -41,6 +45,7 @@ export default {
         .collection("friends")
         .doc("jDIKmCZkXpCmYfqaeuu5")
         .collection("CHAT")
+        .orderBy("date")
         .onSnapshot(snapshot => {
           //snapshotの値はsnapshot.val()で取得できる
           //let rootList = snapshot.val()
@@ -48,13 +53,13 @@ export default {
           snapshot.forEach(doc => {
             msgList.push(doc.data());
           });
-          msgList.sort(function(a, b) {
+          /*msgList.sort(function(a, b) {
             if (a.date > b.date) {
               return 1;
             } else {
               return -1;
             }
-          });
+          });*/
           this.msgList = msgList;
         });
     }
@@ -81,5 +86,13 @@ export default {
 }
 li {
   list-style: none;
+}
+
+.chat-msg {
+  float: left;
+}
+
+.chat-date {
+  float: right;
 }
 </style>

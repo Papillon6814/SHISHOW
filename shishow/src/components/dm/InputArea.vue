@@ -3,7 +3,7 @@
     <div class="smileEmojiPlace">
       <i class="fas fa-smile"></i>
     </div>
-    <input v-model="msg" type="text" class="inputText">
+    <input v-model="msg" type="text" class="inputText" v-on:keyup.enter="sendMsg">
     <div class="checkEmojiPlace">
       <i class="fas fa-check" @click="sendMsg"></i>
     </div>
