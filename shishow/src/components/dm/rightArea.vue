@@ -14,8 +14,17 @@
 </template>
 
 <script>
-import firebase from "../../plugin/firestore";
 import inputArea from "./InputArea";
+
+import firebase from "../../plugin/firestore";
+import 'firebase/firestore'
+import '@firebase/auth'
+import store from '../../store'
+
+let db = firebase.firestore();
+
+let currentUser;
+let msgList = [];
 
 export default {
   data() {
@@ -25,38 +34,30 @@ export default {
       //errorMsg: ""
     };
   },
+
   components: {
     inputArea
   },
+
   created() {
-    this.loadMsg();
+    this.fireinit();
   },
+
   methods: {
-    //これまでのメッセージをロード
+    fireinit: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false);
+      })
+
+      currentUser = firebase.auth().currentUser;
+    },
+    // これまでのメッセージをロード
     loadMsg() {
       const db = firebase.firestore();
-      //データベースから値を持ってきてsnapshotに代入
-      db.collection("USER")
-        .doc("sample")
-        .collection("friends")
-        .doc("jDIKmCZkXpCmYfqaeuu5")
-        .collection("CHAT")
-        .onSnapshot(snapshot => {
-          //snapshotの値はsnapshot.val()で取得できる
-          //let rootList = snapshot.val()
-          let msgList = [];
-          snapshot.forEach(doc => {
-            msgList.push(doc.data());
-          });
-          msgList.sort(function(a, b) {
-            if (a.date > b.date) {
-              return 1;
-            } else {
-              return -1;
-            }
-          });
-          this.msgList = msgList;
-        });
+
+
     }
   }
 };

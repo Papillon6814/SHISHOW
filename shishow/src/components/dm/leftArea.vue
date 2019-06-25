@@ -9,7 +9,8 @@
 
 <script>
 import dmBanner from'./dmBanner.vue'
-import firebase from 'firebase';
+
+import firebase from '../../plugin/firestore';
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
@@ -70,7 +71,7 @@ export default {
           .doc(doc1.id)
           .collection("CHAT")
           .get()
-          .then(querysnapshot2=> {
+          .then(querysnapshot2 => {
             querysnapshot2.forEach(doc2 => {
               myMsg.push(doc2.data().msg);
             })
