@@ -1,13 +1,13 @@
 <template>
-  <div id="inputBar">
-
-  </div>
 </template>
 
 <script>
+
+export default {
+  name: 'UserPage'
+}
+
 </script>
 
 <style lang='scss' scoped>
-  #inputBar {
-  }
 </style>

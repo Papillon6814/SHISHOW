@@ -21,31 +21,11 @@ export default {
       msg: ""
     };
   },
+  /*updated() {
+    this.loadMsg();
+  },*/
   methods: {
-    //メッセージを送る
-    sendMsg() {
-      //console.log("clicked");
-      const db = firebase.firestore();
-      //ログインしているかの確認(今はいらない)
-      //if (!this.SignIn) return;
-      //データベースに値をpush
-      //文字が入力されているときにのみ送信
-      let msg = this.msg;
-      if (msg) {
-        db.collection("USER")
-          .doc("sample")
-          .collection("friends")
-          .doc("jDIKmCZkXpCmYfqaeuu5")
-          .collection("CHAT")
-          .add({
-            //username: this.userName,
-            msg: this.msg
-          });
-        this.msg = "";
-        this.text = "";
-        this.loadMsg();
-      }
-    }, //これまでのメッセージをロード
+    //これまでのメッセージをロード
     loadMsg() {
       const db = firebase.firestore();
       //データベースから値を持ってきてsnapshotに代入
@@ -62,14 +42,49 @@ export default {
           snapshot.forEach(doc => {
             msgList.push(doc.data());
           });
+          msgList.sort(function(a, b) {
+            if (a.date > b.date) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });
           this.msgList = msgList;
         });
+    },
+    //メッセージを送る
+    sendMsg() {
+      //console.log("clicked");
+      const db = firebase.firestore();
+      //ログインしているかの確認(今はいらない)
+      //if (!this.SignIn) return;
+      //データベースに値をpush
+      //文字が入力されているときにのみ送信
+      let msg = this.msg;
+      //現在の日時を取得(文字列型)
+      let now = new Date();
+      if (msg) {
+        db.collection("USER")
+          .doc("sample")
+          .collection("friends")
+          .doc("jDIKmCZkXpCmYfqaeuu5")
+          .collection("CHAT")
+          .add({
+            //username: this.userName,
+            //日付とメッセージの送信
+            msg: this.msg,
+            date: now
+          });
+        //送信した後内容をからにする
+        this.msg = "";
+        this.text = "";
+      }
     }
   }
 };
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
 #inputBar {
   width: 100%;
   height: 100%;

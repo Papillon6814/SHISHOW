@@ -60,23 +60,8 @@
 
 
 <script>
-import firebase from 'firebase'
-import 'firebase/firestore'
-
-
-// Your web app's Firebase configuration
-export const firebaseConfig = {
-  apiKey: "AIzaSyD2D42pBXU_nXpo2wTd_IFs-4hogXE8Dq0",
-  authDomain: "shishow-7cc37.firebaseapp.com",
-  databaseURL: "https://shishow-7cc37.firebaseio.com",
-  projectId: "shishow-7cc37",
-  storageBucket: "shishow-7cc37.appspot.com",
-  messagingSenderId: "476890822571",
-  appId: "1:476890822571:web:508b49508a91c0d3"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+import firebase from "../plugin/firestore";
+import "firebase/firestore";
 
 const db = firebase.firestore();
 let files;
@@ -130,12 +115,12 @@ export default {
         username:""
       });
 
-      
-      
+
+
 
       db.collection("USER").doc(""+email).collection("incoming").add({username:""});
       db.collection("USER").doc(""+email).collection("outgoing").add({username:""});
-      
+
 
       db.collection("USER").doc(""+email).set({
           email: email,
@@ -181,9 +166,9 @@ export default {
 
 </script>
 
-<style lang="scss">
-.signupBanner {
-  position: absolute;
+<style lang="scss" scoped>
+  .signupBanner {
+    position: absolute;
 
   width: $banner_width;
   height: $banner_height;
@@ -270,7 +255,7 @@ export default {
       height: $icon_height;
 
     }
-  
+
 
   .iconCirclePosition {
     position: absolute;
@@ -359,58 +344,59 @@ export default {
     width: $user_width;
     height: $user_height;
 
+    // temporary color
     background-color: #fff;
-
-    border: solid;
-    border-width: 3px;
-    border-color: $si_window_flame;
   }
 
-  .usernamePosition{
-    position: absolute;
+    .usernamePosition {
+      position: absolute;
 
-    top: 30px;
-    left: 202px;
-    right: 0px;
-  }
+      top: 30px;
+      left: 20px;
+      right: 0px;
+    }
 
-  .password{
-    width: $id_width;
-    height: $id_height;
+    .email{
+      width: $user_width;
+      height: $user_height;
 
-    background-color: #fff;
+      background-color: #fff;
 
-    border: solid;
-    border-width: 3px;
-    border-color: $si_window_flame;
-  }
+      border: solid;
+      border-width: 3px;
+      border-color: $su_banner_flame;
+    }
 
-  .passwordPosition{
-    position: absolute;
+    .emailPosition{
+      position: absolute;
 
-    top: 130px;
-    left: 202px;
-    right: 0px;
-  }
+      top: 100px;
+      left: 202px !important;
+      right: 0px;
+    }
 
+    .password{
+      position: absolute;
 
-  .passwordConfirm {
-    position: absolute;
+      width: $id_width;
+      height: $id_height;
+      border: solid;
+      border-width: 3px;
+      border-color: $su_banner_flame;
+    }
 
-    width: 300px;
-    height: $id_height;
+    .passwordConfirm {
+      position: absolute;
 
-}
+      width: 300px;
+      height: $id_height;
 
-  .passwordConfirmPosition {
-    position: absolute;
+    }
 
-    top: 220px;
-    left: 202px;
-  }
-
-  .editBioButton{
-
+    .passwordConfirmPosition {
+      position: absolute;
+      top: 220px;
+      left: 202px;
     }
 }
 </style>
