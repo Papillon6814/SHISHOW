@@ -6,6 +6,7 @@
                 <img id="image" v-show="uploadedImage" :src="uploadedImage" />
                 <button id="button" type="button">Confirm</button>
                 <input type="button" id="closeBtn" value="close">  
+                <button @click="crop">Sign up</button>
             </div>
         </div>
     </div>
@@ -116,10 +117,10 @@ export default {
       let url;
 
       if(!this.uploadedImage){
-          db.collection("Image").doc("SampleImage").get().then(doc =>{
-            url = doc.data()["image"];
-          });
-        }
+        db.collection("Image").doc("SampleImage").get().then(doc =>{
+          url = doc.data()["image"];
+        });
+      }
       if(this.p_confirm != this.password) {
         console.log('Password does not match!');
       } else if(this.errorIndication());
@@ -134,15 +135,15 @@ export default {
           alert('Create account: '+email);
           if(!this.uploadedImage) this.uploadedImage = url;
           this.addToDatabase(this.email,this.username,this.uploadedImage);
-          })
-          .catch(error => {
-            alert(error.message)
-          })
-        }
-      },
+        })
+        .catch(error => {
+          alert(error.message)
+        })
+      }
+    },
 
-      addToDatabase(email, username,image) {
-        let url = db.collection("USER").doc(""+email).collection("friends").doc();
+    addToDatabase(email, username,image) {
+      let url = db.collection("USER").doc(""+email).collection("friends").doc();
       url.collection("CHAT").add({
         msg:"",
         date:"",
@@ -159,18 +160,18 @@ export default {
       
 
       db.collection("USER").doc(""+email).set({
-          email: email,
-          username: username,
-          image: image,
+        email: email,
+        username: username,
+        image: image,
 
-        })
-        .then(function(docRef) {
-          console.log('Document written with ID: ', docRef.id);
-        })
-        .catch(function(error) {
-          console.log("Error adding document: ", error);
-        })
-      },
+      })
+      .then(function(docRef) {
+        console.log('Document written with ID: ', docRef.id);
+      })
+      .catch(function(error) {
+        console.log("Error adding document: ", error);
+      })
+    },
 
 
     onFileChange(event) {
@@ -182,6 +183,7 @@ export default {
         console.log("This is not image");
       }
     },
+
     // 画像表示の関数
     showImage(file) {
       //FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
@@ -205,12 +207,10 @@ export default {
         return true;
       }
       return false;
-    }
-
     },
 
     crop:function(){
-      
+    
       var root = this;
       var image = document.getElementById('image');
       var button = document.getElementById('button');
@@ -279,17 +279,16 @@ export default {
 
         result.appendChild(roundedImage);
       };
-    },
-
-    
+    } 
   }
 }
+
 
 
 </script>
 
 <style lang="scss">
-.signupBanner {
+.banner {
   position: absolute;
 
   width: $banner_width;
