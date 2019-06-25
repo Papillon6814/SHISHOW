@@ -21,37 +21,7 @@ export default {
       msg: ""
     };
   },
-  /*updated() {
-    this.loadMsg();
-  },*/
   methods: {
-    //これまでのメッセージをロード
-    loadMsg() {
-      const db = firebase.firestore();
-      //データベースから値を持ってきてsnapshotに代入
-      db.collection("USER")
-        .doc("sample")
-        .collection("friends")
-        .doc("jDIKmCZkXpCmYfqaeuu5")
-        .collection("CHAT")
-        .get()
-        .then(snapshot => {
-          //snapshotの値はsnapshot.val()で取得できる
-          //let rootList = snapshot.val()
-          let msgList = [];
-          snapshot.forEach(doc => {
-            msgList.push(doc.data());
-          });
-          msgList.sort(function(a, b) {
-            if (a.date > b.date) {
-              return 1;
-            } else {
-              return -1;
-            }
-          });
-          this.msgList = msgList;
-        });
-    },
     //メッセージを送る
     sendMsg() {
       //console.log("clicked");
