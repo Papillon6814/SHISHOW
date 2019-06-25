@@ -4,26 +4,34 @@
       <div class="iconPic"></div>
     </span>
     <div class="achievementPosition1">
-      <div class="achievement"></div>
+      <div class="achievement">
+      </div>
     </div>
     <div class="achievementPosition2">
-      <div class="achievement"></div>
+      <div class="achievement">
+      </div>
     </div>
     <div class="achievementPosition3">
-      <div class="achievement"></div>
+      <div class="achievement">
+      </div>
     </div>
     <div class="usernamePosition">
       <div class="fieldForUserName">
-        <div class="username">Nakataku</div>
+        <div class="username">
+          Nakataku
+        </div>
       </div>
       <div class="fieldForDisplayDeshi">
         <div class="deshiPosition">
-          <div class="deshi"></div>
+          <div class="deshi">
+          </div>
         </div>
       </div>
     </div>
     <div class="idPosition">
-      <div class="id">qawsedrftgyhujkolp</div>
+      <div class="id">
+        qawsedrftgyhujkolp
+      </div>
     </div>
     <div class="profilePosition">
       <div class="profile">
@@ -34,307 +42,297 @@
     </div>
     <div @click="logout" class="btn-circle-3d">ログアウト</div>
     <span @click="doExtend" id="pullDownProperties">
-      <i class="fas fa-caret-down"></i>
+
+     <i class="fas fa-caret-down"></i>
     </span>
   </div>
 </template>
 
 <script>
-import firebase from "firebase";
-import "firebase/firestore";
-import "@firebase/auth";
-import router from "../router";
+import firebase from 'firebase'
+import 'firebase/firestore'
+import '@firebase/auth'
+import router from '../router'
 
 export default {
-  name: "myBanner",
-  props: ["email"],
+  name: 'myBanner',
   data: function() {
-    return {
+    return{
       isA: true,
-      isB: false,
-      userData: []
-    };
-  },
-  created: function() {
-    const db = firebase.firestore();
-    db.collection("USER")
-      .doc()
-      .get(snapshot => {
-        let userData = [];
-        snapshot.forEach(doc => {
-          userData.push(doc.data());
-        });
-        this.userData = userData;
-      });
+      isB: false
+    }
   },
   methods: {
     doExtend: function() {
-      (this.isA = !this.isA), (this.isB = !this.isB);
+      this.isA = !this.isA,
+      this.isB = !this.isB
     },
     logout: function() {
-      firebase
-        .auth()
-        .signOut()
-        .then(function() {
-          alert("Signed out.");
-          router.push("/");
-        })
-        .catch(function(e) {
-          console.log(e);
-        });
-    },
-    loadUserData: function() {
-      const db = firebase.firestore().collection("USER");
+      firebase.auth().signOut()
+      .then(function() {
+        alert('Signed out.');
+        router.push('/');
+      })
+      .catch(function(e) {
+        console.log(e)
+      })
     }
   }
-};
+}
+
 </script>
 
 <style lang="scss">
-.banner {
-  position: absolute;
+  .banner {
+    position: absolute;
 
-  width: $banner_width;
-  //temporary height
-  height: $banner_height;
+    width: $banner_width;
+    //temporary height
+    height: $banner_height;
 
-  background-color: $banner_color;
+    background-color: $banner_color;
 
-  border: solid;
-  border-width: 5px;
-  border-color: $banner_flame;
-  z-index: 2;
+    border: solid;
+    border-width: 5px;
+    border-color: $banner_flame;
+    z-index: 2;
 
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 
-  //children
-}
+    //children
+  }
 
-.extend {
-  position: absolute;
 
-  width: $banner_width;
-  //temporary height
-  height: $banner_height * 2;
 
-  background-color: $banner_color;
+  .extend{
+    position: absolute;
 
-  border: solid;
-  border-width: 5px;
-  border-color: $banner_flame;
-  z-index: 2;
-}
+    width: $banner_width;
+    //temporary height
+    height: $banner_height*2;
 
-.iconPic {
-  width: $icon_width;
-  height: $icon_height;
+    background-color: $banner_color;
 
-  // temporary color
-  background-color: #fff;
+    border: solid;
+    border-width: 5px;
+    border-color: $banner_flame;
+    z-index: 2;
 
-  border-radius: 50%;
-  border: solid;
-  border-width: 2px;
-  border-color: $window_flame;
-}
+  }
 
-.iconPicPosition {
-  position: absolute;
+    .iconPic {
+      width: $icon_width;
+      height: $icon_height;
 
-  top: 15px;
-  left: 34.1611111px;
-}
+      // temporary color
+      background-color: #fff;
 
-.achievement {
-  position: relative;
-  width: $achievement_width;
-  height: $achievement_height; //√3
-  background-color: #ffffff;
-  margin: $root_twelve 0;
+      border-radius: 50%;
+      border: solid;
+      border-width: 2px;
+      border-color: $window_flame;
+    }
 
-  /* border-left: dashed;
+    .iconPicPosition {
+      position: absolute;
+
+      top: 15px;
+      left: 34.1611111px;
+    }
+
+    .achievement {
+      position: relative;
+      width: $achievement_width;
+      height: $achievement_height; //√3
+      background-color: #ffffff;
+      margin: $root_twelve 0;
+
+      /* border-left: dashed;
       border-right: dashed;
       border-color: #111;
       border-width: 1.5px; */
-}
+    }
 
-.achievement:before,
-.achievement:after {
-  content: "";
-  position: absolute;
+    .achievement:before,
+    .achievement:after {
+      content: "";
+      position: absolute;
 
-  left: 0;
+      left: 0;
 
-  width: 0;
-  border-left: $a_half_width solid transparent;
-  border-right: $a_half_width dashed transparent;
-}
+      width: 0;
+      border-left: $a_half_width solid transparent;
+      border-right: $a_half_width dashed transparent;
+    }
 
-.achievement:before {
-  bottom: 100%;
-  border-bottom: $root_twelve solid #fff;
-}
+    .achievement:before {
+      bottom: 100%;
+      border-bottom: $root_twelve solid #fff;
+    }
 
-.achievement:after {
-  top: 100%;
-  width: 0;
-  border-top: $root_twelve solid #fff;
-}
+    .achievement:after {
+      top: 100%;
+      width: 0;
+      border-top: $root_twelve solid #fff;
+    }
 
-.achievementPosition1 {
-  position: absolute;
+    .achievementPosition1 {
+      position: absolute;
 
-  //top: -1.3vh;
-  //left: -1.8vh;
-  top: 145px;
-  left: 16.1611111px;
-}
+      //top: -1.3vh;
+      //left: -1.8vh;
+      top: 145px;
+      left: 16.1611111px;
+    }
 
-.achievementPosition2 {
-  position: absolute;
+    .achievementPosition2 {
+      position: absolute;
 
-  //top: -4.4vh;
-  //left: 5.9vh;
-  top: 160px;
-  left: 77.6611111px;
-}
+      //top: -4.4vh;
+      //left: 5.9vh;
+      top: 160px;
+      left: 77.6611111px;
+    }
 
-.achievementPosition3 {
-  position: absolute;
+    .achievementPosition3 {
+      position: absolute;
 
-  //top: -12.46vh;
-  //left: 14vh;
-  top: 145px;
-  left: 139.161111px;
-}
+      //top: -12.46vh;
+      //left: 14vh;
+      top: 145px;
+      left: 139.161111px;
+    }
 
-#pullDownProperties {
-  position: absolute;
+    #pullDownProperties {
+      position: absolute;
 
-  bottom: -5px;
-  left: 15px;
+      bottom: -5px;
+      left: 15px;
 
-  font-size: 58px;
-}
+      font-size: 58px;
+    }
 
-#pullDownProperties:hover {
-  color: $pulldown_color;
-}
+    #pullDownProperties:hover {
+      color: $pulldown_color;
+    }
 
-.username {
-  width: $user_width;
-  height: $user_height;
+    .username{
+      width: $user_width;
+      height: $user_height;
 
-  background-color: #fff;
+      background-color: #fff;
 
-  border: solid;
-  border-width: 3px;
-  border-color: $window_flame;
+      border: solid;
+      border-width: 3px;
+      border-color: $window_flame;
 
-  .fieldForUserName {
-  }
+      .fieldForUserName{
 
-  .fieldForDisplayDeshi {
-    .deshiPosition {
-      position: relative;
-      top: 0px;
-      right: 0px;
-      z-index: 99;
-
-      .deshi {
-        width: $deshi_width;
-        height: $deshi_height;
-
-        background-color: $window_flame;
       }
 
-      .deshi:before {
-        position: absolute;
-        content: "";
-        left: 0;
-        top: 0;
-        width: 0;
-        height: 0;
-        border: none;
-        border-left: solid 40px white;
-        border-bottom: solid 50px transparent;
+      .fieldForDisplayDeshi{
+        .deshiPosition{
+          position: relative;
+          top: 0px;
+          right: 0px;
+          z-index: 99;
+
+          .deshi{
+            width: $deshi_width;
+            height: $deshi_height;
+
+            background-color: $window_flame;
+          }
+
+          .deshi:before{
+            position: absolute;
+            content: '';
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border: none;
+            border-left: solid 40px white;
+            border-bottom: solid 50px transparent;
+          }
+        }
       }
     }
-  }
-}
 
-.usernamePosition {
-  position: absolute;
+    .usernamePosition{
+      position: absolute;
 
-  top: 30px;
-  left: 202px;
-  right: 0px;
-}
+      top: 30px;
+      left: 202px;
+      right: 0px;
+    }
 
-.id {
-  width: $id_width;
-  height: $id_height;
+    .id{
+      width: $id_width;
+      height: $id_height;
 
-  background-color: #fff;
+      background-color: #fff;
 
-  border: solid;
-  border-width: 3px;
-  border-color: $window_flame;
-}
+      border: solid;
+      border-width: 3px;
+      border-color: $window_flame;
+    }
 
-.idPosition {
-  position: absolute;
+    .idPosition{
+      position: absolute;
 
-  top: 100px;
-  left: 202px;
-  right: 0px;
-}
+      top: 100px;
+      left: 202px;
+      right: 0px;
+    }
 
-.profile {
-  width: $profile_width;
-  height: $profile_height;
+    .profile{
+      width: $profile_width;
+      height: $profile_height;
 
-  background-color: #fff;
+      background-color: #fff;
 
-  border: solid;
-  border-width: 3px;
-  border-color: $window_flame;
-}
+      border: solid;
+      border-width: 3px;
+      border-color: $window_flame;
+    }
 
-.profilePosition {
-  position: absolute;
+    .profilePosition{
+      position: absolute;
 
-  top: 150px;
-  left: 202px;
-  right: 25px;
-}
+      top: 150px;
+      left: 202px;
+      right: 25px;
+    }
 
-.btn-circle-3d {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  display: inline-block;
-  text-decoration: none;
-  background: #ff8181;
-  color: #fff;
-  width: 130px;
-  height: 80px;
-  line-height: 79px;
-  border-radius: 50%;
-  text-align: center;
-  font-weight: bold;
-  overflow: hidden;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-  border-bottom: solid 3px #bd6565;
-  transition: 0.4s;
+    .btn-circle-3d {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      display: inline-block;
+      text-decoration: none;
+      background: #ff8181;
+      color: #fff;
+      width: 130px;
+      height: 80px;
+      line-height: 79px;
+      border-radius: 50%;
+      text-align: center;
+      font-weight: bold;
+      overflow: hidden;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+      border-bottom: solid 3px #bd6565;
+      transition: .4s;
 
-  cursor: pointer;
-}
+      cursor: pointer;
+    }
 
-.btn-circle-3d:active {
-  -webkit-transform: translateY(2px);
-  transform: translateY(2px);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-  border-bottom: none;
-}
+    .btn-circle-3d:active {
+      -webkit-transform: translateY(2px);
+      transform: translateY(2px);
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+      border-bottom: none;
+    }
+
+
 </style>

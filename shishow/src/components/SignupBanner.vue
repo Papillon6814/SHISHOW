@@ -1,8 +1,8 @@
 <template>
   <div class="signupBanner">
     <span class="iconCirclePosition">
-      <div class="iconCircle">
-        <img v-show="uploadedImage" :src="uploadedImage" id="icon">
+      <div class="iconCircle" >
+        <img v-show="uploadedImage" :src="uploadedImage" id="icon"/>
         <div class="iconDashedCircle" v-if="!uploadedImage">
           <div class="plusPosition">
             <i class="fas fa-plus"></i>
@@ -11,6 +11,7 @@
         <input class="iconFile" type="file" @change="onFileChange">
       </div>
     </span>
+
 
     <!-- achievements -->
 
@@ -39,12 +40,7 @@
     </div>
 
     <div class="passwordConfirmPosition">
-      <input
-        class="passwordConfirm"
-        type="password"
-        placeholder="CONFIRM PASSWORD"
-        v-model="p_confirm"
-      >
+      <input class="passwordConfirm" type="password" placeholder="CONFIRM PASSWORD" v-model="p_confirm">
     </div>
 
     <div class="profilePosition"></div>
@@ -53,7 +49,7 @@
 
     <!--
     <span id="pullDownProperties">
-    <i class="fas fa-caret-down"></i>
+     <i class="fas fa-caret-down"></i>
     </span>
     -->
   </div>
@@ -79,99 +75,87 @@ export const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
-//let files;
+let files;
 
 export default {
-  name: "signupBanner",
-  data() {
-    return {
-      username: "",
-      email: "",
-      password: "",
-      p_confirm: "",
-      uploadedImage: ""
-    };
-  },
-  //メールアドレスをmyBannerに送信するためのプロパティの設定
-  components: {
-    email
+  name: 'signupBanner',
+  data () {
+    return  {
+      username: '',
+      email: '',
+      password: '',
+      p_confirm: '',
+      uploadedImage: '',
+    }
   },
   methods: {
-    signUp: function() {
+          signUp: function () {
+
       let url;
-      //画像のアップロード
-      if (!this.uploadedImage) {
-        //ImageコレクションのSampleImageドキュメントから画像を持ってくる
-        db.collection("Image")
-          .doc("SampleImage")
-          .get()
-          .then(doc => {
+
+      if(!this.uploadedImage){
+          db.collection("Image").doc("SampleImage").get().then(doc =>{
             url = doc.data()["image"];
           });
-      }
-      //パスワードが違う
-      if (this.p_confirm != this.password) {
-        console.log("Password does not match!");
-      } //メールアドレスのチェック
-      else if (this.errorIndication());
+        }
+      if(this.p_confirm != this.password) {
+        console.log('Password does not match!');
+      } else if(this.errorIndication());
       else {
-        //ユーザーの登録
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.email, this.password)
-          .then(user => {
-            alert("Create account: ", user.e_mail);
-            if (!this.uploadedImage) this.uploadedImage = url;
-            this.addToDatabase(this.email, this.username, this.uploadedImage);
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+        .then(user => {
+          alert('Create account: ', user.e_mail)
+          if(!this.uploadedImage) this.uploadedImage = url;
+          this.addToDatabase(this.email,this.username,this.uploadedImage);
           })
           .catch(error => {
-            alert(error.message);
-          });
-      }
-    },
-    //データベースにデータを追加
-    addToDatabase(email, username, image) {
-      db.collection("USER")
-        .doc(email)
-        .set({
+            alert(error.message)
+          })
+        }
+      },
+
+      addToDatabase(email, username,image) {
+        db.collection("USER").doc(email).set({
           email: email,
           username: username,
-          image: image
+          image: image,
         })
         .then(function(docRef) {
-          console.log("Document written with ID: ", docRef.id);
+          console.log('Document written with ID: ', docRef.id);
         })
         .catch(function(error) {
           console.log("Error adding document: ", error);
-        });
-    },
+        })
+      },
+
 
     onFileChange(event) {
       let files = event.target.files || event.dataTransfer.files;
-      if (files[0].type.match(/image/)) {
-        this.showImage(files[0]);
-      } else {
+      if(files[0].type.match(/image/)){
+      this.showImage(files[0]);
+      }else{
         console.log("This is not image");
       }
     },
     // 画像表示の関数
     showImage(file) {
       let reader = new FileReader();
-      reader.onload = event => {
+      reader.onload = (event) => {
         this.uploadedImage = event.target.result;
-      };
+      }
       reader.readAsDataURL(file);
     },
-    //メールじゃないときの処理
-    errorIndication() {
-      if (!this.email) {
-        if (!this.email) console.log("there is not email");
+
+    errorIndication(){
+      if(!this.email){
+        if(!this.email) console.log("there is not email");
         return true;
       }
       return false;
     }
   }
-};
+}
+
 </script>
 
 <style lang="scss">
@@ -204,8 +188,10 @@ export default {
 
     cursor: pointer;
 
-    .iconDashedCircle {
-      position: absolute;
+
+      .iconDashedCircle {
+        position: absolute;
+
 
       top: 4.5%;
       left: 4.5%;
@@ -227,26 +213,29 @@ export default {
       .plusPosition {
         position: absolute;
 
-        left: 49.5%;
-        top: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-      }
-    }
-    .iconFile {
-      height: 100%;
-      width: 100%;
-      opacity: 0;
-      cursor: pointer;
-    }
-  }
 
-  #icon {
-    position: absolute;
-    width: $icon_width;
-    height: $icon_height;
-  }
+          left: 49.5%;
+          top: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+      }
+      .iconFile {
+          height: 100%;
+          width: 100%;
+          opacity: 0;
+          cursor: pointer;
+        }
+    }
+
+    #icon{
+      position: absolute;
+      width: $icon_width;
+      height: $icon_height;
+
+    }
+  
 
   .iconCirclePosition {
     position: absolute;
@@ -331,7 +320,7 @@ export default {
     color: $pulldown_color;
   }
 
-  .username {
+  .username{
     width: $user_width;
     height: $user_height;
 
@@ -342,7 +331,7 @@ export default {
     border-color: $si_window_flame;
   }
 
-  .usernamePosition {
+  .usernamePosition{
     position: absolute;
 
     top: 30px;
@@ -350,7 +339,7 @@ export default {
     right: 0px;
   }
 
-  .password {
+  .password{
     width: $id_width;
     height: $id_height;
 
@@ -361,7 +350,7 @@ export default {
     border-color: $si_window_flame;
   }
 
-  .passwordPosition {
+  .passwordPosition{
     position: absolute;
 
     top: 100px;
@@ -369,12 +358,14 @@ export default {
     right: 0px;
   }
 
+
   .passwordConfirm {
     position: absolute;
 
     width: 300px;
     height: $id_height;
-  }
+
+}
 
   .passwordConfirmPosition {
     position: absolute;
@@ -383,7 +374,8 @@ export default {
     left: 202px;
   }
 
-  .editBioButton {
-  }
+  .editBioButton{
+
+    }
 }
 </style>
