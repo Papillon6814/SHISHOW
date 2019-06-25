@@ -5,9 +5,9 @@
       <myBanner v-if="userStatus"></myBanner>
     </div>
     <div class="normalBannerPosition">
-      <!--<div v-for="N in 10" :key="N" v-bind:class="'n'+N">-->
-      <normalBanner></normalBanner>
-      <!--</div>-->
+      <div v-for="N in 10" :key="N" v-bind:class="'n'+N">
+        <normalBanner></normalBanner>
+      </div>
       <!-- <li class="n2">
           <normalBanner></normalBanner>
         </li>
@@ -39,8 +39,14 @@ import store from "../store";
 
 export default {
   name: "home",
+  data() {
+    return {
+      userData: []
+    };
+  },
   created: function() {
     this.onAuth();
+    this.loadUser();
   },
   components: {
     navi,
@@ -63,6 +69,17 @@ export default {
         store.commit("onAuthStateChanged", user);
         store.commit("onUserStatusChanged", user.uid ? true : false);
       });
+    },
+    //全てのメルアドを読み込むようにする
+    loadUser() {
+      const db = firebase.firestore();
+      db.collection("USER")
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            this.userData.push(doc.data());
+          });
+        });
     }
   }
 };

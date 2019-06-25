@@ -1,29 +1,27 @@
 <template>
   <div class="normalBanner">
-    <div v-for="name in userName" v-bind:key="name.id">
-      <span class="iconPicPosition">
-        <div class="iconPic"></div>
-      </span>
-      <div class="achievementPosition1">
-        <div class="achievement"></div>
-      </div>
-      <div class="achievementPosition2">
-        <div class="achievement"></div>
-      </div>
-      <div class="achievementPosition3">
-        <div class="achievement"></div>
-      </div>
-      <div class="usernamePosition">
-        <div class="username">{{name.username}}</div>
-      </div>
-      <div class="idPosition">
-        <div class="id">qawsedrftgyhujkolp</div>
-      </div>
-      <div class="profilePosition">
-        <div class="profile">
-          新しいことにチャレンジすることが好き!
-          テニス、スキー、スノーボード、ゴルフ、
-        </div>
+    <span class="iconPicPosition">
+      <div class="iconPic"></div>
+    </span>
+    <div class="achievementPosition1">
+      <div class="achievement"></div>
+    </div>
+    <div class="achievementPosition2">
+      <div class="achievement"></div>
+    </div>
+    <div class="achievementPosition3">
+      <div class="achievement"></div>
+    </div>
+    <div class="usernamePosition">
+      <div class="username">nakano</div>
+    </div>
+    <div class="idPosition">
+      <div class="id">qawsedrftgyhujkolp</div>
+    </div>
+    <div class="profilePosition">
+      <div class="profile">
+        新しいことにチャレンジすることが好き!
+        テニス、スキー、スノーボード、ゴルフ、
       </div>
     </div>
     <button>Panic button</button>
@@ -39,27 +37,10 @@ import firebase from "firebase";
 export default {
   name: "normalBanner",
   data() {
-    return {
-      userData: [],
-      userName: []
-    };
+    return {};
   },
-  created() {
-    this.loadUser();
-  },
-  methods: {
-    //全てのメルアドを読み込むようにする
-    loadUser() {
-      const db = firebase.firestore();
-      db.collection("USER")
-        .get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            this.userName.push(doc.data());
-          });
-        });
-    }
-  }
+  created() {},
+  methods: {}
 };
 </script>
 
