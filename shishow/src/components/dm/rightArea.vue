@@ -1,15 +1,17 @@
 <template>
   <div id="rightArea">
     <div v-for="msg in msgList" v-bind:key="msg.id">
-      <ul>
-        <div class="chat-msg">
-          <li>{{msg.msg}}</li>
-        </div>
-        <!--日付の変換-->
-        <div class="caht-date">
-          <li>{{msg.date.toDate().toLocaleString()}}</li>
-        </div>
-      </ul>
+      <div class="chat">
+        <ul>
+          <div class="chat-msg">
+            <li>{{msg.msg}}</li>
+          </div>
+          <!--日付の変換-->
+          <div class="chat-date">
+            <li>{{msg.date.toDate().toLocaleString()}}</li>
+          </div>
+        </ul>
+      </div>
     </div>
     <div class="inputArea">
       <inputArea></inputArea>
@@ -88,11 +90,17 @@ li {
   list-style: none;
 }
 
+.chat {
+  border: 1px solid black;
+}
+
 .chat-msg {
   float: left;
+  padding: 5px;
 }
 
 .chat-date {
-  float: right;
+  //float: right;
+  font-size: 15px;
 }
 </style>
