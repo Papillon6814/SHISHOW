@@ -34,10 +34,9 @@ body {
 }
 
 #signinBannerPosition {
-  position: absolute;
-  width: 100%;
+  position: relative;
   //temporary top
-  top: 150px;
+  top: 45px;
   left: 10%;
 }
 

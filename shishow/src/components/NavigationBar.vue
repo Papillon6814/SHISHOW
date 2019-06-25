@@ -1,18 +1,15 @@
 <template>
   <div id="header">
+
     <div>
       <img class="logo" src="../assets/logoShishow.png" />
     </div>
+
     <div class="centered">
       <div class="group">
-        <div id="get_data">
-          <input type="text" id="search" v-model="search_key" required="required" />
-          <label for="search">Search...</label>
-          <div class="bar"></div>
-          <router-link to="/SearchResult">
-            <img class="sch" src="../assets/search-button.png" />
-          </router-link>
-        </div>
+        <input type="text" id="search" required="required"/>
+        <label for="search">Search...</label>
+        <div class="bar"></div>
       </div>
     </div>
 
@@ -34,39 +31,6 @@
     </div>
   </div>
 </template>
-
-<script>
-/*import firebase from 'firebase'
-import 'firebase/firestore'
-import '@firebase/auth'
-import store from '../store'
-import router from '../router'
-
-//import signinBanner from '../components/SigninBanner.vue'
-
-export default ({
-  el: "#get_data",
-  data(){
-    return{
-      search_key: ''
-    }
-    computed: {
-      user() {
-        return this.$store.getters.user;
-      }
-    },
-    methods:{
-      search: function() {
-        firebase.auth().onAuthStateChanged(user => {
-          user = user ? user: {};
-          store.commit('onAuthStateChanged', user);
-          store.commit('onUserStatusChanged', user.uid ? true : false);
-      })
-    }
-  }
-})*/
-
-</script>
 
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css?family=Pangolin&display=swap');
@@ -174,15 +138,6 @@ export default ({
             background: #ccc;
 
             transition: .3s ease;
-          }
-          .sch{
-            position: absolute;
-
-            width: 45px;
-            height: 45px;
-
-            left: 355px;
-            top: 22px;
           }
       }
     }

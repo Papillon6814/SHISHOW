@@ -6,7 +6,6 @@
                 <img id="image" v-show="uploadedImage" :src="uploadedImage" />
                 <button id="button" type="button">Confirm</button>
                 <input type="button" id="closeBtn" value="close">  
-                <button @click="crop">Sign up</button>
             </div>
         </div>
     </div>
@@ -20,14 +19,13 @@
               <i class="fas fa-plus"></i>
             </div>
           </div>
-          <input hidden class="iconFile" type="file" @change="onFileChange">
         </div>
-        </label>
-      </span>
-    </div>
+        <input class="iconFile" type="file" @change="onFileChange">
+      </div>
+    </span>
+
 
     <!-- achievements -->
-
 
     <div class="achievementPosition1">
       <div class="achievement"></div>
@@ -45,7 +43,6 @@
     <div class="usernamePosition">
       <input class="username" type="text" placeholder="Display name" v-model="username">
     </div>
-
     <div class="emailPosition">
       <input class="email" type="text" placeholder="E-mail" v-model="email">
     </div>
@@ -72,12 +69,9 @@
 
 
 
-
 <script>
-import firebase from 'firebase'
-import 'firebase/firestore'
-import Cropper from 'cropperjs'
-
+import firebase from "firebase";
+import "firebase/firestore";
 // Your web app's Firebase configuration
 export const firebaseConfig = {
   apiKey: "AIzaSyD2D42pBXU_nXpo2wTd_IFs-4hogXE8Dq0",
@@ -95,11 +89,8 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 let files;
 
-//使用するオリジナルの関数を定義
 export default {
-  //名前定義
   name: 'signupBanner',
-  //templateで使用する変数を定義
   data () {
     return  {
       username: '',
@@ -110,9 +101,7 @@ export default {
     }
   },
   methods: {
-
-    signUp: function () {
-
+          signUp: function () {
 
       let url;
 
@@ -127,12 +116,7 @@ export default {
       else {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
-
-          var email;
-
-          //変数に情報を格納
-          email = User.email;
-          alert('Create account: '+email);
+          alert('Create account: ', user.e_mail)
           if(!this.uploadedImage) this.uploadedImage = url;
           this.addToDatabase(this.email,this.username,this.uploadedImage);
         })
@@ -175,7 +159,6 @@ export default {
 
 
     onFileChange(event) {
-      //file変数定義
       let files = event.target.files || event.dataTransfer.files;
       if(files[0].type.match(/image/)){
       this.showImage(files[0]);
@@ -186,18 +169,10 @@ export default {
 
     // 画像表示の関数
     showImage(file) {
-      //FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
       let reader = new FileReader();
-      //ファイルが読み込まれたとき、eventを引数とするアロー関数作動
-      let place =this;
       reader.onload = (event) => {
-        //htmlにファイルを反映
         this.uploadedImage = event.target.result;
-        window.setTimeout(place.crop, 1);
       }
-      //読み込み開始
-      console.log(typeof modal);
-      modal.style.display = 'block';
       reader.readAsDataURL(file);
     },
 
@@ -301,8 +276,6 @@ export default {
   border-color: $su_banner_flame;
   z-index: 2;
 
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-
   //children
 
   .iconCircle {
@@ -324,10 +297,8 @@ export default {
         position: absolute;
 
 
-
       top: 4.5%;
       left: 4.5%;
-
 
       width: 90%;
       height: 90%;
@@ -360,14 +331,6 @@ export default {
           opacity: 0;
           cursor: pointer;
         }
-
-    }
-
-    .iconCirclePosition {
-      position: absolute;
-      width: $icon_width;
-      height: $icon_height;
-
     }
 
     #icon{
@@ -494,7 +457,7 @@ export default {
   .passwordPosition{
     position: absolute;
 
-    top: 130px;
+    top: 100px;
     left: 202px;
     right: 0px;
   }
@@ -514,26 +477,9 @@ export default {
     top: 220px;
     left: 202px;
   }
-}
-#result{  //cropper
-  z-index: 7;
-}
-//modal
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.5);
-}
-    
-.modal-content{
-  background-color: white;
-  width: 500px;
-  margin: 40% auto;
+
+  .editBioButton{
+
+    }
 }
 </style>

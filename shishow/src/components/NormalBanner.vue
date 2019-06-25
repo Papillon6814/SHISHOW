@@ -1,5 +1,5 @@
 <template>
-  <div class="normalBanner" v-bind:class="{ 'banner': isA, 'extend': isB }">
+  <div class="normalBanner">
     <span class="iconPicPosition">
       <div class="iconPic"></div>
     </span>
@@ -31,8 +31,8 @@
         テニス、スキー、スノーボード、ゴルフ、
       </div>
     </div>
-    <div class="n_btn-circle-3d">江崎にフレ申請</div>
-    <span @click="doExtend" id="pullDownProperties">
+    <button>Panic button</button>
+    <span id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
   </div>
@@ -41,19 +41,7 @@
 <script>
 
 export default {
-  name: 'normalBanner',
-  data: function() {
-    return{
-      isA: true,
-      isB: false
-    }
-  },
-  methods: {
-    doExtend: function() {
-      this.isA = !this.isA,
-      this.isB = !this.isB
-    }
-  }
+  name: 'normalBanner'
 }
 
 </script>
@@ -73,11 +61,7 @@ export default {
     border-color: $n_banner_flame;
     z-index: 2;
 
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-
     //children
-    
-
 
     .iconPic {
       width: $n_icon_width;
@@ -184,8 +168,8 @@ export default {
     .usernamePosition{
       position: absolute;
 
-      top: 18px;
-      left: 172px;
+      top: 30px;
+      left: 202px;
       right: 0px;
     }
 
@@ -203,8 +187,8 @@ export default {
     .idPosition{
       position: absolute;
 
-      top: 68px;
-      left: 172px;
+      top: 80px;
+      left: 202px;
       right: 0px;
     }
 
@@ -222,38 +206,9 @@ export default {
     .profilePosition{
       position: absolute;
 
-      top: 108px;
-      left: 172px;
+      top: 120px;
+      left: 202px;
       right: 25px;
-    }
-
-    .n_btn-circle-3d {
-      position: relative;
-      top: 32px;
-      left:39%;
-      display: inline-block;
-      text-decoration: none;
-      background: #ff8181;
-      color: #fff;
-      width: 100px;
-      height: 60px;
-      line-height: 63px;
-      border-radius: 50%;
-      text-align: center;
-      font-weight: bold;
-      overflow: hidden;
-      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-      border-bottom: solid 3px #bd6565;
-      transition: .4s;
-
-      cursor: pointer;
-    }
-
-    .n_btn-circle-3d:active {
-      -webkit-transform: translateY(2px);
-      transform: translateY(2px);
-      box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-      border-bottom: none;
     }
 
     /*.editBioButton{

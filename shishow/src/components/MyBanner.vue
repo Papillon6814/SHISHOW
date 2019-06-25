@@ -41,7 +41,8 @@
       </div>
     </div>
     <div @click="logout" class="btn-circle-3d">ログアウト</div>
-    <span v-bind:class="{reverse:isC}" @click="doExtend" id="pullDownProperties">
+    <span @click="doExtend" id="pullDownProperties">
+
      <i class="fas fa-caret-down"></i>
     </span>
   </div>
@@ -57,17 +58,14 @@ export default {
   name: 'myBanner',
   data: function() {
     return{
-      isA:true,
-      isB:false,
-      isC:false
+      isA: true,
+      isB: false
     }
   },
   methods: {
     doExtend: function() {
       this.isA = !this.isA,
-      this.isB = !this.isB,
-      this.isC = !this.isC,
-      this.$emit('extendMyBanner')
+      this.isB = !this.isB
     },
     logout: function() {
       firebase.auth().signOut()
@@ -97,11 +95,10 @@ export default {
     border: solid;
     border-width: 5px;
     border-color: $banner_flame;
-    //z-index: 9999;
+    z-index: 2;
 
-    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 
-    transition:0.3s;
     //children
   }
 
@@ -121,8 +118,6 @@ export default {
     border-color: $banner_flame;
     z-index: 2;
 
-    transition:0.3s;
-
   }
 
     .iconPic {
@@ -132,100 +127,100 @@ export default {
       // temporary color
       background-color: #fff;
 
-    border-radius: 50%;
-    border: solid;
-    border-width: 2px;
-    border-color: $window_flame;
-  }
+      border-radius: 50%;
+      border: solid;
+      border-width: 2px;
+      border-color: $window_flame;
+    }
 
-  .iconPicPosition {
-    position: absolute;
+    .iconPicPosition {
+      position: absolute;
 
-    top: 15px;
-    left: 34.1611111px;
-  }
+      top: 15px;
+      left: 34.1611111px;
+    }
 
-  .achievement {
-    position: relative;
-    width: $achievement_width;
-    height: $achievement_height; //√3
-    background-color: #ffffff;
-    margin: $root_twelve 0;
+    .achievement {
+      position: relative;
+      width: $achievement_width;
+      height: $achievement_height; //√3
+      background-color: #ffffff;
+      margin: $root_twelve 0;
 
-    /* border-left: dashed;
-    border-right: dashed;
-    border-color: #111;
-    border-width: 1.5px; */
-  }
+      /* border-left: dashed;
+      border-right: dashed;
+      border-color: #111;
+      border-width: 1.5px; */
+    }
 
-  .achievement:before,
-  .achievement:after {
-    content: "";
-    position: absolute;
+    .achievement:before,
+    .achievement:after {
+      content: "";
+      position: absolute;
 
-    left: 0;
+      left: 0;
 
-    width: 0;
-    border-left: $a_half_width solid transparent;
-    border-right: $a_half_width dashed transparent;
-  }
+      width: 0;
+      border-left: $a_half_width solid transparent;
+      border-right: $a_half_width dashed transparent;
+    }
 
-  .achievement:before {
-    bottom: 100%;
-    border-bottom: $root_twelve solid #fff;
-  }
+    .achievement:before {
+      bottom: 100%;
+      border-bottom: $root_twelve solid #fff;
+    }
 
-  .achievement:after {
-    top: 100%;
-    width: 0;
-    border-top: $root_twelve solid #fff;
-  }
+    .achievement:after {
+      top: 100%;
+      width: 0;
+      border-top: $root_twelve solid #fff;
+    }
 
-  .achievementPosition1 {
-    position: absolute;
+    .achievementPosition1 {
+      position: absolute;
 
-    //top: -1.3vh;
-    //left: -1.8vh;
-    top: 145px;
-    left: 16.1611111px;
-  }
+      //top: -1.3vh;
+      //left: -1.8vh;
+      top: 145px;
+      left: 16.1611111px;
+    }
 
-  .achievementPosition2 {
-    position: absolute;
+    .achievementPosition2 {
+      position: absolute;
 
-    //top: -4.4vh;
-    //left: 5.9vh;
-    top: 160px;
-    left: 77.6611111px;
-  }
+      //top: -4.4vh;
+      //left: 5.9vh;
+      top: 160px;
+      left: 77.6611111px;
+    }
 
-  .achievementPosition3 {
-    position: absolute;
+    .achievementPosition3 {
+      position: absolute;
 
-    //top: -12.46vh;
-    //left: 14vh;
-    top: 145px;
-    left: 139.161111px;
-  }
+      //top: -12.46vh;
+      //left: 14vh;
+      top: 145px;
+      left: 139.161111px;
+    }
 
-  #pullDownProperties {
-    position: absolute;
+    #pullDownProperties {
+      position: absolute;
 
-    bottom: -5px;
-    left: 15px;
+      bottom: -5px;
+      left: 15px;
 
-    font-size: 58px;
-  }
+      font-size: 58px;
+    }
 
-  #pullDownProperties:hover {
-    color: $pulldown_color;
-  }
+    #pullDownProperties:hover {
+      color: $pulldown_color;
+    }
 
-  .username{
-    width: $user_width;
-    height: $user_height;
+    .username{
+      width: $user_width;
+      height: $user_height;
 
-    background-color: #fff;
+      background-color: #fff;
 
       border: solid;
       border-width: 3px;
@@ -264,56 +259,56 @@ export default {
       }
     }
 
-  .usernamePosition{
-    position: absolute;
+    .usernamePosition{
+      position: absolute;
 
-    top: 30px;
-    left: 202px;
-    right: 0px;
-  }
+      top: 30px;
+      left: 202px;
+      right: 0px;
+    }
 
-  .id{
-    width: $id_width;
-    height: $id_height;
+    .id{
+      width: $id_width;
+      height: $id_height;
 
-    background-color: #fff;
+      background-color: #fff;
 
-    border: solid;
-    border-width: 3px;
-    border-color: $window_flame;
-  }
+      border: solid;
+      border-width: 3px;
+      border-color: $window_flame;
+    }
 
-  .idPosition{
-    position: absolute;
+    .idPosition{
+      position: absolute;
 
-    top: 100px;
-    left: 202px;
-    right: 0px;
-  }
+      top: 100px;
+      left: 202px;
+      right: 0px;
+    }
 
-  .profile{
-    width: $profile_width;
-    height: $profile_height;
+    .profile{
+      width: $profile_width;
+      height: $profile_height;
 
-    background-color: #fff;
+      background-color: #fff;
 
-    border: solid;
-    border-width: 3px;
-    border-color: $window_flame;
-  }
+      border: solid;
+      border-width: 3px;
+      border-color: $window_flame;
+    }
 
-  .profilePosition{
-    position: absolute;
+    .profilePosition{
+      position: absolute;
 
-    top: 150px;
-    left: 202px;
-    right: 25px;
-  }
+      top: 150px;
+      left: 202px;
+      right: 25px;
+    }
 
     .btn-circle-3d {
-      position: relative;
-      top: 30px;
-      left:39%;
+      position: absolute;
+      top: 15px;
+      right: 15px;
       display: inline-block;
       text-decoration: none;
       background: #ff8181;
@@ -332,15 +327,12 @@ export default {
       cursor: pointer;
     }
 
-  .btn-circle-3d:active {
-    -webkit-transform: translateY(2px);
-    transform: translateY(2px);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-    border-bottom: none;
-  }
+    .btn-circle-3d:active {
+      -webkit-transform: translateY(2px);
+      transform: translateY(2px);
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+      border-bottom: none;
+    }
 
-  .reverse{
-    transform: rotateX(180deg);
-  }
 
 </style>
