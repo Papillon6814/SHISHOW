@@ -1,10 +1,6 @@
 import firebase from 'firebase'
-import 'firebase/firestore'
-import '@firebase/auth'
-import store from '../store'
 
-// Your web app's Firebase configuration
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyD2D42pBXU_nXpo2wTd_IFs-4hogXE8Dq0",
   authDomain: "shishow-7cc37.firebaseapp.com",
   databaseURL: "https://shishow-7cc37.firebaseio.com",
@@ -14,24 +10,8 @@ var firebaseConfig = {
   appId: "1:476890822571:web:508b49508a91c0d3"
 };
 
-export default {
-  init() {
-    firebase.initializeApp(firebaseConfig);
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-  },
-  login() {
+if(!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
-  },
-  logout() {
-    firebase.auth().signOut();
-  },
-  onAuth() {
-    firebase.auth().onAuthStateChanged(user => {
-      user = user ? user: {};
-      store.commit('onAuthStateChanged', user);
-      store.commit('onUserStatusChanged', user.uid ? true : false);
-    })
-  }
-};
-
-// ゴミ
+export default firebase

@@ -48,10 +48,10 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from '../plugin/firestore'
 import 'firebase/firestore'
-import '@firebase/auth'
-import router from '../router'
+
+const db = firebase.firestore();
 
 export default {
   name: 'myBanner',
@@ -84,7 +84,7 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .banner {
     position: absolute;
 
