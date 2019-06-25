@@ -18,7 +18,7 @@
     <div class="usernamePosition">
       <div class="fieldForUserName">
         <div class="username">
-
+          {{Uname}}
         </div>
       </div>
       <div class="fieldForDisplayDeshi">
@@ -48,6 +48,9 @@
 <script>
 import firebase from '../plugin/firestore'
 import 'firebase/firestore'
+import '@firebase/auth'
+import store from "../store"
+
 
 const db = firebase.firestore();
 
@@ -58,8 +61,13 @@ export default {
     return {
       isA:true,
       isB:false,
-      isC:false
+      isC:false,
+      Uname:""
     }
+  },
+
+  created:function(){
+    this.UName();
   },
 
   props: [
@@ -69,6 +77,17 @@ export default {
   ],
 
   methods: {
+    UName(){
+      var User = firebase.auth().currentUser;
+      db.collection('USER').doc(store.state["user"].email).get()
+      .then(doc=>{
+        if(doc.exists){
+        this.Uname = doc.data()['username'];
+        }else{
+          console.log(store.state["user"].email);
+        }
+      });
+    },
     doExtend: function() {
       this.isA = !this.isA,
       this.isB = !this.isB,

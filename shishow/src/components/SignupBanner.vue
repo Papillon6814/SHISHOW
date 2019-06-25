@@ -97,7 +97,6 @@ export default {
   methods: {
 
     signUp: function () {
-
       let url;
 
       if(!this.uploadedImage){
@@ -118,7 +117,7 @@ export default {
           email = User.email;
           alert('Create account: '+email);
           if(!this.uploadedImage) this.uploadedImage = url;
-          this.addToDatabase(this.email,this.username,this.uploadedImage);
+          this.addToDatabase(this.email.toLowerCase(),this.username,this.uploadedImage);
         })
         .catch(error => {
           alert(error.message)

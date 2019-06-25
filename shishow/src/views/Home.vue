@@ -45,7 +45,7 @@ import store from '../store'
 
 let db = firebase.firestore();
 
-let currentUser;
+var currentUser;
 
 export default {
   name: 'home',
