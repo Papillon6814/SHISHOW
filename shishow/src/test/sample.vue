@@ -4,15 +4,20 @@
         <input type="text" v-model="text">
         <button type="button" @click="click">aaa</button>
         <img :src='url' id="image">
+        <div v-for="N in 2" :key="N">
+            {{N}}
+        </div>
     </div>
+    
 </template>
 
 
 <script>
 
 
-    import firebase from 'firebase'
+    import firebase from '../plugin/firestore'
     import 'firebase/firestore'
+    
 
     // Your web app's Firebase configuration
     var firebaseConfig = {
@@ -26,9 +31,8 @@
     };
     // Initialize Firebase
    
-
     var db = firebase.firestore();
-   ;
+   
 
     
 
@@ -62,29 +66,43 @@
             },
 
             click(){
-                
-                db.collection("USER").doc("penis2@gmail.com").get().then(doc =>{
-                    this.url = doc.data()["user"];
+                const currentUser = firebase.auth().currentUser;
+                db.collection("USER").doc(currentUser.email).get().then(doc =>{
+                    this.text= doc.data()["username"];
+                })
+
+                /*
+                db.collection("USER").doc("SampleImage").get().then(doc =>{
+                    this.url = doc.data()["image"];
                 })
                 
-                /*
+                
                 if(this.task)console.log
                 this.photo.get().then(doc =>{
                     console.log(doc.data()["name"]);
                 });.where("email","==",this.text)*/
-                /*db.collection("USER").get().then(querySnapshot => {
+                /*db.collection("USER").doc("mikan4@gmail.com").get().then(doc =>{
+                    doc.collection("friend").get().then(doc =>{
+                        console.log(doc.docs[0].id);
+                    })
+                })
+                db.collection("USER").doc("mikan4@gmail.com").collection("friend").limit(1).get().then(querySnapshot => {
                     //this.url = querySnapshot.docs[0].data()["image"];
-                    if(!querySnapshot.docs[0])console.log("bbb");
+                    //if(!querySnapshot.docs[0])console.log("bbb");
                     querySnapshot.forEach(doc =>{
                         //this.url = doc.data()["image"]
                         
-                        console.log(doc.data()["email"]+"=>"+doc.id);
+                        db.collection("USER").doc("mikan4@gmail.com").collection("friend").doc(doc.id).collection("CHAT").limit(1).get().then(query =>{
+                            query.forEach(doc =>{
+                                console.log(doc.data()["date"])
+                            })
+                        })
                     })
                 
                 }).catch(e =>{
                     console.log("aaa")
                 })
-                db.collection("USER").doc("").collection("user").doc();
+                db.collection("USER").doc("aaa").collection("user").doc();
             },
 
             delete(){
@@ -94,6 +112,7 @@
                     /*querySnapshot.forEach(doc =>{
                         db.collection("users").doc(doc.id).delete();
                     }
+                
                 
                 });*/
             }

@@ -1,7 +1,9 @@
 <template>
   <div class="normalBanner" v-bind:class="{ 'banner': isA, 'extend': isB }">
     <span class="iconPicPosition">
-      <div class="iconPic"></div>
+      <div class="iconPic">
+        <img id="image" :src="user['image']" />
+      </div>
     </span>
     <div class="achievementPosition1">
       <div class="achievement">
@@ -17,7 +19,7 @@
     </div>
     <div class="usernamePosition">
       <div class="username">
-        Nakataku
+        {{user["username"]}}
       </div>
     </div>
     <div class="idPosition">
@@ -31,27 +33,71 @@
         テニス、スキー、スノーボード、ゴルフ、
       </div>
     </div>
-    <div class="n_btn-circle-3d">江崎にフレ申請</div>
-    <span @click="doExtend" id="pullDownProperties">
+    <div class="n_btn-circle-3d" @click="doExtend">江崎にフレ申請</div>
+    <span  id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
   </div>
 </template>
 
 <script>
+import store from "../store"
+import firebase from '../plugin/firestore'
+import 'firebase/firestore'
+import '@firebase/auth'
+
+
+
+const db = firebase.firestore();
+const currentUser = firebase.auth().currentUser;
 
 export default {
   name: 'normalBanner',
+  props:["user"],
+  created:function(){
+    db.collection("USER").doc(store.state["user"].email).get().then(doc =>{
+          this.signuser = doc.data();
+
+        })
+        .catch(e =>{
+          console.log(e)
+        })
+  },
   data: function() {
     return{
       isA: true,
-      isB: false
+      isB: false,
+      signuser:""
     }
   },
   methods: {
     doExtend: function() {
-      this.isA = !this.isA,
-      this.isB = !this.isB
+      this.isA = !this.isA;
+      this.isB = !this.isB;
+      
+      if(store.state["status"]){
+        console.log(this.user["email"])
+        
+        
+        const currentUser = firebase.auth().currentUser;
+        
+        db.collection("USER").doc(store.state["user"].email).collection("outgoing").add({
+          username:this.user["username"],
+          email:this.user["email"]
+        })
+        .catch(e =>{
+          console.log("error1")
+        })
+
+        db.collection("USER").doc(this.user["email"]).collection("incoming").add({
+          username:this.signuser["username"],
+          email:this.signuser["email"]
+        })
+        .catch(e =>{
+          console.log("error2")
+        })
+
+      }
     }
   }
 }
@@ -90,6 +136,12 @@ export default {
       border: solid;
       border-width: 2px;
       border-color: $n_window_flame;
+    }
+
+    #image{
+      width: $n_icon_width;
+      height: $n_icon_height;
+      border-radius:50%,
     }
 
     .iconPicPosition {
