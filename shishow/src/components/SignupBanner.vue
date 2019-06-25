@@ -460,7 +460,7 @@ export default {
       position: absolute;
 
       top: 30px;
-      left: 20px;
+      left: 140px;
       right: 0px;
     }
 
@@ -479,7 +479,7 @@ export default {
       position: absolute;
 
       top: 100px;
-      left: 202px !important;
+      left: 140px !important;
       right: 0px;
     }
 
@@ -491,13 +491,22 @@ export default {
       border: solid;
       border-width: 3px;
       border-color: $su_banner_flame;
+
+      top:175px;
+      left:228px;
     }
 
-    .passwordConfirm {
-      position: absolute;
+    .passwordConfirm {//パスワード確認
+    position: absolute;
 
-    top: 220px;
-    left: 202px;
+    width: $id_width;
+    height: $id_height;
+    border: solid;
+    border-width: 3px;
+    border-color: $su_banner_flame;
+
+    top: 230px;
+    left: 228px;
   }
 }
 #result{  //cropper
