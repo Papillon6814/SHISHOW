@@ -111,7 +111,7 @@ export default {
       else {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
-
+          var User = firebase.auth().currentUser;
           var email;
 
           //変数に情報を格納
