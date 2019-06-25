@@ -1,5 +1,5 @@
 <template>
-  <div class="signupBanner">
+  <div class="banner">
     <span class="iconCirclePosition">
       <div class="iconCircle" >
         <img v-show="uploadedImage" :src="uploadedImage" id="icon"/>
