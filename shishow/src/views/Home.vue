@@ -103,6 +103,7 @@ export default {
     margin-right: 10%;
     width:100%;
     position:absolute;
+    z-index: 1;
     /*top: 45px;
     left: 10%;*/
   }
@@ -121,7 +122,7 @@ export default {
     }
     list-style: none;
 
-    z-index: -1
+    // z-index: -1
   }
 
   .gameBannerPosition {
