@@ -49,10 +49,10 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from '../plugin/firestore'
 import 'firebase/firestore'
-import '@firebase/auth'
-import router from '../router'
+
+const db = firebase.firestore();
 
 export default {
   name: 'myBanner',
