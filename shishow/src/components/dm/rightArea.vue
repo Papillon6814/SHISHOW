@@ -1,6 +1,18 @@
 <template>
   <div id="rightArea">
-    <div v-for="msg in msgList" v-bind:key="msg.id">{{msg.msg}}</div>
+    <div v-for="msg in msgList" v-bind:key="msg.id">
+      <div class="chat">
+        <ul>
+          <div class="chat-msg">
+            <li>{{msg.msg}}</li>
+          </div>
+          <!--日付の変換-->
+          <div class="chat-date">
+            <li>{{msg.date.toDate().toLocaleString()}}</li>
+          </div>
+        </ul>
+      </div>
+    </div>
     <div class="inputArea">
       <inputArea></inputArea>
     </div>
@@ -14,9 +26,9 @@ import inputArea from "./InputArea";
 export default {
   data() {
     return {
-      msgList: [],
-      msg: "",
-      errorMsg: ""
+      msgList: []
+      //msg: "",
+      //errorMsg: ""
     };
   },
   components: {
@@ -35,14 +47,21 @@ export default {
         .collection("friends")
         .doc("jDIKmCZkXpCmYfqaeuu5")
         .collection("CHAT")
-        .get()
-        .then(snapshot => {
+        .orderBy("date")
+        .onSnapshot(snapshot => {
           //snapshotの値はsnapshot.val()で取得できる
           //let rootList = snapshot.val()
           let msgList = [];
           snapshot.forEach(doc => {
             msgList.push(doc.data());
           });
+          /*msgList.sort(function(a, b) {
+            if (a.date > b.date) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });*/
           this.msgList = msgList;
         });
     }
@@ -66,5 +85,22 @@ export default {
 .inputArea {
   position: fixed;
   bottom: 200px;
+}
+li {
+  list-style: none;
+}
+
+.chat {
+  border: 1px solid black;
+}
+
+.chat-msg {
+  float: left;
+  padding: 5px;
+}
+
+.chat-date {
+  //float: right;
+  font-size: 15px;
 }
 </style>
