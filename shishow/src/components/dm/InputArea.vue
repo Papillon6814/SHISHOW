@@ -21,24 +21,59 @@ let currentUser;
 
 export default {
   name: "inputArea",
-  props: ["SignIn", "userName", "userImage"],
+
+  props: [
+    "SignIn",
+    "userName",
+    "userImage"
+  ],
+
   data() {
     return {
       msg: ""
     };
   },
-  /*updated() {
-    this.loadMsg();
-  },*/
+
+  created: function() {
+    this.onAuth();
+    currentUser = firebase
+  },
+
   methods: {
-    //これまでのメッセージをロード
+    // すべてのフレンドを読み込む関数loadMsg
     loadMsg() {
       const db = firebase.firestore();
       //データベースから値を持ってきてsnapshotに代入
       db.collection("USER")
         .doc(currentUser.email)
         .collection("friends")
-        .doc("jDIKmCZkXpCmYfqaeuu5")
+        .get()
+        .then(querysnapshot1 => {
+          querysnapshot1.forEach(doc1 => {
+
+            db.collection("USER")
+            .doc(currentUser.email)
+            .collection('friends')
+            .get(doc1.id)
+            .collection("CHAT")
+            .get()
+            .then(querysnapshot2 => {
+              let msgList = [];
+
+              querysnapshot2.forEach(doc2 => {
+                msgList.push(doc2.data());
+              });
+
+              msgList.sort(function(a, b) {
+
+              })
+            })
+
+          })
+        })
+
+
+
         .collection("CHAT")
         .get()
         .then(snapshot => {
