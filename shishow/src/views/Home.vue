@@ -1,24 +1,28 @@
 <template>
   <div id="root">
     <navi @input="getSearchWord"></navi>
-    <div id="myBannerPosition">
-      <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
-    </div>
-    <div id="moving">
-      <div class="normalBannerPosition">
-        <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
-          <normalBanner :user="users[N-1].data()" :searchWord="searchWord"></normalBanner>
-        </div>
-        <!-- <li class="n2">
-            <normalBanner></normalBanner>
-          </li>
-          <li class="n3">
-            <normalBanner></normalBanner>
-          </li>
-          <li class="n4">
-            <normalBanner></normalBanner>
-        </li>-->
+    <transition appear name="v">
+      <div id="myBannerPosition">
+        <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
       </div>
+    </transition>
+    <div id="moving">
+      <transition appear name="v2">
+        <div class="normalBannerPosition">
+          <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
+            <normalBanner :user="users[N-1].data()" :searchWord="searchWord"></normalBanner>
+          </div>
+          <!-- <li class="n2">
+              <normalBanner></normalBanner>
+            </li>
+            <li class="n3">
+              <normalBanner></normalBanner>
+            </li>
+            <li class="n4">
+              <normalBanner></normalBanner>
+          </li>-->
+        </div>
+      </transition>
       <!--
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
@@ -113,6 +117,51 @@ export default {
 </script>
 
 <style lang="scss">
+
+.v-enter {
+  transform: translate(300px, 0);
+  opacity: 0;
+}
+.v-enter-to {
+  opacity: 1;
+}
+.v-enter-active {
+  transition: all 2.5s 1s ease;
+}
+.v-leave {
+  transform: translate(0, 0);
+  opacity: 1;
+}
+.v-leave-to {
+  transform: translate(-300px, 0);
+  opacity: 0;
+}
+.v-leave-active {
+  transition: all .5s 0s ease;
+}
+
+.v2-enter {
+  transform: translate(400px, 0);
+  opacity: 0;
+}
+.v2-enter-to {
+  opacity: 1;
+}
+.v2-enter-active {
+  transition: all 2.5s 1s ease;
+}
+.v2-leave {
+  transform: translate(0, 0);
+  opacity: 1;
+}
+.v2-leave-to {
+  transform: translate(-400px, 0);
+  opacity: 0;
+}
+.v2-leave-active {
+  transition: all .5s 0s ease;
+}
+
 html {
   overflow-y: scroll;
   overflow-x: hidden;
