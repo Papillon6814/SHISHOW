@@ -6,8 +6,8 @@
       </div>
       <div id="moving">
         <div class="normalBannerPosition">
-          <div v-for="N in 10" :key="N" v-bind:class="'n'+N">
-            <normalBanner></normalBanner>
+          <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
+            <normalBanner :user="users[N-1].data()"></normalBanner>
           </div>
           <!-- <li class="n2">
             <normalBanner></normalBanner>
@@ -39,10 +39,15 @@ import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../store'
 
+const db = firebase.firestore()
+
 export default {
   name: 'home',
   created: function() {
     this.onAuth();
+    db.collection("USER").get().then(doc =>{
+      this.users = doc.docs;
+    })
   },
   components: {
     navi,
@@ -50,7 +55,11 @@ export default {
     normalBanner
     //gameBanner
   },
-
+  data:function(){
+    return{
+      users:"",
+    }
+  },
   computed: {
     user() {
       return this.$store.getters.user;
@@ -106,6 +115,7 @@ export default {
     margin-right: 10%;
     width:100%;
     position:absolute;
+    z-index:1;
     /*top: 45px;
     left: 10%;*/
   }
@@ -124,7 +134,7 @@ export default {
     }
     list-style: none;
 
-    z-index: -1
+
   }
 
   .gameBannerPosition {
