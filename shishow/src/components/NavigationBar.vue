@@ -6,7 +6,7 @@
     <div class="centered">
       <div class="group">
         <div id="get_data">
-          <input type="text" id="search" v-model="searchWord">
+          <input type="text" id="search" v-model="searchWord" required="true">
           <NormalBanner :searchWord="searchWord"></NormalBanner>
           <label for="search">Search...</label>
           <div class="bar"></div>

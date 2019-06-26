@@ -20,16 +20,13 @@ import store from '../../store'
 
 let db = firebase.firestore();
 
-let currentUser;
-let msgList = [];
-let myFriends = [];
-
 export default {
   name: 'directMessageField',
 
   components: {
     leftArea,
-    rightArea
+    rightArea,
+    inputArea
   }
 }
 
