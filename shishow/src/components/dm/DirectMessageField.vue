@@ -13,7 +13,7 @@ export default {
   name: 'directMessageField',
   components: {
     leftArea,
-    rightArea,
+    rightArea
   }
 }
 

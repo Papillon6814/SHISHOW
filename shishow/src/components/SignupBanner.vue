@@ -98,21 +98,20 @@ export default {
 
     signUp: function () {
 
-
       let url;
 
       if(!this.uploadedImage){
-          db.collection("Image").doc("SampleImage").get().then(doc =>{
-            url = doc.data()["image"];
-          });
-        }
+        db.collection("Image").doc("SampleImage").get().then(doc =>{
+          url = doc.data()["image"];
+        });
+      }
       if(this.p_confirm != this.password) {
         console.log('Password does not match!');
       } else if(this.errorIndication());
       else {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
-
+          var User = firebase.auth().currentUser;
           var email;
 
           //変数に情報を格納
@@ -120,15 +119,15 @@ export default {
           alert('Create account: '+email);
           if(!this.uploadedImage) this.uploadedImage = url;
           this.addToDatabase(this.email,this.username,this.uploadedImage);
-          })
-          .catch(error => {
-            alert(error.message)
-          })
-        }
-      },
+        })
+        .catch(error => {
+          alert(error.message)
+        })
+      }
+    },
 
-      addToDatabase(email, username,image) {
-        let url = db.collection("USER").doc(""+email).collection("friends").doc();
+    addToDatabase(email, username,image) {
+      let url = db.collection("USER").doc(""+email).collection("friends").doc();
       url.collection("CHAT").add({
         msg:"",
         date:"",
@@ -149,14 +148,14 @@ export default {
           username: username,
           image: image,
 
-        })
-        .then(function(docRef) {
-          console.log('Document written with ID: ', docRef.id);
-        })
-        .catch(function(error) {
-          console.log("Error adding document: ", error);
-        })
-      },
+      })
+      .then(function(docRef) {
+        console.log('Document written with ID: ', docRef.id);
+      })
+      .catch(function(error) {
+        console.log("Error adding document: ", error);
+      })
+    },
 
 
     onFileChange(event) {
@@ -191,8 +190,6 @@ export default {
         return true;
       }
       return false;
-    }
-
     },
 
     crop:function(){
@@ -267,11 +264,8 @@ export default {
       };
     },
 
-
   }
-
-
-
+}
 </script>
 
 <style lang="scss" scoped>
@@ -312,8 +306,8 @@ export default {
 
 
 
-      top: 4.5%;
-      left: 4.5%;
+      top: 5.72%;
+      left: 5.85%;
 
 
       width: 90%;
@@ -448,9 +442,12 @@ export default {
   }
 
   .username{
-    width: $user_width;
-    height: $user_height;
+    width: $su_user_width;
+    height: $su_user_height;
 
+    border: solid;
+    border-width: 3px;
+    border-color: $su_banner_flame;
     // temporary color
     background-color: #fff;
   }
@@ -459,13 +456,14 @@ export default {
       position: absolute;
 
       top: 30px;
-      left: 140px;
+      left: 120px;
+
       right: 0px;
     }
 
     .email{
-      width: $user_width;
-      height: $user_height;
+      width: $su_user_width;
+      height: $su_user_height;
 
       background-color: #fff;
 
@@ -477,15 +475,18 @@ export default {
     .emailPosition{
       position: absolute;
 
-      top: 100px;
-      left: 140px;
+      top: 90px;
+      left: 120px !important;
+
       right: 0px;
     }
 
     .password{
-      
-      width: $id_width;
-      height: $id_height;
+      width: $su_pass_width;
+      height: $su_pass_height;
+
+      background-color: #fff;
+
       border: solid;
       border-width: 3px;
       border-color: $su_banner_flame;
@@ -499,21 +500,31 @@ export default {
       right:0px;
     }
 
-    .passwordConfirm {//パスワード確認
-    
-      width: $id_width;
-      height: $id_height;
+    .passwordPosition{
+      position: absolute;
+
+      top: 150px;
+      left: 120px;
+      right: 0px;
+    }
+
+    .passwordConfirm {
+      width: $su_pass_width;
+      height: $su_pass_height;
+
+      background-color: #fff;
+
       border: solid;
       border-width: 3px;
       border-color: $su_banner_flame;
-    
     }
 
     .passwordConfirmPosition{
       position: absolute;
-      top: 230px;
-      left: 70px;
-      right:0px;
+
+      top: 200px;
+      left: 120px;
+      right: 0px;
     }
 
 }

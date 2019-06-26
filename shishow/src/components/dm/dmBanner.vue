@@ -1,5 +1,5 @@
 <template>
-  <div id="dmBanner">
+  <div class="dmBanner">
     <div class="dmBannerIcon"></div>
     <div class="dmBannerName">
       {{ dmBannerUsername }}
@@ -26,7 +26,7 @@ export default {
 
 <style lang="scss" scoped>
 
-  #dmBanner {
+  .dmBanner {
     display: block;
 
     width: 100%;
@@ -39,7 +39,7 @@ export default {
     border-color: #555;
 
     .dmBannerIcon {
-      position: absolute;
+      position: relative;
 
       top: 10px;
       left: 15px;
@@ -57,9 +57,9 @@ export default {
     }
 
     .dmBannerName {
-      position: absolute;
+      position: relative;
 
-      top: 15px;
+      bottom: 80px;
       left: 130px;
 
       width: 60%;
@@ -72,9 +72,9 @@ export default {
     }
 
     .dmMsgArea {
-      position: absolute;
+      position: relative;
 
-      top: 60px;
+      bottom: 70px;
       left: 130px;
 
       width: 70%;
