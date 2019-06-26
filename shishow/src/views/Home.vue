@@ -47,6 +47,7 @@ let currentUser;
 
 export default {
   name: "home",
+
   created: function() {
     this.onAuth();
     currentUser = firebase.auth().currentUser;
@@ -56,17 +57,20 @@ export default {
       this.users = doc.docs;
     })
   },
+
   components: {
     navi,
     myBanner,
     normalBanner
   },
+
   data: function() {
     return {
       users: [],
       searchWord: ""
     };
   },
+
   computed: {
     user() {
       return this.$store.getters.user;
@@ -94,7 +98,6 @@ export default {
       console.log(results);
     }
   },
-
 
   methods: {
     getSearchWord(word) {

@@ -4,8 +4,7 @@
       <div v-for="(friend, N) in friends" :key="N" v-bind:class="'b' + N">
         <dmBanner
           :dmBannerUsername="friend"
-          :dmMsg="msg[0]"
-          @click="moveToIndividualChat(N)">
+          :dmMsg="msg[0]">
         </dmBanner>
       </div>
     </div>
@@ -25,6 +24,15 @@ let db = firebase.firestore();
 export default {
   name: 'leftArea',
 
+  props: [
+    'IDlist',
+    'userNameList'
+  ],
+
+  created() {
+    this.friends = this.userNameList;
+  },
+
   data() {
     return {
       friends: '',
@@ -36,7 +44,7 @@ export default {
     dmBanner
   },
 
-  
+
 }
 </script>
 

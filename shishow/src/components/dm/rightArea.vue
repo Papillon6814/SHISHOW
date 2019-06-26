@@ -23,7 +23,13 @@ const db = firebase.firestore();
 let currentUser;
 
 export default {
-  name: 'rightArea'
+  name: 'rightArea',
+
+  data() {
+    return {
+      msgList: ''
+    }
+  }
 };
 </script>
 

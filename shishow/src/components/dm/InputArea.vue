@@ -11,6 +11,7 @@
 </template>
 
 <script>
+
 import firebase from "../../plugin/firestore";
 import 'firebase/firestore'
 import '@firebase/auth'
@@ -23,10 +24,13 @@ export default {
   name: "inputArea",
 
   props: [
-    "SignIn",
-    "userName",
-    "userImage"
+    'ID'
   ],
+
+  created: function () {
+    this.onAuth();
+    currentUser = firebase.auth().currentUser;
+  },
 
   data() {
     return {
@@ -34,65 +38,7 @@ export default {
     };
   },
 
-  created: function() {
-    this.onAuth();
-    currentUser = firebase
-  },
-
   methods: {
-    // すべてのフレンドを読み込む関数loadMsg
-    loadMsg() {
-      const db = firebase.firestore();
-      //データベースから値を持ってきてsnapshotに代入
-      db.collection("USER")
-        .doc(currentUser.email)
-        .collection("friends")
-        .get()
-        .then(querysnapshot1 => {
-          querysnapshot1.forEach(doc1 => {
-
-            db.collection("USER")
-            .doc(currentUser.email)
-            .collection('friends')
-            .get(doc1.id)
-            .collection("CHAT")
-            .get()
-            .then(querysnapshot2 => {
-              let msgList = [];
-
-              querysnapshot2.forEach(doc2 => {
-                msgList.push(doc2.data());
-              });
-
-              msgList.sort(function(a, b) {
-
-              })
-            })
-
-          })
-        })
-
-
-
-        .collection("CHAT")
-        .get()
-        .then(snapshot => {
-          //snapshotの値はsnapshot.val()で取得できる
-          //let rootList = snapshot.val()
-          let msgList = [];
-          snapshot.forEach(doc => {
-            msgList.push(doc.data());
-          });
-          msgList.sort(function(a, b) {
-            if (a.date > b.date) {
-              return 1;
-            } else {
-              return -1;
-            }
-          });
-          this.msgList = msgList;
-        });
-    },
     //メッセージを送る
     sendMsg() {
       //console.log("clicked");
@@ -106,19 +52,28 @@ export default {
       let now = new Date();
       if (msg) {
         db.collection("USER")
-          .doc("sample")
-          .collection("friends")
-          .doc("jDIKmCZkXpCmYfqaeuu5")
-          .collection("CHAT")
-          .add({
-            //username: this.userName,
-            //日付とメッセージの送信
-            msg: this.msg,
-            date: now
-          });
-        //送信した後内容をからにする
-        this.msg = "";
-        this.text = "";
+        .doc(currentUser.email)
+        .collection("friends")
+        .get()
+        .then(querysnapshot1 => {
+          querysnapshot1.forEach(doc1 => {
+
+            db.collection("USER")
+            .doc(currentUser.email)
+            .collection("friends")
+            .doc(doc1.id)
+            .collection("CHAT")
+            .add({
+              //username: this.userName,
+              //日付とメッセージの送信
+              msg: this.msg,
+              date: now
+            });
+            //送信した後内容をからにする
+            this.msg = "";
+            this.text = "";
+          })
+        })
       }
     },
     onAuth: function () {
