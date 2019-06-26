@@ -37,7 +37,6 @@ import firebase from "../plugin/firestore";
 import "firebase/firestore";
 import "@firebase/auth";
 import store from "../store";
-import { resolve } from "dns";
 
 const db = firebase.firestore();
 
