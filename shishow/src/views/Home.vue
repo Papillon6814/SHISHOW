@@ -1,24 +1,28 @@
 <template>
   <div id="root">
     <navi @input="getSearchWord"></navi>
-    <div id="myBannerPosition">
-      <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
-    </div>
-    <div id="moving">
-      <div class="normalBannerPosition">
-        <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
-          <normalBanner :user="users[N-1].data()" :searchWord="searchWord"></normalBanner>
-        </div>
-        <!-- <li class="n2">
-            <normalBanner></normalBanner>
-          </li>
-          <li class="n3">
-            <normalBanner></normalBanner>
-          </li>
-          <li class="n4">
-            <normalBanner></normalBanner>
-        </li>-->
+    <transition appear name="v">
+      <div id="myBannerPosition">
+        <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
       </div>
+    </transition>
+    <div id="moving">
+      <transition appear name="v2">
+        <div class="normalBannerPosition">
+          <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
+            <normalBanner :user="users[N-1].data()" :searchWord="searchWord"></normalBanner>
+          </div>
+          <!-- <li class="n2">
+              <normalBanner></normalBanner>
+            </li>
+            <li class="n3">
+              <normalBanner></normalBanner>
+            </li>
+            <li class="n4">
+              <normalBanner></normalBanner>
+          </li>-->
+        </div>
+      </transition>
       <!--
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
@@ -32,13 +36,12 @@
 import navi from "../components/NavigationBar.vue";
 import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
-//import gameBanner from '../components/GameBanner.vue'
-//import navigationBar from "../components/NavigationBar";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
 import "@firebase/auth";
 import store from "../store";
+import { resolve } from "dns";
 
 const db = firebase.firestore();
 
@@ -56,11 +59,10 @@ export default {
     navi,
     myBanner,
     normalBanner
-    //gameBanner
   },
   data: function() {
     return {
-      users: "",
+      users: [],
       searchWord: ""
     };
   },
@@ -70,6 +72,25 @@ export default {
     },
     userStatus() {
       return this.$store.getters.isSignedIn;
+    },
+    filterUser: function() {
+      let key = this.searchWord;
+      let data = [];
+      let results = [];
+      //console.log(this.users[3].data().username);
+      //console.log(Object.keys(this.users).length);
+      let i;
+      //オブジェクトに変換
+      for (i in this.users) {
+        data[i] = this.users[i].data();
+      }
+      //console.log(data);
+      if (key) {
+        if (data.username.indexOf(key) !== -1) {
+          results.push(data);
+        }
+      }
+      console.log(results);
     }
   },
   methods: {
@@ -97,6 +118,51 @@ export default {
 </script>
 
 <style lang="scss">
+
+.v-enter {
+  transform: translate(300px, 0);
+  opacity: 0;
+}
+.v-enter-to {
+  opacity: 1;
+}
+.v-enter-active {
+  transition: all 2.5s 1s ease;
+}
+.v-leave {
+  transform: translate(0, 0);
+  opacity: 1;
+}
+.v-leave-to {
+  transform: translate(-300px, 0);
+  opacity: 0;
+}
+.v-leave-active {
+  transition: all .5s 0s ease;
+}
+
+.v2-enter {
+  transform: translate(400px, 0);
+  opacity: 0;
+}
+.v2-enter-to {
+  opacity: 1;
+}
+.v2-enter-active {
+  transition: all 2.5s 1s ease;
+}
+.v2-leave {
+  transform: translate(0, 0);
+  opacity: 1;
+}
+.v2-leave-to {
+  transform: translate(-400px, 0);
+  opacity: 0;
+}
+.v2-leave-active {
+  transition: all .5s 0s ease;
+}
+
 html {
   overflow-y: scroll;
   overflow-x: hidden;
