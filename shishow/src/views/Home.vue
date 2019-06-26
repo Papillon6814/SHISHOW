@@ -21,51 +21,53 @@
           </li>
           <li class="n4">
             <normalBanner></normalBanner>
-          </li> -->
-        </div>
-        <!--
+        </li>-->
+      </div>
+      <!--
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
-        </div> -->
-      </div>
+      </div>-->
     </div>
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import navi from '../components/NavigationBar.vue'
-import myBanner from '../components/MyBanner.vue'
-import normalBanner from '../components/NormalBanner.vue'
-//import gameBanner from '../components/GameBanner.vue'
+import navi from "../components/NavigationBar.vue";
+import myBanner from "../components/MyBanner.vue";
+import normalBanner from "../components/NormalBanner.vue";
 
-import firebase from '../plugin/firestore'
-import 'firebase/firestore'
-import '@firebase/auth'
-import store from '../store'
+import firebase from "../plugin/firestore";
+import "firebase/firestore";
+import "@firebase/auth";
+import store from "../store";
+import { resolve } from "dns";
 
 let db = firebase.firestore();
 
-var currentUser;
+let currentUser;
 
 export default {
-  name: 'home',
-
-  data() {
-    return {
-      username: ''
-    }
-  },
-
+  name: "home",
   created: function() {
     this.onAuth();
-    this.loadCurrentUser();
+    db.collection("USER")
+      .get()
+      .then(doc => {
+        this.users = doc.docs;
+      });
   },
 
   components: {
     navi,
     myBanner,
     normalBanner
-    //gameBanner
+  },
+  data: function() {
+    return {
+      users: [],
+      searchWord: ""
+    };
   },
 
   computed: {
@@ -74,10 +76,32 @@ export default {
     },
     userStatus() {
       return this.$store.getters.isSignedIn;
+    },
+    filterUser: function() {
+      let key = this.searchWord;
+      let data = [];
+      let results = [];
+      //console.log(this.users[3].data().username);
+      //console.log(Object.keys(this.users).length);
+      let i;
+      //オブジェクトに変換
+      for (i in this.users) {
+        data[i] = this.users[i].data();
+      }
+      //console.log(data);
+      if (key) {
+        if (data.username.indexOf(key) !== -1) {
+          results.push(data);
+        }
+      }
+      console.log(results);
     }
   },
 
   methods: {
+    getSearchWord(word) {
+      this.searchWord = word;
+    },
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};
@@ -93,8 +117,8 @@ export default {
       var move = document.getElementById('moving');
       move.style.top = "350px";
       this.active = !this.active;
-      if(this.active === false){
-        move.style.top = "45px"
+      if (this.active === false) {
+        move.style.top = "45px";
       }
     },
     loadCurrentUser: function() {
@@ -103,66 +127,63 @@ export default {
       .data().username;
     }
   }
-}
-
+};
 </script>
 
 <style lang="scss">
+html {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 
-  html{
-    overflow-y:scroll;
-    overflow-x:hidden;
-  }
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
 
-  body {
-    padding: 0;
-    margin: 0;
-    width: 100%;
+  background-color: $dark_color;
+}
 
-    background-color: $dark_color;
-  }
-
-  #myBannerPosition {
-    //position: relative;
-    //temporary top
-    padding-top: 70px;
-    margin-left: 10%;
-    margin-right: 10%;
-    width:100%;
-    position:absolute;
-    /*top: 45px;
+#myBannerPosition {
+  //position: relative;
+  //temporary top
+  padding-top: 70px;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  /*top: 45px;
     left: 10%;*/
-  }
+  z-index: 1;
+}
 
-  .normalBannerPosition {
-    margin-left: 10%;
-    width:100%;
-    position: absolute;
-    padding-top:200px;
-    $i: 1;
-    @while $i <= 30{
-      .n#{$i}{
-        padding-top: 210px;/* + (200px * $i);*/
-      }
-      $i: $i + 1;
+.normalBannerPosition {
+  margin-left: 10%;
+  width: 100%;
+  position: absolute;
+  padding-top: 200px;
+  $i: 1;
+  @while $i <= 30 {
+    .n#{$i} {
+      padding-top: 210px; /* + (200px * $i);*/
+      left: 10%;
     }
-    list-style: none;
-
-    z-index: -1
+    $i: $i + 1;
   }
+  list-style: none;
+}
 
-  .gameBannerPosition {
-    position: absolute;
-    //temporary top
-    top: 45px;
-    left: 10%;
-  }
+.gameBannerPosition {
+  position: absolute;
+  //temporary top
+  top: 45px;
+  left: 10%;
+}
 
-  #moving{
-    position: absolute;
-    width: 100%;
-    transition: .3s;
-    }
-
-
+#moving {
+  position: absolute;
+  width: 100%;
+  transition: 0.3s;
+}
 </style>
