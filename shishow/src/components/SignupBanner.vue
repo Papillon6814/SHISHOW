@@ -60,7 +60,6 @@
     <div class="profilePosition"></div>
 
     <button @click="signUp">Sign up</button>
-    <button @click="roundimage">中身</button>
 
     <!--
     <span id="pullDownProperties">
@@ -97,9 +96,6 @@ export default {
     }
   },
   methods: {
-    roundimage(){
-      console.log('round,'+this.roundedimg);
-    },
     signUp: function () {
       let url;
 
@@ -182,7 +178,6 @@ export default {
       reader.onload = (event) => {
         //htmlにファイルを反映
         this.uploadedImage = event.target.result;
-        console.log("upload,"+typeof this.uploadedImage);
         window.setTimeout(place.crop, 1);
       }
       //読み込み開始

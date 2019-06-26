@@ -1,7 +1,7 @@
 <template>
   <div class="banner" v-bind:class="{ 'banner': isA, 'extend': isB }">
     <span class="iconPicPosition">
-      <div class="iconPic"></div>
+      <div class="iconPic"><img id="image" v-show="Iconimg" :src="Iconimg" /></div>
     </span>
     <div class="achievementPosition1">
       <div class="achievement">
@@ -62,7 +62,8 @@ export default {
       isA:true,
       isB:false,
       isC:false,
-      Uname:""
+      Uname:"",
+      Iconimg:""
     }
   },
 
@@ -83,9 +84,11 @@ export default {
       .then(doc=>{
         if(doc.exists){
         this.Uname = doc.data()['username'];
+        this.Iconimg = doc.data()['image'];
         }else{
           console.log(store.state["user"].email);
         }
+
       });
     },
     doExtend: function() {
@@ -130,7 +133,11 @@ export default {
     //children
   }
 
-
+  #image{
+    width: $icon_width;
+    height: $icon_height;
+    border-radius: 50%;
+  }
 
   .extend{
     position: absolute;
