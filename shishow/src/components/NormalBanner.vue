@@ -60,6 +60,7 @@ export default {
     return {
       isA: true,
       isB: false,
+      isC: false,
       signuser: ""
     };
   },
