@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from '../plugin/firestore'
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../store'

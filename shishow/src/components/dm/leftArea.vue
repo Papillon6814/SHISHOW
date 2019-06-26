@@ -1,9 +1,11 @@
 <template>
   <div id="leftArea">
-    <dmBanner
-     :dmBannerUsername="friends[0]"
-     :dmMsg="msg[0]">
-    </dmBanner>
+    <div v-for="(friend, N) in friends" v-bind:class="'n'+N">
+      <dmBanner
+       :dmBannerUsername="friend"
+       :dmMsg="msg[0]">
+      </dmBanner>
+    </div>
   </div>
 </template>
 
