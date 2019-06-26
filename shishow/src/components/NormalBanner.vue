@@ -71,18 +71,24 @@ export default {
 
     background-color: $n_banner_color;
 
-    border: solid;
-    border-width: 5px;
-    border-color: $n_banner_flame;
+    border-radius: 3px;
+
+    // border: solid;
+    // border-width: 5px;
+    // border-color: $n_banner_flame;
     z-index: 2;
 
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 3px  rgba(0, 0, 0, 0.3);
     transition: 0.3s;
     //children
 
     /*.editBioButton{
 
     }*/
+  }
+
+  .normalBanner:hover{
+    box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
   }
 
   .extend {
@@ -94,9 +100,9 @@ export default {
 
     background-color: $n_banner_color;
 
-    border: solid;
-    border-width: 5px;
-    border-color: $n_banner_flame;
+    // border: solid;
+    // border-width: 5px;
+    // border-color: $n_banner_flame;
     z-index: 2;
 
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
@@ -262,7 +268,7 @@ export default {
     left:39%;
     display: inline-block;
     text-decoration: none;
-    background: #ff8181;
+    background: #FFC107;
     color: #fff;
     width: 100px;
     height: 60px;
@@ -272,7 +278,7 @@ export default {
     font-weight: bold;
     overflow: hidden;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-    border-bottom: solid 3px #bd6565;
+    border-bottom: solid 3px #FFB300;
     transition: .4s;
 
     cursor: pointer;

@@ -1,9 +1,7 @@
 <template>
   <div id = "notificationBanner">
-    <div class = "humanInfo">
       <i class = "fas fa-user human"></i>
       <div class = "iconPic"></div>
-    </div>
     <div class = "messageInfo">
       <div > message </div>
     </div>
@@ -29,11 +27,11 @@ export default {
     width: $not_banner_width;
     height: $not_banner_height;
 
-    background-color: $not_banner_color;
+    background-color: #fff;
 
     border-bottom: solid;
     border-width: 1.2px;
-    border-color: #bbb;
+    border-color: #ddd;
 
   .human{
       position: absolute;

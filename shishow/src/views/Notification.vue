@@ -2,7 +2,9 @@
   <div id="root">
     <navi></navi>
     <div id="notificationField">
-      <notificationBanner></notificationBanner>
+      <div> 
+        <notificationBanner></notificationBanner>
+      </div>
     </div>
   </div>
 </template>
@@ -39,7 +41,7 @@ export default {
     width: 90%;
     height: 87%;
 
-    background-color: #ddd;
+    background-color: #fff;
     box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
   }
 </style>

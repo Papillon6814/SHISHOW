@@ -69,10 +69,10 @@ export default {
     extendOther:function(){
       var active = true;
       var move=document.getElementById('moving');
-      move.style.top = "350px";
+      move.style.top = "340px";
       this.active = !this.active;
       if(this.active === false){
-        move.style.top = "45px"
+        move.style.top = "60px"
       }
     }
   }
@@ -112,7 +112,7 @@ export default {
     margin-left: 10%;
     width:100%;
     position: absolute;
-    padding-top:200px;
+    padding-top:165px;
     $i: 1;
     @while $i <= 30{
       .n#{$i}{
