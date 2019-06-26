@@ -7,7 +7,7 @@
     <div id="moving">
       <div class="normalBannerPosition">
         <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
-          <normalBanner :user="users[N-1].data()"></normalBanner>
+          <normalBanner :user="users[N-1].data()" :searchWord="searchWord"></normalBanner>
         </div>
         <!-- <li class="n2">
             <normalBanner></normalBanner>
