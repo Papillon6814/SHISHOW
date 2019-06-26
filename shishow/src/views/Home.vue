@@ -10,23 +10,10 @@
       <transition appear name="v2">
         <div class="normalBannerPosition">
           <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
-            <normalBanner :user="users[N-1].data()" :searchWord="searchWord"></normalBanner>
+            <normalBanner :user="users[N-1].data()"></normalBanner>
           </div>
-          <!-- <li class="n2">
-              <normalBanner></normalBanner>
-            </li>
-            <li class="n3">
-              <normalBanner></normalBanner>
-            </li>
-            <li class="n4">
-              <normalBanner></normalBanner>
-          </li>-->
         </div>
       </transition>
-      <!--
-        <div class="gameBannerPosition">
-          <gameBanner></gameBanner>
-      </div>-->
     </div>
   </div>
 </template>
@@ -72,7 +59,7 @@ export default {
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
-    filterUser: function() {
+    filterUser() {
       let key = this.searchWord;
       let data = [];
       let results = [];
@@ -85,8 +72,10 @@ export default {
             results.push(this.users[i].data());
           }
         }
+        this.users = results;
+        console.log(this.users.length);
       }
-      return results;
+      return this.users;
     }
   },
   methods: {
