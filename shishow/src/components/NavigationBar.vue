@@ -9,7 +9,8 @@
           <input v-model="word" type="text" id="search" required="required">
           <label for="search">Search...</label>
           <div class="bar"></div>
-          <img class="sch" src="../assets/search-button.png" @click="onChangeInput">
+          <!-- <img class="sch" src="../assets/search-button.png" @click="onChangeInput"> -->
+          <i class="fas fa-search fa-2x sch"  @click="onChangeInput"></i>
         </div>
       </div>
     </div>
@@ -17,16 +18,17 @@
 
     <div id="menuButtons">
       <router-link to="/directMessage">
-        <img class="dm" src="../assets/dm-button.png">
+        <i class="fas fa-envelope fa-3x dm"></i>
       </router-link>
-      <img class="game" src="../assets/gameuser-button.png">
+      <i class="fas fa-gamepad fa-3x game"></i>
       <router-link to="/notification">
-        <img class="bell" src="../assets/bell-button.png">
+        <i class="fas fa-bell fa-3x bell"></i>
       </router-link>
       <router-link to="/">
-        <img class="home" src="../assets/home-button.png">
+        <i class="fas fa-home fa-3x home"></i>
       </router-link>
     </div>
+
   </div>
 </template>
 
@@ -167,6 +169,8 @@ $searchbar_width: 400px;
 
         left: 355px;
         top: 22px;
+
+        color:#fff;
       }
     }
   }
@@ -204,8 +208,10 @@ $searchbar_width: 400px;
     position: absolute;
 
     height: 100%;
+    top: 18px;
 
     right: 0;
+    
 
     .dm {
       position: absolute;
@@ -215,6 +221,8 @@ $searchbar_width: 400px;
 
       right: 50px;
       top: 10px;
+
+      color: #fff;
     }
 
     .game {
@@ -225,6 +233,8 @@ $searchbar_width: 400px;
 
       right: 150px;
       top: 10px;
+
+      color: #fff;
     }
 
     .bell {
@@ -235,6 +245,8 @@ $searchbar_width: 400px;
 
       right: 250px;
       top: 10px;
+
+      color: #fff;
     }
 
     .home {
@@ -245,6 +257,24 @@ $searchbar_width: 400px;
 
       right: 350px;
       top: 10px;
+
+      color: #fff;
+    }
+
+    .dm:hover{
+      opacity: 0.5;
+    }
+
+    .game:hover{
+      opacity: 0.5;
+    }
+
+    .bell:hover{
+      opacity: 0.5;
+    }
+
+    .home:hover{
+      opacity: 0.5;
     }
   }
 }
