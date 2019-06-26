@@ -115,7 +115,17 @@ export default {
       if (this.active === false) {
         move.style.top = "45px";
       }
-    }
+    }/*,
+    extendNother:function(){
+      var active = true;
+      var move=document.getElementById('moven')
+
+      move.style.top = "350px";
+      this.active = !this.active;
+      if(this.active === false){
+        move.style.top = "45px"
+      }
+    }*/
   }
 };
 </script>
@@ -221,4 +231,11 @@ body {
   width: 100%;
   transition: 0.3s;
 }
+
+ /*#moven{
+    position: absolute;
+    width: 100%;
+    transition: .3s;
+
+  }*/
 </style>

@@ -22,11 +22,6 @@
           Nobuyuki
         </div>
       </div>
-      <div class="idPosition">
-        <div class="id">
-          qawsedrftgyhujkolp
-        </div>
-      </div>
       <div class="profilePosition">
         <div class="profile">
           新しいことにチャレンジすることが好き!
@@ -208,25 +203,6 @@ export default {
       position: absolute;
 
       top: 30px;
-      left: 202px;
-      right: 0px;
-    }
-
-    .id{
-      width: $id_width;
-      height: $id_height;
-
-      background-color: #fff;
-
-      border: solid;
-      border-width: 3px;
-      border-color: $window_flame;
-    }
-
-    .idPosition{
-      position: absolute;
-
-      top: 100px;
       left: 202px;
       right: 0px;
     }
