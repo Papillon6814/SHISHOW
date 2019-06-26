@@ -115,7 +115,17 @@ export default {
       if(this.active === false){
         move.style.top = "60px"
       }
-    }
+    }/*,
+    extendNother:function(){
+      var active = true;
+      var move=document.getElementById('moven')
+
+      move.style.top = "350px";
+      this.active = !this.active;
+      if(this.active === false){
+        move.style.top = "45px"
+      }
+    }*/
   }
 };
 </script>
@@ -123,14 +133,14 @@ export default {
 <style lang="scss">
 
 .v-enter {
-  transform: translate(300px, 0);
+  transform: translate(700px, 0);
   opacity: 0;
 }
 .v-enter-to {
   opacity: 1;
 }
 .v-enter-active {
-  transition: all 2.5s 1s ease;
+  transition: all 1s 0s ease;
 }
 .v-leave {
   transform: translate(0, 0);
@@ -145,14 +155,14 @@ export default {
 }
 
 .v2-enter {
-  transform: translate(400px, 0);
+  transform: translate(1000px, 0);
   opacity: 0;
 }
 .v2-enter-to {
   opacity: 1;
 }
 .v2-enter-active {
-  transition: all 2.5s 1s ease;
+  transition: all 1.4s 1s ease;
 }
 .v2-leave {
   transform: translate(0, 0);
@@ -250,4 +260,11 @@ body {
   width: 100%;
   transition: 0.3s;
 }
+
+ /*#moven{
+    position: absolute;
+    width: 100%;
+    transition: .3s;
+
+  }*/
 </style>

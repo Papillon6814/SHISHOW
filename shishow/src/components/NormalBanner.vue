@@ -1,5 +1,5 @@
 <template>
-  <div class="normalBanner" v-bind:class="{ 'normalBanner': isA, 'extend': isB }">
+  <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'nextend': isB }">
     <span class="iconPicPosition">
       <div class="iconPic">
         <img id="image" :src="user['image']">
@@ -17,18 +17,18 @@
     <div class="usernamePosition">
       <div class="username">{{user["username"]}}</div>
     </div>
-    <div class="idPosition">
-      <div class="id">qawsedrftgyhujkolp</div>
-    </div>
     <div class="profilePosition">
       <div class="profile">
         新しいことにチャレンジすることが好き!
         テニス、スキー、スノーボード、ゴルフ、
       </div>
     </div>
+    <div class="userInfoPosition">
+        <div class="userInfo">仲野巧ですから</div>
+    </div>
     <div class="n_btn-circle-3d">江崎にフレ申請</div>
-    <span v-bind:class="{reverse:isC}" @click="doExtend" id="pullDownProperties">
-     <i class="fas fa-caret-down"></i>
+    <span v-bind:class="{nreverse:isC}" @click="doExtend" id="pullDownProperties">
+      <i class="fas fa-caret-down"></i>
     </span>
   </div>
 </template>
@@ -70,6 +70,7 @@ export default {
       this.isB = !this.isB;
       this.isC = !this.isC,
       this.$emit('extendNormalBanner')
+      this.$emit('extendNbanner')
 
       if (store.state["status"]) {
         console.log(this.user["email"]);
@@ -105,8 +106,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.normalBanner {
+  .normalBanner {
   position: absolute;
+
+  overflow-y: hidden;
 
   width: $n_banner_width;
   //temporary height
@@ -242,6 +245,7 @@ export default {
     left: 10.3px;
 
     font-size: 39.875px;
+    z-index: 4;
   }
 
   #pullDownProperties:hover {
@@ -266,42 +270,42 @@ export default {
     left: 172px;
     right: 0px;
   }
+  
+  .idPosition{
 
-  .id{
-    width: $id_width;
-    height: $n_id_height;
-
-    background-color: #fff;
-
-    border: solid;
-    border-width: 3px;
-    border-color: $n_window_flame;
   }
 
-  .idPosition{
+  .profilePosition {
     position: absolute;
 
-    top: 68px;
+    top: 88px;
     left: 172px;
-    right: 0px;
+    right: 25px;
   }
 
   .profile{
     width: $profile_width;
     height: $n_profile_height;
+    background-color: #fff;
+    }
+  .userInfo {
+    width: 100%;
+    height: 160px;
 
+      // temporary color
     background-color: #fff;
 
-    border: solid;
-    border-width: 3px;
-    border-color: $n_window_flame;
+    border-radius: 5%;
+    border: dashed;
+    border-width: 2px;
+    border-color: $window_flame;
   }
 
-  .profilePosition{
+  .userInfoPosition {
     position: absolute;
 
-    top: 108px;
-    left: 172px;
+    top: 200px;
+    left: 75px;
     right: 25px;
   }
 
@@ -338,4 +342,33 @@ export default {
     transform: rotateX(180deg);
   }
 
+  .nextend{
+    position: absolute;
+
+    width: $n_banner_width;
+    //temporary height
+    height: $n_banner_height*2;
+
+    background-color: $n_banner_color;
+
+    border: solid;
+    border-width: 5px;
+    border-color: $n_banner_flame;
+    z-index: 2;
+
+    transition:0.3s;
+
+  }
+
+  .nreverse{
+    transform: rotateX(180deg);
+    transition: .3s;
+  }
+
+
+  /*.editBioButton{
+
+    }*
+
+}
 </style>
