@@ -41,7 +41,6 @@ import firebase from "../plugin/firestore";
 import "firebase/firestore";
 import "@firebase/auth";
 import store from "../store";
-import { resolve } from "dns";
 
 const db = firebase.firestore();
 
@@ -84,7 +83,7 @@ export default {
       for (i in this.users) {
         data[i] = this.users[i].data();
       }
-      //console.log(data);
+      console.log(data);
       if (key) {
         if (data.username.indexOf(key) !== -1) {
           results.push(data);
@@ -118,7 +117,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .v-enter {
   transform: translate(300px, 0);
   opacity: 0;
@@ -138,7 +136,7 @@ export default {
   opacity: 0;
 }
 .v-leave-active {
-  transition: all .5s 0s ease;
+  transition: all 0.5s 0s ease;
 }
 
 .v2-enter {
@@ -160,7 +158,7 @@ export default {
   opacity: 0;
 }
 .v2-leave-active {
-  transition: all .5s 0s ease;
+  transition: all 0.5s 0s ease;
 }
 
 html {
