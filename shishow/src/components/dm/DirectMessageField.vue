@@ -19,14 +19,38 @@ import '@firebase/auth'
 import store from '../../store'
 
 let db = firebase.firestore();
+let currentUser;
+// 現在ログイン中のユーザー
 
 export default {
   name: 'directMessageField',
+
+  data() {
+    return {
+      myFriends: '',
+      myMsg: ''
+    }
+  },
+
+  created: function () {
+    this.onAuth();
+    currentUser = firebase.auth().currentUser;
+  },
 
   components: {
     leftArea,
     rightArea,
     inputArea
+  },
+
+  methods: {
+    onAuth: function () {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false);
+      })
+    }
   }
 }
 

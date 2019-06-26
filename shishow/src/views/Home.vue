@@ -40,11 +40,13 @@ import '@firebase/auth'
 import store from '../store'
 
 const db = firebase.firestore()
+let currentUser;
 
 export default {
   name: 'home',
   created: function() {
     this.onAuth();
+    currentUser = firebase.auth().currentUser;
     db.collection("USER").get().then(doc =>{
       this.users = doc.docs;
     })
@@ -55,8 +57,8 @@ export default {
     normalBanner
     //gameBanner
   },
-  data:function(){
-    return{
+  data: function () {
+    return {
       users:"",
     }
   },

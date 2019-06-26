@@ -23,45 +23,7 @@ const db = firebase.firestore();
 let currentUser;
 
 export default {
-  data() {
-    return {
-      msgList: []
-      //msg: "",
-      //errorMsg: ""
-    };
-  },
-
-  created() {
-    this.loadMsg();
-  },
-
-  methods: {
-    // これまでのメッセージをロード
-    loadMsg() {
-      // データベースから値を持ってきてsnapshotに代入
-      db.collection("USER")
-        .doc("sample")
-        .collection("friends")
-        .doc("jDIKmCZkXpCmYfqaeuu5")
-        .collection("CHAT")
-        .onSnapshot(snapshot => {
-          //snapshotの値はsnapshot.val()で取得できる
-          //let rootList = snapshot.val()
-          let msgList = [];
-          snapshot.forEach(doc => {
-            msgList.push(doc.data());
-          });
-          msgList.sort(function(a, b) {
-            if (a.date > b.date) {
-              return 1;
-            } else {
-              return -1;
-            }
-          });
-          this.msgList = msgList;
-        });
-    }
-  }
+  name: 'rightArea'
 };
 </script>
 
