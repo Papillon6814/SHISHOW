@@ -199,7 +199,7 @@ export default {
     },
 
     crop:function(){
-
+      var img;
       var root = this;
       var image = document.getElementById('image');
       var button = document.getElementById('button');
@@ -255,12 +255,9 @@ export default {
           let reader = new FileReader();
 
           reader.onload = (event) => {
-            this.roundedimg = event.target.result;
-            console.log('round,'+this.roundedimg);
+            root.roundedimg = event.target.result;
           }
           reader.readAsDataURL(blob);
-          
-
         });
         
         roundedImage.width =130;
