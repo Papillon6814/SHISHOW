@@ -1,6 +1,6 @@
 <template>
   <div id="root">
-    <navi></navi>
+    <navi @input="getSearchWord"></navi>
     <div id="myBannerPosition">
       <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
     </div>
@@ -33,7 +33,7 @@ import navi from "../components/NavigationBar.vue";
 import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
 //import gameBanner from '../components/GameBanner.vue'
-import navigationBar from "../components/NavigationBar";
+//import navigationBar from "../components/NavigationBar";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
@@ -55,8 +55,7 @@ export default {
   components: {
     navi,
     myBanner,
-    normalBanner,
-    navigationBar
+    normalBanner
     //gameBanner
   },
   data: function() {
@@ -74,6 +73,9 @@ export default {
     }
   },
   methods: {
+    getSearchWord(word) {
+      this.searchWord = word;
+    },
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};

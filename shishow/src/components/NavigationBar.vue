@@ -6,8 +6,7 @@
     <div class="centered">
       <div class="group">
         <div id="get_data">
-          <input type="text" id="search" required="required" v-model="searchWord">
-
+          <input v-model="word" type="text" id="search" required="required">
           <label for="search">Search...</label>
           <div class="bar"></div>
           <img class="sch" src="../assets/search-button.png" @click="onChangeInput">
@@ -38,16 +37,16 @@ export default {
   name: "navi",
   data() {
     return {
-      searchWord: ""
+      word: ""
     };
   },
   comportnents: {},
   methods: {
     onChangeInput() {
-      this.commitChange(searchWord);
+      this.commitChange(this.word);
     },
     commitChange(newValue) {
-      this.$emit("searchWord", newValue);
+      this.$emit("input", newValue);
     }
   }
 };
