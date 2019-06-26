@@ -107,7 +107,8 @@ export default {
       }
       if(this.p_confirm != this.password) {
         console.log('Password does not match!');
-      } else if(this.errorIndication());
+      }
+      else if(this.errorIndication());
       else {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
@@ -128,6 +129,8 @@ export default {
 
     addToDatabase(email, username,image) {
       let url = db.collection("USER").doc(""+email).collection("friends").doc();
+
+      /*
       url.collection("CHAT").add({
         msg:"",
         date:"",
@@ -135,19 +138,16 @@ export default {
       url.set({
         username:""
       });
-
-
-
+      */
 
       db.collection("USER").doc(""+email).collection("incoming").add({username:""});
       db.collection("USER").doc(""+email).collection("outgoing").add({username:""});
-
 
       db.collection("USER").doc(""+email).set({
           email: email,
           username: username,
           image: image,
-
+          bio: ''
       })
       .then(function(docRef) {
         console.log('Document written with ID: ', docRef.id);
@@ -327,7 +327,6 @@ export default {
       .plusPosition {
         position: absolute;
 
-
           left: 49.5%;
           top: 50%;
           -webkit-transform: translate(-50%, -50%);
@@ -491,9 +490,14 @@ export default {
       border: solid;
       border-width: 3px;
       border-color: $su_banner_flame;
+      
+    }
 
+    .passwordPosition{
+      position: absolute;
       top:175px;
-      left:228px;
+      left:70px;
+      right:0px;
     }
 
     .passwordPosition{

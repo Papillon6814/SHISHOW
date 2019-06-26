@@ -6,17 +6,13 @@
     <div class="centered">
       <div class="group">
         <div id="get_data">
-          <input type="text" id="search" v-model="searchWord">
-          <NormalBanner :searchWord="searchWord"></NormalBanner>
+          <input v-model="word" type="text" id="search" required="required">
           <label for="search">Search...</label>
           <div class="bar"></div>
-          <router-link to="/SearchResult">
-            <img class="sch" src="../assets/search-button.png">
-          </router-link>
+          <img class="sch" src="../assets/search-button.png" @click="onChangeInput">
         </div>
       </div>
     </div>
-
     <div class="logoSentence">SHISHOW</div>
 
     <div id="menuButtons">
@@ -41,11 +37,17 @@ export default {
   name: "navi",
   data() {
     return {
-      searchWord: ""
+      word: ""
     };
   },
-  comportnents: {
-    NormalBanner
+  comportnents: {},
+  methods: {
+    onChangeInput() {
+      this.commitChange(this.word);
+    },
+    commitChange(newValue) {
+      this.$emit("input", newValue);
+    }
   }
 };
 </script>

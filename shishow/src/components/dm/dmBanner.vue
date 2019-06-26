@@ -38,6 +38,9 @@ export default {
     border-width: 3px;
     border-color: #555;
 
+    transition: .15s;
+    cursor: pointer;
+
     .dmBannerIcon {
       position: relative;
 
@@ -82,6 +85,10 @@ export default {
 
       background-color: #fff;
     }
+  }
+
+  .dmBanner:hover {
+    background-color: $dm_banner_color_hover;
   }
 
 </style>
