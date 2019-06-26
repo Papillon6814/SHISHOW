@@ -60,6 +60,7 @@
     <div class="profilePosition"></div>
 
     <button @click="signUp">Sign up</button>
+    <button @click="roundimage">中身</button>
 
     <!--
     <span id="pullDownProperties">
@@ -92,10 +93,13 @@ export default {
       password: '',
       p_confirm: '',
       uploadedImage: '',
+      roundedimg:'',
     }
   },
   methods: {
-
+    roundimage(){
+      console.log('round,'+this.roundedimg);
+    },
     signUp: function () {
       let url;
 
@@ -117,7 +121,10 @@ export default {
           email = User.email;
           alert('Create account: '+email);
           if(!this.uploadedImage) this.uploadedImage = url;
-          this.addToDatabase(this.email.toLowerCase(),this.username,this.uploadedImage);
+
+          console.log("round,"+this.roundedimg);
+
+          this.addToDatabase(this.email.toLowerCase(),this.username,this.roundedimg);
         })
         .catch(error => {
           alert(error.message)
@@ -175,10 +182,10 @@ export default {
       reader.onload = (event) => {
         //htmlにファイルを反映
         this.uploadedImage = event.target.result;
+        console.log("upload,"+typeof this.uploadedImage);
         window.setTimeout(place.crop, 1);
       }
       //読み込み開始
-      console.log(typeof modal);
       modal.style.display = 'block';
       reader.readAsDataURL(file);
     },
@@ -244,6 +251,18 @@ export default {
         context.fill();
 
         roundedImage.src =canvas.toDataURL();
+        canvas.toBlob(blob=>{
+          let reader = new FileReader();
+
+          reader.onload = (event) => {
+            this.roundedimg = event.target.result;
+            console.log('round,'+this.roundedimg);
+          }
+          reader.readAsDataURL(blob);
+          
+
+        });
+        
         roundedImage.width =130;
         roundedImage.height =130;
         result.innerHTML = '';
