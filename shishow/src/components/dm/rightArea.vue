@@ -15,6 +15,12 @@
 <script>
 import firebase from "../../plugin/firestore";
 import 'firebase/firestore'
+import '@firebase/auth'
+import store from '../../store'
+
+const db = firebase.firestore();
+
+let currentUser;
 
 export default {
   data() {
@@ -30,10 +36,9 @@ export default {
   },
 
   methods: {
-    //これまでのメッセージをロード
+    // これまでのメッセージをロード
     loadMsg() {
-      const db = firebase.firestore();
-      //データベースから値を持ってきてsnapshotに代入
+      // データベースから値を持ってきてsnapshotに代入
       db.collection("USER")
         .doc("sample")
         .collection("friends")

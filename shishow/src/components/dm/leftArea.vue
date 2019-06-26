@@ -1,9 +1,9 @@
 <template>
   <div id="leftArea">
     <div class="dmbannerPosition">
-      <div v-for="N in 10" :key="N" v-bind:class="'b' + N">
+      <div v-for="(friend, N) in friends" :key="N" v-bind:class="'b' + N">
         <dmBanner
-          :dmBannerUsername="friends[0]"
+          :dmBannerUsername="friend"
           :dmMsg="msg[0]">
         </dmBanner>
       </div>
@@ -83,7 +83,6 @@ export default {
         });
 
         console.log(myFriends[0])
-        console.log(myMsg[0])
 
         // myFriendsの中身はusernameの配列
         this.friends = myFriends;
