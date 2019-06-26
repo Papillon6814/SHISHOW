@@ -1,9 +1,13 @@
 <template>
   <div id="leftArea">
-    <dmBanner
-     :dmBannerUsername="friends[0]"
-     :dmMsg="msg[0]">
-    </dmBanner>
+    <div class="dmbannerPosition">
+      <div v-for="N in 10" :key="N" v-bind:class="'b' + N">
+        <dmBanner
+          :dmBannerUsername="friends[0]"
+          :dmMsg="msg[0]">
+        </dmBanner>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -95,6 +99,9 @@ export default {
 
 <style lang='scss' scoped>
   #leftArea {
+    overflow-y: scroll;
+    overflow-x: hidden;
+
     position: absolute;
     top: 0;
     left: 0;
@@ -109,6 +116,15 @@ export default {
     border-color: #666;
 
     z-index: 3;
+
+    .dmbannerPosition{
+      $i: 1;
+      @while $i <= 30{
+        .b#{$i}{
+        }
+        $i: $i + 1;
+      }
+    }
   }
 
 </style>
