@@ -76,20 +76,17 @@ export default {
       let key = this.searchWord;
       let data = [];
       let results = [];
-      //console.log(this.users[3].data().username);
-      //console.log(Object.keys(this.users).length);
       let i;
-      //オブジェクトに変換
-      for (i in this.users) {
-        data[i] = this.users[i].data();
-      }
-      console.log(data);
       if (key) {
-        if (data.username.indexOf(key) !== -1) {
-          results.push(data);
+        //オブジェクトに変換
+        for (i in this.users) {
+          data[i] = this.users[i].data();
+          if (this.users[i].data().username.indexOf(key) !== -1) {
+            results.push(this.users[i].data());
+          }
         }
       }
-      console.log(results);
+      return results;
     }
   },
   methods: {
