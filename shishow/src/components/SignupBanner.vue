@@ -306,8 +306,8 @@ export default {
 
 
 
-      top: 4.5%;
-      left: 4.5%;
+      top: 5.72%;
+      left: 5.85%;
 
 
       width: 90%;
@@ -443,9 +443,12 @@ export default {
   }
 
   .username{
-    width: $user_width;
-    height: $user_height;
+    width: $su_user_width;
+    height: $su_user_height;
 
+    border: solid;
+    border-width: 3px;
+    border-color: $su_banner_flame;
     // temporary color
     background-color: #fff;
   }
@@ -454,13 +457,14 @@ export default {
       position: absolute;
 
       top: 30px;
-      left: 140px;
+      left: 120px;
+
       right: 0px;
     }
 
     .email{
-      width: $user_width;
-      height: $user_height;
+      width: $su_user_width;
+      height: $su_user_height;
 
       background-color: #fff;
 
@@ -472,16 +476,18 @@ export default {
     .emailPosition{
       position: absolute;
 
-      top: 100px;
-      left: 140px !important;
+      top: 90px;
+      left: 120px !important;
+
       right: 0px;
     }
 
     .password{
-      position: absolute;
+      width: $su_pass_width;
+      height: $su_pass_height;
 
-      width: $id_width;
-      height: $id_height;
+      background-color: #fff;
+
       border: solid;
       border-width: 3px;
       border-color: $su_banner_flame;
@@ -490,18 +496,33 @@ export default {
       left:228px;
     }
 
-    .passwordConfirm {//パスワード確認
-    position: absolute;
+    .passwordPosition{
+      position: absolute;
 
-    width: $id_width;
-    height: $id_height;
-    border: solid;
-    border-width: 3px;
-    border-color: $su_banner_flame;
+      top: 150px;
+      left: 120px;
+      right: 0px;
+    }
 
-    top: 230px;
-    left: 228px;
-  }
+    .passwordConfirm {
+      width: $su_pass_width;
+      height: $su_pass_height;
+
+      background-color: #fff;
+
+      border: solid;
+      border-width: 3px;
+      border-color: $su_banner_flame;
+    }
+
+    .passwordConfirmPosition{
+      position: absolute;
+
+      top: 200px;
+      left: 120px;
+      right: 0px;
+    }
+
 }
 #result{  //cropper
   z-index: 7;

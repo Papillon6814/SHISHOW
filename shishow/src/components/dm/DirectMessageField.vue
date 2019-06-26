@@ -29,64 +29,7 @@ export default {
 
   components: {
     leftArea,
-    rightArea,
-    inputArea
-  },
-
-  created() {
-    this.fireinit();
-    this.loadDMFriends();
-  },
-
-  methods: {
-    fireinit: function() {
-      firebase.auth().onAuthStateChanged(user => {
-        user = user ? user : {};
-        store.commit('onAuthStateChanged', user);
-        store.commit('onUserStatusChanged', user.uid ? true : false);
-      })
-
-      currentUser = firebase.auth().currentUser;
-    },
-    loadDMFriends() {
-      db.collection("USER")
-      .doc(currentUser.email)
-      collection('friends')
-      .get()
-      .then(querysnapshot1 => {
-        if(querysnapshot1.exists){
-          querysnapshot1.forEach(doc1 => {
-
-            db.collection("USER")
-            .doc(currentUser.email)
-            .doc(doc1.id)
-            .collection("CHAT")
-            .get()
-            .then(querysnapshot2 => {
-              if(doc2.data().msg != ""){
-                querysnapshot2.forEach(doc2 => {
-                  msgList.push(doc2.data().msg);
-                })
-              }
-              console.log(msgList);
-            })
-            .catch(e2 => {
-              console.log(e2);
-            })
-          })
-        } else {
-          console.log("You have no friends.");
-        }
-      })
-      .catch(e1 => {
-        console.log(e1);
-      })
-    },
-    // これまでのメッセージをロード
-    loadMsg() {
-      db.collection("USER")
-      .doc(currentUser.email)
-    }
+    rightArea
   }
 }
 

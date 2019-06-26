@@ -118,6 +118,7 @@ export default {
     z-index:1;
     /*top: 45px;
     left: 10%;*/
+    z-index: 1;
   }
 
   .normalBannerPosition {
@@ -129,11 +130,11 @@ export default {
     @while $i <= 30{
       .n#{$i}{
         padding-top: 210px;/* + (200px * $i);*/
+        left: 10%;
       }
       $i: $i + 1;
     }
     list-style: none;
-
 
   }
 
