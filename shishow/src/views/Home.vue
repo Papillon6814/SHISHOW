@@ -42,17 +42,19 @@ import "firebase/firestore";
 import "@firebase/auth";
 import store from "../store";
 
-const db = firebase.firestore();
+const db = firebase.firestore()
+let currentUser;
 
 export default {
   name: "home",
   created: function() {
     this.onAuth();
+    currentUser = firebase.auth().currentUser;
     db.collection("USER")
-      .get()
-      .then(doc => {
-        this.users = doc.docs;
-      });
+    .get()
+    .then(doc =>{
+      this.users = doc.docs;
+    })
   },
   components: {
     navi,
@@ -92,6 +94,8 @@ export default {
       console.log(results);
     }
   },
+
+
   methods: {
     getSearchWord(word) {
       this.searchWord = word;

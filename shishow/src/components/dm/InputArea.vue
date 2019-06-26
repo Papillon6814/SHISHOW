@@ -3,7 +3,7 @@
     <div class="smileEmojiPlace">
       <i class="fas fa-smile"></i>
     </div>
-    <input v-model="msg" type="text" class="inputText">
+    <input v-model="msg" type="text" class="inputText" @keydown.enter="sendMsg">
     <div class="checkEmojiPlace">
       <i class="fas fa-check" @click="sendMsg"></i>
     </div>
@@ -89,13 +89,13 @@ export default {
   width: 100%;
   height: 100%;
 
-  background-color: $theme_color_dm;
+  background-color: #fff;
 
   .smileEmojiPlace {
     position: absolute;
 
-    left: 3px;
-    top: 5px;
+    left: 3%;
+    top: 3px;
 
     font-size: 40px;
   }
@@ -103,18 +103,18 @@ export default {
   .inputText {
     position: absolute;
 
-    left: 45px;
-    top: 10px;
+    left: calc(3% + 40px + 3%);
+    top: 7px;
 
-    width: 300px;
+    width: calc(88% - 80px);
     height: 30px;
   }
 
   .checkEmojiPlace {
     position: absolute;
 
-    left: 355px;
-    top: 5px;
+    right: 3%;
+    top: 3px;
 
     font-size: 40px;
   }
