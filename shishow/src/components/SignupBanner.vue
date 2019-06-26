@@ -342,7 +342,6 @@ export default {
       .plusPosition {
         position: absolute;
 
-
           left: 49.5%;
           top: 50%;
           -webkit-transform: translate(-50%, -50%);
@@ -500,9 +499,14 @@ export default {
       border: solid;
       border-width: 3px;
       border-color: $su_banner_flame;
+      
+    }
 
+    .passwordPosition{
+      position: absolute;
       top:175px;
-      left:228px;
+      left:70px;
+      right:0px;
     }
 
     .passwordConfirm {//パスワード確認
