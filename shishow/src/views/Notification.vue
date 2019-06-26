@@ -33,12 +33,13 @@ export default {
   #notificationField {
     position: absolute;
 
-    top: 100px;
+    top: 150px;
     left: 5%;
 
     width: 90%;
     height: 87%;
 
     background-color: #ddd;
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
   }
 </style>

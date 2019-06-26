@@ -1,6 +1,11 @@
 <template>
-  <div id="notificationBanner">
-    <div class="iconPic">
+  <div id = "notificationBanner">
+    <div class = "humanInfo">
+      <i class = "fas fa-user human"></i>
+      <div class = "iconPic"></div>
+    </div>
+    <div class = "messageInfo">
+      <div > message </div>
     </div>
   </div>
 </template>
@@ -27,25 +32,47 @@ export default {
     background-color: $not_banner_color;
 
     border-bottom: solid;
-    border-width: 5px;
-    border-color: $not_banner_flane;
+    border-width: 1.2px;
+    border-color: #bbb;
 
+  .human{
+      position: absolute;
+
+      top: 15px;
+      left: 15px;
+
+      font-size: 35px;
+
+  }
     .iconPic {
       position: absolute;
 
-      top: 20px;
-      left: 20px;
+      top: 10px;
+      left: 65px;
 
-      width: 90px;
-      height: 90px;
+      width: 45px;
+      height: 45px;
 
       // temporary color
       background-color: #fff;
 
       border-radius: 50%;
       border: solid;
-      border-width: 1px;
+      border-width: 3px;
       border-color: #000;
     }
+
+    .messageInfo{
+      position: absolute;
+
+      width:90%;
+      height:40%;
+
+      left:90px;
+      bottom:10px;
+      background-color: #fff;
+    }
   }
+  
+
 </style>
