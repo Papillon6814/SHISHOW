@@ -98,21 +98,20 @@ export default {
 
     signUp: function () {
 
-
       let url;
 
       if(!this.uploadedImage){
-          db.collection("Image").doc("SampleImage").get().then(doc =>{
-            url = doc.data()["image"];
-          });
-        }
+        db.collection("Image").doc("SampleImage").get().then(doc =>{
+          url = doc.data()["image"];
+        });
+      }
       if(this.p_confirm != this.password) {
         console.log('Password does not match!');
       } else if(this.errorIndication());
       else {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
-
+          var User = firebase.auth().currentUser;
           var email;
 
           //変数に情報を格納
@@ -120,15 +119,15 @@ export default {
           alert('Create account: '+email);
           if(!this.uploadedImage) this.uploadedImage = url;
           this.addToDatabase(this.email,this.username,this.uploadedImage);
-          })
-          .catch(error => {
-            alert(error.message)
-          })
-        }
-      },
+        })
+        .catch(error => {
+          alert(error.message)
+        })
+      }
+    },
 
-      addToDatabase(email, username,image) {
-        let url = db.collection("USER").doc(""+email).collection("friends").doc();
+    addToDatabase(email, username,image) {
+      let url = db.collection("USER").doc(""+email).collection("friends").doc();
       url.collection("CHAT").add({
         msg:"",
         date:"",
@@ -149,14 +148,14 @@ export default {
           username: username,
           image: image,
 
-        })
-        .then(function(docRef) {
-          console.log('Document written with ID: ', docRef.id);
-        })
-        .catch(function(error) {
-          console.log("Error adding document: ", error);
-        })
-      },
+      })
+      .then(function(docRef) {
+        console.log('Document written with ID: ', docRef.id);
+      })
+      .catch(function(error) {
+        console.log("Error adding document: ", error);
+      })
+    },
 
 
     onFileChange(event) {
@@ -191,8 +190,6 @@ export default {
         return true;
       }
       return false;
-    }
-
     },
 
     crop:function(){
@@ -267,11 +264,8 @@ export default {
       };
     },
 
-
   }
-
-
-
+}
 </script>
 
 <style lang="scss" scoped>
@@ -464,6 +458,7 @@ export default {
 
       top: 30px;
       left: 120px;
+
       right: 0px;
     }
 
@@ -482,7 +477,8 @@ export default {
       position: absolute;
 
       top: 90px;
-      left: 120px;
+      left: 120px !important;
+
       right: 0px;
     }
 
@@ -495,6 +491,9 @@ export default {
       border: solid;
       border-width: 3px;
       border-color: $su_banner_flame;
+
+      top:175px;
+      left:228px;
     }
 
     .passwordPosition{
@@ -523,6 +522,7 @@ export default {
       left: 120px;
       right: 0px;
     }
+
 }
 #result{  //cropper
   z-index: 7;
