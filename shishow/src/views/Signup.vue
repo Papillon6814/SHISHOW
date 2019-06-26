@@ -4,7 +4,6 @@
     <div id="signupBannerPosition">
       <signupBanner></signupBanner>
     </div>
-    </div>
   </div>
 </template>
 

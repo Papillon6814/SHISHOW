@@ -443,7 +443,7 @@ export default {
   }
 
   .username{
-    width: $su_user_width;
+    width: 100%;
     height: $su_user_height;
 
     border: solid;
@@ -457,13 +457,13 @@ export default {
       position: absolute;
 
       top: 30px;
-      left: 120px;
+      left: 210px;
 
-      right: 0px;
+      right: 100px;
     }
 
     .email{
-      width: $su_user_width;
+      width: 100%;
       height: $su_user_height;
 
       background-color: #fff;
@@ -477,13 +477,13 @@ export default {
       position: absolute;
 
       top: 90px;
-      left: 120px !important;
+      left: 210px !important;
 
-      right: 0px;
+      right: 100px;
     }
 
     .password{
-      width: $su_pass_width;
+      width: 100%;
       height: $su_pass_height;
 
       background-color: #fff;
@@ -500,12 +500,12 @@ export default {
       position: absolute;
 
       top: 150px;
-      left: 120px;
-      right: 0px;
+      left: 210px;
+      right: 220px;
     }
 
     .passwordConfirm {
-      width: $su_pass_width;
+      width: 100%;
       height: $su_pass_height;
 
       background-color: #fff;
@@ -519,8 +519,8 @@ export default {
       position: absolute;
 
       top: 200px;
-      left: 120px;
-      right: 0px;
+      left: 210px;
+      right: 220px;
     }
 
 }
