@@ -94,15 +94,21 @@ export default {
 
     background-color: $banner_color;
 
-    border: solid;
-    border-width: 5px;
-    border-color: $banner_flame;
+    border-radius: 3px;
+
+    // border: solid;
+    // border-width: 5px;
+    // border-color: $banner_flame;
     //z-index: 9999;
 
-    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 3px  rgba(0, 0, 0, 0.1);
 
     transition:0.3s;
     //children
+  }
+
+  .banner:hover{
+    box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
   }
 
 
@@ -116,9 +122,9 @@ export default {
 
     background-color: $banner_color;
 
-    border: solid;
-    border-width: 5px;
-    border-color: $banner_flame;
+    // border: solid;
+    // border-width: 5px;
+    // border-color: $banner_flame;
     z-index: 2;
 
     transition:0.3s;
@@ -316,7 +322,7 @@ export default {
       left:39%;
       display: inline-block;
       text-decoration: none;
-      background: #ff8181;
+      background: #FFC107;
       color: #fff;
       width: 130px;
       height: 80px;
@@ -326,7 +332,7 @@ export default {
       font-weight: bold;
       overflow: hidden;
       box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-      border-bottom: solid 3px #bd6565;
+      border-bottom: solid 3px #FFB300;
       transition: .4s;
 
       cursor: pointer;

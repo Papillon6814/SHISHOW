@@ -1,5 +1,5 @@
 <template>
-  <div class="normalBanner" v-bind:class="{ 'banner': isA, 'extend': isB }">
+  <div class="normalBanner" v-bind:class="{ 'normalBanner': isA, 'extend': isB }">
     <span class="iconPicPosition">
       <div class="iconPic">
         <img id="image" :src="user['image']">
@@ -26,9 +26,9 @@
         テニス、スキー、スノーボード、ゴルフ、
       </div>
     </div>
-    <div class="n_btn-circle-3d" @click="doExtend">江崎にフレ申請</div>
-    <span id="pullDownProperties">
-      <i class="fas fa-caret-down"></i>
+    <div class="n_btn-circle-3d">江崎にフレ申請</div>
+    <span v-bind:class="{reverse:isC}" @click="doExtend" id="pullDownProperties">
+     <i class="fas fa-caret-down"></i>
     </span>
   </div>
 </template>
@@ -60,6 +60,7 @@ export default {
     return {
       isA: true,
       isB: false,
+      isC: false,
       signuser: ""
     };
   },
@@ -67,6 +68,8 @@ export default {
     doExtend: function() {
       this.isA = !this.isA;
       this.isB = !this.isB;
+      this.isC = !this.isC,
+      this.$emit('extendNormalBanner')
 
       if (store.state["status"]) {
         console.log(this.user["email"]);
@@ -95,9 +98,10 @@ export default {
             console.log("error2");
           });
       }
+
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -110,14 +114,48 @@ export default {
 
   background-color: $n_banner_color;
 
-  border: solid;
-  border-width: 5px;
-  border-color: $n_banner_flame;
-  z-index: 2;
+    border-radius: 3px;
 
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    // border: solid;
+    // border-width: 5px;
+    // border-color: $n_banner_flame;
+    z-index: 2;
 
-  //children
+    box-shadow: 0px 0px 3px  rgba(0, 0, 0, 0.3);
+    transition: 0.3s;
+    //children
+
+    /*.editBioButton{
+
+    }*/
+  }
+
+  .normalBanner:hover{
+    box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
+  }
+
+  .extend {
+    position: absolute;
+
+    width: $n_banner_width;
+    //temporary height
+    height: $n_banner_height*2;
+
+    background-color: $n_banner_color;
+
+    // border: solid;
+    // border-width: 5px;
+    // border-color: $n_banner_flame;
+    z-index: 2;
+
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    transition: 0.3s;
+    //children
+
+    /*.editBioButton{
+
+    }*/
+  }
 
   .iconPic {
     width: $n_icon_width;
@@ -130,12 +168,6 @@ export default {
     border: solid;
     border-width: 2px;
     border-color: $n_window_flame;
-  }
-
-  #image {
-    width: $n_icon_width;
-    height: $n_icon_height;
-    border-radius: 50%;
   }
 
   .iconPicPosition {
@@ -206,7 +238,7 @@ export default {
   #pullDownProperties {
     position: absolute;
 
-    top: 154.6875px;
+    bottom: -5px;
     left: 10.3px;
 
     font-size: 39.875px;
@@ -216,7 +248,7 @@ export default {
     color: $pulldown_color;
   }
 
-  .username {
+  .username{
     width: $user_width;
     height: $n_user_height;
 
@@ -227,7 +259,7 @@ export default {
     border-color: $n_window_flame;
   }
 
-  .usernamePosition {
+  .usernamePosition{
     position: absolute;
 
     top: 18px;
@@ -235,7 +267,7 @@ export default {
     right: 0px;
   }
 
-  .id {
+  .id{
     width: $id_width;
     height: $n_id_height;
 
@@ -246,7 +278,7 @@ export default {
     border-color: $n_window_flame;
   }
 
-  .idPosition {
+  .idPosition{
     position: absolute;
 
     top: 68px;
@@ -254,7 +286,7 @@ export default {
     right: 0px;
   }
 
-  .profile {
+  .profile{
     width: $profile_width;
     height: $n_profile_height;
 
@@ -265,7 +297,7 @@ export default {
     border-color: $n_window_flame;
   }
 
-  .profilePosition {
+  .profilePosition{
     position: absolute;
 
     top: 108px;
@@ -276,10 +308,10 @@ export default {
   .n_btn-circle-3d {
     position: relative;
     top: 32px;
-    left: 39%;
+    left:39%;
     display: inline-block;
     text-decoration: none;
-    background: #ff8181;
+    background: #FFC107;
     color: #fff;
     width: 100px;
     height: 60px;
@@ -289,8 +321,8 @@ export default {
     font-weight: bold;
     overflow: hidden;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-    border-bottom: solid 3px #bd6565;
-    transition: 0.4s;
+    border-bottom: solid 3px #FFB300;
+    transition: .4s;
 
     cursor: pointer;
   }
@@ -302,8 +334,8 @@ export default {
     border-bottom: none;
   }
 
-  /*.editBioButton{
+  .reverse{
+    transform: rotateX(180deg);
+  }
 
-    }*/
-}
 </style>

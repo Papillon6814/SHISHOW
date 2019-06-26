@@ -109,11 +109,11 @@ export default {
     },
     extendOther: function() {
       var active = true;
-      var move = document.getElementById("moving");
-      move.style.top = "350px";
+      var move=document.getElementById('moving');
+      move.style.top = "340px";
       this.active = !this.active;
-      if (this.active === false) {
-        move.style.top = "45px";
+      if(this.active === false){
+        move.style.top = "60px"
       }
     }
   }
@@ -178,6 +178,35 @@ body {
 
   background-color: $dark_color;
 }
+  #myBannerPosition {
+    //position: relative;
+    //temporary top
+    padding-top: 70px;
+    margin-left: 10%;
+    margin-right: 10%;
+    width:100%;
+    position:absolute;
+    z-index: 1;
+    /*top: 45px;
+    left: 10%;*/
+  }
+
+  .normalBannerPosition {
+    margin-left: 10%;
+    width:100%;
+    position: absolute;
+    padding-top:165px;
+    $i: 1;
+    @while $i <= 30{
+      .n#{$i}{
+        padding-top: 210px;/* + (200px * $i);*/
+      }
+      $i: $i + 1;
+    }
+    list-style: none;
+
+    // z-index: -1
+  }
 
 #myBannerPosition {
   //position: relative;

@@ -294,7 +294,7 @@ export default {
     right: 15px;
     display: inline-block;
     text-decoration: none;
-    background: #ff8181;
+    background: #FFC107;
     color: #fff;
     width: 130px;
     height: 80px;
@@ -304,7 +304,7 @@ export default {
     font-weight: bold;
     overflow: hidden;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-    border-bottom: solid 3px #bd6565;
+    border-bottom: solid 3px #FFB300;
     transition: .4s;
 
     cursor: pointer;
