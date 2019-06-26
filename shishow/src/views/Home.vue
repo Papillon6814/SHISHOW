@@ -36,13 +36,12 @@
 import navi from "../components/NavigationBar.vue";
 import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
-//import gameBanner from '../components/GameBanner.vue'
-//import navigationBar from "../components/NavigationBar";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
 import "@firebase/auth";
 import store from "../store";
+import { resolve } from "dns";
 
 const db = firebase.firestore();
 
@@ -60,11 +59,10 @@ export default {
     navi,
     myBanner,
     normalBanner
-    //gameBanner
   },
   data: function() {
     return {
-      users: "",
+      users: [],
       searchWord: ""
     };
   },
@@ -74,6 +72,25 @@ export default {
     },
     userStatus() {
       return this.$store.getters.isSignedIn;
+    },
+    filterUser: function() {
+      let key = this.searchWord;
+      let data = [];
+      let results = [];
+      //console.log(this.users[3].data().username);
+      //console.log(Object.keys(this.users).length);
+      let i;
+      //オブジェクトに変換
+      for (i in this.users) {
+        data[i] = this.users[i].data();
+      }
+      //console.log(data);
+      if (key) {
+        if (data.username.indexOf(key) !== -1) {
+          results.push(data);
+        }
+      }
+      console.log(results);
     }
   },
   methods: {
