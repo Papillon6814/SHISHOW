@@ -11,7 +11,13 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from "../../plugin/firestore";
+import 'firebase/firestore'
+import '@firebase/auth'
+import store from '../../store'
+
+let db = firebase.firestore();
+let currentUser;
 
 export default {
   name: "inputArea",
@@ -30,7 +36,7 @@ export default {
       const db = firebase.firestore();
       //データベースから値を持ってきてsnapshotに代入
       db.collection("USER")
-        .doc("sample")
+        .doc(currentUser.email)
         .collection("friends")
         .doc("jDIKmCZkXpCmYfqaeuu5")
         .collection("CHAT")
@@ -79,6 +85,13 @@ export default {
         this.msg = "";
         this.text = "";
       }
+    },
+    onAuth: function () {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false);
+      })
     }
   }
 };

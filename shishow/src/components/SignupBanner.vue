@@ -130,7 +130,6 @@ export default {
     addToDatabase(email, username,image) {
       let url = db.collection("USER").doc(""+email).collection("friends").doc();
 
-      /*
       url.collection("CHAT").add({
         msg:"",
         date:"",
@@ -138,7 +137,6 @@ export default {
       url.set({
         username:""
       });
-      */
 
       db.collection("USER").doc(""+email).collection("incoming").add({username:""});
       db.collection("USER").doc(""+email).collection("outgoing").add({username:""});
@@ -490,7 +488,7 @@ export default {
       border: solid;
       border-width: 3px;
       border-color: $su_banner_flame;
-      
+
     }
 
     .passwordPosition{
