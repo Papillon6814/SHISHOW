@@ -43,6 +43,12 @@ export default new Vuex.Store({
     },
     isSignedIn(state) {
       return state.status;
+    },
+    idList(state) {
+      return state.id_list;
+    },
+    userNameList(state) {
+      return state.user_name_list;
     }
   },
 
