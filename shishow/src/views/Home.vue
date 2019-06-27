@@ -39,6 +39,9 @@ export default {
       .get()
       .then(doc => {
         this.users = doc.docs;
+        /*for (i in this.users) {
+          this.filteredUser[i] = this.users[i].data();
+        }*/
       });
   },
   components: {
