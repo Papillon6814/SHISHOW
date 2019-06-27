@@ -39,9 +39,9 @@ export default {
       .get()
       .then(doc => {
         this.users = doc.docs;
-        /*for (i in this.users) {
-          this.filteredUser[i] = this.users[i].data();
-        }*/
+        doc.forEach(docs => {
+          this.filteredUser.push(docs.data());
+        });
       });
   },
   components: {
@@ -92,6 +92,7 @@ export default {
   methods: {
     getSearchWord(word) {
       this.searchWord = word;
+      this.filterUser();
     },
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
