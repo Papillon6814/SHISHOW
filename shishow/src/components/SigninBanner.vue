@@ -105,9 +105,12 @@ export default {
 
   background-color: $si_banner_color;
 
-  border: solid;
-  border-width: 5px;
-  border-color: $si_banner_flame;
+  border-radius: 3px;
+
+  box-shadow: 0px 0px 3px  rgba(0, 0, 0, 0.1);
+  // border: solid;
+  // border-width: 5px;
+  // border-color: $si_banner_flame;
   z-index: 2;
 
   //children
@@ -166,6 +169,7 @@ export default {
       }
     }
   }
+
 
   .iconCirclePosition {
     position: absolute;
@@ -317,5 +321,9 @@ export default {
     border-bottom: none;
   }
 }
+
+  .signinBanner:hover{
+    box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
+  }
 
 </style>

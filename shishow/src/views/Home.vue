@@ -4,6 +4,7 @@
     <transition appear name="v">
       <div id="myBannerPosition">
         <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
+        <BlurBanner v-else></BlurBanner>
       </div>
     </transition>
     <div id="moving">
@@ -36,6 +37,7 @@
 import navi from "../components/NavigationBar.vue";
 import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
+import BlurBanner from "../components/BlurBanner.vue"
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
@@ -59,7 +61,8 @@ export default {
   components: {
     navi,
     myBanner,
-    normalBanner
+    normalBanner,
+    BlurBanner
   },
   data: function() {
     return {
