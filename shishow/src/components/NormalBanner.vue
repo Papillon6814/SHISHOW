@@ -351,10 +351,10 @@ export default {
 
     background-color: $n_banner_color;
 
-    border: solid;
-    border-width: 5px;
-    border-color: $n_banner_flame;
-    z-index: 2;
+    // border: solid;
+    // border-width: 5px;
+    // border-color: $n_banner_flame;
+    // z-index: 2;
 
     transition:0.3s;
 

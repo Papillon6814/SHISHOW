@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-link to="/signup">
     <div class="instead-banner">
       <div v-blur="isBlurred" class="banner">
       <!-- <span class="iconPicPosition">
@@ -39,6 +40,7 @@
         {{message}}
       </div>
     </div>
+    </router-link>
   </div>
 </template>
 <script>
