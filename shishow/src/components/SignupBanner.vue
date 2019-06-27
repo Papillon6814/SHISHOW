@@ -277,12 +277,12 @@ export default {
 
   background-color: $su_banner_color;
 
-  border: solid;
-  border-width: 5px;
-  border-color: $su_banner_flame;
+  // border: solid;
+  // border-width: 5px;
+  // border-color: $su_banner_flame;
   z-index: 2;
 
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
   //children
 
@@ -527,6 +527,10 @@ export default {
       right: 0px;
     }
 
+}
+
+.signupBanner:hover{
+  box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
 }
 #result{  //cropper
   z-index: 7;
