@@ -15,7 +15,8 @@
       <div class="achievement"></div>
     </div>
     <div class="usernamePosition">
-      <div class="username">{{user["username"]}}</div>
+      <!--<div class="username">{{user["username"]}}</div>-->
+      <div class="username">{{user.username}}</div>
     </div>
     <div class="idPosition">
       <div class="id">qawsedrftgyhujkolp</div>
@@ -44,7 +45,7 @@ const currentUser = firebase.auth().currentUser;
 
 export default {
   name: "normalBanner",
-  props: ["user", "searchWord"],
+  props: ["user"],
   created: function() {
     db.collection("USER")
       .doc(store.state["user"].email)

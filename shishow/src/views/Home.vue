@@ -9,8 +9,8 @@
     <div id="moving">
       <transition appear name="v2">
         <div class="normalBannerPosition">
-          <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
-            <normalBanner :user="users[N-1].data()"></normalBanner>
+          <div v-for="N in filteredUser.length" :key="N" v-bind:class="'n'+N">
+            <normalBanner :user="filteredUser[N-1]"></normalBanner>
           </div>
         </div>
       </transition>
@@ -49,7 +49,8 @@ export default {
   data: function() {
     return {
       users: [],
-      searchWord: ""
+      searchWord: "",
+      filteredUser: []
     };
   },
   computed: {
@@ -64,18 +65,25 @@ export default {
       let data = [];
       let results = [];
       let i;
+      //オブジェクトに変換
+      for (i in this.users) {
+        data[i] = this.users[i].data();
+      }
       if (key) {
-        //オブジェクトに変換
         for (i in this.users) {
-          data[i] = this.users[i].data();
+          //ユーザーネームの走査
           if (this.users[i].data().username.indexOf(key) !== -1) {
             results.push(this.users[i].data());
           }
+          this.filteredUser = results;
+          console.log("searched");
         }
-        this.users = results;
-        console.log(this.users.length);
+      } else {
+        //何も入力されてないときにフィルターする前のデータをする
+        console.log("non searched");
+        this.filteredUser = data;
       }
-      return this.users;
+      return this.filteredUser;
     }
   },
   methods: {
