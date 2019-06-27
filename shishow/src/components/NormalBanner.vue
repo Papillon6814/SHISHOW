@@ -370,5 +370,5 @@ export default {
 
     }*
 
-}
+}*/
 </style>
