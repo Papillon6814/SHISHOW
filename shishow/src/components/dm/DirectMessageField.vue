@@ -46,9 +46,14 @@ export default {
   created: function () {
     this.onAuth();
     currentUser = firebase.auth().currentUser;
+    console.log("created")
     this.loadFriendMsgs();
   },
-  
+
+  mounted: function () {
+    console.log("mounted")
+  },
+
   components: {
     leftArea,
     rightArea,
@@ -98,6 +103,10 @@ export default {
               }
             });
 
+            let userData = { id_list: msgListForLeftPage,
+                            user_name_list: userNameList };
+            this.$store.dispatch('openChatArea', userData);
+
             this.IDlist = msgListForLeftPage;
             this.usernames = userNameList;
           })
@@ -105,7 +114,7 @@ export default {
       })
       .then(function() {
         // デバッグ用のコンソール出力
-        console.log(msgListForLeftPage)
+        console.log(msgListForLeftPage);
         console.log('uiList: ' + userIDList);
       })
     },
