@@ -128,17 +128,6 @@ export default {
 .v-enter-active {
   transition: all 1s 0s ease;
 }
-.v-leave {
-  transform: translate(0, 0);
-  opacity: 1;
-}
-.v-leave-to {
-  transform: translate(-300px, 0);
-  opacity: 0;
-}
-.v-leave-active {
-  transition: all .5s 0s ease;
-}
 
 .v2-enter {
   transform: translate(1000px, 0);
@@ -149,17 +138,6 @@ export default {
 }
 .v2-enter-active {
   transition: all 1.5s 1s ease;
-}
-.v2-leave {
-  transform: translate(0, 0);
-  opacity: 1;
-}
-.v2-leave-to {
-  transform: translate(-400px, 0);
-  opacity: 0;
-}
-.v2-leave-active {
-  transition: all .5s 0s ease;
 }
 
 html {
