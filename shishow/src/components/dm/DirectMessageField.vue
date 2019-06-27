@@ -1,6 +1,8 @@
 <template>
   <div id="directMessageField">
-    <leftArea></leftArea>
+    <leftArea
+    :friendsDocID="leftAreaData"
+    ></leftArea>
     <rightArea></rightArea>
     <div class="inputArea">
       <inputArea></inputArea>
@@ -10,6 +12,7 @@
 
 <script>
 // ほとんどのDMコンポーネントの親
+// IDをfirebaseから取得してそれぞれのコンポーネントへ送信する
 import leftArea from './leftArea.vue'
 import rightArea from './rightArea.vue'
 import inputArea from './InputArea.vue'
@@ -22,19 +25,16 @@ import store from '../../store'
 let db = firebase.firestore();
 
 let currentUser;
-let username;
-let lastMsgAndDate = [];
-let iconPic;
-let msg = [];
+let friendsDocID = [];
 
 export default {
   name: 'directMessageField',
 
   data() {
     return{
-      rightBundle: {},
-      leftBundle: {},
-      inputBundle: {}
+      rightAreaData: '',
+      leftAreaData: [],
+      inputAreaData: ''
     }
   },
 
@@ -53,63 +53,25 @@ export default {
       })
     },
 
-    loadAllMsgAndDate: function() {
+    loadFriendID: function() {
       db.collection("USER")
         .doc(currentUser.email)
         .collection("friends")
         .get()
         .then(friendsSnapshot => {
           friendsSnapshot.forEach(doc1 => {
-
-            db.collection("USER")
-            .doc(currentUser.email)
-            .collection("friends")
-            .doc(doc1.id)
-            .collection("CHAT")
-            .get()
-            .then(msgSnapshot => {
-              msgSnapshot.forEach(doc2 => {
-                msg.push(doc2.data());
-
-                console.log(msg)
-              })
-            })
+            friendsDocID.push(doc1.id)
+            console.log("ID: " + friendsDocID)
           })
       })
-    },
-
-    loadLastMsgAndDate: function() {
-      db.collection("USER")
-        .doc(currentUser.email)
-        .collection('friends')
-        .get()
-        .then(friendsSnapshot => {
-          friendsSnapshot.forEach(doc1 => {
-
-            db.collection("USER")
-              .doc(currentUser.email)
-              .collection("friends")
-              .doc(doc1.id)
-              .collection("CHAT")
-              .limit(1)
-              .get()
-              .then(lastMsgSnapshot => {
-                lastMsgSnapshot.forEach(doc2 => {
-                  lastMsgAndDate.push(doc2.data())
-                })
-
-                console.log(lastMsgAndDate)
-              })
-          })
-        })
     }
   },
 
   created: function() {
     this.onAuth();
     currentUser = firebase.auth().currentUser;
-    this.loadAllMsgAndDate();
-    this.loadLastMsgAndDate();
+    this.loadFriendID();
+    this.leftAreaData = friendsDocID;
   }
 }
 

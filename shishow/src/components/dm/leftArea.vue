@@ -1,10 +1,10 @@
 <template>
   <div id="leftArea">
     <div class="dmbannerPosition">
-      <div v-for="(friend, N) in friends" :key="N" v-bind:class="'b' + N">
+      <div v-for="(friend, N) in friendsDocID" :key="N" v-bind:class="'b' + N">
         <dmBanner
           :dmBannerUsername="friend"
-          :dmMsg="msg[0]">
+          :dmMsg="lastMsg[0]">
         </dmBanner>
       </div>
     </div>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+// directMessageFieldからフレンドのIDを受け取ってleftareaの内容を表示する
 import dmBanner from'./dmBanner.vue'
 
 import firebase from '../../plugin/firestore';
@@ -21,30 +22,84 @@ import store from '../../store'
 
 let db = firebase.firestore();
 
+let currentUser;
+let lastMsgAndDate = [];
+
+let selectedFriendID;
+let lastMsgDate = [];
+
 export default {
   name: 'leftArea',
-
-  props: [
-    'IDlist',
-    'userNameList'
-  ],
-
-  created() {
-    this.friends = this.userNameList;
-  },
 
   data() {
     return {
       friends: '',
-      msg: ''
+      lastMsg: ''
     }
   },
+
+
+  props: [
+    'friendsDocID'
+  ],
 
   components: {
     dmBanner
   },
 
+  methods: {
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false);
+      })
+    },
 
+    loadLastMsgAndDate: function() {
+      db.collection("USER")
+        .doc(currentUser.email)
+        .collection('friends')
+        .get()
+        .then(friendsSnapshot => {
+          friendsSnapshot.forEach(doc1 => {
+
+            db.collection("USER")
+              .doc(currentUser.email)
+              .collection('friends')
+              .doc(doc1.id)
+              .collection("CHAT")
+              .limit(1)
+              .get()
+              .then(lastMsgSnapshot => {
+                lastMsgSnapshot.forEach(doc2 => {
+                  lastMsgAndDate.push(doc2.data());
+                })
+              })
+          })
+        })
+    },
+
+    // YYYY:MM:DD:hh:mm:ss じゃないと動作しない
+    formatDate: function (date) {
+      var formattedDate = date.year + date.month  + date.day
+                        + date.hour + date.minute + date.second;
+
+      console.log(formattedDate);
+      return Number(formattedDate);
+    }
+  },
+
+  mounted: function() {
+    this.onAuth();
+    console.log("leftarea mounted")
+    currentUser = firebase.auth().currentUser;
+    this.loadLastMsgAndDate();
+
+    lastMsgAndDate.forEach(MandD => {
+      lastMsgDate.push(this.formatDate(MandD.date));
+    });
+  }
 }
 </script>
 
