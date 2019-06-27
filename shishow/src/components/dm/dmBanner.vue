@@ -1,8 +1,19 @@
 <template>
+<<<<<<< HEAD
   <div id="dmBanner">
     <div class="dmBannerIcon">
     </div>
     <div class="dmBannerName"></div>
+=======
+  <div class="dmBanner">
+    <div class="dmBannerIcon"></div>
+    <div class="dmBannerName">
+      {{ dmBannerUsername }}
+    </div>
+    <div class="dmMsgArea">
+      {{ dmMsg }}
+    </div>
+>>>>>>> master
   </div>
 </template>
 
@@ -50,9 +61,9 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
-  #dmBanner {
+  .dmBanner {
     display: block;
 
     width: 100%;
@@ -64,8 +75,11 @@ export default {
     border-width: 3px;
     border-color: #555;
 
+    transition: .15s;
+    cursor: pointer;
+
     .dmBannerIcon {
-      position: absolute;
+      position: relative;
 
       top: 10px;
       left: 15px;
@@ -83,9 +97,9 @@ export default {
     }
 
     .dmBannerName {
-      position: absolute;
+      position: relative;
 
-      top: 15px;
+      bottom: 80px;
       left: 130px;
 
       width: 60%;
@@ -96,6 +110,25 @@ export default {
 
       font-size: 35px;
     }
+<<<<<<< HEAD
+=======
+
+    .dmMsgArea {
+      position: relative;
+
+      bottom: 70px;
+      left: 130px;
+
+      width: 70%;
+      height: 60px;
+
+      background-color: #fff;
+    }
+>>>>>>> master
+  }
+
+  .dmBanner:hover {
+    background-color: $dm_banner_color_hover;
   }
 
 </style>

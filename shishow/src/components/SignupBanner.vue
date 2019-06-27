@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="banner">
     <span class="iconCirclePosition">
       <div class="iconCircle" >
@@ -6,6 +7,27 @@
         <div class="iconDashedCircle" v-if="!uploadedImage">
           <div class="plusPosition">
             <i class="fas fa-plus"></i>
+=======
+  <div class="signupBanner">
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img id="image" v-show="uploadedImage" :src="uploadedImage" />
+                <button id="button" type="button">Confirm</button>
+                <input type="button" id="closeBtn" value="close">
+            </div>
+        </div>
+    </div>
+    <div id="trimmingButton">
+      <span class="iconCirclePosition">
+        <label>
+        <div class="iconCircle" >
+          <div id="result" ></div>
+          <div class="iconDashedCircle" id='delete'>
+            <div class="plusPosition">
+              <i class="fas fa-plus"></i>
+            </div>
+>>>>>>> master
           </div>
         </div>
         <input class="iconFile" type="file" @change="onFileChange">
@@ -58,6 +80,7 @@
 
 
 <script>
+<<<<<<< HEAD
 import firebase from "firebase";
 import "firebase/firestore";
 // Your web app's Firebase configuration
@@ -73,6 +96,11 @@ export const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+=======
+import firebase from "../plugin/firestore";
+import "firebase/firestore";
+import Cropper from 'cropperjs'
+>>>>>>> master
 
 const db = firebase.firestore();
 let files;
@@ -89,7 +117,12 @@ export default {
     }
   },
   methods: {
+<<<<<<< HEAD
           signUp: function () {
+=======
+
+    signUp: function () {
+>>>>>>> master
 
       let url;
 
@@ -100,11 +133,21 @@ export default {
       }
       if(this.p_confirm != this.password) {
         console.log('Password does not match!');
-      } else if(this.errorIndication());
+      }
+      else if(this.errorIndication());
       else {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
+<<<<<<< HEAD
           alert('Create account: ', user.e_mail)
+=======
+          var User = firebase.auth().currentUser;
+          var email;
+
+          //変数に情報を格納
+          email = User.email;
+          alert('Create account: '+email);
+>>>>>>> master
           if(!this.uploadedImage) this.uploadedImage = url;
           this.addToDatabase(this.email,this.username,this.uploadedImage);
         })
@@ -113,9 +156,17 @@ export default {
         })
       }
     },
+<<<<<<< HEAD
 
     addToDatabase(email, username,image) {
       let url = db.collection("USER").doc(""+email).collection("friends").doc();
+=======
+
+    addToDatabase(email, username,image) {
+      let url = db.collection("USER").doc(""+email).collection("friends").doc();
+
+      /*
+>>>>>>> master
       url.collection("CHAT").add({
         msg:"",
         date:"",
@@ -123,19 +174,23 @@ export default {
       url.set({
         username:""
       });
-
-      
-      
+      */
 
       db.collection("USER").doc(""+email).collection("incoming").add({username:""});
       db.collection("USER").doc(""+email).collection("outgoing").add({username:""});
-      
 
       db.collection("USER").doc(""+email).set({
+<<<<<<< HEAD
         email: email,
         username: username,
         image: image,
 
+=======
+          email: email,
+          username: username,
+          image: image,
+          bio: ''
+>>>>>>> master
       })
       .then(function(docRef) {
         console.log('Document written with ID: ', docRef.id);
@@ -173,22 +228,26 @@ export default {
     },
 
     crop:function(){
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> master
       var root = this;
       var image = document.getElementById('image');
       var button = document.getElementById('button');
       var result = document.getElementById('result');
       var close = document.getElementById('closeBtn');
-      
-      var croppable = false;
-      
-      var cropper = new Cropper(image, {
-        aspectRatio: 1,         
-        viewMode: 1,            
-                                
 
-        
-        ready: function () { 
+      var croppable = false;
+
+      var cropper = new Cropper(image, {
+        aspectRatio: 1,
+        viewMode: 1,
+
+
+
+        ready: function () {
           croppable = true;
         },
       });
@@ -228,7 +287,7 @@ export default {
         roundedImage.width =130;
         roundedImage.height =130;
         result.innerHTML = '';
-        
+
         var del = document.getElementById('delete');
         if(del != null){
           del.textContent = null;
@@ -242,6 +301,7 @@ export default {
 
         result.appendChild(roundedImage);
       };
+<<<<<<< HEAD
     } 
   }
 }
@@ -253,17 +313,33 @@ export default {
 <style lang="scss">
 .banner {
   position: absolute;
+=======
+    },
+
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .signupBanner {
+    position: absolute;
+>>>>>>> master
 
   width: $banner_width;
   height: $banner_height;
 
   background-color: $su_banner_color;
 
-  border: solid;
-  border-width: 5px;
-  border-color: $su_banner_flame;
+  // border: solid;
+  // border-width: 5px;
+  // border-color: $su_banner_flame;
   z-index: 2;
 
+<<<<<<< HEAD
+=======
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+
+>>>>>>> master
   //children
 
   .iconCircle {
@@ -285,8 +361,14 @@ export default {
         position: absolute;
 
 
+<<<<<<< HEAD
       top: 4.5%;
       left: 4.5%;
+=======
+
+      top: 5.72%;
+      left: 5.85%;
+>>>>>>> master
 
       width: 90%;
       height: 90%;
@@ -304,7 +386,6 @@ export default {
 
       .plusPosition {
         position: absolute;
-
 
           left: 49.5%;
           top: 50%;
@@ -327,7 +408,7 @@ export default {
       height: $icon_height;
 
     }
-  
+
 
   .iconCirclePosition {
     position: absolute;
@@ -413,55 +494,65 @@ export default {
   }
 
   .username{
-    width: $user_width;
-    height: $user_height;
-
-    background-color: #fff;
+    width: 100%;
+    height: $su_user_height;
 
     border: solid;
     border-width: 3px;
-    border-color: $si_window_flame;
-  }
-
-  .usernamePosition{
-    position: absolute;
-
-    top: 30px;
-    left: 202px;
-    right: 0px;
-  }
-
-  .password{
-    width: $id_width;
-    height: $id_height;
-
+    border-color: $su_banner_flame;
+    // temporary color
     background-color: #fff;
-
-    border: solid;
-    border-width: 3px;
-    border-color: $si_window_flame;
   }
 
-  .passwordPosition{
-    position: absolute;
+    .usernamePosition {
+      position: absolute;
 
+      top: 30px;
+      left: 210px;
+
+      right: 100px;
+    }
+
+    .email{
+      width: 100%;
+      height: $su_user_height;
+
+      background-color: #fff;
+
+      border: solid;
+      border-width: 3px;
+      border-color: $su_banner_flame;
+    }
+
+<<<<<<< HEAD
     top: 100px;
     left: 202px;
     right: 0px;
   }
+=======
+    .emailPosition{
+      position: absolute;
+>>>>>>> master
 
+      top: 90px;
+      left: 210px !important;
 
-  .passwordConfirm {
-    position: absolute;
+      right: 100px;
+    }
 
-    width: 300px;
-    height: $id_height;
+    .password{
+      width: 100%;
+      height: $su_pass_height;
 
-}
+      background-color: #fff;
 
-  .passwordConfirmPosition {
-    position: absolute;
+      border: solid;
+      border-width: 3px;
+      border-color: $su_banner_flame;
+      
+    }
 
+<<<<<<< HEAD
     top: 220px;
     left: 202px;
   }
@@ -469,5 +560,66 @@ export default {
   .editBioButton{
 
     }
+=======
+    .passwordPosition{
+      position: absolute;
+      top:175px;
+      left:70px;
+      right:0px;
+    }
+
+    .passwordPosition{
+      position: absolute;
+
+      top: 150px;
+      left: 210px;
+      right: 220px;
+    }
+
+    .passwordConfirm {
+      width: 100%;
+      height: $su_pass_height;
+
+      background-color: #fff;
+
+      border: solid;
+      border-width: 3px;
+      border-color: $su_banner_flame;
+    }
+
+    .passwordConfirmPosition{
+      position: absolute;
+
+      top: 200px;
+      left: 210px;
+      right: 220px;
+    }
+
+}
+
+.signupBanner:hover{
+  box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
+}
+#result{  //cropper
+  z-index: 7;
+}
+//modal
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content{
+  background-color: white;
+  width: 500px;
+  margin: 40% auto;
+>>>>>>> master
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
-  <div id="rightArea">
+  <div class="rightArea">
     <div v-for="msg in msgList" v-bind:key="msg.id">
+<<<<<<< HEAD
       <div class="chat">
         <ul>
           <div class="chat-msg">
@@ -15,15 +16,31 @@
     </div>
     <div class="inputArea">
       <inputArea></inputArea>
+=======
+      <div class="chatBubble">
+        <ul>
+          <li>{{msg.msg}}</li>
+          <!--日付の変換-->
+          <li>{{msg.date.toDate().toLocaleString()}}</li>
+        </ul>
+      </div>
+>>>>>>> master
     </div>
   </div>
 </template>
 
 <script>
-import firebase from "firebase";
-import inputArea from "./InputArea";
+import firebase from "../../plugin/firestore";
+import 'firebase/firestore'
+import '@firebase/auth'
+import store from '../../store'
+
+const db = firebase.firestore();
+
+let currentUser;
 
 export default {
+<<<<<<< HEAD
   data() {
     return {
       msgList: []
@@ -66,26 +83,37 @@ export default {
         });
     }
   }
+=======
+  name: 'rightArea'
+>>>>>>> master
 };
 </script>
 
-<style lang='scss'>
-#rightArea {
+<style lang='scss' scoped>
+.rightArea {
   position: absolute;
 
   top: 0;
   right: 0;
 
   width: 55%;
-  height: 100%;
+  height: calc(100% - 50px);
 
   background-color: $theme_color_dm;
+
+  overflow-y: scroll;
+
+  .chatBubble {
+    display: block;
+
+    width: 450px;
+    height: auto;
+
+    // temporary color
+    background-color: #fff;
+  }
 }
-//下部に表示する
-.inputArea {
-  position: fixed;
-  bottom: 200px;
-}
+
 li {
   list-style: none;
 }

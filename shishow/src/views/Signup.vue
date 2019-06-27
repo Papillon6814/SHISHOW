@@ -27,8 +27,14 @@ export default {
   body {
     padding: 0;
     margin: 0;
+<<<<<<< HEAD
     width: 100%;
     overflow: hidden;
+=======
+    width:100%;
+
+    height: 2000px;
+>>>>>>> master
 
     background-color: $dark_color;
   }
