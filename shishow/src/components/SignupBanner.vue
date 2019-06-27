@@ -445,9 +445,9 @@ export default {
     width: 100%;
     height: $su_user_height;
 
-    border: solid;
-    border-width: 3px;
-    border-color: $su_banner_flame;
+    // border: solid;
+    // border-width: 3px;
+    // border-color: $su_banner_flame;
     // temporary color
     background-color: #fff;
   }
@@ -467,9 +467,7 @@ export default {
 
       background-color: #fff;
 
-      border: solid;
-      border-width: 3px;
-      border-color: $su_banner_flame;
+
     }
 
     .emailPosition{
@@ -487,9 +485,9 @@ export default {
 
       background-color: #fff;
 
-      border: solid;
-      border-width: 3px;
-      border-color: $su_banner_flame;
+      // border: solid;
+      // border-width: 3px;
+      // border-color: $su_banner_flame;
       
     }
 
@@ -514,9 +512,9 @@ export default {
 
       background-color: #fff;
 
-      border: solid;
-      border-width: 3px;
-      border-color: $su_banner_flame;
+      // border: solid;
+      // border-width: 3px;
+      // border-color: $su_banner_flame;
     }
 
     .passwordConfirmPosition{

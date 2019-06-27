@@ -97,11 +97,6 @@ export default {
 
     border-radius: 3px;
 
-    // border: solid;
-    // border-width: 5px;
-    // border-color: $banner_flame;
-    //z-index: 9999;
-
     box-shadow: 0px 0px 3px  rgba(0, 0, 0, 0.1);
 
     transition:0.3s;
@@ -123,9 +118,6 @@ export default {
 
     background-color: $banner_color;
 
-    // border: solid;
-    // border-width: 5px;
-    // border-color: $banner_flame;
     z-index: 2;
 
     transition:0.3s;
@@ -158,11 +150,6 @@ export default {
     height: $achievement_height; //√3
     background-color: #ffffff;
     margin: $root_twelve 0;
-
-    /* border-left: dashed;
-    border-right: dashed;
-    border-color: #111;
-    border-width: 1.5px; */
   }
 
   .achievement:before,
@@ -237,10 +224,6 @@ export default {
       border: solid;
       border-width: 3px;
       border-color: $window_flame;
-
-      .fieldForUserName{
-
-      }
 
       .fieldForDisplayDeshi{
         .deshiPosition{

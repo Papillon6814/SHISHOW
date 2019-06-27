@@ -79,11 +79,6 @@ $searchbar_width: 400px;
     top: 13px;
     left: 100px;
 
-    //width: $searchbar_width;
-    //height: $searchbar_width/2;
-
-    //margin: auto;
-
     .group {
       position: relative;
 
@@ -183,6 +178,8 @@ $searchbar_width: 400px;
 
     top: 10px;
     left: 10px;
+
+    
   }
 
   .logoSentence {
@@ -197,6 +194,8 @@ $searchbar_width: 400px;
     -webkit-transform: translate(-50%, 0);
 
     color: $logo_sentence_color;
+
+    text-shadow: 2px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   }
 
   ::selection {
