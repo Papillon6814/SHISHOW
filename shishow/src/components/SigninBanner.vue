@@ -123,9 +123,9 @@ export default {
     background-color: #fff;
 
     border-radius: 50%;
-    border: solid;
-    border-width: 2px;
-    border-color: $si_window_flame;
+    // border: solid;
+    // border-width: 2px;
+    // border-color: $si_window_flame;
 
     cursor: pointer;
 
@@ -260,9 +260,9 @@ export default {
 
     background-color: #fff;
 
-    border: solid;
-    border-width: 3px;
-    border-color: $si_window_flame;
+    // border: solid;
+    // border-width: 3px;
+    // border-color: $si_window_flame;
   }
 
   .usernamePosition{
@@ -279,9 +279,9 @@ export default {
 
     background-color: #fff;
 
-    border: solid;
-    border-width: 3px;
-    border-color: $si_window_flame;
+    // border: solid;
+    // border-width: 3px;
+    // border-color: $si_window_flame;
   }
 
   .passwordPosition{

@@ -28,17 +28,15 @@
         </div>
       </div>
     </div>
-    <div class="idPosition">
-      <div class="id">
-        qawsedrftgyhujkolp
-      </div>
-    </div>
     <div class="profilePosition">
       <div class="profile">
         新しいことにチャレンジすることが好き!
         テニス、スキー、スノーボード、ゴルフ、それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
         最近では、予想外の趣味に没頭中！
       </div>
+    </div>
+    <div class="userInfoPosition">
+        <div class="userInfo">仲野巧ですから</div>
     </div>
     <div @click="logout" class="btn-circle-3d">ログアウト</div>
     <span v-bind:class="{reverse:isC}" @click="doExtend" id="pullDownProperties">
@@ -86,6 +84,9 @@ export default {
 
 <style lang="scss" scoped>
   .banner {
+    overflow-y: hidden;
+    overflow-x: hidden;
+
     position: absolute;
 
     width: $banner_width;
@@ -131,12 +132,12 @@ export default {
 
   }
 
-    .iconPic {
-      width: $icon_width;
-      height: $icon_height;
+  .iconPic {
+    width: $icon_width;
+    height: $icon_height;
 
       // temporary color
-      background-color: #fff;
+    background-color: #fff;
 
     border-radius: 50%;
     border: solid;
@@ -237,10 +238,6 @@ export default {
       border-width: 3px;
       border-color: $window_flame;
 
-      .fieldForUserName{
-
-      }
-
       .fieldForDisplayDeshi{
         .deshiPosition{
           position: relative;
@@ -278,24 +275,7 @@ export default {
     right: 0px;
   }
 
-  .id{
-    width: $id_width;
-    height: $id_height;
 
-    background-color: #fff;
-
-    border: solid;
-    border-width: 3px;
-    border-color: $window_flame;
-  }
-
-  .idPosition{
-    position: absolute;
-
-    top: 100px;
-    left: 202px;
-    right: 0px;
-  }
 
   .profile{
     width: $profile_width;
@@ -311,14 +291,35 @@ export default {
   .profilePosition{
     position: absolute;
 
-    top: 150px;
+    top: 120px;
     left: 202px;
+    right: 25px;
+  }
+
+  .userInfo {
+    width: 100%;
+    height: 230px;
+
+      // temporary color
+    background-color: #fff;
+
+    border-radius: 5%;
+    border: dashed;
+    border-width: 2px;
+    border-color: $window_flame;
+  }
+
+  .userInfoPosition {
+    position: absolute;
+
+    top: 300px;
+    left: 75px;
     right: 25px;
   }
 
     .btn-circle-3d {
       position: relative;
-      top: 30px;
+      top: 20px;
       left:39%;
       display: inline-block;
       text-decoration: none;
