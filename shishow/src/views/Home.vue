@@ -1,5 +1,7 @@
 <template>
-  <div id="root">
+<div id="root">
+  <div v-show="loading" class="loader">Now loading...</div>
+  <div v-show="!loading" class="itemContainer">
     <navi @input="getSearchWord"></navi>
     <transition appear name="v">
       <div id="myBannerPosition">
@@ -29,6 +31,7 @@
       </div>-->
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -45,6 +48,25 @@ import store from "../store";
 const db = firebase.firestore();
 
 export default {
+  /*var app = new Vue({*/
+    /*el: '#app',
+    data: {
+        results: [],
+        loading: true
+    },
+    components: {
+        'item-component': ItemComponent
+    },
+    mounted () {
+        axios
+            .get("api.php")
+            .then(response => {
+                this.results = response.data;
+                this.loading = false;
+            })
+    }*/
+  /*});*/
+
   name: "home",
   created: function() {
     this.onAuth();
