@@ -30,6 +30,7 @@ export default {
       username: '',
       lastMsg: '',
       iconPic: '',
+      msgDate: {},
       msgBubbles: [],
     }
   },
@@ -66,7 +67,9 @@ export default {
           .then(msgSnapshot => {
             msgSnapshot.forEach(doc2 => {
               this.msgBubbles.push(doc2.data().msg);
+              this.msgDate.push(doc2.data().date)
               console.log(this.msgBubbles)
+              console.log(this.msgDate)
             })
           })
         })
