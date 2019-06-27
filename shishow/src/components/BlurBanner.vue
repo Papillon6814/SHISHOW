@@ -3,38 +3,6 @@
     <router-link to="/signup">
     <div class="instead-banner">
       <div v-blur="isBlurred" class="banner">
-      <!-- <span class="iconPicPosition">
-        <div class="iconPic"></div>
-      </span>
-      <div class="achievementPosition1">
-        <div class="achievement">
-        </div>
-      </div>
-      <div class="achievementPosition2">
-        <div class="achievement">
-        </div>
-      </div>
-      <div class="achievementPosition3">
-        <div class="achievement">
-        </div>
-      </div>
-      <div class="usernamePosition">
-        <div class="username">
-          Nobuyuki
-        </div>
-      </div>
-      <div class="profilePosition">
-        <div class="profile">
-          新しいことにチャレンジすることが好き!
-          テニス、スキー、スノーボード、ゴルフ、
-          それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
-          最近では、予想外の趣味に没頭中！
-        </div>
-      </div>
-      <a href="#" class="btn-circle-3d">江崎スイッチ</a>
-      <span id="pullDownProperties">
-      <i class="fas fa-caret-down"></i>
-      </span> -->
     </div>
       <div class="recommendToCreate" v-if="isBlurred === true">
         {{message}}
@@ -122,11 +90,6 @@ export default {
       height: $achievement_height; //√3
       background-color: #ffffff;
       margin: $root_twelve 0;
-
-      /* border-left: dashed;
-      border-right: dashed;
-      border-color: #111;
-      border-width: 1.5px; */
     }
 
     .achievement:before,
@@ -263,4 +226,7 @@ export default {
   }
 
 
+  .banner:hover{
+    box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
+  }
 </style>

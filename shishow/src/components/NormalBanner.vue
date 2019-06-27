@@ -1,9 +1,7 @@
 <template>
   <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'nextend': isB }">
     <span class="iconPicPosition">
-      <div class="iconPic">
-        <img id="image" :src="user['image']">
-      </div>
+      <img id="icon" :src="user['image']">
     </span>
     <div class="achievementPosition1">
       <div class="achievement"></div>
@@ -119,9 +117,6 @@ export default {
 
     border-radius: 3px;
 
-    // border: solid;
-    // border-width: 5px;
-    // border-color: $n_banner_flame;
     z-index: 2;
 
     box-shadow: 0px 0px 3px  rgba(0, 0, 0, 0.3);
@@ -146,9 +141,6 @@ export default {
 
     background-color: $n_banner_color;
 
-    // border: solid;
-    // border-width: 5px;
-    // border-color: $n_banner_flame;
     z-index: 2;
 
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
@@ -158,19 +150,6 @@ export default {
     /*.editBioButton{
 
     }*/
-  }
-
-  .iconPic {
-    width: $n_icon_width;
-    height: $n_icon_height;
-
-    //temporary color
-    background-color: #fff;
-
-    border-radius: 50%;
-    border: solid;
-    border-width: 2px;
-    border-color: $n_window_flame;
   }
 
   .iconPicPosition {
@@ -311,7 +290,7 @@ export default {
 
   .n_btn-circle-3d {
     position: relative;
-    top: 32px;
+    top: 15px;
     left:39%;
     display: inline-block;
     text-decoration: none;
@@ -351,11 +330,6 @@ export default {
 
     background-color: $n_banner_color;
 
-    // border: solid;
-    // border-width: 5px;
-    // border-color: $n_banner_flame;
-    // z-index: 2;
-
     transition:0.3s;
 
   }
@@ -363,6 +337,14 @@ export default {
   .nreverse{
     transform: rotateX(180deg);
     transition: .3s;
+  }
+
+  #icon{
+    position: absolute;
+
+    width: $n_icon_width;
+    height: $n_icon_height;
+    left: 7%;
   }
 
 
