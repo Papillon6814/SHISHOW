@@ -20,18 +20,21 @@ import '@firebase/auth'
 import store from '../../store'
 
 let db = firebase.firestore();
+
 let currentUser;
+let username;
+let lastMsgAndDate = [];
+let iconPic;
+let msg = [];
 
 export default {
   name: 'directMessageField',
 
   data() {
     return{
-      username: '',
-      lastMsg: '',
-      iconPic: '',
-      msgDate: {},
-      msgBubbles: [],
+      rightBundle: {},
+      leftBundle: {},
+      inputBundle: {}
     }
   },
 
@@ -58,22 +61,47 @@ export default {
         .then(friendsSnapshot => {
           friendsSnapshot.forEach(doc1 => {
 
-          db.collection("USER")
-          .doc(currentUser.email)
-          .collection("friends")
-          .doc(doc1.id)
-          .collection("CHAT")
-          .get()
-          .then(msgSnapshot => {
-            msgSnapshot.forEach(doc2 => {
-              this.msgBubbles.push(doc2.data().msg);
-              this.msgDate.push(doc2.data().date)
-              console.log(this.msgBubbles)
-              console.log(this.msgDate)
+            db.collection("USER")
+            .doc(currentUser.email)
+            .collection("friends")
+            .doc(doc1.id)
+            .collection("CHAT")
+            .get()
+            .then(msgSnapshot => {
+              msgSnapshot.forEach(doc2 => {
+                msg.push(doc2.data());
+
+                console.log(msg)
+              })
             })
           })
-        })
       })
+    },
+
+    loadLastMsgAndDate: function() {
+      db.collection("USER")
+        .doc(currentUser.email)
+        .collection('friends')
+        .get()
+        .then(friendsSnapshot => {
+          friendsSnapshot.forEach(doc1 => {
+
+            db.collection("USER")
+              .doc(currentUser.email)
+              .collection("friends")
+              .doc(doc1.id)
+              .collection("CHAT")
+              .limit(1)
+              .get()
+              .then(lastMsgSnapshot => {
+                lastMsgSnapshot.forEach(doc2 => {
+                  lastMsgAndDate.push(doc2.data())
+                })
+
+                console.log(lastMsgAndDate)
+              })
+          })
+        })
     }
   },
 
@@ -81,6 +109,7 @@ export default {
     this.onAuth();
     currentUser = firebase.auth().currentUser;
     this.loadAllMsgAndDate();
+    this.loadLastMsgAndDate();
   }
 }
 
