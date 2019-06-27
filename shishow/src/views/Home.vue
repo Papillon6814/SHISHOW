@@ -78,9 +78,9 @@ export default {
           if (this.users[i].data().username.indexOf(key) !== -1) {
             results.push(this.users[i].data());
           }
-          this.filteredUser = results;
           console.log("searched");
         }
+        this.filteredUser = results;
       } else {
         //何も入力されてないときにフィルターする前のデータをする
         console.log("non searched");
