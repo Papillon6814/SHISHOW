@@ -1,35 +1,32 @@
 <template>
 <div id="root">
-  <div v-show="loading" class="loader">Now loading...</div>
-  <div v-show="!loading" class="itemContainer">
-    <navi @input="getSearchWord"></navi>
-    <transition appear name="v">
-      <div id="myBannerPosition">
-        <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
+  <navi @input="getSearchWord"></navi>
+  <transition appear name="v">
+    <div id="myBannerPosition">
+      <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
+    </div>
+  </transition>
+  <div id="moving">
+    <transition appear name="v2">
+      <div class="normalBannerPosition">
+        <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
+          <normalBanner :user="users[N-1].data()" :searchWord="searchWord"></normalBanner>
+        </div>
+        <!-- <li class="n2">
+            <normalBanner></normalBanner>
+          </li>
+          <li class="n3">
+            <normalBanner></normalBanner>
+          </li>
+          <li class="n4">
+            <normalBanner></normalBanner>
+        </li>-->
       </div>
     </transition>
-    <div id="moving">
-      <transition appear name="v2">
-        <div class="normalBannerPosition">
-          <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
-            <normalBanner :user="users[N-1].data()" :searchWord="searchWord"></normalBanner>
-          </div>
-          <!-- <li class="n2">
-              <normalBanner></normalBanner>
-            </li>
-            <li class="n3">
-              <normalBanner></normalBanner>
-            </li>
-            <li class="n4">
-              <normalBanner></normalBanner>
-          </li>-->
-        </div>
-      </transition>
-      <!--
-        <div class="gameBannerPosition">
-          <gameBanner></gameBanner>
-      </div>-->
-    </div>
+    <!--
+      <div class="gameBannerPosition">
+        <gameBanner></gameBanner>
+    </div>-->
   </div>
 </div>
 </template>
@@ -48,24 +45,6 @@ import store from "../store";
 const db = firebase.firestore();
 
 export default {
-  /*var app = new Vue({*/
-    /*el: '#app',
-    data: {
-        results: [],
-        loading: true
-    },
-    components: {
-        'item-component': ItemComponent
-    },
-    mounted () {
-        axios
-            .get("api.php")
-            .then(response => {
-                this.results = response.data;
-                this.loading = false;
-            })
-    }*/
-  /*});*/
 
   name: "home",
   created: function() {

@@ -2,8 +2,11 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import vBlur from 'v-blur'
 // routerは遷移管理
 // storeは状態管理
+
+Vue.use(vBlur)
 
 Vue.config.productionTip = false;
 

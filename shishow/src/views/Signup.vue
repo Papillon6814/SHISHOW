@@ -4,7 +4,6 @@
     <div id="signupBannerPosition">
       <signupBanner></signupBanner>
     </div>
-    </div>
   </div>
 </template>
 
@@ -29,6 +28,7 @@ export default {
   body {
     padding: 0;
     margin: 0;
+    width:100%;
 
     height: 2000px;
 

@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from '../plugin/firestore'
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../store'
@@ -105,9 +105,12 @@ export default {
 
   background-color: $si_banner_color;
 
-  border: solid;
-  border-width: 5px;
-  border-color: $si_banner_flame;
+  border-radius: 3px;
+
+  box-shadow: 0px 0px 3px  rgba(0, 0, 0, 0.1);
+  // border: solid;
+  // border-width: 5px;
+  // border-color: $si_banner_flame;
   z-index: 2;
 
   //children
@@ -166,6 +169,7 @@ export default {
       }
     }
   }
+
 
   .iconCirclePosition {
     position: absolute;
@@ -294,7 +298,7 @@ export default {
     right: 15px;
     display: inline-block;
     text-decoration: none;
-    background: #ff8181;
+    background: #FFC107;
     color: #fff;
     width: 130px;
     height: 80px;
@@ -304,7 +308,7 @@ export default {
     font-weight: bold;
     overflow: hidden;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-    border-bottom: solid 3px #bd6565;
+    border-bottom: solid 3px #FFB300;
     transition: .4s;
 
     cursor: pointer;
@@ -317,5 +321,9 @@ export default {
     border-bottom: none;
   }
 }
+
+  .signinBanner:hover{
+    box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
+  }
 
 </style>

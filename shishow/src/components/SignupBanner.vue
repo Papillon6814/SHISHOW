@@ -107,7 +107,8 @@ export default {
       }
       if(this.p_confirm != this.password) {
         console.log('Password does not match!');
-      } else if(this.errorIndication());
+      }
+      else if(this.errorIndication());
       else {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
@@ -128,6 +129,8 @@ export default {
 
     addToDatabase(email, username,image) {
       let url = db.collection("USER").doc(""+email).collection("friends").doc();
+
+      /*
       url.collection("CHAT").add({
         msg:"",
         date:"",
@@ -135,19 +138,16 @@ export default {
       url.set({
         username:""
       });
-
-
-
+      */
 
       db.collection("USER").doc(""+email).collection("incoming").add({username:""});
       db.collection("USER").doc(""+email).collection("outgoing").add({username:""});
-
 
       db.collection("USER").doc(""+email).set({
           email: email,
           username: username,
           image: image,
-
+          bio: ''
       })
       .then(function(docRef) {
         console.log('Document written with ID: ', docRef.id);
@@ -277,12 +277,12 @@ export default {
 
   background-color: $su_banner_color;
 
-  border: solid;
-  border-width: 5px;
-  border-color: $su_banner_flame;
+  // border: solid;
+  // border-width: 5px;
+  // border-color: $su_banner_flame;
   z-index: 2;
 
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
   //children
 
@@ -442,7 +442,7 @@ export default {
   }
 
   .username{
-    width: $su_user_width;
+    width: 100%;
     height: $su_user_height;
 
     border: solid;
@@ -456,13 +456,13 @@ export default {
       position: absolute;
 
       top: 30px;
-      left: 120px;
+      left: 210px;
 
-      right: 0px;
+      right: 100px;
     }
 
     .email{
-      width: $su_user_width;
+      width: 100%;
       height: $su_user_height;
 
       background-color: #fff;
@@ -476,13 +476,13 @@ export default {
       position: absolute;
 
       top: 90px;
-      left: 120px !important;
+      left: 210px !important;
 
-      right: 0px;
+      right: 100px;
     }
 
     .password{
-      width: $su_pass_width;
+      width: 100%;
       height: $su_pass_height;
 
       background-color: #fff;
@@ -504,12 +504,12 @@ export default {
       position: absolute;
 
       top: 150px;
-      left: 120px;
-      right: 0px;
+      left: 210px;
+      right: 220px;
     }
 
     .passwordConfirm {
-      width: $su_pass_width;
+      width: 100%;
       height: $su_pass_height;
 
       background-color: #fff;
@@ -523,10 +523,14 @@ export default {
       position: absolute;
 
       top: 200px;
-      left: 120px;
-      right: 0px;
+      left: 210px;
+      right: 220px;
     }
 
+}
+
+.signupBanner:hover{
+  box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
 }
 #result{  //cropper
   z-index: 7;
