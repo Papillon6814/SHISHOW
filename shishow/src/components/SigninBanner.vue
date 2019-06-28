@@ -268,9 +268,9 @@ export default {
   .usernamePosition{
     position: absolute;
 
-    top: 30px;
-    left: 202px;
-    right: 0px;
+    top: 50px;
+    left: 200px;
+    right: 100px;
   }
 
   .password{
@@ -287,12 +287,12 @@ export default {
   .passwordPosition{
     position: absolute;
 
-    top: 100px;
-    left: 202px;
-    right: 0px;
+    top: 160px;
+    left: 100px;
+    right: 150px;
   }
 
-  .btn-circle-3d {
+.btn-circle-3d{
     position: absolute;
     top: 15px;
     right: 15px;
