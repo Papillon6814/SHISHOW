@@ -77,6 +77,7 @@ export default {
               .doc(doc1.id)
               .collection("CHAT")
               .limit(1)
+              .orderBy('date', 'desc')
               .get()
               .then(lastMsgSnapshot => {
                 lastMsgSnapshot.forEach(doc2 => {
