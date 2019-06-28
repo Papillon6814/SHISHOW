@@ -1,6 +1,8 @@
 <template>
   <div class="signinBanner">
-    <div class="LoginTitle">Login</div>
+    <div class="LoginTitle">
+      <div class="LoginCenter">Login</div>
+    </div>
     <div class="usernamePosition">
       <input class="username" type="text" placeholder="E-mail" v-model="e_mail">
     </div>
@@ -99,6 +101,12 @@ export default {
     color:#fff;
     background-color: #333;
     height:30px;
+
+    .LoginCenter{
+      position: absolute;
+      left:50%;
+      top:5px;
+    }
   }
 
   .username{
@@ -111,7 +119,7 @@ export default {
     position: absolute;
 
     top: 50px;
-    left: 20%;
+    left: 22%;
   }
 
   .password{
@@ -125,13 +133,13 @@ export default {
     position: absolute;
 
     top: 120px;
-    left: 20%;
+    left: 22%;
   }
 
   .btn-circle-3d {
     position: absolute;
     bottom:8% ;
-    left: 28%;
+    left: 30%;
     display: inline-block;
     text-decoration: none;
     background: #FFC107;
@@ -162,7 +170,7 @@ export default {
   button.btn-circle-3d-ver2{
     position: absolute;
     bottom:8% ;
-    right: 28%;
+    right: 30%;
     display: inline-block;
     text-decoration: none;
     background: #FFC107;
