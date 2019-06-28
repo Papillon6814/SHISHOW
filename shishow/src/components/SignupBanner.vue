@@ -122,12 +122,13 @@ export default {
             var email;
             User.updateProfile({
               displayName: this.username
+            }).then(() => {
+              //変数に情報を格納
+              email = User.email;
+              alert("Create account: " + email);
+              if (!this.uploadedImage) this.uploadedImage = url;
+              this.addToDatabase(this.email, this.username, this.uploadedImage);
             });
-            //変数に情報を格納
-            email = User.email;
-            alert("Create account: " + email);
-            if (!this.uploadedImage) this.uploadedImage = url;
-            this.addToDatabase(this.email, this.username, this.uploadedImage);
           })
           .catch(error => {
             alert(error.message);
