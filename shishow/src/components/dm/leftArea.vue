@@ -60,7 +60,7 @@ export default {
 
     loadLastMsgAndDate: function() {
 
-      var obtainFriendsNumber = new Promise(function() {
+      var obtainFriendsNumber = new Promise(function(resolve) {
         db.collection("USER")
           .doc(currentUserEmail)
           .collection("friends")
@@ -70,12 +70,13 @@ export default {
               friendsNumber++;
             })
             console.log("friendsNumber: " + friendsNumber);
+            resolve(friendsNumber)
           })
       })
 
       obtainFriendsNumber
-      .then(function () {
-        console.log(friendsNumber)
+      .then(function (friendsCount) {
+        console.log(friendsCount);
 
         db.collection("USER")
           .doc(currentUserEmail)
