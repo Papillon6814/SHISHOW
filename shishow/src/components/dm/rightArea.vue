@@ -85,7 +85,6 @@ export default {
     this.onAuth();
     console.log("rightArea created")
     currentUserEmail = firebase.auth().currentUser.email;
-
   }
 };
 </script>
