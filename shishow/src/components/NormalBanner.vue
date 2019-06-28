@@ -237,9 +237,6 @@ export default {
 
     background-color: #fff;
 
-    border: solid;
-    border-width: 3px;
-    border-color: $n_window_flame;
   }
 
   .usernamePosition{
