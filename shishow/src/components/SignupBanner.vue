@@ -128,22 +128,7 @@ export default {
       },
 
       addToDatabase(email, username,image) {
-        let url = db.collection("USER").doc(""+email).collection("friends").doc();
-      url.collection("CHAT").add({
-        msg:"",
-        date:"",
-      });
-      url.set({
-        username:""
-      });
-
-
-
-
-      db.collection("USER").doc(""+email).collection("incoming").add({username:""});
-      db.collection("USER").doc(""+email).collection("outgoing").add({username:""});
-
-
+      
       db.collection("USER").doc(""+email).set({
           email: email,
           username: username,

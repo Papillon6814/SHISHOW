@@ -1,5 +1,5 @@
 <template>
-  <div class="normalBanner" v-bind:class="{ 'banner': isA, 'extend': isB }">
+  <div class="incoming" v-bind:class="{ 'banner': isA, 'extend': isB }">
     <span class="iconPicPosition">
       <div class="iconPic">
         <img id="image" :src="user['image']" />
@@ -19,7 +19,7 @@
     </div>
     <div class="usernamePosition">
       <div class="username">
-        {{user.username}}
+        {{user["username"]}}
       </div>
     </div>
     <div class="idPosition">
@@ -33,7 +33,7 @@
         テニス、スキー、スノーボード、ゴルフ、
       </div>
     </div>
-    <div class="n_btn-circle-3d" @click="doExtend">江崎にフレ申請</div>
+    <div class="n_btn-circle-3d" @click="doExtend">許可</div>
     <span  id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
@@ -49,12 +49,12 @@ import '@firebase/auth'
 
 
 const db = firebase.firestore();
+const currentUser = firebase.auth().currentUser;
 
 export default {
-  name: 'normalBanner',
+  name: 'incoming',
   props:["user","signuser"],
   created:function(){
-    this.onAuth();
   },
   data: function() {
     return{
@@ -63,41 +63,36 @@ export default {
     }
   },
   methods: {
-    onAuth: function() {
-      firebase.auth().onAuthStateChanged(user => {
-        user = user ? user : {};
-        store.commit('onAuthStateChanged', user);
-        store.commit('onUserStatusChanged', user.uid ? true : false)
-      })
-    },
     doExtend: function() {
       this.isA = !this.isA;
       this.isB = !this.isB;
+      const sign_db = db.collection("USER").doc(this.signuser.email);
+      const user_db = db.collection("USER").doc(this.user.email);
+  
       
-      if(store.state.status){
-        console.log(this.signuser["email"])
-        
-        
-        
-        db.collection("USER").doc(this.signuser.email).collection("outgoing").doc(this.user.email).set({
-          username:this.user["username"],
-          email:this.user["email"]
-        })
-        .catch(e =>{
-          console.log("error1")
-        })
-        console.log(this.user.email)
-        console.log(this.signuser.username)
-        
-        db.collection("USER").doc(this.user.email).collection("incoming").doc(this.signuser.email).set({
-          username:this.signuser["username"],
-          email:this.signuser["email"]
-        })
-        .catch(e =>{
-          console.log("error2")
-        })
+      sign_db.collection("incoming").doc(this.user.email).delete().then(()=>{
+          sign_db.collection("friends").doc(this.user.email).set({
+            username:this.user.username,
+            email:this.user.email
+          });
+          sign_db.collection("incoming").get().then(doc =>{
+            this.$parent.income = doc.docs();
+          }).catch(()=>{
+            this.$parent.income ="";
+          })
+      }).catch(e=>{console.log(e)});
+      
+      user_db.collection("outgoing").doc(this.signuser.email).delete().then(()=>{
+          user_db.collection("friends").doc(this.signuser.email).set({
+            username:this.signuser.username,
+            email:this.signuser.email
+          })
+      }).catch(e=>{console.log(e)});
 
-      }
+      
+
+
+      
     }
   }
 }
@@ -105,7 +100,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .normalBanner {
+  .incoming {
     position: absolute;
 
     width: $n_banner_width;

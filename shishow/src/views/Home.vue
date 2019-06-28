@@ -7,7 +7,7 @@
       <div id="moving">
         <div class="normalBannerPosition">
           <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
-            <normalBanner :user="users[N-1].data()"></normalBanner>
+            <normalBanner :user="users[N-1]" :signuser="signuser"></normalBanner>
           </div>
           <!-- <li class="n2">
             <normalBanner></normalBanner>
@@ -24,6 +24,9 @@
           <gameBanner></gameBanner>
         </div> -->
       </div>
+      <router-link to="/friend">
+      <button type="button" style="height:100px;z-index:20;position:absolute">{{signuser.username}}</button>
+      </router-link>
     </div>
 </template>
 
@@ -45,9 +48,16 @@ export default {
   name: 'home',
   created: function() {
     this.onAuth();
-    db.collection("USER").get().then(doc =>{
-      this.users = doc.docs;
-    })
+    db.collection("USER").get().then(docs =>{
+      docs.forEach(doc=>{
+        if(doc.data().email != this.user.email){
+          this.users.push(doc.data());
+        }
+      });
+    });
+    db.collection("USER").doc(this.user.email).get().then(doc =>{
+      this.signuser = doc.data();
+    });
   },
   components: {
     navi,
@@ -57,7 +67,8 @@ export default {
   },
   data:function(){
     return{
-      users:"",
+      users:[],
+      signuser:"",
     }
   },
   computed: {
@@ -66,7 +77,7 @@ export default {
     },
     userStatus() {
       return this.$store.getters.isSignedIn;
-    }
+    },
   },
   methods: {
     onAuth: function() {
