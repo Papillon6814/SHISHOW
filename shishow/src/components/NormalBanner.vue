@@ -24,8 +24,8 @@
     <div class="userInfoPosition">
         <div class="userInfo">仲野巧ですから</div>
     </div>
-    <div class="n_btn-circle-3d">江崎にフレ申請</div>
-    <span v-bind:class="{nreverse:isC}" @click="doExtend" id="pullDownProperties">
+    <div @click="doExtend" class="n_btn-circle-3d">江崎にフレ申請</div>
+    <span v-bind:class="{nreverse:isC}"  id="pullDownProperties">
       <i class="fas fa-caret-down"></i>
     </span>
   </div>
@@ -40,64 +40,56 @@ import "@firebase/auth";
 const db = firebase.firestore();
 const currentUser = firebase.auth().currentUser;
 
+
 export default {
-  name: "normalBanner",
-  props: ["user", "searchWord"],
-  created: function() {
-    db.collection("USER")
-      .doc(store.state["user"].email)
-      .get()
-      .then(doc => {
-        this.signuser = doc.data();
-      })
-      .catch(e => {
-        console.log(e);
-      });
+  name: 'normalBanner',
+  props:["user","signuser","searchWord"],
+  created:function(){
+    this.onAuth();
   },
   data: function() {
     return {
       isA: true,
       isB: false,
       isC: false,
-      signuser: ""
     };
   },
   methods: {
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false)
+      })
+    },
     doExtend: function() {
       this.isA = !this.isA;
       this.isB = !this.isB;
       this.isC = !this.isC,
       this.$emit('extendNormalBanner')
       this.$emit('extendNbanner')
+      
+      if(store.state.status){
+        console.log(this.signuser["email"])
+        db.collection("USER").doc(this.signuser.email).collection("outgoing").doc(this.user.email).set({
+          username:this.user["username"],
+          email:this.user["email"]
+        })
+        .catch(e =>{
+          console.log(e)
+        })
+        console.log(this.user.email)
+        console.log(this.signuser.username)
+        
+        db.collection("USER").doc(this.user.email).collection("incoming").doc(this.signuser.email).set({
+          username:this.signuser["username"],
+          email:this.signuser["email"]
+        })
+        .catch(e =>{
+          console.log(e)
+        })
 
-      if (store.state["status"]) {
-        console.log(this.user["email"]);
-
-        const currentUser = firebase.auth().currentUser;
-
-        db.collection("USER")
-          .doc(store.state["user"].email)
-          .collection("outgoing")
-          .add({
-            username: this.user["username"],
-            email: this.user["email"]
-          })
-          .catch(e => {
-            console.log("error1");
-          });
-
-        db.collection("USER")
-          .doc(this.user["email"])
-          .collection("incoming")
-          .add({
-            username: this.signuser["username"],
-            email: this.signuser["email"]
-          })
-          .catch(e => {
-            console.log("error2");
-          });
       }
-
     }
   }
 }
@@ -166,6 +158,7 @@ export default {
     background-color: #ffffff;
     margin: $n_root_twelve 0;
   }
+
 
   .achievement:before,
   .achievement:after {

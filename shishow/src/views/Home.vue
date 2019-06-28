@@ -11,7 +11,7 @@
       <transition appear name="v2">
         <div class="normalBannerPosition">
           <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
-            <normalBanner :user="users[N-1].data()" :searchWord="searchWord"></normalBanner>
+            <normalBanner :user="users[N-1]" :searchWord="searchWord" :signuser="signuser"></normalBanner>
           </div>
           <!-- <li class="n2">
               <normalBanner></normalBanner>
@@ -28,7 +28,11 @@
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
       </div>-->
+
     </div>
+    <router-link to="/friend">
+    <button type="button" style="height:100px;position:absolute;z-index:10">aaa</button>
+    </router-link>
   </div>
 </template>
 
@@ -44,19 +48,26 @@ import "firebase/firestore";
 import "@firebase/auth";
 import store from "../store";
 
+
 const db = firebase.firestore()
 let currentUser;
+
+
 
 export default {
   name: "home",
   created: function() {
     this.onAuth();
-    currentUser = firebase.auth().currentUser;
-    db.collection("USER")
-    .get()
-    .then(doc =>{
-      this.users = doc.docs;
-    })
+    db.collection("USER").get().then(docs =>{
+      docs.forEach(doc=>{
+        if(doc.data().email != this.user.email){
+          this.users.push(doc.data());
+        }
+      });
+    });
+    db.collection("USER").doc(this.user.email).get().then(doc =>{
+      this.signuser = doc.data();
+    });
   },
   components: {
     navi,
@@ -70,6 +81,13 @@ export default {
       searchWord: ""
     };
   },
+  data:function(){
+    return{
+      users:[],
+      signuser:"",
+      searchWord:"",
+    }
+  },
   computed: {
     user() {
       return this.$store.getters.user;
@@ -77,6 +95,7 @@ export default {
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
+
     filterUser: function() {
       let key = this.searchWord;
       let data = [];
@@ -200,6 +219,7 @@ body {
     width:100%;
     position:absolute;
     z-index: 1;
+
     /*top: 45px;
     left: 10%;*/
   }
@@ -217,8 +237,8 @@ body {
       $i: $i + 1;
     }
     list-style: none;
-
     // z-index: -1
+
   }
 
 #myBannerPosition {
