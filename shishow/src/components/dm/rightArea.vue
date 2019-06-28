@@ -1,7 +1,7 @@
 <template>
   <div class="rightArea">
     {{ friendDocID }}
-    <div v-for="msg in onloadAllMsg" v-bind:key="msg.id">
+    <div v-for="msg in msgList" v-bind:key="msg.id">
       <ul>
         <li>{{ msg.msg }}</li>
         <!-- 日付の変換 -->
@@ -25,8 +25,7 @@ export default {
 
   data() {
     return {
-      msgList: [],
-      ID: this.friendDocID || 'eZLLISJVLnyCOIP7XP58'
+      msgList: []
     }
   },
 
@@ -39,7 +38,7 @@ export default {
       db.collection("USER")
         .doc(currentUserEmail)
         .collection('friends')
-        .doc(this.ID)
+        .doc(this.friendDocID)
         .collection("CHAT")
         .get()
         .then(chatSnapshot => {
@@ -69,7 +68,7 @@ export default {
       db.collection("USER")
         .doc(currentUserEmail)
         .collection('friends')
-        .doc(this.ID)
+        .doc(this.friendDocID)
         .collection("CHAT")
         .get()
         .then(chatSnapshot => {
