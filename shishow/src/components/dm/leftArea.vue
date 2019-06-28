@@ -22,11 +22,13 @@ import store from '../../store'
 
 let db = firebase.firestore();
 
-let currentUser;
-let lastMsgAndDate = [];
+let currentUserEmail;
+let lastMsg = [];
+let lastMsgDate = [];
+let usernames = [];
+let friendsNumber = 0;
 
 let selectedFriendID;
-let lastMsgDate = [];
 
 export default {
   name: 'leftArea',
@@ -58,14 +60,17 @@ export default {
 
     loadLastMsgAndDate: function() {
       db.collection("USER")
-        .doc(currentUser.email)
+        .doc(currentUserEmail)
         .collection('friends')
         .get()
         .then(friendsSnapshot => {
+          console.log("name: "+ Object.keys(friendsSnapshot))
           friendsSnapshot.forEach(doc1 => {
+            usernames.push(doc1.data().username)
+            console.log(usernames)
 
             db.collection("USER")
-              .doc(currentUser.email)
+              .doc(currentUserEmail)
               .collection('friends')
               .doc(doc1.id)
               .collection("CHAT")
@@ -73,34 +78,30 @@ export default {
               .get()
               .then(lastMsgSnapshot => {
                 lastMsgSnapshot.forEach(doc2 => {
-                  lastMsgAndDate.push(doc2.data());
+                  // doc2はチャットのデータが格納されている
+
+                  lastMsg.push(doc2.data().msg);
+                  // NOTE: lastMsgDateもlastMsgも配列だが typeof を使うとObjectが返される
+                  lastMsgDate.push(doc2.data().date);
+
                 })
+                console.log(lastMsgDate.length)
               })
           })
         })
-    },
-
-    // YYYY:MM:DD:hh:mm:ss じゃないと動作しない
-    formatDate: function (date) {
-      var formattedDate = date.year + date.month  + date.day
-                        + date.hour + date.minute + date.second;
-
-      console.log(formattedDate);
-      return Number(formattedDate);
     }
   },
 
-  mounted: function() {
+  created: function() {
     this.onAuth();
-    console.log("leftarea mounted")
-    currentUser = firebase.auth().currentUser;
+    console.log("leftarea created")
+    currentUserEmail = firebase.auth().currentUser.email;
+    this.obtainFriendsNumber();
     this.loadLastMsgAndDate();
-
-    lastMsgAndDate.forEach(MandD => {
-      lastMsgDate.push(this.formatDate(MandD.date));
-    });
-  }
+    // lastMsg = msg, lastMsgDate = date;
+  },
 }
+
 </script>
 
 <style lang='scss' scoped>
