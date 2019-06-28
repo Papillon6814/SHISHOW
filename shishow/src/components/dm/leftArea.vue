@@ -64,7 +64,7 @@ export default {
         .collection('friends')
         .get()
         .then(friendsSnapshot => {
-          console.log("name: "+ Object.keys(friendsSnapshot))
+
           friendsSnapshot.forEach(doc1 => {
             usernames.push(doc1.data().username)
             console.log(usernames)
