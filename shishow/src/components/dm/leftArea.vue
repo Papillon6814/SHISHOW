@@ -2,10 +2,12 @@
   <div id="leftArea">
     <div class="dmbannerPosition">
       <div v-for="(friend, N) in friendsDocID" :key="N" v-bind:class="'b' + N">
-        <dmBanner
-          :dmBannerUsername="friend"
-          :dmMsg="lastMsg[0]">
-        </dmBanner>
+        <div @click="click(friend)">
+          <dmBanner
+            :dmBannerUsername="usernames[N]"
+            :dmMsg="lastMsg[N]">
+          </dmBanner>
+        </div>
       </div>
     </div>
   </div>
@@ -26,9 +28,6 @@ let currentUserEmail;
 let lastMsg = [];
 let lastMsgDate = [];
 let usernames = [];
-let friendsNumber = 0;
-
-let selectedFriendID;
 
 export default {
   name: 'leftArea',
@@ -36,7 +35,8 @@ export default {
   data() {
     return {
       friends: '',
-      lastMsg: ''
+      lastMsg: [],
+      usernames: []
     }
   },
 
@@ -58,25 +58,9 @@ export default {
       })
     },
 
+    // 最後にメッセージが送信された日時とその内容を取得する
+    // TODO: returnできるようにする
     loadLastMsgAndDate: function() {
-
-      var obtainFriendsNumber = new Promise(function(resolve) {
-        db.collection("USER")
-          .doc(currentUserEmail)
-          .collection("friends")
-          .get()
-          .then(friendsSnapshot => {
-            friendsSnapshot.forEach(doc1 => {
-              friendsNumber++;
-            })
-            console.log("friendsNumber: " + friendsNumber);
-            resolve(friendsNumber)
-          })
-      })
-
-      obtainFriendsNumber
-      .then(function (friendsCount) {
-        console.log(friendsCount);
 
         db.collection("USER")
           .doc(currentUserEmail)
@@ -85,7 +69,7 @@ export default {
           .then(friendsSnapshot => {
             console.log("name: "+ Object.keys(friendsSnapshot))
             friendsSnapshot.forEach(doc1 => {
-              usernames.push(doc1.data().username)
+              this.usernames.push(doc1.data().username)
               console.log(usernames)
 
               db.collection("USER")
@@ -99,16 +83,21 @@ export default {
                   lastMsgSnapshot.forEach(doc2 => {
                     // doc2はチャットのデータが格納されている
 
-                    lastMsg.push(doc2.data().msg);
+                    this.lastMsg.push(doc2.data().msg);
                     // NOTE: lastMsgDateもlastMsgも配列だが typeof を使うとObjectが返される
                     lastMsgDate.push(doc2.data().date);
 
                   })
-                  console.log(lastMsgDate.length)
+                  console.log("length" + lastMsgDate.length)
                 })
             })
-          })
+            console.log("last")
       })
+    },
+
+    click: function(friend) {
+      this.$parent.idFromLeftArea = friend;
+      console.log("click")
     }
   },
 
@@ -118,6 +107,7 @@ export default {
     currentUserEmail = firebase.auth().currentUser.email;
     this.loadLastMsgAndDate();
     // lastMsg = msg, lastMsgDate = date;
+
   },
 }
 

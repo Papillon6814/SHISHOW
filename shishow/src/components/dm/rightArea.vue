@@ -1,13 +1,12 @@
 <template>
   <div class="rightArea">
-    <div v-for="msg in msgList" v-bind:key="msg.id">
-      <div class="chatBubble">
-        <ul>
-          <li>{{msg.msg}}</li>
-          <!--日付の変換-->
-          <li>{{msg.date.toDate().toLocaleString()}}</li>
-        </ul>
-      </div>
+    {{ friendDocID }}
+    <div v-for="msg in onloadAllMsg" v-bind:key="msg.id">
+      <ul>
+        <li>{{ msg.msg }}</li>
+        <!-- 日付の変換 -->
+        <li>{{ msg.date.toDate().toLocaleString() }}</li>
+      </ul>
     </div>
   </div>
 </template>
@@ -19,16 +18,75 @@ import '@firebase/auth'
 import store from '../../store'
 
 const db = firebase.firestore();
-
-let currentUser;
+let currentUserEmail;
 
 export default {
   name: 'rightArea',
 
   data() {
     return {
-      msgList: ''
+      msgList: [],
+      ID: this.friendDocID || 'eZLLISJVLnyCOIP7XP58'
     }
+  },
+
+  props: [
+    'friendDocID'
+  ],
+
+  computed: {
+    onloadAllMsg: function() {
+      db.collection("USER")
+        .doc(currentUserEmail)
+        .collection('friends')
+        .doc(this.ID)
+        .collection("CHAT")
+        .get()
+        .then(chatSnapshot => {
+          chatSnapshot.forEach(doc1 => {
+            this.msgList.push(doc1.data());
+          })
+
+          console.log("onload: " + this.msgList[0].msg)
+
+          return this.msgList
+        })
+    }
+  },
+
+  methods: {
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false);
+      })
+    },
+
+    loadAllMsg: function() {
+      this.msgList = [];
+
+      db.collection("USER")
+        .doc(currentUserEmail)
+        .collection('friends')
+        .doc(this.ID)
+        .collection("CHAT")
+        .get()
+        .then(chatSnapshot => {
+          chatSnapshot.forEach(doc1 => {
+            this.msgList.push(doc1.data());
+          })
+
+          console.log(this.msgList.msg)
+        })
+    }
+  },
+
+  created: function() {
+    this.onAuth();
+    console.log("rightArea created")
+    currentUserEmail = firebase.auth().currentUser.email;
+
   }
 };
 </script>

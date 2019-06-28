@@ -23,19 +23,19 @@ let currentUser;
 export default {
   name: "inputArea",
 
-  props: [
-    'ID'
-  ],
-
-  created: function () {
-    this.onAuth();
-    currentUser = firebase.auth().currentUser;
-  },
-
   data() {
     return {
       msg: ""
     };
+  },
+
+  props: [
+    // leftAreaでクリックされたフレンドのドキュメントID
+    'friendDocID'
+  ],
+
+  created: function () {
+    currentUser = firebase.auth().currentUser;
   },
 
   methods: {
@@ -54,34 +54,15 @@ export default {
         db.collection("USER")
         .doc(currentUser.email)
         .collection("friends")
-        .get()
-        .then(querysnapshot1 => {
-          querysnapshot1.forEach(doc1 => {
+        .doc(this.friendDocID)
+        .collection("CHAT")
+        .add({
+          msg: this.msg,
+          date: now
+        });
 
-            db.collection("USER")
-            .doc(currentUser.email)
-            .collection("friends")
-            .doc(doc1.id)
-            .collection("CHAT")
-            .add({
-              //username: this.userName,
-              //日付とメッセージの送信
-              msg: this.msg,
-              date: now
-            });
-            //送信した後内容をからにする
-            this.msg = "";
-            this.text = "";
-          })
-        })
+        this.msg = '';
       }
-    },
-    onAuth: function () {
-      firebase.auth().onAuthStateChanged(user => {
-        user = user ? user : {};
-        store.commit('onAuthStateChanged', user);
-        store.commit('onUserStatusChanged', user.uid ? true : false);
-      })
     }
   }
 };

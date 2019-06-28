@@ -3,9 +3,13 @@
     <leftArea
     :friendsDocID="leftAreaData"
     ></leftArea>
-    <rightArea></rightArea>
+    <rightArea
+    :friendDocID="idFromLeftArea">
+    </rightArea>
     <div class="inputArea">
-      <inputArea></inputArea>
+      <inputArea
+      :friendDocID="idFromLeftArea">
+      </inputArea>
     </div>
   </div>
 </template>
@@ -34,7 +38,9 @@ export default {
     return{
       rightAreaData: '',
       leftAreaData: [],
-      inputAreaData: ''
+      inputAreaData: '',
+
+      idFromLeftArea: '',
     }
   },
 
