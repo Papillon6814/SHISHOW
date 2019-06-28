@@ -1,24 +1,19 @@
 <template>
   <div class="signinBanner">
-
     <span class="iconCirclePosition">
-      <div class="iconCircle">
-      </div>
+      <div class="iconCircle"></div>
     </span>
 
     <div class="achievementPosition1">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
 
     <div class="achievementPosition2">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
 
     <div class="achievementPosition3">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
 
     <div class="usernamePosition">
@@ -32,34 +27,30 @@
     <router-link to="/signup">
       <div class="btn-circle-3d">Sign up</div>
     </router-link>
-
-
     <button @click="login">Sign in</button>
-
-
   </div>
 </template>
 
 <script>
-import firebase from 'firebase'
-import 'firebase/firestore'
-import '@firebase/auth'
-import store from '../store'
-import router from '../router'
+import firebase from "firebase";
+import "firebase/firestore";
+import "@firebase/auth";
+import store from "../store";
+import router from "../router";
 
 export default {
-  name: 'Signin',
+  name: "Signin",
 
   created: function() {
     this.onAuth();
   },
 
-  data: function () {
+  data: function() {
     return {
-      username: '',
-      password: '',
-      e_mail: ''
-    }
+      username: "",
+      password: "",
+      e_mail: ""
+    };
   },
 
   computed: {
@@ -74,25 +65,30 @@ export default {
 
   methods: {
     login: function() {
-      firebase.auth().signInWithEmailAndPassword(this.e_mail, this.password)
-      .then(function() {
-        alert('Signed in.');
-        router.push('/')
-      })
-      .catch(function(e) {
-        console.log(e)
-      })
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.e_mail, this.password)
+        .then(function() {
+          alert("Signed in.");
+          router.push("/");
+        })
+        .catch(function(e) {
+          console.log(e);
+        });
+    },
+    inputUserNameToStore: function() {
+      store.commit("inputLoiginedUserName", this.e_mail);
     },
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
-        user = user ? user: {};
-        store.commit('onAuthStateChanged', user);
-        store.commit('onUserStatusChanged', user.uid ? true : false);
-      })
+        user = user ? user : {};
+        store.commit("inputLoiginedUserName", user.displayName);
+        store.commit("onAuthStateChanged", user);
+        store.commit("onUserStatusChanged", user.uid ? true : false);
+      });
     }
   }
-}
-
+};
 </script>
 
 <style lang="scss" scoped>
@@ -137,7 +133,7 @@ export default {
 
       font-size: 70px;
 
-      background-color: rgba(0,0,0,0);
+      background-color: rgba(0, 0, 0, 0);
 
       border-radius: 50%;
       border: dashed;
@@ -250,7 +246,7 @@ export default {
     color: $pulldown_color;
   }
 
-  .username{
+  .username {
     width: $user_width;
     height: $user_height;
 
@@ -261,7 +257,7 @@ export default {
     border-color: $si_window_flame;
   }
 
-  .usernamePosition{
+  .usernamePosition {
     position: absolute;
 
     top: 30px;
@@ -269,7 +265,7 @@ export default {
     right: 0px;
   }
 
-  .password{
+  .password {
     width: $id_width;
     height: $id_height;
 
@@ -280,7 +276,7 @@ export default {
     border-color: $si_window_flame;
   }
 
-  .passwordPosition{
+  .passwordPosition {
     position: absolute;
 
     top: 100px;
@@ -305,7 +301,7 @@ export default {
     overflow: hidden;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
     border-bottom: solid 3px #bd6565;
-    transition: .4s;
+    transition: 0.4s;
 
     cursor: pointer;
   }
@@ -317,5 +313,4 @@ export default {
     border-bottom: none;
   }
 }
-
 </style>

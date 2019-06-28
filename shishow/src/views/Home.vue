@@ -3,7 +3,7 @@
     <navi @input="getSearchWord"></navi>
     <transition appear name="v">
       <div id="myBannerPosition">
-        <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
+        <myBanner @extendMyBanner="extendOther" v-if="userStatus" :loginedUser="currentUser"></myBanner>
       </div>
     </transition>
     <div id="moving">
@@ -23,6 +23,7 @@
 import navi from "../components/NavigationBar.vue";
 import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
+import signinBanner from "../components/SigninBanner";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
@@ -53,7 +54,8 @@ export default {
     return {
       users: [],
       searchWord: "",
-      filteredUser: []
+      filteredUser: [],
+      currentUser: ""
     };
   },
   computed: {
@@ -62,6 +64,12 @@ export default {
     },
     userStatus() {
       return this.$store.getters.isSignedIn;
+    },
+    getCurrentUserNameFromStore() {
+      return this.$store.getters.getLoginedUserName;
+    },
+    getCurrentUserName: function() {
+      this.currentUser = this.$store.getters.user.displayName;
     },
     filterUser() {
       let key = this.searchWord;
