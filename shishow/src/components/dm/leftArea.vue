@@ -61,6 +61,30 @@ export default {
     // 最後にメッセージが送信された日時とその内容を取得する
     // TODO: returnできるようにする
     loadLastMsgAndDate: function() {
+      db.collection("USER")
+        .doc(currentUserEmail)
+        .collection('friends')
+        .get()
+        .then(friendsSnapshot => {
+
+          friendsSnapshot.forEach(doc1 => {
+            usernames.push(doc1.data().username)
+            console.log(usernames)
+
+            db.collection("USER")
+              .doc(currentUserEmail)
+              .collection('friends')
+              .doc(doc1.id)
+              .collection("CHAT")
+              .limit(1)
+              .get()
+              .then(lastMsgSnapshot => {
+                lastMsgSnapshot.forEach(doc2 => {
+                  // doc2はチャットのデータが格納されている
+
+                  lastMsg.push(doc2.data().msg);
+                  // NOTE: lastMsgDateもlastMsgも配列だが typeof を使うとObjectが返される
+                  lastMsgDate.push(doc2.data().date);
 
         db.collection("USER")
           .doc(currentUserEmail)
