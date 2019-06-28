@@ -26,6 +26,14 @@
       <router-link to="/">
         <img class="home" src="../assets/home-button.png">
       </router-link>
+      <a class="menu-trigger" href="#">
+        <span>
+        </span>
+        <span>
+        </span>
+        <span>
+        </span>
+      </a>
     </div>
   </div>
 </template>
@@ -246,6 +254,72 @@ $searchbar_width: 400px;
       right: 350px;
       top: 10px;
     }
+  }
+}
+@media (max-width: 800px){
+  .bar {
+    width: 300px;
+  }
+  #menuButtons {
+    .dm {
+      display: none;
+    }
+
+    .game {
+      display: none;
+    }
+
+    .bell {
+      display: none;
+    }
+
+    .home {
+      display: none;
+    }
+  }
+  .menu-trigger,
+  .menu-trigger span {
+    display: inline-block;
+    transition: all .4s;
+    box-sizing: border-box;
+  }
+  .menu-trigger {
+    position: relative;
+    width: 50px;
+    height: 44px;
+  }
+  .menu-trigger span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #fff;
+    border-radius: 4px;
+  }
+  .menu-trigger span:nth-of-type(1) {
+    top: 25px;
+    left: -30px;
+  }
+  .menu-trigger.active span:nth-of-type(1) {
+    -webkit-transform: translateY(20px) rotate(-45deg);
+    transform: translateY(20px) rotate(-45deg);
+  }
+  
+  .menu-trigger span:nth-of-type(2) {
+    top: 45px;
+    left: -30px;
+  }
+  .menu-trigger.active span:nth-of-type(2) {
+    opacity: 0;
+  }
+
+  .menu-trigger span:nth-of-type(3) {
+    top: 65px;
+    left: -30px;
+  }
+  .menu-trigger.active span:nth-of-type(3) {
+    -webkit-transform: translateY(-20px) rotate(45deg);
+    transform: translateY(-20px) rotate(45deg);
   }
 }
 </style>
