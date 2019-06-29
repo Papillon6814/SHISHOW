@@ -3,11 +3,12 @@
     <navi @input="getSearchWord"></navi>
     <transition appear name="v">
       <div id="myBannerPosition">
-        <myBanner @extendMyBanner="extendOther"
-                  v-if="userStatus"
-                  :loginedUser="getCurrentUserName">
-        </myBanner>
-        <BlurBanner v-else></BlurBanner>
+        <myBanner
+          @extendMyBanner="extendOther"
+          v-if="userStatus"
+          :loginedUser="getCurrentUserName"
+          :loginedUerId="getCurrentUserId"
+        ></myBanner>
       </div>
     </transition>
     <div id="moving">
@@ -23,7 +24,6 @@
           <gameBanner></gameBanner>
       </div>
       -->
-
     </div>
   </div>
 </template>
@@ -34,17 +34,15 @@ import navi from "../components/NavigationBar.vue";
 import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
 import signinBanner from "../components/SigninBanner";
-import BlurBanner from "../components/BlurBanner.vue"
+import BlurBanner from "../components/BlurBanner.vue";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
 import "@firebase/auth";
 import store from "../store";
 
-const db = firebase.firestore()
+const db = firebase.firestore();
 let currentUser;
-
-
 
 export default {
   name: "home",
@@ -59,7 +57,10 @@ export default {
           this.filteredUser.push(docs.data());
         });
       });
-      db.collection("USER").doc(this.user.email).get().then(doc =>{
+    db.collection("USER")
+      .doc(this.user.email)
+      .get()
+      .then(doc => {
         this.signuser = doc.data();
       });
   },
@@ -91,6 +92,9 @@ export default {
     getCurrentUserName: function() {
       return this.$store.getters.user.displayName;
     },
+    getCurrentUserId: function() {
+      return this.$store.getters.user.uid;
+    },
     filterUser() {
       let key = this.searchWord;
       let data = [];
@@ -102,7 +106,6 @@ export default {
           if (this.users[users_i].data().username.indexOf(key) !== -1) {
             results.push(this.users[users_i].data());
           }
-          console.log("searched");
         }
         this.filteredUser = results;
       } else {
@@ -111,7 +114,6 @@ export default {
           data[users_i] = this.users[users_i].data();
         }
         //何も入力されてないときにフィルターする前のデータをする
-        console.log("non searched");
         this.filteredUser = data;
       }
       this.$forceUpdate();
@@ -132,13 +134,13 @@ export default {
     },
     extendOther: function() {
       var active = true;
-      var move=document.getElementById('moving');
+      var move = document.getElementById("moving");
       move.style.top = "340px";
       this.active = !this.active;
-      if(this.active === false){
-        move.style.top = "60px"
+      if (this.active === false) {
+        move.style.top = "60px";
       }
-    }/*,
+    } /*,
     extendNother:function(){
       var active = true;
       var move=document.getElementById('moven')
@@ -210,36 +212,35 @@ body {
 
   background-color: $dark_color;
 }
-  #myBannerPosition {
-    //position: relative;
-    //temporary top
-    padding-top: 70px;
-    margin-left: 10%;
-    margin-right: 10%;
-    width:100%;
-    position:absolute;
-    z-index: 1;
+#myBannerPosition {
+  //position: relative;
+  //temporary top
+  padding-top: 70px;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
 
-    /*top: 45px;
+  /*top: 45px;
     left: 10%;*/
-  }
+}
 
-  .normalBannerPosition {
-    margin-left: 10%;
-    width:100%;
-    position: absolute;
-    padding-top:165px;
-    $i: 1;
-    @while $i <= 30{
-      .n#{$i}{
-        padding-top: 210px;/* + (200px * $i);*/
-      }
-      $i: $i + 1;
+.normalBannerPosition {
+  margin-left: 10%;
+  width: 100%;
+  position: absolute;
+  padding-top: 165px;
+  $i: 1;
+  @while $i <= 30 {
+    .n#{$i} {
+      padding-top: 210px; /* + (200px * $i);*/
     }
-    list-style: none;
-    // z-index: -1
-
+    $i: $i + 1;
   }
+  list-style: none;
+  // z-index: -1
+}
 
 #myBannerPosition {
   //position: relative;
@@ -284,11 +285,10 @@ body {
   transition: 0.3s;
 }
 
- /*#moven{
+/*#moven{
     position: absolute;
     width: 100%;
     transition: .3s;
 
   }*/
-
 </style>

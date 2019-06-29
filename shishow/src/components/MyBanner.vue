@@ -22,6 +22,9 @@
         </div>
       </div>
     </div>
+    <div class="idPosition">
+      <div class="id">{{loginedUerId}}</div>
+    </div>
     <div class="profilePosition">
       <div class="profile">
         新しいことにチャレンジすることが好き!
@@ -30,7 +33,7 @@
       </div>
     </div>
     <div class="userInfoPosition">
-        <div class="userInfo">仲野巧ですから</div>
+      <div class="userInfo">仲野巧ですから</div>
     </div>
     <router-link to="/friend">
       <div class="friendsButton">
@@ -38,33 +41,30 @@
       </div>
     </router-link>
     <div class="logoutButton">
-      <div @click="logout"
-           class="btn-circle-3d">ログアウト
-      </div>
+      <div @click="logout" class="btn-circle-3d">ログアウト</div>
     </div>
     <span v-bind:class="{ reverse:isC }" @click="doExtend" id="pullDownProperties">
-     <i class="fas fa-caret-down"></i>
+      <i class="fas fa-caret-down"></i>
     </span>
   </div>
 </template>
 
 <script>
-import firebase from '../plugin/firestore'
-import 'firebase/firestore'
-import router from '../router'
+import firebase from "../plugin/firestore";
+import "firebase/firestore";
+import router from "../router";
 
 const db = firebase.firestore();
 
 export default {
   name: "myBanner",
-  props: ["loginedUser"],
-  
+  props: ["loginedUser", "loginedUerId"],
   data: function() {
     return {
       isA: true,
       isB: false,
       isC: false,
-      sign:"",
+      sign: ""
     };
   },
   watch: {
@@ -95,33 +95,33 @@ export default {
         });
     }
   },
-  created:function(){
-    console.log(this.loginedUser)
+  created: function() {
+    console.log(this.loginedUser);
   }
 };
 </script>
 
 <style lang="scss" scoped>
-  .banner {
-    overflow-y: hidden;
-    overflow-x: hidden;
+.banner {
+  overflow-y: hidden;
+  overflow-x: hidden;
 
-    position: absolute;
+  position: absolute;
 
-    width: $banner_width;
-    //temporary height
-    height: $banner_height;
-
-    background-color: $banner_color;
-
-    border-radius: 3px;
-
-    box-shadow: 0px 0px 3px  rgba(0, 0, 0, 0.1);
+  width: $banner_width;
+  //temporary height
+  height: $banner_height;
 
   background-color: $banner_color;
 
-  .banner:hover{
-    box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+
+  background-color: $banner_color;
+
+  .banner:hover {
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
   }
 
   box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
@@ -147,11 +147,11 @@ export default {
   transition: 0.3s;
 }
 
-  .iconPic {
-    width: $icon_width;
-    height: $icon_height;
+.iconPic {
+  width: $icon_width;
+  height: $icon_height;
 
-      // temporary color
+  // temporary color
   background-color: #fff;
   border-radius: 50%;
   border: solid;
@@ -166,13 +166,13 @@ export default {
   left: 34.1611111px;
 }
 
-  .achievement {
-    position: relative;
-    width: $achievement_width;
-    height: $achievement_height; //√3
-    background-color: #ffffff;
-    margin: $root_twelve 0;
-  }
+.achievement {
+  position: relative;
+  width: $achievement_width;
+  height: $achievement_height; //√3
+  background-color: #ffffff;
+  margin: $root_twelve 0;
+}
 
 .achievement:before,
 .achievement:after {
@@ -257,23 +257,23 @@ export default {
       right: 0px;
       z-index: 99;
 
-      .fieldForDisplayDeshi{
-        .deshiPosition{
+      .fieldForDisplayDeshi {
+        .deshiPosition {
           position: relative;
           top: 0px;
           right: 0px;
           z-index: 99;
 
-          .deshi{
+          .deshi {
             width: $deshi_width;
             height: $deshi_height;
 
             background-color: $window_flame;
           }
 
-          .deshi:before{
+          .deshi:before {
             position: absolute;
-            content: '';
+            content: "";
             left: 0;
             top: 0;
             width: 0;
@@ -288,11 +288,9 @@ export default {
   }
 }
 
-
-
-  .profile{
-    width: $profile_width;
-    height: $profile_height;
+.profile {
+  width: $profile_width;
+  height: $profile_height;
   top: 30px;
   left: 202px;
   right: 0px;
@@ -302,7 +300,7 @@ export default {
   width: $id_width;
   height: $id_height;
 
-  .profilePosition{
+  .profilePosition {
     position: absolute;
 
     top: 120px;
@@ -314,7 +312,7 @@ export default {
     width: 100%;
     height: 230px;
 
-      // temporary color
+    // temporary color
     background-color: #fff;
 
     border-radius: 5%;
@@ -348,7 +346,7 @@ export default {
   .btn-circle-3d {
     display: inline-block;
     text-decoration: none;
-    background: #FFC107;
+    background: #ffc107;
     color: #fff;
     width: 130px;
     height: 80px;
@@ -358,8 +356,8 @@ export default {
     font-weight: bold;
     overflow: hidden;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-    border-bottom: solid 3px #FFB300;
-    transition: .4s;
+    border-bottom: solid 3px #ffb300;
+    transition: 0.4s;
 
     cursor: pointer;
   }
