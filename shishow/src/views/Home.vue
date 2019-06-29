@@ -144,7 +144,6 @@ export default {
     extendNother:function(){
       var active = true;
       var move=document.getElementById('moven')
-
       move.style.top = "350px";
       this.active = !this.active;
       if(this.active === false){
