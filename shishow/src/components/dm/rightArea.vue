@@ -105,7 +105,7 @@ export default {
   width: 55%;
   height: calc(100% - 50px);
 
-  background-color: $theme_color_dm;
+  background-color: #fff;
 
   overflow-y: scroll;
   overflow-x: hidden;
@@ -115,30 +115,25 @@ export default {
   position: relative;
   display: inline-block;
 
+  border-radius: 20px;
+
+  border: solid 1px #bbb;/*線*/
+  border-radius: 20px;/*角の丸み*/
+
   left: 38%;
 
   margin: 1.5em 15px 1.5em 0;
   padding: 7px 10px;
 
-  min-width: 120px;
+  min-width: 125px;
   max-width: 100%;
 
-  color: #555;
+  color: $main_text_color;
   font-size: 16px;
-  background: #adff2f;
+  background: #FFF;
 
   text-align: right;
   font-family: 'Noto Sans JP', sans-serif;
-}
-
-.chatBalloon:before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  margin-top: -15px;
-  border: 15px solid transparent;
-  border-left: 15px solid #adff2f;
 }
 
 .datePosition {

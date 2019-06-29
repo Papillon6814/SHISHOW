@@ -35,8 +35,8 @@ export default {
     background-color: $dm_banner_color;
 
     border-bottom: solid;
-    border-width: 3px;
-    border-color: #555;
+    border-width: 1px;
+    border-color: #444;
 
     transition: .15s;
     cursor: pointer;
@@ -44,8 +44,8 @@ export default {
     .dmBannerIcon {
       position: relative;
 
-      top: 10px;
-      left: 15px;
+      top: 15px;
+      left: 20px;
 
       width: $dm_icon_width;
       height: $dm_icon_width;
@@ -63,15 +63,15 @@ export default {
       position: relative;
 
       bottom: 80px;
-      left: 130px;
+      left: 140px;
 
-      width: 60%;
+      width: 10%;
       height: 35px;
 
       // temporary color
       background-color: #fff;
 
-      font-size: 35px;
+      font-size: 25px;
       // font-family: 'Noto Sans JP', sans-serif;
     }
 
@@ -79,9 +79,9 @@ export default {
       position: relative;
 
       bottom: 70px;
-      left: 130px;
+      left: 150px;
 
-      width: 70%;
+      width: 10%;
       height: 60px;
 
       background-color: #fff;
