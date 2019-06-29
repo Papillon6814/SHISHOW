@@ -1,11 +1,11 @@
 <template>
   <div class="rightArea">
     {{ friendDocID }}
-    <div v-for="msg in msgList" v-bind:key="msg.id">
+    <div v-for="N in msgList" v-bind:key="N">
       <ul>
-        <li>{{ msg.msg }}</li>
+        <li>{{ N.msg }}</li>
         <!-- 日付の変換 -->
-        <li>{{ msg.date.toDate().toLocaleString() }}</li>
+        <li>{{ N.date.toDate().toLocaleString() }}</li>
       </ul>
     </div>
   </div>
@@ -16,6 +16,8 @@ import firebase from "../../plugin/firestore";
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
+import { type } from 'os';
+import { types } from 'util';
 
 const db = firebase.firestore();
 let currentUserEmail;
@@ -35,21 +37,7 @@ export default {
 
   computed: {
     onloadAllMsg: function() {
-      db.collection("USER")
-        .doc(currentUserEmail)
-        .collection('friends')
-        .doc(this.friendDocID)
-        .collection("CHAT")
-        .get()
-        .then(chatSnapshot => {
-          chatSnapshot.forEach(doc1 => {
-            this.msgList.push(doc1.data());
-          })
-
-          console.log("onload: " + this.msgList[0].msg)
-
-          return this.msgList
-        })
+      
     }
   },
 
@@ -63,7 +51,6 @@ export default {
     },
 
     loadAllMsg: function() {
-      this.msgList = [];
 
       db.collection("USER")
         .doc(currentUserEmail)
@@ -76,7 +63,7 @@ export default {
             this.msgList.push(doc1.data());
           })
 
-          console.log(this.msgList.msg)
+          console.log(this.msgList[0].msg)
         })
     }
   },
@@ -85,6 +72,48 @@ export default {
     this.onAuth();
     console.log("rightArea created")
     currentUserEmail = firebase.auth().currentUser.email;
+    db.collection("USER")
+        .doc(currentUserEmail)
+        .collection("friends")
+        .doc(this.friendDocID)
+        .collection("CHAT").orderBy("date")
+        .get()
+        .then(chatSnapshot => {
+          chatSnapshot.forEach(doc1 => {
+            this.msgList.push(doc1.data());
+          })
+
+          console.log("onload: " + this.msgList[0].msg)
+        }).catch(e=>{
+          console.log(e)
+        })
+  },
+  watch:{
+    friendDocID:function(newval){
+      this.msgList=[];
+      currentUserEmail = firebase.auth().currentUser.email;
+        db.collection("USER")
+        .doc(currentUserEmail)
+        .collection("friends")
+        .doc(newval)
+        .collection("CHAT").orderBy("date")
+        .get()
+        .then(chatSnapshot => {
+          chatSnapshot.forEach(doc1 => {
+            this.msgList.push(doc1.data());
+          })
+
+          console.log("onload: " + this.msgList[0].msg)
+        }).catch(e=>{
+          console.log(e)
+        })
+    }
+    
+    
+
+    
+
+    
   }
 };
 </script>

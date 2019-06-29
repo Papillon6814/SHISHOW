@@ -1,7 +1,7 @@
 <template>
   <div id="directMessageField">
     <leftArea
-    :friendsDocID="leftAreaData"
+    :friendsDocID="leftAreaData" 
     ></leftArea>
     <rightArea
     :friendDocID="idFromLeftArea">
@@ -25,6 +25,7 @@ import firebase from "../../plugin/firestore";
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
+import { functions } from 'firebase';
 
 let db = firebase.firestore();
 
@@ -39,8 +40,7 @@ export default {
       rightAreaData: '',
       leftAreaData: [],
       inputAreaData: '',
-
-      idFromLeftArea: '',
+      idFromLeftArea: "eZLLISJVLnyCOIP7XP58",
     }
   },
 
@@ -48,6 +48,10 @@ export default {
     leftArea,
     rightArea,
     inputArea,
+  },
+
+  computed:{
+    
   },
 
   methods: {
@@ -78,7 +82,10 @@ export default {
     currentUser = firebase.auth().currentUser;
     this.loadFriendID();
     this.leftAreaData = friendsDocID;
-  }
+  },
+  
+  
+
 }
 
 </script>
