@@ -5,6 +5,7 @@ import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
 import Notification from './views/Notification.vue'
 import DirectMessage from './views/DirectMessage.vue'
+import Friend from './test/friend.vue'
 
 
 import firebase from 'firebase'
@@ -40,6 +41,11 @@ let router = new Router({
       name: 'directMessage',
       component: DirectMessage,
       meta: { requiresAuth: true }
+    },
+    {
+      path:'/friend',
+      name:'friend',
+      component:Friend
     }
   ]
 })

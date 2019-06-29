@@ -22,9 +22,6 @@
         </div>
       </div>
     </div>
-    <div class="idPosition">
-      <div class="id">qawsedrftgyhujkolp</div>
-    </div>
     <div class="profilePosition">
       <div class="profile">
         新しいことにチャレンジすることが好き!
@@ -32,22 +29,36 @@
         最近では、予想外の趣味に没頭中！
       </div>
     </div>
-    <div @click="logout" class="btn-circle-3d">ログアウト</div>
-    <span v-bind:class="{reverse:isC}" @click="doExtend" id="pullDownProperties">
-      <i class="fas fa-caret-down"></i>
+    <div class="userInfoPosition">
+        <div class="userInfo">仲野巧ですから</div>
+    </div>
+    <router-link to="/friend">
+      <div class="friendsButton">
+        <div class="btn-circle-3d">フレンズ</div>
+      </div>
+    </router-link>
+    <div class="logoutButton">
+      <div @click="logout"
+           class="btn-circle-3d">ログアウト
+      </div>
+    </div>
+    <span v-bind:class="{ reverse:isC }" @click="doExtend" id="pullDownProperties">
+     <i class="fas fa-caret-down"></i>
     </span>
   </div>
 </template>
 
 <script>
-import firebase from "../plugin/firestore";
-import "firebase/firestore";
+import firebase from '../plugin/firestore'
+import 'firebase/firestore'
+import router from '../router'
 
 const db = firebase.firestore();
 
 export default {
   name: "myBanner",
   props: ["loginedUser"],
+  
   data: function() {
     return {
       isA: true,
@@ -62,6 +73,7 @@ export default {
       this.$forceUpdate();
     }
   },
+
   methods: {
     doExtend: function() {
       (this.isA = !this.isA),
@@ -69,6 +81,7 @@ export default {
         (this.isC = !this.isC),
         this.$emit("extendMyBanner");
     },
+
     logout: function() {
       firebase
         .auth()
@@ -89,19 +102,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.banner {
-  position: absolute;
+  .banner {
+    overflow-y: hidden;
+    overflow-x: hidden;
 
-  width: $banner_width;
-  //temporary height
-  height: $banner_height;
+    position: absolute;
+
+    width: $banner_width;
+    //temporary height
+    height: $banner_height;
+
+    background-color: $banner_color;
+
+    border-radius: 3px;
+
+    box-shadow: 0px 0px 3px  rgba(0, 0, 0, 0.1);
 
   background-color: $banner_color;
 
-  border: solid;
-  border-width: 5px;
-  border-color: $banner_flame;
-  //z-index: 9999;
+  .banner:hover{
+    box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
+  }
 
   box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
 
@@ -116,7 +137,7 @@ export default {
   //temporary height
   height: $banner_height * 2;
 
-  background-color: $banner_color;
+  z-index: 2;
 
   border: solid;
   border-width: 5px;
@@ -126,13 +147,12 @@ export default {
   transition: 0.3s;
 }
 
-.iconPic {
-  width: $icon_width;
-  height: $icon_height;
+  .iconPic {
+    width: $icon_width;
+    height: $icon_height;
 
-  // temporary color
+      // temporary color
   background-color: #fff;
-
   border-radius: 50%;
   border: solid;
   border-width: 2px;
@@ -146,18 +166,13 @@ export default {
   left: 34.1611111px;
 }
 
-.achievement {
-  position: relative;
-  width: $achievement_width;
-  height: $achievement_height; //√3
-  background-color: #ffffff;
-  margin: $root_twelve 0;
-
-  /* border-left: dashed;
-    border-right: dashed;
-    border-color: #111;
-    border-width: 1.5px; */
-}
+  .achievement {
+    position: relative;
+    width: $achievement_width;
+    height: $achievement_height; //√3
+    background-color: #ffffff;
+    margin: $root_twelve 0;
+  }
 
 .achievement:before,
 .achievement:after {
@@ -242,31 +257,42 @@ export default {
       right: 0px;
       z-index: 99;
 
-      .deshi {
-        width: $deshi_width;
-        height: $deshi_height;
+      .fieldForDisplayDeshi{
+        .deshiPosition{
+          position: relative;
+          top: 0px;
+          right: 0px;
+          z-index: 99;
 
-        background-color: $window_flame;
-      }
+          .deshi{
+            width: $deshi_width;
+            height: $deshi_height;
 
-      .deshi:before {
-        position: absolute;
-        content: "";
-        left: 0;
-        top: 0;
-        width: 0;
-        height: 0;
-        border: none;
-        border-left: solid 40px white;
-        border-bottom: solid 50px transparent;
+            background-color: $window_flame;
+          }
+
+          .deshi:before{
+            position: absolute;
+            content: '';
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border: none;
+            border-left: solid 40px white;
+            border-bottom: solid 50px transparent;
+          }
+        }
       }
     }
   }
 }
 
-.usernamePosition {
-  position: absolute;
 
+
+  .profile{
+    width: $profile_width;
+    height: $profile_height;
   top: 30px;
   left: 202px;
   right: 0px;
@@ -276,34 +302,67 @@ export default {
   width: $id_width;
   height: $id_height;
 
-  background-color: #fff;
+  .profilePosition{
+    position: absolute;
 
-  border: solid;
-  border-width: 3px;
-  border-color: $window_flame;
-}
+    top: 120px;
+    left: 202px;
+    right: 25px;
+  }
 
-.idPosition {
-  position: absolute;
+  .userInfo {
+    width: 100%;
+    height: 230px;
 
-  top: 100px;
-  left: 202px;
-  right: 0px;
-}
+      // temporary color
+    background-color: #fff;
 
-.profile {
-  width: $profile_width;
-  height: $profile_height;
+    border-radius: 5%;
+    border: dashed;
+    border-width: 2px;
+    border-color: $window_flame;
+  }
 
-  background-color: #fff;
+  .userInfoPosition {
+    position: absolute;
 
-  border: solid;
-  border-width: 3px;
-  border-color: $window_flame;
-}
+    top: 300px;
+    left: 75px;
+    right: 25px;
+  }
 
-.profilePosition {
-  position: absolute;
+  .logoutButton {
+    position: absolute;
+
+    right: 13%;
+    top: 20px;
+  }
+
+  .friendsButton {
+    position: absolute;
+
+    right: 2%;
+    top: 20px;
+  }
+
+  .btn-circle-3d {
+    display: inline-block;
+    text-decoration: none;
+    background: #FFC107;
+    color: #fff;
+    width: 130px;
+    height: 80px;
+    line-height: 79px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    overflow: hidden;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+    border-bottom: solid 3px #FFB300;
+    transition: .4s;
+
+    cursor: pointer;
+  }
 
   top: 150px;
   left: 202px;

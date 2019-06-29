@@ -1,28 +1,33 @@
 <template>
   <div id="leftArea">
     <div class="dmbannerPosition">
-      <div v-for="N in 10" :key="N" v-bind:class="'b' + N">
-        <dmBanner
-          :dmBannerUsername="friends[0]"
-          :dmMsg="msg[0]">
-        </dmBanner>
+      <div v-for="(friend, N) in friendsDocID" :key="N" v-bind:class="'b' + N">
+        <div @click="click(friend); toggleColor()">
+          <dmBanner
+            :dmBannerUsername="usernames[N]"
+            :dmMsg="lastMsg[N]">
+          </dmBanner>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// directMessageFieldからフレンドのIDを受け取ってleftareaの内容を表示する
 import dmBanner from'./dmBanner.vue'
-import firebase from 'firebase';
+
+import firebase from '../../plugin/firestore';
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
 
 let db = firebase.firestore();
 
-let currentUser;
-let myFriends = [];
-let myMsg = [];
+let currentUserEmail;
+let lastMsg = [];
+let lastMsgDate = [];
+let usernames = [];
 
 export default {
   name: 'leftArea',
@@ -30,71 +35,86 @@ export default {
   data() {
     return {
       friends: '',
-      msg: ''
+      lastMsg: [],
+      usernames: []
     }
   },
+
+
+  props: [
+    'friendsDocID'
+  ],
 
   components: {
     dmBanner
   },
 
-  created() {
-    this.fireinit();
-    this.loadFriends();
-  },
-
   methods: {
-    fireinit: function() {
-      /* firebase初期設定部分 */
+    onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};
         store.commit('onAuthStateChanged', user);
         store.commit('onUserStatusChanged', user.uid ? true : false);
       })
-      /* --- */
-
-      // 現在のユーザー
-      currentUser = firebase.auth().currentUser;
     },
-    loadFriends: function() {
 
-      /* フレンド読み込み */
-
+    // 最後にメッセージが送信された日時とその内容を取得する
+    // TODO: returnできるようにする
+    loadLastMsgAndDate: function() {
       db.collection("USER")
-      .doc(currentUser.email)
-      .collection('friends')
-      .get()
-      .then(querysnapshot1 => {
-        querysnapshot1.forEach(doc1 => {
-          myFriends.push(doc1.data().username);
+        .doc(currentUserEmail)
+        .collection('friends')
+        .get()
+        .then(friendsSnapshot => {
 
-          db.collection("USER")
-          .doc(currentUser.email)
-          .collection("friends")
-          .doc(doc1.id)
-          .collection("CHAT")
-          .get()
-          .then(querysnapshot2=> {
-            querysnapshot2.forEach(doc2 => {
-              myMsg.push(doc2.data().msg);
+          friendsSnapshot.forEach(doc1 => {
+            this.usernames.push(doc1.data().username)
+            console.log(usernames)
+
+            db.collection("USER")
+              .doc(currentUserEmail)
+              .collection('friends')
+              .doc(doc1.id)
+              .collection("CHAT")
+              .limit(1)
+              .orderBy('date', 'desc')
+              .get()
+              .then(lastMsgSnapshot => {
+                lastMsgSnapshot.forEach(doc2 => {
+                  // doc2はチャットのデータが格納されている
+
+                    this.lastMsg.push(doc2.data().msg);
+                    // NOTE: lastMsgDateもlastMsgも配列だが typeof を使うとObjectが返される
+                    lastMsgDate.push(doc2.data().date);
+
+                  })
+                  console.log("length" + lastMsgDate.length)
+                })
             })
-          })
-        });
-
-        console.log(myFriends[0])
-        console.log(myMsg[0])
-
-        // myFriendsの中身はusernameの配列
-        this.friends = myFriends;
-        this.msg = myMsg;
+            console.log("last")
       })
-      .catch(e => {
-        console.log(e)
-      })
-
     },
+
+    click: function(friend) {
+      this.$parent.idFromLeftArea = friend;
+      console.log("click");
+    },
+
+    toggleColor: function() {
+      console.log("toggleColor")
+    }
+  },
+
+  created: function() {
+    this.onAuth();
+    console.log("leftarea created")
+    currentUserEmail = firebase.auth().currentUser.email;
+    this.loadLastMsgAndDate();
+    // lastMsg = msg, lastMsgDate = date;
+
   },
 }
+
 </script>
 
 <style lang='scss' scoped>

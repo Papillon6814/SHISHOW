@@ -1,49 +1,14 @@
 <template>
   <div>
+    <router-link to="/signup">
     <div class="instead-banner">
       <div v-blur="isBlurred" class="banner">
-      <span class="iconPicPosition">
-        <div class="iconPic"></div>
-      </span>
-      <div class="achievementPosition1">
-        <div class="achievement">
-        </div>
-      </div>
-      <div class="achievementPosition2">
-        <div class="achievement">
-        </div>
-      </div>
-      <div class="achievementPosition3">
-        <div class="achievement">
-        </div>
-      </div>
-      <div class="usernamePosition">
-        <div class="username">
-          Nobuyuki
-        </div>
-      </div>
-      <div class="idPosition">
-        <div class="id">
-          qawsedrftgyhujkolp
-        </div>
-      </div>
-      <div class="profilePosition">
-        <div class="profile">
-          新しいことにチャレンジすることが好き!
-          テニス、スキー、スノーボード、ゴルフ、
-          それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
-          最近では、予想外の趣味に没頭中！
-        </div>
-      </div>
-      <a href="#" class="btn-circle-3d">江崎スイッチ</a>
-      <span id="pullDownProperties">
-      <i class="fas fa-caret-down"></i>
-      </span>
     </div>
-      <div class="warn" v-if="isBlurred === true">
+      <div class="recommendToCreate" v-if="isBlurred === true">
         {{message}}
       </div>
     </div>
+    </router-link>
   </div>
 </template>
 <script>
@@ -66,18 +31,20 @@ export default {
     width: $banner_width;
     height: $banner_height;
     position: relative;
-    .warn{
+    .recommendToCreate{
       position: absolute;
-      top: 0;
+      top: 70px;
       bottom: 0;
       margin: auto;
-      width: 80%;
+      width: 100%;
       height: 3.2rem;
       z-index: 3;
       -webkit-transform: translate(-50%, -50%);
       -moz-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
-      left: 40%;
+      left: 48%;
+
+      font-size: 40px
     }
   }
 
@@ -123,11 +90,6 @@ export default {
       height: $achievement_height; //√3
       background-color: #ffffff;
       margin: $root_twelve 0;
-
-      /* border-left: dashed;
-      border-right: dashed;
-      border-color: #111;
-      border-width: 1.5px; */
     }
 
     .achievement:before,
@@ -212,25 +174,6 @@ export default {
       right: 0px;
     }
 
-    .id{
-      width: $id_width;
-      height: $id_height;
-
-      background-color: #fff;
-
-      border: solid;
-      border-width: 3px;
-      border-color: $window_flame;
-    }
-
-    .idPosition{
-      position: absolute;
-
-      top: 100px;
-      left: 202px;
-      right: 0px;
-    }
-
     .profile{
       width: $profile_width;
       height: $profile_height;
@@ -276,11 +219,10 @@ export default {
       box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
       border-bottom: none;
     }
-
-    /*.editBioButton{
-
-    }*/
   }
 
 
+  .banner:hover{
+    box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
+  }
 </style>
