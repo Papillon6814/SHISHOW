@@ -15,7 +15,7 @@
 
 <script>
 // directMessageFieldからフレンドのIDを受け取ってleftareaの内容を表示する
-import dmBanner from'./dmBanner.vue'
+import dmBanner from'./DmBanner.vue'
 
 import firebase from '../../plugin/firestore';
 import 'firebase/firestore'
@@ -30,7 +30,7 @@ let lastMsgDate = [];
 let usernames = [];
 
 export default {
-  name: 'leftArea',
+  name: 'LeftArea',
 
   data() {
     return {
