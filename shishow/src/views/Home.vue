@@ -30,9 +30,6 @@
       </div>-->
 
     </div>
-    <router-link to="/friend">
-    <button type="button" style="height:100px;position:absolute;z-index:10">aaa</button>
-    </router-link>
   </div>
 </template>
 
@@ -47,7 +44,6 @@ import firebase from "../plugin/firestore";
 import "firebase/firestore";
 import "@firebase/auth";
 import store from "../store";
-
 
 const db = firebase.firestore()
 let currentUser;
@@ -78,12 +74,6 @@ export default {
     BlurBanner
   },
 
-  data: function() {
-    return {
-      users: [],
-      searchWord: ""
-    };
-  },
   data:function(){
     return{
       users:[],
@@ -91,6 +81,7 @@ export default {
       searchWord:"",
     }
   },
+
   computed: {
     user() {
       return this.$store.getters.user;

@@ -50,10 +50,6 @@ export default {
     inputArea,
   },
 
-  computed:{
-
-  },
-
   methods: {
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {

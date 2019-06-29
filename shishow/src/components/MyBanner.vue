@@ -38,8 +38,17 @@
     <div class="userInfoPosition">
         <div class="userInfo">仲野巧ですから</div>
     </div>
-    <div @click="logout" class="btn-circle-3d">ログアウト</div>
-    <span v-bind:class="{reverse:isC}" @click="doExtend" id="pullDownProperties">
+    <router-link to="/friend">
+      <div class="friendsButton">
+        <div class="btn-circle-3d">フレンズ</div>
+      </div>
+    </router-link>
+    <div class="logoutButton">
+      <div @click="logout"
+           class="btn-circle-3d">ログアウト
+      </div>
+    </div>
+    <span v-bind:class="{ reverse:isC }" @click="doExtend" id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
   </div>
@@ -48,6 +57,7 @@
 <script>
 import firebase from '../plugin/firestore'
 import 'firebase/firestore'
+import router from '../router'
 
 const db = firebase.firestore();
 
@@ -307,27 +317,38 @@ export default {
     right: 25px;
   }
 
-    .btn-circle-3d {
-      position: relative;
-      top: 20px;
-      left:39%;
-      display: inline-block;
-      text-decoration: none;
-      background: #FFC107;
-      color: #fff;
-      width: 130px;
-      height: 80px;
-      line-height: 79px;
-      border-radius: 50%;
-      text-align: center;
-      font-weight: bold;
-      overflow: hidden;
-      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-      border-bottom: solid 3px #FFB300;
-      transition: .4s;
+  .logoutButton {
+    position: absolute;
 
-      cursor: pointer;
-    }
+    right: 13%;
+    top: 20px;
+  }
+
+  .friendsButton {
+    position: absolute;
+
+    right: 2%;
+    top: 20px;
+  }
+
+  .btn-circle-3d {
+    display: inline-block;
+    text-decoration: none;
+    background: #FFC107;
+    color: #fff;
+    width: 130px;
+    height: 80px;
+    line-height: 79px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    overflow: hidden;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+    border-bottom: solid 3px #FFB300;
+    transition: .4s;
+
+    cursor: pointer;
+  }
 
   .btn-circle-3d:active {
     -webkit-transform: translateY(2px);
