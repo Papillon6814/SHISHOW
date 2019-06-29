@@ -76,9 +76,6 @@ export default {
           console.log(e);
         });
     },
-    inputUserNameToStore: function() {
-      store.commit("inputLoiginedUserName", this.e_mail);
-    },
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};
