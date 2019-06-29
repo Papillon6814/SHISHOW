@@ -55,6 +55,12 @@ export default {
       isC: false
     };
   },
+  watch: {
+    loginedUser: function() {
+      console.log(this.loginedUser);
+      this.$forceUpdate();
+    }
+  },
   methods: {
     doExtend: function() {
       (this.isA = !this.isA),

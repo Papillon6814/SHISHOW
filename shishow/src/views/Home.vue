@@ -65,11 +65,11 @@ export default {
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
-    getCurrentUserNameFromStore() {
-      return this.$store.getters.getLoginedUserName;
-    },
     getCurrentUserName: function() {
       this.currentUser = this.$store.getters.user.displayName;
+      //this.$forceUpdate();
+      //this.$set("currentUser", currentUser);
+      //this.$forceUpdate();
     },
     filterUser() {
       let key = this.searchWord;
@@ -94,7 +94,7 @@ export default {
         console.log("non searched");
         this.filteredUser = data;
       }
-      return this.filteredUser;
+      //return this.filteredUser;
     }
   },
   methods: {
