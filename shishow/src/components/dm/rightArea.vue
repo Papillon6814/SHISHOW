@@ -59,8 +59,8 @@ export default {
         .collection('friends')
         .doc(this.friendDocID)
         .collection("CHAT")
-        .get()
-        .then(chatSnapshot => {
+        .orderBy("date")
+        .onSnapshot(chatSnapshot => {
           chatSnapshot.forEach(doc1 => {
             this.msgList.push(doc1.data());
           })
@@ -78,7 +78,8 @@ export default {
         .doc(currentUserEmail)
         .collection("friends")
         .doc(this.friendDocID)
-        .collection("CHAT").orderBy("date")
+        .collection("CHAT")
+        .orderBy("date")
         .get()
         .then(chatSnapshot => {
           chatSnapshot.forEach(doc1 => {
