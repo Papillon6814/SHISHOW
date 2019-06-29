@@ -48,7 +48,7 @@ export default {
   },
 
   watch:{
-    friendDocID:function(newval){
+    friendDocID: function(newval){
       this.msgList=[];
       currentUserEmail = firebase.auth().currentUser.email;
         db.collection("USER")
