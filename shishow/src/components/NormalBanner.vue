@@ -24,7 +24,7 @@
     <div class="userInfoPosition">
         <div class="userInfo">仲野巧ですから</div>
     </div>
-    <div @click="doExtend" class="n_btn-circle-3d">江崎にフレ申請</div>
+    <div @click="sendFriendReq()" class="n_btn-circle-3d">江崎にフレ申請</div>
     <span v-bind:class="{nreverse:isC}"  id="pullDownProperties">
       <i class="fas fa-caret-down"></i>
     </span>
@@ -43,10 +43,17 @@ const currentUser = firebase.auth().currentUser;
 
 export default {
   name: 'normalBanner',
-  props:["user","signuser","searchWord"],
+
+  props:[
+    "user",
+    "signuser",
+    "searchWord"
+  ],
+
   created:function(){
     this.onAuth();
   },
+
   data: function() {
     return {
       isA: true,
@@ -54,6 +61,7 @@ export default {
       isC: false,
     };
   },
+
   methods: {
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
@@ -62,13 +70,16 @@ export default {
         store.commit('onUserStatusChanged', user.uid ? true : false)
       })
     },
-    doExtend: function() {
+
+    sendFriendReq: function() {
+      /*
       this.isA = !this.isA;
       this.isB = !this.isB;
       this.isC = !this.isC,
+      */
       this.$emit('extendNormalBanner')
       this.$emit('extendNbanner')
-      
+
       if(store.state.status){
         console.log(this.signuser["email"])
         db.collection("USER").doc(this.signuser.email).collection("outgoing").doc(this.user.email).set({
@@ -80,7 +91,7 @@ export default {
         })
         console.log(this.user.email)
         console.log(this.signuser.username)
-        
+
         db.collection("USER").doc(this.user.email).collection("incoming").doc(this.signuser.email).set({
           username:this.signuser["username"],
           email:this.signuser["email"]
@@ -239,7 +250,7 @@ export default {
     left: 172px;
     right: 0px;
   }
-  
+
   .idPosition{
 
   }
