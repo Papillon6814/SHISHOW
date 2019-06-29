@@ -2,7 +2,7 @@
   <div class="normalBanner" v-bind:class="{ 'banner': isA, 'extend': isB }">
     <span class="iconPicPosition">
       <div class="iconPic">
-        <img id="image" :src="user['image']">
+        <img id="image" :src="user['image']" />
       </div>
     </span>
     <div class="achievementPosition1">
@@ -22,10 +22,7 @@
       <div class="id">qawsedrftgyhujkolp</div>
     </div>
     <div class="profilePosition">
-      <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、
-      </div>
+      <div class="profile">{{user.bio}}</div>
     </div>
     <div class="n_btn-circle-3d" @click="doExtend">江崎にフレ申請</div>
     <span id="pullDownProperties">
