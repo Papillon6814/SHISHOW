@@ -44,8 +44,6 @@ export default {
           this.filteredUser.push(docs.data());
         });
       });
-      
-
   },
   components: {
     navi,
@@ -57,7 +55,7 @@ export default {
       users: [],
       searchWord: "",
       filteredUser: [],
-      currentUser: "",
+      currentUser: ""
     };
   },
   computed: {
@@ -69,34 +67,31 @@ export default {
     },
     getCurrentUserName: function() {
       return this.$store.getters.user.displayName;
-      //this.$forceUpdate();
-      //this.$set("currentUser", currentUser);
-      //this.$forceUpdate();
     },
     filterUser() {
       let key = this.searchWord;
       let data = [];
       let results = [];
-      let i;
-      //オブジェクトに変換
-      for (i in this.users) {
-        data[i] = this.users[i].data();
-      }
+      let users_i;
       if (key) {
-        for (i in this.users) {
+        for (users_i in this.users) {
           //ユーザーネームの走査
-          if (this.users[i].data().username.indexOf(key) !== -1) {
-            results.push(this.users[i].data());
+          if (this.users[users_i].data().username.indexOf(key) !== -1) {
+            results.push(this.users[users_i].data());
           }
           console.log("searched");
         }
         this.filteredUser = results;
       } else {
+        //オブジェクトに変換
+        for (users_i in this.users) {
+          data[users_i] = this.users[users_i].data();
+        }
         //何も入力されてないときにフィルターする前のデータをする
         console.log("non searched");
         this.filteredUser = data;
       }
-      //return this.filteredUser;
+      this.$forceUpdate();
     }
   },
   methods: {
