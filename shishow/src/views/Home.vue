@@ -23,10 +23,29 @@
         </li>-->
       </div>
     </transition>
-    <!--
-      <div class="gameBannerPosition">
-        <gameBanner></gameBanner>
-    </div>-->
+    <div id="moving">
+      <transition appear name="v2">
+        <div class="normalBannerPosition">
+          <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
+            <normalBanner :user="users[N-1]" :searchWord="searchWord" :signuser="signuser"></normalBanner>
+          </div>
+          <!-- <li class="n2">
+              <normalBanner></normalBanner>
+            </li>
+            <li class="n3">
+              <normalBanner></normalBanner>
+            </li>
+            <li class="n4">
+              <normalBanner></normalBanner>
+          </li>-->
+        </div>
+      </transition>
+      <!--
+        <div class="gameBannerPosition">
+          <gameBanner></gameBanner>
+      </div>-->
+
+    </div>
   </div>
 </div>
 </template>
@@ -44,28 +63,40 @@ import store from "../store";
 
 const db = firebase.firestore();
 
+
+
 export default {
 
   name: "home",
+
   created: function() {
     this.onAuth();
-    db.collection("USER")
-      .get()
-      .then(doc => {
-        this.users = doc.docs;
+    db.collection("USER").get().then(docs =>{
+      docs.forEach(doc=>{
+        if(doc.data().email != this.user.email){
+          this.users.push(doc.data());
+        }
       });
+    });
+    db.collection("USER").doc(this.user.email).get().then(doc =>{
+      this.signuser = doc.data();
+    });
   },
+
   components: {
     navi,
     myBanner,
     normalBanner
   },
-  data: function() {
-    return {
-      users: [],
-      searchWord: ""
-    };
+
+  data:function(){
+    return{
+      users:[],
+      signuser:"",
+      searchWord:"",
+    }
   },
+
   computed: {
     user() {
       return this.$store.getters.user;
@@ -73,6 +104,7 @@ export default {
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
+
     filterUser: function() {
       let key = this.searchWord;
       let data = [];
@@ -93,6 +125,7 @@ export default {
       console.log(results);
     }
   },
+
   methods: {
     getSearchWord(word) {
       this.searchWord = word;
@@ -153,6 +186,36 @@ body {
 
   background-color: $dark_color;
 }
+  #myBannerPosition {
+    //position: relative;
+    //temporary top
+    padding-top: 70px;
+    margin-left: 10%;
+    margin-right: 10%;
+    width:100%;
+    position:absolute;
+    z-index: 1;
+
+    /*top: 45px;
+    left: 10%;*/
+  }
+
+  .normalBannerPosition {
+    margin-left: 10%;
+    width:100%;
+    position: absolute;
+    padding-top:165px;
+    $i: 1;
+    @while $i <= 30{
+      .n#{$i}{
+        padding-top: 210px;/* + (200px * $i);*/
+      }
+      $i: $i + 1;
+    }
+    list-style: none;
+    // z-index: -1
+
+  }
 
 #myBannerPosition {
   //position: relative;
@@ -196,4 +259,12 @@ body {
   width: 100%;
   transition: 0.3s;
 }
+
+ /*#moven{
+    position: absolute;
+    width: 100%;
+    transition: .3s;
+
+  }*/
+
 </style>

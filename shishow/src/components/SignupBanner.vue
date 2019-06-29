@@ -54,7 +54,7 @@
     </div>
 
     <div class="passwordConfirmPosition">
-      <input class="passwordConfirm" type="password" placeholder="CONFIRM PASSWORD" v-model="p_confirm">
+      <input class="passwordConfirm" type="password" placeholder="CONFIRM PASSWORD" v-model="p_confirm" @keydown="signUp">
     </div>
 
     <div class="profilePosition"></div>
@@ -101,7 +101,10 @@ export default {
       let url;
 
       if(!this.uploadedImage){
-        db.collection("Image").doc("SampleImage").get().then(doc =>{
+        db.collection("Image")
+        .doc("SampleImage")
+        .get()
+        .then(doc =>{
           url = doc.data()["image"];
         });
       }
@@ -127,21 +130,7 @@ export default {
       }
     },
 
-    addToDatabase(email, username,image) {
-      let url = db.collection("USER").doc(""+email).collection("friends").doc();
-
-      /*
-      url.collection("CHAT").add({
-        msg:"",
-        date:"",
-      });
-      url.set({
-        username:""
-      });
-      */
-
-      db.collection("USER").doc(""+email).collection("incoming").add({username:""});
-      db.collection("USER").doc(""+email).collection("outgoing").add({username:""});
+      addToDatabase(email, username,image) {
 
       db.collection("USER").doc(""+email).set({
           email: email,
@@ -488,7 +477,7 @@ export default {
       // border: solid;
       // border-width: 3px;
       // border-color: $su_banner_flame;
-      
+
     }
 
     .passwordPosition{

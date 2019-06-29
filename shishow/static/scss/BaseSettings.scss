@@ -32,7 +32,6 @@ $header_height: 100px;
 $logo_sentence_color: #e0ffff;
 
 /* --- */
-
 /* around myBanner */
 
 $banner_width: 80%;
@@ -64,7 +63,6 @@ $su_pass_width: 45%;
 $su_pass_height: 30px;
 
 /* --- */
-
 /* around normalBanner */
 
 $n_banner_width: 65%;
@@ -86,24 +84,22 @@ $n_id_height: 20.625px;
 $n_profile_height: 83.75px;
 
  /* --- */
-
  /* menubuttons */
 
  $button_width: 80px;
  $button_height: 80px;
 
  /* --- */
-
  /* around direct message page */
 
  $theme_color_dm: #ddddff;
  $dm_icon_width: 90px;
  $dm_banner_color: #ccc;
  $dm_banner_color_hover : #e5e5e5;
+ $selected_dm_banner_color: #555;
 
  /* --- */
-
- /* aruond notification page */
+ /* around notification page */
 
  $not_banner_color: #d5d5d5;
  $not_banner_flane: #222;
