@@ -11,47 +11,34 @@
 </template>
 
 <script>
-import firebase from "firebase";
+
+import firebase from "../../plugin/firestore";
+import 'firebase/firestore'
+import '@firebase/auth'
+import store from '../../store'
+
+let db = firebase.firestore();
+let currentUser;
 
 export default {
   name: "inputArea",
-  props: ["SignIn", "userName", "userImage"],
+
   data() {
     return {
       msg: ""
     };
   },
-  /*updated() {
-    this.loadMsg();
-  },*/
+
+  props: [
+    // leftAreaでクリックされたフレンドのドキュメントID
+    'friendDocID'
+  ],
+
+  created: function () {
+    currentUser = firebase.auth().currentUser;
+  },
+
   methods: {
-    //これまでのメッセージをロード
-    loadMsg() {
-      const db = firebase.firestore();
-      //データベースから値を持ってきてsnapshotに代入
-      db.collection("USER")
-        .doc("sample")
-        .collection("friends")
-        .doc("jDIKmCZkXpCmYfqaeuu5")
-        .collection("CHAT")
-        .get()
-        .then(snapshot => {
-          //snapshotの値はsnapshot.val()で取得できる
-          //let rootList = snapshot.val()
-          let msgList = [];
-          snapshot.forEach(doc => {
-            msgList.push(doc.data());
-          });
-          msgList.sort(function(a, b) {
-            if (a.date > b.date) {
-              return 1;
-            } else {
-              return -1;
-            }
-          });
-          this.msgList = msgList;
-        });
-    },
     //メッセージを送る
     sendMsg() {
       //console.log("clicked");
@@ -65,19 +52,16 @@ export default {
       let now = new Date();
       if (msg) {
         db.collection("USER")
-          .doc("sample")
-          .collection("friends")
-          .doc("jDIKmCZkXpCmYfqaeuu5")
-          .collection("CHAT")
-          .add({
-            //username: this.userName,
-            //日付とメッセージの送信
-            msg: this.msg,
-            date: now
-          });
-        //送信した後内容をからにする
-        this.msg = "";
-        this.text = "";
+        .doc(currentUser.email)
+        .collection("friends")
+        .doc(this.friendDocID)
+        .collection("CHAT")
+        .add({
+          msg: this.msg,
+          date: now
+        });
+
+        this.msg = '';
       }
     }
   }

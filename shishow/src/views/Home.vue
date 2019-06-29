@@ -56,6 +56,7 @@ let currentUser;
 
 export default {
   name: "home",
+
   created: function() {
     this.onAuth();
     db.collection("USER").get().then(docs =>{
@@ -69,12 +70,14 @@ export default {
       this.signuser = doc.data();
     });
   },
+
   components: {
     navi,
     myBanner,
     normalBanner,
     BlurBanner
   },
+
   data: function() {
     return {
       users: [],
@@ -116,7 +119,6 @@ export default {
       console.log(results);
     }
   },
-
 
   methods: {
     getSearchWord(word) {

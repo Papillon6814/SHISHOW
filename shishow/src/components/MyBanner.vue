@@ -53,13 +53,15 @@ const db = firebase.firestore();
 
 export default {
   name: 'myBanner',
+
   data: function() {
-    return{
-      isA:true,
-      isB:false,
-      isC:false
+    return {
+      isA: true,
+      isB: false,
+      isC: false
     }
   },
+
   methods: {
     doExtend: function() {
       this.isA = !this.isA,
@@ -67,6 +69,7 @@ export default {
       this.isC = !this.isC,
       this.$emit('extendMyBanner')
     },
+
     logout: function() {
       firebase.auth().signOut()
       .then(function() {

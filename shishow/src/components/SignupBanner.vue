@@ -127,9 +127,8 @@ export default {
       }
     },
 
-
       addToDatabase(email, username,image) {
-        
+
       db.collection("USER").doc(""+email).set({
           email: email,
           username: username,
@@ -475,7 +474,7 @@ export default {
       // border: solid;
       // border-width: 3px;
       // border-color: $su_banner_flame;
-      
+
     }
 
     .passwordPosition{
