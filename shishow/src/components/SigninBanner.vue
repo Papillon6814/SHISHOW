@@ -15,10 +15,8 @@
       <div class="btn-circle-3d">Sign up</div>
     </router-link>
 
-
     <!-- XXX:変な影が出現中 -->
     <div class="btn-circle-3d-ver2" @click="login">Sign in</div>
-
   </div>
 </template>
 
@@ -30,18 +28,18 @@ import store from '../store'
 import router from '../router'
 
 export default {
-  name: 'Signin',
+  name: "Signin",
 
   created: function() {
     this.onAuth();
   },
 
-  data: function () {
+  data: function() {
     return {
-      username: '',
-      password: '',
-      e_mail: ''
-    }
+      username: "",
+      password: "",
+      e_mail: ""
+    };
   },
 
   computed: {
@@ -56,25 +54,26 @@ export default {
 
   methods: {
     login: function() {
-      firebase.auth().signInWithEmailAndPassword(this.e_mail, this.password)
-      .then(function() {
-        alert('Signed in.');
-        router.push('/')
-      })
-      .catch(function(e) {
-        console.log(e)
-      })
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.e_mail, this.password)
+        .then(function() {
+          alert("Signed in.");
+          router.push("/");
+        })
+        .catch(function(e) {
+          console.log(e);
+        });
     },
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
-        user = user ? user: {};
-        store.commit('onAuthStateChanged', user);
-        store.commit('onUserStatusChanged', user.uid ? true : false);
-      })
+        user = user ? user : {};
+        store.commit("onAuthStateChanged", user);
+        store.commit("onUserStatusChanged", user.uid ? true : false);
+      });
     }
   }
-}
-
+};
 </script>
 
 <style lang="scss" scoped>
@@ -115,7 +114,7 @@ export default {
     background-color: #fff;
   }
 
-  .usernamePosition{
+  .usernamePosition {
     position: absolute;
 
     top: 50px;
@@ -130,7 +129,7 @@ export default {
     background-color: #fff;
   }
 
-  .passwordPosition{
+  .passwordPosition {
     position: absolute;
 
     top: 120px;
@@ -200,7 +199,6 @@ export default {
   .signinBanner:hover{
     box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
   }
-
-
-
+ 
+ 
 </style>

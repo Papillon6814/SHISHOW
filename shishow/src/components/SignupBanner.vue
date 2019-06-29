@@ -1,32 +1,31 @@
 <template>
   <div class="signupBanner">
     <div id="modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-body">
-                <img id="image" v-show="uploadedImage" :src="uploadedImage" />
-                <button id="button" type="button">Confirm</button>
-                <input type="button" id="closeBtn" value="close">
-            </div>
+      <div class="modal-content">
+        <div class="modal-body">
+          <img id="image" v-show="uploadedImage" :src="uploadedImage">
+          <button id="button" type="button">Confirm</button>
+          <input type="button" id="closeBtn" value="close">
         </div>
+      </div>
     </div>
     <div id="trimmingButton">
       <span class="iconCirclePosition">
         <label>
-        <div class="iconCircle" >
-          <div id="result" ></div>
-          <div class="iconDashedCircle" id='delete'>
-            <div class="plusPosition">
-              <i class="fas fa-plus"></i>
+          <div class="iconCircle">
+            <div id="result"></div>
+            <div class="iconDashedCircle" id="delete">
+              <div class="plusPosition">
+                <i class="fas fa-plus"></i>
+              </div>
             </div>
+            <input hidden class="iconFile" type="file" @change="onFileChange">
           </div>
-          <input hidden class="iconFile" type="file" @change="onFileChange">
-        </div>
         </label>
       </span>
     </div>
 
     <!-- achievements -->
-
 
     <div class="achievementPosition1">
       <div class="achievement"></div>
@@ -54,7 +53,12 @@
     </div>
 
     <div class="passwordConfirmPosition">
-      <input class="passwordConfirm" type="password" placeholder="CONFIRM PASSWORD" v-model="p_confirm" @keydown="signUp">
+      <input
+        class="passwordConfirm"
+        type="password"
+        placeholder="CONFIRM PASSWORD"
+        v-model="p_confirm"
+      >
     </div>
 
     <div class="profilePosition"></div>
@@ -63,7 +67,7 @@
 
     <!--
     <span id="pullDownProperties">
-     <i class="fas fa-caret-down"></i>
+    <i class="fas fa-caret-down"></i>
     </span>
     -->
   </div>
@@ -75,7 +79,7 @@
 <script>
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
-import Cropper from 'cropperjs'
+import Cropper from "cropperjs";
 
 const db = firebase.firestore();
 let files;
@@ -83,21 +87,19 @@ let files;
 //使用するオリジナルの関数を定義
 export default {
   //名前定義
-  name: 'signupBanner',
+  name: "signupBanner",
   //templateで使用する変数を定義
-  data () {
-    return  {
-      username: '',
-      email: '',
-      password: '',
-      p_confirm: '',
-      uploadedImage: '',
-    }
+  data() {
+    return {
+      username: "",
+      email: "",
+      password: "",
+      p_confirm: "",
+      uploadedImage: ""
+    };
   },
   methods: {
-
-    signUp: function () {
-
+    signUp: function() {
       let url;
 
       if(!this.uploadedImage){
@@ -113,20 +115,25 @@ export default {
       }
       else if(this.errorIndication());
       else {
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-        .then(user => {
-          var User = firebase.auth().currentUser;
-          var email;
-
-          //変数に情報を格納
-          email = User.email;
-          alert('Create account: '+email);
-          if(!this.uploadedImage) this.uploadedImage = url;
-          this.addToDatabase(this.email,this.username,this.uploadedImage);
-        })
-        .catch(error => {
-          alert(error.message)
-        })
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+          .then(user => {
+            var User = firebase.auth().currentUser;
+            var email;
+            User.updateProfile({
+              displayName: this.username
+            }).then(() => {
+              //変数に情報を格納
+              email = User.email;
+              alert("Create account: " + email);
+              if (!this.uploadedImage) this.uploadedImage = url;
+              this.addToDatabase(this.email, this.username, this.uploadedImage);
+            });
+          })
+          .catch(error => {
+            alert(error.message);
+          });
       }
     },
 
@@ -145,14 +152,12 @@ export default {
         console.log("Error adding document: ", error);
       })
     },
-
-
     onFileChange(event) {
       //file変数定義
       let files = event.target.files || event.dataTransfer.files;
-      if(files[0].type.match(/image/)){
-      this.showImage(files[0]);
-      }else{
+      if (files[0].type.match(/image/)) {
+        this.showImage(files[0]);
+      } else {
         console.log("This is not image");
       }
     },
@@ -161,33 +166,32 @@ export default {
       //FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
       let reader = new FileReader();
       //ファイルが読み込まれたとき、eventを引数とするアロー関数作動
-      let place =this;
-      reader.onload = (event) => {
+      let place = this;
+      reader.onload = event => {
         //htmlにファイルを反映
         this.uploadedImage = event.target.result;
         window.setTimeout(place.crop, 1);
-      }
+      };
       //読み込み開始
       console.log(typeof modal);
-      modal.style.display = 'block';
+      modal.style.display = "block";
       reader.readAsDataURL(file);
     },
 
-    errorIndication(){
-      if(!this.email){
-        if(!this.email) console.log("there is not email");
+    errorIndication() {
+      if (!this.email) {
+        if (!this.email) console.log("there is not email");
         return true;
       }
       return false;
     },
 
-    crop:function(){
-
+    crop: function() {
       var root = this;
-      var image = document.getElementById('image');
-      var button = document.getElementById('button');
-      var result = document.getElementById('result');
-      var close = document.getElementById('closeBtn');
+      var image = document.getElementById("image");
+      var button = document.getElementById("button");
+      var result = document.getElementById("result");
+      var close = document.getElementById("closeBtn");
 
       var croppable = false;
 
@@ -195,18 +199,16 @@ export default {
         aspectRatio: 1,
         viewMode: 1,
 
-
-
-        ready: function () {
+        ready: function() {
           croppable = true;
-        },
+        }
       });
-      close.onclick = function(){
-        modal.style.display = 'none';
+      close.onclick = function() {
+        modal.style.display = "none";
         cropper.destroy();
-        this.uploadedImage ='';
+        this.uploadedImage = "";
       };
-      button.onclick = function () {
+      button.onclick = function() {
         var croppedCanvas;
         var roundedImage;
 
@@ -216,50 +218,53 @@ export default {
         // Crop
         croppedCanvas = cropper.getCroppedCanvas();
 
-
         // Show
-        roundedImage = document.createElement('img');
+        roundedImage = document.createElement("img");
 
-        var canvas = document.createElement('canvas');
-        var context = canvas.getContext('2d');
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
         var width = croppedCanvas.width;
         var height = croppedCanvas.height;
         canvas.width = width;
         canvas.height = height;
         context.imageSmoothingEnabled = true;
         context.drawImage(croppedCanvas, 0, 0, width, height);
-        context.globalCompositeOperation = 'destination-in';
+        context.globalCompositeOperation = "destination-in";
         context.beginPath();
-        context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
+        context.arc(
+          width / 2,
+          height / 2,
+          Math.min(width, height) / 2,
+          0,
+          2 * Math.PI,
+          true
+        );
         context.fill();
 
-        roundedImage.src =canvas.toDataURL();
-        roundedImage.width =130;
-        roundedImage.height =130;
-        result.innerHTML = '';
+        roundedImage.src = canvas.toDataURL();
+        roundedImage.width = 130;
+        roundedImage.height = 130;
+        result.innerHTML = "";
 
-        var del = document.getElementById('delete');
-        if(del != null){
+        var del = document.getElementById("delete");
+        if (del != null) {
           del.textContent = null;
           del.parentNode.removeChild(del);
         }
         cropper.destroy();
-        modal.style.display = 'none';
-        root.uploadedImage ='';
-
-
+        modal.style.display = "none";
+        root.uploadedImage = "";
 
         result.appendChild(roundedImage);
       };
-    },
-
+    }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-  .signupBanner {
-    position: absolute;
+.signupBanner {
+  position: absolute;
 
   width: $banner_width;
   height: $banner_height;
@@ -289,15 +294,11 @@ export default {
 
     cursor: pointer;
 
-
-      .iconDashedCircle {
-        position: absolute;
-
-
+    .iconDashedCircle {
+      position: absolute;
 
       top: 5.72%;
       left: 5.85%;
-
 
       width: 90%;
       height: 90%;
@@ -316,36 +317,32 @@ export default {
       .plusPosition {
         position: absolute;
 
-          left: 49.5%;
-          top: 50%;
-          -webkit-transform: translate(-50%, -50%);
-          -moz-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-        }
+        left: 49.5%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
       }
-      .iconFile {
-          height: 100%;
-          width: 100%;
-          opacity: 0;
-          cursor: pointer;
-        }
-
     }
-
-    .iconCirclePosition {
-      position: absolute;
-      width: $icon_width;
-      height: $icon_height;
-
+    .iconFile {
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      cursor: pointer;
     }
+  }
 
-    #icon{
-      position: absolute;
-      width: $icon_width;
-      height: $icon_height;
+  .iconCirclePosition {
+    position: absolute;
+    width: $icon_width;
+    height: $icon_height;
+  }
 
-    }
-
+  #icon {
+    position: absolute;
+    width: $icon_width;
+    height: $icon_height;
+  }
 
   .iconCirclePosition {
     position: absolute;
@@ -450,78 +447,73 @@ export default {
       right: 100px;
     }
 
-    .email{
-      width: 100%;
-      height: $su_user_height;
+  .email {
+    width: $su_user_width;
+    height: $su_user_height;
+   }
+   
+  .emailPosition {
+    position: absolute;
 
-      background-color: #fff;
+    top: 90px;
+    left: 120px !important;
 
+    right: 0px;
+  }
 
-    }
+  .password {
+    width: $su_pass_width;
+    height: $su_pass_height;
 
-    .emailPosition{
-      position: absolute;
+    background-color: #fff;
 
-      top: 90px;
-      left: 210px !important;
+    border: solid;
+    border-width: 3px;
+    border-color: $su_banner_flame;
+  }
 
-      right: 100px;
-    }
+  .passwordPosition {
+    position: absolute;
+    top: 175px;
+    left: 70px;
+    right: 0px;
+  }
 
-    .password{
-      width: 100%;
-      height: $su_pass_height;
+  .passwordPosition {
+    position: absolute;
 
-      background-color: #fff;
+    top: 150px;
+    left: 120px;
+    right: 0px;
+  }
 
-      // border: solid;
-      // border-width: 3px;
-      // border-color: $su_banner_flame;
+  .passwordConfirm {
+    width: $su_pass_width;
+    height: $su_pass_height;
+    background-color: #fff;
 
-    }
+    border: solid;
+    border-width: 3px;
+    border-color: $su_banner_flame;
+  }
 
-    .passwordPosition{
-      position: absolute;
-      top:175px;
-      left:70px;
-      right:0px;
-    }
+  .passwordConfirmPosition {
+    position: absolute;
 
-    .passwordPosition{
-      position: absolute;
-
-      top: 150px;
-      left: 210px;
-      right: 220px;
-    }
-
-    .passwordConfirm {
-      width: 100%;
-      height: $su_pass_height;
-
-      background-color: #fff;
-
-      // border: solid;
-      // border-width: 3px;
-      // border-color: $su_banner_flame;
-    }
-
-    .passwordConfirmPosition{
-      position: absolute;
-
-      top: 200px;
-      left: 210px;
-      right: 220px;
-    }
-
+    top: 200px;
+    left: 120px;
+    right: 0px;
+  }
 }
 
 .signupBanner:hover{
   box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
 }
+
 #result{  //cropper
   z-index: 7;
 }
+
 //modal
 .modal {
   display: none;
@@ -532,10 +524,10 @@ export default {
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content{
+.modal-content {
   background-color: white;
   width: 500px;
   margin: 40% auto;

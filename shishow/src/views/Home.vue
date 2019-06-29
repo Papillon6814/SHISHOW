@@ -3,31 +3,23 @@
     <navi @input="getSearchWord"></navi>
     <transition appear name="v">
       <div id="myBannerPosition">
-        <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
+        <myBanner @extendMyBanner="extendOther" v-if="userStatus" :loginedUser="getCurrentUserName"></myBanner>
         <BlurBanner v-else></BlurBanner>
       </div>
     </transition>
     <div id="moving">
       <transition appear name="v2">
         <div class="normalBannerPosition">
-          <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
-            <normalBanner :user="users[N-1]" :searchWord="searchWord" :signuser="signuser"></normalBanner>
+          <div v-for="N in filteredUser.length" :key="N" v-bind:class="'n'+N">
+            <normalBanner :user="filteredUser[N-1]"></normalBanner>
           </div>
-          <!-- <li class="n2">
-              <normalBanner></normalBanner>
-            </li>
-            <li class="n3">
-              <normalBanner></normalBanner>
-            </li>
-            <li class="n4">
-              <normalBanner></normalBanner>
-          </li>-->
         </div>
       </transition>
       <!--
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
-      </div>-->
+      </div>
+      -->
 
     </div>
   </div>
@@ -38,6 +30,7 @@
 import navi from "../components/NavigationBar.vue";
 import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
+import signinBanner from "../components/SigninBanner";
 import BlurBanner from "../components/BlurBanner.vue"
 
 import firebase from "../plugin/firestore";
@@ -55,11 +48,13 @@ export default {
 
   created: function() {
     this.onAuth();
-    db.collection("USER").get().then(docs =>{
-      docs.forEach(doc=>{
-        if(doc.data().email != this.user.email){
-          this.users.push(doc.data());
-        }
+    db.collection("USER")
+      .get()
+      .then(doc => {
+        this.users = doc.docs;
+        doc.forEach(docs => {
+          this.filteredUser.push(docs.data());
+        });
       });
     });
     db.collection("USER").doc(this.user.email).get().then(doc =>{
@@ -74,12 +69,13 @@ export default {
     BlurBanner
   },
 
-  data:function(){
-    return{
-      users:[],
-      signuser:"",
-      searchWord:"",
-    }
+  data: function() {
+    return {
+      users: [],
+      searchWord: "",
+      filteredUser: [],
+      currentUser: ""
+    };
   },
 
   computed: {
@@ -89,31 +85,41 @@ export default {
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
-
-    filterUser: function() {
+    
+    getCurrentUserName: function() {
+      return this.$store.getters.user.displayName;
+    },
+    filterUser() {
       let key = this.searchWord;
       let data = [];
       let results = [];
-      //console.log(this.users[3].data().username);
-      //console.log(Object.keys(this.users).length);
-      let i;
-      //オブジェクトに変換
-      for (i in this.users) {
-        data[i] = this.users[i].data();
-      }
-      //console.log(data);
+      let users_i;
       if (key) {
-        if (data.username.indexOf(key) !== -1) {
-          results.push(data);
+        for (users_i in this.users) {
+          //ユーザーネームの走査
+          if (this.users[users_i].data().username.indexOf(key) !== -1) {
+            results.push(this.users[users_i].data());
+          }
+          console.log("searched");
         }
+        this.filteredUser = results;
+      } else {
+        //オブジェクトに変換
+        for (users_i in this.users) {
+          data[users_i] = this.users[users_i].data();
+        }
+        //何も入力されてないときにフィルターする前のデータをする
+        console.log("non searched");
+        this.filteredUser = data;
       }
-      console.log(results);
+      this.$forceUpdate();
     }
   },
 
   methods: {
     getSearchWord(word) {
       this.searchWord = word;
+      this.filterUser();
     },
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
@@ -146,7 +152,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .v-enter {
   transform: translate(700px, 0);
   opacity: 0;
@@ -166,7 +171,7 @@ export default {
   opacity: 0;
 }
 .v-leave-active {
-  transition: all .5s 0s ease;
+  transition: all 0.5s 0s ease;
 }
 
 .v2-enter {
@@ -188,7 +193,7 @@ export default {
   opacity: 0;
 }
 .v2-leave-active {
-  transition: all .5s 0s ease;
+  transition: all 0.5s 0s ease;
 }
 
 html {

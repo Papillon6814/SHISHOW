@@ -4,27 +4,21 @@
       <div class="iconPic"></div>
     </span>
     <div class="achievementPosition1">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
     <div class="achievementPosition2">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
     <div class="achievementPosition3">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
     <div class="usernamePosition">
       <div class="fieldForUserName">
-        <div class="username">
-          Nakataku
-        </div>
+        <div class="username">{{loginedUser}}</div>
       </div>
       <div class="fieldForDisplayDeshi">
         <div class="deshiPosition">
-          <div class="deshi">
-          </div>
+          <div class="deshi"></div>
         </div>
       </div>
     </div>
@@ -62,37 +56,49 @@ import router from '../router'
 const db = firebase.firestore();
 
 export default {
-  name: 'myBanner',
-
+  name: "myBanner",
+  props: ["loginedUser"],
+  
   data: function() {
     return {
       isA: true,
       isB: false,
-      isC: false
+      isC: false,
+      sign:"",
+    };
+  },
+  watch: {
+    loginedUser: function() {
+      console.log(this.loginedUser);
+      this.$forceUpdate();
     }
   },
 
   methods: {
     doExtend: function() {
-      this.isA = !this.isA,
-      this.isB = !this.isB,
-      this.isC = !this.isC,
-      this.$emit('extendMyBanner')
+      (this.isA = !this.isA),
+        (this.isB = !this.isB),
+        (this.isC = !this.isC),
+        this.$emit("extendMyBanner");
     },
 
     logout: function() {
-      firebase.auth().signOut()
-      .then(function() {
-        alert('Signed out.');
-        router.push('/');
-      })
-      .catch(function(e) {
-        console.log(e)
-      })
+      firebase
+        .auth()
+        .signOut()
+        .then(function() {
+          alert("Signed out.");
+          router.push("/");
+        })
+        .catch(function(e) {
+          console.log(e);
+        });
     }
+  },
+  created:function(){
+    console.log(this.loginedUser)
   }
-}
-
+};
 </script>
 
 <style lang="scss" scoped>
@@ -112,50 +118,53 @@ export default {
 
     box-shadow: 0px 0px 3px  rgba(0, 0, 0, 0.1);
 
-    transition:0.3s;
-    //children
-  }
+  background-color: $banner_color;
 
   .banner:hover{
     box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
   }
 
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
 
+  transition: 0.3s;
+  //children
+}
 
-  .extend{
-    position: absolute;
+.extend {
+  position: absolute;
 
-    width: $banner_width;
-    //temporary height
-    height: $banner_height*2;
+  width: $banner_width;
+  //temporary height
+  height: $banner_height * 2;
 
-    background-color: $banner_color;
+  z-index: 2;
 
-    z-index: 2;
+  border: solid;
+  border-width: 5px;
+  border-color: $banner_flame;
+  z-index: 2;
 
-    transition:0.3s;
-
-  }
+  transition: 0.3s;
+}
 
   .iconPic {
     width: $icon_width;
     height: $icon_height;
 
       // temporary color
-    background-color: #fff;
+  background-color: #fff;
+  border-radius: 50%;
+  border: solid;
+  border-width: 2px;
+  border-color: $window_flame;
+}
 
-    border-radius: 50%;
-    border: solid;
-    border-width: 2px;
-    border-color: $window_flame;
-  }
+.iconPicPosition {
+  position: absolute;
 
-  .iconPicPosition {
-    position: absolute;
-
-    top: 15px;
-    left: 34.1611111px;
-  }
+  top: 15px;
+  left: 34.1611111px;
+}
 
   .achievement {
     position: relative;
@@ -165,78 +174,88 @@ export default {
     margin: $root_twelve 0;
   }
 
-  .achievement:before,
-  .achievement:after {
-    content: "";
-    position: absolute;
+.achievement:before,
+.achievement:after {
+  content: "";
+  position: absolute;
 
-    left: 0;
+  left: 0;
 
-    width: 0;
-    border-left: $a_half_width solid transparent;
-    border-right: $a_half_width dashed transparent;
+  width: 0;
+  border-left: $a_half_width solid transparent;
+  border-right: $a_half_width dashed transparent;
+}
+
+.achievement:before {
+  bottom: 100%;
+  border-bottom: $root_twelve solid #fff;
+}
+
+.achievement:after {
+  top: 100%;
+  width: 0;
+  border-top: $root_twelve solid #fff;
+}
+
+.achievementPosition1 {
+  position: absolute;
+
+  //top: -1.3vh;
+  //left: -1.8vh;
+  top: 145px;
+  left: 16.1611111px;
+}
+
+.achievementPosition2 {
+  position: absolute;
+
+  //top: -4.4vh;
+  //left: 5.9vh;
+  top: 160px;
+  left: 77.6611111px;
+}
+
+.achievementPosition3 {
+  position: absolute;
+
+  //top: -12.46vh;
+  //left: 14vh;
+  top: 145px;
+  left: 139.161111px;
+}
+
+#pullDownProperties {
+  position: absolute;
+
+  bottom: -5px;
+  left: 15px;
+
+  font-size: 58px;
+}
+
+#pullDownProperties:hover {
+  color: $pulldown_color;
+}
+
+.username {
+  width: $user_width;
+  height: $user_height;
+
+  background-color: #fff;
+
+  border: solid;
+  border-width: 3px;
+  border-color: $window_flame;
+
+  .fieldForUserName {
   }
 
-  .achievement:before {
-    bottom: 100%;
-    border-bottom: $root_twelve solid #fff;
-  }
-
-  .achievement:after {
-    top: 100%;
-    width: 0;
-    border-top: $root_twelve solid #fff;
-  }
-
-  .achievementPosition1 {
-    position: absolute;
-
-    //top: -1.3vh;
-    //left: -1.8vh;
-    top: 145px;
-    left: 16.1611111px;
-  }
-
-  .achievementPosition2 {
-    position: absolute;
-
-    //top: -4.4vh;
-    //left: 5.9vh;
-    top: 160px;
-    left: 77.6611111px;
-  }
-
-  .achievementPosition3 {
-    position: absolute;
-
-    //top: -12.46vh;
-    //left: 14vh;
-    top: 145px;
-    left: 139.161111px;
-  }
-
-  #pullDownProperties {
-    position: absolute;
-
-    bottom: -5px;
-    left: 15px;
-
-    font-size: 58px;
-  }
-
-  #pullDownProperties:hover {
-    color: $pulldown_color;
-  }
-
-  .username{
-    width: $user_width;
-    height: $user_height;
-
-    background-color: #fff;
-
-      border: solid;
-      border-width: 3px;
-      border-color: $window_flame;
+  .fieldForDisplayDeshi {
+    .deshiPosition {
+      position: relative;
+      top: 0px;
+      right: 0px;
+      z-index: 99;
 
       .fieldForDisplayDeshi{
         .deshiPosition{
@@ -266,27 +285,22 @@ export default {
         }
       }
     }
-
-  .usernamePosition{
-    position: absolute;
-
-    top: 30px;
-    left: 202px;
-    right: 0px;
   }
+}
 
 
 
   .profile{
     width: $profile_width;
     height: $profile_height;
+  top: 30px;
+  left: 202px;
+  right: 0px;
+}
 
-    background-color: #fff;
-
-    border: solid;
-    border-width: 3px;
-    border-color: $window_flame;
-  }
+.id {
+  width: $id_width;
+  height: $id_height;
 
   .profilePosition{
     position: absolute;
@@ -350,15 +364,41 @@ export default {
     cursor: pointer;
   }
 
-  .btn-circle-3d:active {
-    -webkit-transform: translateY(2px);
-    transform: translateY(2px);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-    border-bottom: none;
-  }
+  top: 150px;
+  left: 202px;
+  right: 25px;
+}
 
-  .reverse{
-    transform: rotateX(180deg);
-  }
+.btn-circle-3d {
+  position: relative;
+  top: 30px;
+  left: 39%;
+  display: inline-block;
+  text-decoration: none;
+  background: #ff8181;
+  color: #fff;
+  width: 130px;
+  height: 80px;
+  line-height: 79px;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+  overflow: hidden;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+  border-bottom: solid 3px #bd6565;
+  transition: 0.4s;
 
+  cursor: pointer;
+}
+
+.btn-circle-3d:active {
+  -webkit-transform: translateY(2px);
+  transform: translateY(2px);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+  border-bottom: none;
+}
+
+.reverse {
+  transform: rotateX(180deg);
+}
 </style>
