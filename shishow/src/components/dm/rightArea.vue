@@ -37,12 +37,6 @@ export default {
     'friendDocID'
   ],
 
-  computed: {
-    onloadAllMsg: function() {
-
-    }
-  },
-
   methods: {
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
@@ -50,22 +44,28 @@ export default {
         store.commit('onAuthStateChanged', user);
         store.commit('onUserStatusChanged', user.uid ? true : false);
       })
-    },
+    }
+  },
 
-    loadAllMsg: function() {
-
-      db.collection("USER")
+  watch:{
+    friendDocID:function(newval){
+      this.msgList=[];
+      currentUserEmail = firebase.auth().currentUser.email;
+        db.collection("USER")
         .doc(currentUserEmail)
-        .collection('friends')
-        .doc(this.friendDocID)
+        .collection("friends")
+        .doc(newval)
         .collection("CHAT")
         .orderBy("date")
-        .onSnapshot(chatSnapshot => {
+        .get()
+        .then(chatSnapshot => {
           chatSnapshot.forEach(doc1 => {
             this.msgList.push(doc1.data());
           })
 
-          console.log(this.msgList[0].msg)
+          console.log("onload: " + this.msgList[0].msg)
+        }).catch(e=>{
+          console.log(e)
         })
     }
   },
@@ -90,33 +90,6 @@ export default {
         }).catch(e=>{
           console.log(e)
         })
-  },
-  watch:{
-    friendDocID:function(newval){
-      this.msgList=[];
-      currentUserEmail = firebase.auth().currentUser.email;
-        db.collection("USER")
-        .doc(currentUserEmail)
-        .collection("friends")
-        .doc(newval)
-        .collection("CHAT").orderBy("date")
-        .get()
-        .then(chatSnapshot => {
-          chatSnapshot.forEach(doc1 => {
-            this.msgList.push(doc1.data());
-          })
-
-          console.log("onload: " + this.msgList[0].msg)
-        }).catch(e=>{
-          console.log(e)
-        })
-    }
-
-
-
-
-
-
   }
 };
 </script>
