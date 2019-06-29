@@ -102,17 +102,18 @@ export default {
     signUp: function() {
       let url;
 
-      if (!this.uploadedImage) {
+      if(!this.uploadedImage){
         db.collection("Image")
-          .doc("SampleImage")
-          .get()
-          .then(doc => {
-            url = doc.data()["image"];
-          });
+        .doc("SampleImage")
+        .get()
+        .then(doc =>{
+          url = doc.data()["image"];
+        });
       }
-      if (this.p_confirm != this.password) {
-        console.log("Password does not match!");
-      } else if (this.errorIndication());
+      if(this.p_confirm != this.password) {
+        console.log('Password does not match!');
+      }
+      else if(this.errorIndication());
       else {
         firebase
           .auth()
@@ -136,42 +137,20 @@ export default {
       }
     },
 
-    addToDatabase(email, username, image) {
-      let url = db
-        .collection("USER")
-        .doc("" + email)
-        .collection("friends")
-        .doc();
-      url.collection("CHAT").add({
-        msg: "",
-        date: ""
-      });
-      url.set({
-        username: ""
-      });
+      addToDatabase(email, username,image) {
 
-      db.collection("USER")
-        .doc("" + email)
-        .collection("incoming")
-        .add({ username: "" });
-      db.collection("USER")
-        .doc("" + email)
-        .collection("outgoing")
-        .add({ username: "" });
-
-      db.collection("USER")
-        .doc("" + email)
-        .set({
+      db.collection("USER").doc(""+email).set({
           email: email,
           username: username,
-          image: image
-        })
-        .then(function(docRef) {
-          console.log("Document written with ID: ", docRef.id);
-        })
-        .catch(function(error) {
-          console.log("Error adding document: ", error);
-        });
+          image: image,
+          bio: ''
+      })
+      .then(function(docRef) {
+        console.log('Document written with ID: ', docRef.id);
+      })
+      .catch(function(error) {
+        console.log("Error adding document: ", error);
+      })
     },
     onFileChange(event) {
       //file変数定義
@@ -292,12 +271,12 @@ export default {
 
   background-color: $su_banner_color;
 
-  border: solid;
-  border-width: 5px;
-  border-color: $su_banner_flame;
+  // border: solid;
+  // border-width: 5px;
+  // border-color: $su_banner_flame;
   z-index: 2;
 
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
   //children
 
@@ -448,37 +427,31 @@ export default {
     color: $pulldown_color;
   }
 
-  .username {
-    width: $su_user_width;
+  .username{
+    width: 100%;
     height: $su_user_height;
 
-    border: solid;
-    border-width: 3px;
-    border-color: $su_banner_flame;
+    // border: solid;
+    // border-width: 3px;
+    // border-color: $su_banner_flame;
     // temporary color
     background-color: #fff;
   }
 
-  .usernamePosition {
-    position: absolute;
+    .usernamePosition {
+      position: absolute;
 
-    top: 30px;
-    left: 120px;
+      top: 30px;
+      left: 210px;
 
-    right: 0px;
-  }
+      right: 100px;
+    }
 
   .email {
     width: $su_user_width;
     height: $su_user_height;
-
-    background-color: #fff;
-
-    border: solid;
-    border-width: 3px;
-    border-color: $su_banner_flame;
-  }
-
+   }
+   
   .emailPosition {
     position: absolute;
 
@@ -517,7 +490,6 @@ export default {
   .passwordConfirm {
     width: $su_pass_width;
     height: $su_pass_height;
-
     background-color: #fff;
 
     border: solid;
@@ -533,10 +505,15 @@ export default {
     right: 0px;
   }
 }
-#result {
-  //cropper
+
+.signupBanner:hover{
+  box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
+}
+
+#result{  //cropper
   z-index: 7;
 }
+
 //modal
 .modal {
   display: none;

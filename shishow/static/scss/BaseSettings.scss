@@ -1,9 +1,9 @@
 /* basic color */
 
-$header_color: #394e8c;
-$dark_color: #687bb3;
+$header_color: #039BE5;
+$dark_color: #2196F3;
 $footer_color: #161e34;
-$banner_color: #326596;
+$banner_color: #abbffb;
 $banner_flame: #2dc2e6;
 $window_flame: #002858;
 $pulldown_color: #97fff1;
@@ -32,7 +32,6 @@ $header_height: 100px;
 $logo_sentence_color: #e0ffff;
 
 /* --- */
-
 /* around myBanner */
 
 $banner_width: 80%;
@@ -47,7 +46,7 @@ $root_twelve: 13.5516911px;
 $a_half_width: 23.47px;
 
 $user_width: 70%;
-$user_height: 50px;
+$user_height: 70px;
 
 $deshi_width: $user_width*0.275;
 $deshi_height: 50px;
@@ -56,7 +55,7 @@ $id_width: 55%;
 $id_height: 30px;
 
 $profile_width: 100%;
-$profile_height: 100px;
+$profile_height: 130px;
 
 $su_user_width: 70%;
 $su_user_height: 40px;
@@ -64,7 +63,6 @@ $su_pass_width: 45%;
 $su_pass_height: 30px;
 
 /* --- */
-
 /* around normalBanner */
 
 $n_banner_width: 65%;
@@ -79,30 +77,29 @@ $n_achievement_height: 15.8125px;
 $n_root_twelve: 9.3278px;
 $n_a_half_width: 16.15625px;
 
-$n_user_height: 34.375px;
+$n_user_height: 54.375px;
 
 $n_id_height: 20.625px;
 
-$n_profile_height: 68.75px;
+$n_profile_height: 83.75px;
 
  /* --- */
-
  /* menubuttons */
 
  $button_width: 80px;
  $button_height: 80px;
 
  /* --- */
-
  /* around direct message page */
 
  $theme_color_dm: #ddddff;
  $dm_icon_width: 90px;
  $dm_banner_color: #ccc;
+ $dm_banner_color_hover : #e5e5e5;
+ $selected_dm_banner_color: #555;
 
  /* --- */
-
- /* aruond notification page */
+ /* around notification page */
 
  $not_banner_color: #d5d5d5;
  $not_banner_flane: #222;

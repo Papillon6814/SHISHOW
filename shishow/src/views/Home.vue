@@ -19,6 +19,11 @@
           </div>
         </div>
       </transition>
+      <!--
+        <div class="gameBannerPosition">
+          <gameBanner></gameBanner>
+      </div>
+      -->
     </div>
   </div>
 </template>
@@ -29,6 +34,7 @@ import navi from "../components/NavigationBar.vue";
 import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
 import signinBanner from "../components/SigninBanner";
+import BlurBanner from "../components/BlurBanner.vue";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
@@ -36,9 +42,11 @@ import "@firebase/auth";
 import store from "../store";
 
 const db = firebase.firestore();
+let currentUser;
 
 export default {
   name: "home",
+
   created: function() {
     this.onAuth();
     db.collection("USER")
@@ -49,12 +57,21 @@ export default {
           this.filteredUser.push(docs.data());
         });
       });
+    db.collection("USER")
+      .doc(this.user.email)
+      .get()
+      .then(doc => {
+        this.signuser = doc.data();
+      });
   },
+
   components: {
     navi,
     myBanner,
-    normalBanner
+    normalBanner,
+    BlurBanner
   },
+
   data: function() {
     return {
       users: [],
@@ -63,6 +80,7 @@ export default {
       currentUser: ""
     };
   },
+
   computed: {
     user() {
       return this.$store.getters.user;
@@ -70,6 +88,7 @@ export default {
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
+
     getCurrentUserName: function() {
       return this.$store.getters.user.displayName;
     },
@@ -100,6 +119,7 @@ export default {
       this.$forceUpdate();
     }
   },
+
   methods: {
     getSearchWord(word) {
       this.searchWord = word;
@@ -115,26 +135,36 @@ export default {
     extendOther: function() {
       var active = true;
       var move = document.getElementById("moving");
-      move.style.top = "350px";
+      move.style.top = "340px";
       this.active = !this.active;
       if (this.active === false) {
-        move.style.top = "45px";
+        move.style.top = "60px";
       }
-    }
+    } /*,
+    extendNother:function(){
+      var active = true;
+      var move=document.getElementById('moven')
+
+      move.style.top = "350px";
+      this.active = !this.active;
+      if(this.active === false){
+        move.style.top = "45px"
+      }
+    }*/
   }
 };
 </script>
 
 <style lang="scss">
 .v-enter {
-  transform: translate(300px, 0);
+  transform: translate(700px, 0);
   opacity: 0;
 }
 .v-enter-to {
   opacity: 1;
 }
 .v-enter-active {
-  transition: all 2.5s 1s ease;
+  transition: all 1s 0s ease;
 }
 .v-leave {
   transform: translate(0, 0);
@@ -149,14 +179,14 @@ export default {
 }
 
 .v2-enter {
-  transform: translate(400px, 0);
+  transform: translate(1000px, 0);
   opacity: 0;
 }
 .v2-enter-to {
   opacity: 1;
 }
 .v2-enter-active {
-  transition: all 2.5s 1s ease;
+  transition: all 1.4s 1s ease;
 }
 .v2-leave {
   transform: translate(0, 0);
@@ -181,6 +211,35 @@ body {
   width: 100%;
 
   background-color: $dark_color;
+}
+#myBannerPosition {
+  //position: relative;
+  //temporary top
+  padding-top: 70px;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+
+  /*top: 45px;
+    left: 10%;*/
+}
+
+.normalBannerPosition {
+  margin-left: 10%;
+  width: 100%;
+  position: absolute;
+  padding-top: 165px;
+  $i: 1;
+  @while $i <= 30 {
+    .n#{$i} {
+      padding-top: 210px; /* + (200px * $i);*/
+    }
+    $i: $i + 1;
+  }
+  list-style: none;
+  // z-index: -1
 }
 
 #myBannerPosition {
@@ -225,4 +284,11 @@ body {
   width: 100%;
   transition: 0.3s;
 }
+
+/*#moven{
+    position: absolute;
+    width: 100%;
+    transition: .3s;
+
+  }*/
 </style>
