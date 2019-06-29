@@ -41,16 +41,22 @@ import NormalBanner from "../components/NormalBanner";
 
 export default {
   name: "navi",
+
   data() {
     return {
       word: ""
     };
   },
-  comportnents: {},
+
+  components: {
+
+  },
+
   methods: {
     onChangeInput() {
       this.commitChange(this.word);
     },
+
     commitChange(newValue) {
       this.$emit("input", newValue);
     }
