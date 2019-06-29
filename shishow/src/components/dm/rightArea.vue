@@ -3,11 +3,10 @@
     {{ friendDocID }}
     <div v-for="N in msgList" v-bind:key="N">
       <div class="chatBalloon">
-        <ul>
-          <li>{{ N.msg }}</li>
-          <!-- 日付の変換 -->
-          <li>{{ N.date.toDate().toLocaleString() }}</li>
-        </ul>
+        {{ N.msg }}
+      </div>
+      <div class="datePosition">
+        {{ N.date.toDate().toLocaleString() }}
       </div>
     </div>
   </div>
@@ -109,27 +108,14 @@ export default {
   background-color: $theme_color_dm;
 
   overflow-y: scroll;
-
-  .chatBubble {
-    display: block;
-
-    width: 450px;
-    height: auto;
-
-    // temporary color
-    background-color: #fff;
-  }
-}
-
-li {
-  list-style: none;
+  overflow-x: hidden;
 }
 
 .chatBalloon {
   position: relative;
   display: inline-block;
 
-  left: 28%;
+  left: 38%;
 
   margin: 1.5em 15px 1.5em 0;
   padding: 7px 10px;
@@ -140,6 +126,9 @@ li {
   color: #555;
   font-size: 16px;
   background: #adff2f;
+
+  text-align: right;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 .chatBalloon:before {
@@ -151,5 +140,14 @@ li {
   border: 15px solid transparent;
   border-left: 15px solid #adff2f;
 }
+
+.datePosition {
+  position: relative;
+
+  left: 40%;
+  font-size: 13px;
+}
+
+
 
 </style>

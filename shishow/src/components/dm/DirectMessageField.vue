@@ -105,6 +105,8 @@ export default {
     left: 5%;
     bottom: 2vh;
 
+    overflow-y: hidden;
+
     //下部に表示する
     .inputArea {
       position: fixed;

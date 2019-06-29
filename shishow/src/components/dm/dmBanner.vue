@@ -72,6 +72,7 @@ export default {
       background-color: #fff;
 
       font-size: 35px;
+      // font-family: 'Noto Sans JP', sans-serif;
     }
 
     .dmMsgArea {
@@ -84,6 +85,7 @@ export default {
       height: 60px;
 
       background-color: #fff;
+      font-family: 'Noto Sans JP', sans-serif;
     }
   }
 

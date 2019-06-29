@@ -1,9 +1,7 @@
 <template>
   <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'nextend': isB }">
     <span class="iconPicPosition">
-      <div class="iconPic">
-        <img id="image" :src="user['image']" />
-      </div>
+      <img class="icon" :src="user['image']" />
     </span>
     <div class="achievementPosition1">
       <div class="achievement"></div>
@@ -250,9 +248,6 @@ export default {
   right: 0px;
 }
 
-.idPosition {
-}
-
 .profilePosition {
   position: absolute;
 
@@ -337,7 +332,7 @@ export default {
   transition: 0.3s;
 }
 
-#icon {
+.icon {
   position: absolute;
 
   width: $n_icon_width;
@@ -345,9 +340,4 @@ export default {
   left: 7%;
 }
 
-/*.editBioButton{
-
-    }*
-
-}*/
 </style>

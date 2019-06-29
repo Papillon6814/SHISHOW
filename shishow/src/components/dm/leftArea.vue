@@ -2,7 +2,7 @@
   <div id="leftArea">
     <div class="dmbannerPosition">
       <div v-for="(friend, N) in friendsDocID" :key="N" v-bind:class="'b' + N">
-        <div @click="click(friend); toggleColor()">
+        <div @click="click(friend)">
           <dmBanner
             :dmBannerUsername="usernames[N]"
             :dmMsg="lastMsg[N]">

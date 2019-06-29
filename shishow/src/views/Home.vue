@@ -9,6 +9,7 @@
           :loginedUser="getCurrentUserName"
           :loginedUerId="getCurrentUserId"
         ></myBanner>
+        <BlurBanner v-else></BlurBanner>
       </div>
     </transition>
     <div id="moving">
