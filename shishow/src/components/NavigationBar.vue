@@ -24,7 +24,9 @@
       <router-link to="/directMessage">
         <i class="fas fa-envelope fa-3x dm"></i>
       </router-link>
+      <router-link to="/follow">
       <i class="fas fa-gamepad fa-3x game"></i>
+      </router-link>
       <router-link to="/notification">
         <i class="fas fa-bell fa-3x bell"></i>
       </router-link>
