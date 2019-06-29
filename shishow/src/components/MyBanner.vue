@@ -168,9 +168,6 @@ export default {
     // temporary color
     background-color: #fff;
     border-radius: 50%;
-    border: solid;
-    border-width: 2px;
-    border-color: $window_flame;
   }
 }
 
@@ -256,10 +253,6 @@ export default {
   height: $user_height;
 
   background-color: #fff;
-
-  border: solid;
-  border-width: 3px;
-  border-color: $window_flame;
 
     .deshiPosition {
       position: relative;
