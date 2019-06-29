@@ -52,7 +52,8 @@ export default {
     return {
       isA: true,
       isB: false,
-      isC: false
+      isC: false,
+      sign:"",
     };
   },
   methods: {
@@ -74,6 +75,9 @@ export default {
           console.log(e);
         });
     }
+  },
+  created:function(){
+    console.log(this.loginedUser)
   }
 };
 </script>

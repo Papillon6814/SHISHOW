@@ -3,7 +3,7 @@
     <navi @input="getSearchWord"></navi>
     <transition appear name="v">
       <div id="myBannerPosition">
-        <myBanner @extendMyBanner="extendOther" v-if="userStatus" :loginedUser="currentUser"></myBanner>
+        <myBanner @extendMyBanner="extendOther" v-if="userStatus" :loginedUser="getCurrentUserName"></myBanner>
       </div>
     </transition>
     <div id="moving">
@@ -44,6 +44,8 @@ export default {
           this.filteredUser.push(docs.data());
         });
       });
+      
+
   },
   components: {
     navi,
@@ -55,7 +57,7 @@ export default {
       users: [],
       searchWord: "",
       filteredUser: [],
-      currentUser: ""
+      currentUser: "",
     };
   },
   computed: {
@@ -69,7 +71,7 @@ export default {
       return this.$store.getters.getLoginedUserName;
     },
     getCurrentUserName: function() {
-      this.currentUser = this.$store.getters.user.displayName;
+      return this.$store.getters.user.displayName;
     },
     filterUser() {
       let key = this.searchWord;
