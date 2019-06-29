@@ -5,7 +5,6 @@ import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
 import Notification from './views/Notification.vue'
 import DirectMessage from './views/DirectMessage.vue'
-import Sample from './test/sample.vue'
 import Friend from './test/friend.vue'
 
 

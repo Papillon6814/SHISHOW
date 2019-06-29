@@ -17,7 +17,7 @@
 
 
     <!-- XXX:変な影が出現中 -->
-    <button class="btn-circle-3d-ver2" @click="login">Sign in</button>
+    <div class="btn-circle-3d-ver2" @click="login">Sign in</div>
 
   </div>
 </template>
@@ -168,7 +168,7 @@ export default {
 
 }
 
-  button.btn-circle-3d-ver2{
+  .btn-circle-3d-ver2{
     position: absolute;
     bottom:8% ;
     right: 30%;
@@ -190,7 +190,7 @@ export default {
     cursor: pointer;
   }
 
-    .btn-circle-3d-ver2:active {
+  .btn-circle-3d-ver2:active {
     -webkit-transform: translateY(2px);
     transform: translateY(2px);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
