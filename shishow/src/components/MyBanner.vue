@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="idPosition">
-      <div class="id">qawsedrftgyhujkolp</div>
+      <div class="id">{{loginedUerId}}</div>
     </div>
     <div class="profilePosition">
       <div class="profile">
@@ -47,20 +47,14 @@ const db = firebase.firestore();
 
 export default {
   name: "myBanner",
-  props: ["loginedUser"],
+  props: ["loginedUser", "loginedUerId"],
   data: function() {
     return {
       isA: true,
       isB: false,
       isC: false,
-      sign:"",
+      sign: ""
     };
-  },
-  watch: {
-    loginedUser: function() {
-      console.log(this.loginedUser);
-      this.$forceUpdate();
-    }
   },
   methods: {
     doExtend: function() {
@@ -82,8 +76,8 @@ export default {
         });
     }
   },
-  created:function(){
-    console.log(this.loginedUser)
+  created: function() {
+    console.log(this.loginedUser);
   }
 };
 </script>

@@ -3,7 +3,12 @@
     <navi @input="getSearchWord"></navi>
     <transition appear name="v">
       <div id="myBannerPosition">
-        <myBanner @extendMyBanner="extendOther" v-if="userStatus" :loginedUser="getCurrentUserName"></myBanner>
+        <myBanner
+          @extendMyBanner="extendOther"
+          v-if="userStatus"
+          :loginedUser="getCurrentUserName"
+          :loginedUerId="getCurrentUserId"
+        ></myBanner>
       </div>
     </transition>
     <div id="moving">
@@ -68,6 +73,9 @@ export default {
     getCurrentUserName: function() {
       return this.$store.getters.user.displayName;
     },
+    getCurrentUserId: function() {
+      return this.$store.getters.user.uid;
+    },
     filterUser() {
       let key = this.searchWord;
       let data = [];
@@ -79,7 +87,6 @@ export default {
           if (this.users[users_i].data().username.indexOf(key) !== -1) {
             results.push(this.users[users_i].data());
           }
-          console.log("searched");
         }
         this.filteredUser = results;
       } else {
@@ -88,7 +95,6 @@ export default {
           data[users_i] = this.users[users_i].data();
         }
         //何も入力されてないときにフィルターする前のデータをする
-        console.log("non searched");
         this.filteredUser = data;
       }
       this.$forceUpdate();
