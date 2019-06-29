@@ -58,6 +58,7 @@
         type="password"
         placeholder="CONFIRM PASSWORD"
         v-model="p_confirm"
+        @keydown.enter="signUp"
       >
     </div>
 
@@ -451,7 +452,7 @@ export default {
     width: $su_user_width;
     height: $su_user_height;
    }
-   
+
   .emailPosition {
     position: absolute;
 

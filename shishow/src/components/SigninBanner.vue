@@ -8,7 +8,11 @@
     </div>
 
     <div class="passwordPosition">
-      <input class="password" type="password" placeholder="PASSWORD" v-model="password">
+      <input class="password"
+             type="password"
+             placeholder="PASSWORD"
+             v-model="password"
+             @keydown.enter="login">
     </div>
 
     <router-link to="/signup">
@@ -199,6 +203,6 @@ export default {
   .signinBanner:hover{
     box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
   }
- 
- 
+
+
 </style>
