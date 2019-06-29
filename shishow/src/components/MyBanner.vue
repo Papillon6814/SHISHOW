@@ -261,7 +261,7 @@ export default {
       position: relative;
 
       top: 0px;
-      left: 30px;
+      left: 85%;
 
       height: 100%;
       z-index: 5;
@@ -333,15 +333,15 @@ export default {
   .logoutButton {
     position: absolute;
 
-    right: 13%;
-    top: 20px;
+    right: 19%;
+    top: -10px;
   }
 
   .friendsButton {
     position: absolute;
 
-    right: 2%;
-    top: 20px;
+    right: 6%;
+    top: -10px;
   }
 
   .btn-circle-3d {
