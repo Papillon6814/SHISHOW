@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <navi></navi>
     <div class="friend">
         <div style="top:800px;width:80%;height:50px;margin:0 auto;">
             <div class="tab" id="black" @click="T"><span style="color:white;"></span></div>
@@ -16,6 +18,7 @@
             </div>
         </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -102,6 +105,14 @@ export default {
 
 
 <style lang="scss">
+.friend {
+  position: absolute;
+
+  width: 100%;
+
+  top: 200px;
+}
+
     .tab{
         width:50%;
         height: 100%;
