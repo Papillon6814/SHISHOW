@@ -3,7 +3,10 @@
     <navi @input="getSearchWord"></navi>
     <transition appear name="v">
       <div id="myBannerPosition">
-        <myBanner @extendMyBanner="extendOther" v-if="userStatus" :loginedUser="getCurrentUserName"></myBanner>
+        <myBanner @extendMyBanner="extendOther"
+                  v-if="userStatus"
+                  :loginedUser="getCurrentUserName">
+        </myBanner>
         <BlurBanner v-else></BlurBanner>
       </div>
     </transition>
@@ -56,10 +59,9 @@ export default {
           this.filteredUser.push(docs.data());
         });
       });
-    });
-    db.collection("USER").doc(this.user.email).get().then(doc =>{
-      this.signuser = doc.data();
-    });
+      db.collection("USER").doc(this.user.email).get().then(doc =>{
+        this.signuser = doc.data();
+      });
   },
 
   components: {
@@ -85,7 +87,7 @@ export default {
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
-    
+
     getCurrentUserName: function() {
       return this.$store.getters.user.displayName;
     },

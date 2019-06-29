@@ -6,7 +6,11 @@
     <div class="centered">
       <div class="group">
         <div id="get_data">
-          <input v-model="word" type="text" id="search" required="required">
+          <input v-model="word"
+                 type="text"
+                 id="search"
+                 required="required"
+                 @keydown.enter="onChangeInput">
           <label for="search">Search...</label>
           <div class="bar"></div>
           <!-- <img class="sch" src="../assets/search-button.png" @click="onChangeInput"> -->
@@ -179,7 +183,7 @@ $searchbar_width: 400px;
     top: 10px;
     left: 10px;
 
-    
+
   }
 
   .logoSentence {
@@ -210,7 +214,7 @@ $searchbar_width: 400px;
     top: 18px;
 
     right: 0;
-    
+
 
     .dm {
       position: absolute;
