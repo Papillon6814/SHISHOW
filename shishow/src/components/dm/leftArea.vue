@@ -15,7 +15,7 @@
 
 <script>
 // directMessageFieldからフレンドのIDを受け取ってleftareaの内容を表示する
-import dmBanner from'./DmBanner.vue'
+import dmBanner from'./dmBanner.vue'
 
 import firebase from '../../plugin/firestore';
 import 'firebase/firestore'

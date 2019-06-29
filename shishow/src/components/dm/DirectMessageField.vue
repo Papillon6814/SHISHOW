@@ -17,8 +17,8 @@
 <script>
 // ほとんどのDMコンポーネントの親
 // IDをfirebaseから取得してそれぞれのコンポーネントへ送信する
-import leftArea from './LeftArea.vue'
-import rightArea from './RightArea.vue'
+import leftArea from './leftArea.vue'
+import rightArea from './rightArea.vue'
 import inputArea from './InputArea.vue'
 
 import firebase from "../../plugin/firestore";
