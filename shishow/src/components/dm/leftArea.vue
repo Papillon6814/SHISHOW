@@ -2,7 +2,7 @@
   <div id="leftArea">
     <div class="dmbannerPosition">
       <div v-for="(friend, N) in friendsDocID" :key="N" v-bind:class="'b' + N">
-        <div @click="click(friend)">
+        <div @click="click(friend); toggleColor()">
           <dmBanner
             :dmBannerUsername="usernames[N]"
             :dmMsg="lastMsg[N]">
@@ -97,7 +97,11 @@ export default {
 
     click: function(friend) {
       this.$parent.idFromLeftArea = friend;
-      console.log("click")
+      console.log("click");
+    },
+
+    toggleColor: function() {
+      console.log("toggleColor")
     }
   },
 

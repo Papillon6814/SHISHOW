@@ -2,11 +2,13 @@
   <div class="rightArea">
     {{ friendDocID }}
     <div v-for="N in msgList" v-bind:key="N">
-      <ul>
-        <li>{{ N.msg }}</li>
-        <!-- 日付の変換 -->
-        <li>{{ N.date.toDate().toLocaleString() }}</li>
-      </ul>
+      <div class="chatBalloon">
+        <ul>
+          <li>{{ N.msg }}</li>
+          <!-- 日付の変換 -->
+          <li>{{ N.date.toDate().toLocaleString() }}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -37,7 +39,7 @@ export default {
 
   computed: {
     onloadAllMsg: function() {
-      
+
     }
   },
 
@@ -108,12 +110,12 @@ export default {
           console.log(e)
         })
     }
-    
-    
 
-    
 
-    
+
+
+
+
   }
 };
 </script>
@@ -146,4 +148,32 @@ export default {
 li {
   list-style: none;
 }
+
+.chatBalloon {
+  position: relative;
+  display: inline-block;
+
+  left: 28%;
+
+  margin: 1.5em 15px 1.5em 0;
+  padding: 7px 10px;
+
+  min-width: 120px;
+  max-width: 100%;
+
+  color: #555;
+  font-size: 16px;
+  background: #adff2f;
+}
+
+.chatBalloon:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -15px;
+  border: 15px solid transparent;
+  border-left: 15px solid #adff2f;
+}
+
 </style>
