@@ -1,7 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import firebase from './plugin/firestore'
-import "firebase/firestore";
 
 Vue.use(Vuex);
 
