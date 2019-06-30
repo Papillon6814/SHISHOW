@@ -114,6 +114,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .banner {
   overflow-y: hidden;
   overflow-x: hidden;
@@ -121,16 +122,18 @@ export default {
   position: absolute;
 
   width: $banner_width;
-  //temporary height
   height: $banner_height;
 
   background-color: $banner_color;
 
+  border: solid;
+  border-width: 5px;
   border-radius: 3px;
+  border-color: $banner_color;
+
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
   transition: 0.3s;
-  //children
 }
 
 .banner:hover {
@@ -149,7 +152,8 @@ export default {
   border: solid;
   border-width: 5px;
   border-color: $banner_flame;
-  z-index: 2;
+
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 
   transition: 0.3s;
 }

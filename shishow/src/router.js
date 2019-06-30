@@ -3,10 +3,11 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
+import SearchResult from './views/SearchResult.vue'
 import Notification from './views/Notification.vue'
 import DirectMessage from './views/DirectMessage.vue'
 import Follow from './views/Follow.vue'
-import Friend from './test/friend.vue'
+import Friend from './views/friend.vue'
 
 
 
@@ -53,6 +54,12 @@ let router = new Router({
       path:'/follow',
       name:'follow',
       component:Follow,
+      component: Friend
+    },
+    {
+      path:'/search',
+      name:'search',
+      component: SearchResult
     }
   ]
 })

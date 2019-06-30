@@ -26,41 +26,41 @@ export default {
 
 <style lang="scss" scoped>
 
-  .dmBanner {
-    display: block;
+.dmBanner {
+  display: block;
 
-    width: 100%;
-    height: 120px;
+  width: 100%;
+  height: 120px;
 
-    background-color: $dm_banner_color;
+  background-color: $dm_banner_color;
 
     border-bottom: solid;
     border-width: 1px;
     border-color: #444;
 
-    transition: .15s;
-    cursor: pointer;
+  transition: .15s;
+  cursor: pointer;
 
-    .dmBannerIcon {
-      position: relative;
+  .dmBannerIcon {
+    position: relative;
 
       top: 15px;
       left: 20px;
 
-      width: $dm_icon_width;
-      height: $dm_icon_width;
+    width: $dm_icon_width;
+    height: $dm_icon_width;
 
-      // temporary color
-      background-color: #fff;
+    // temporary color
+    background-color: #fff;
 
-      border-radius: 50%;
-      border: solid;
-      border-width: 1px;
-      border-color: $window_flame;
-    }
+    border-radius: 50%;
+    border: solid;
+    border-width: 1px;
+    border-color: $window_flame;
+  }
 
-    .dmBannerName {
-      position: relative;
+  .dmBannerName {
+    position: relative;
 
       bottom: 80px;
       left: 110px;
@@ -68,15 +68,15 @@ export default {
       width: 30%;
       height: 35px;
 
-      // temporary color
-      background-color: #fff;
+    // temporary color
+    background-color: #fff;
 
       font-size: 25px;
       // font-family: 'Noto Sans JP', sans-serif;
     }
 
-    .dmMsgArea {
-      position: relative;
+  .dmMsgArea {
+    position: relative;
 
       bottom: 70px;
       left: 150px;
@@ -84,13 +84,13 @@ export default {
       width: 50%;
       height: 60px;
 
-      background-color: #fff;
-      font-family: 'Noto Sans JP', sans-serif;
-    }
+    background-color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
   }
+}
 
-  .dmBanner:hover {
-     
-  }
+.dmBanner:hover {
+  background-color: $dm_banner_color_hover;
+}
 
 </style>

@@ -65,12 +65,6 @@
     <div class="profilePosition"></div>
 
     <button @click="signUp">Sign up</button>
-
-    <!--
-    <span id="pullDownProperties">
-    <i class="fas fa-caret-down"></i>
-    </span>
-    -->
   </div>
 </template>
 
@@ -153,6 +147,7 @@ export default {
         console.log("Error adding document: ", error);
       })
     },
+
     onFileChange(event) {
       //file変数定義
       let files = event.target.files || event.dataTransfer.files;
@@ -162,6 +157,7 @@ export default {
         console.log("This is not image");
       }
     },
+
     // 画像表示の関数
     showImage(file) {
       //FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
@@ -272,77 +268,67 @@ export default {
 
   background-color: $su_banner_color;
 
-  // border: solid;
-  // border-width: 5px;
-  // border-color: $su_banner_flame;
   z-index: 2;
 
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
-  //children
-
-  .iconCircle {
-    width: $icon_width;
-    height: $icon_height;
-
-    //temporary color
-    background-color: #fff;
-
-    border-radius: 50%;
-    border: solid;
-    border-width: 2px;
-    border-color: $su_window_flame;
-
-    cursor: pointer;
-
-    .iconDashedCircle {
-      position: absolute;
-
-      top: 5.72%;
-      left: 5.85%;
-
-      width: 90%;
-      height: 90%;
-
-      font-size: 70px;
-
-      background-color: rgba(0, 0, 0, 0);
-
-      border-radius: 50%;
-      border: dashed;
-      border-width: 1px;
-      border-color: #000;
-
-      cursor: pointer;
-
-      .plusPosition {
-        position: absolute;
-
-        left: 49.5%;
-        top: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-      }
-    }
-    .iconFile {
-      height: 100%;
-      width: 100%;
-      opacity: 0;
-      cursor: pointer;
-    }
-  }
-
   .iconCirclePosition {
     position: absolute;
-    width: $icon_width;
-    height: $icon_height;
-  }
 
-  #icon {
-    position: absolute;
     width: $icon_width;
     height: $icon_height;
+
+    .iconCircle {
+      width: $icon_width;
+      height: $icon_height;
+
+      //temporary color
+      background-color: #fff;
+
+      border-radius: 50%;
+      border: solid;
+      border-width: 2px;
+      border-color: $su_window_flame;
+
+      cursor: pointer;
+
+      .iconDashedCircle {
+        position: absolute;
+
+        top: 5.72%;
+        left: 5.85%;
+
+        width: 90%;
+        height: 90%;
+
+        font-size: 70px;
+
+        background-color: rgba(0, 0, 0, 0);
+
+        border-radius: 50%;
+        border: dashed;
+        border-width: 1px;
+        border-color: #000;
+
+        cursor: pointer;
+
+        .plusPosition {
+          position: absolute;
+
+          left: 49.5%;
+          top: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+      }
+      .iconFile {
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        cursor: pointer;
+      }
+    }
   }
 
   .iconCirclePosition {
@@ -415,43 +401,22 @@ export default {
     left: 139.161111px;
   }
 
-  #pullDownProperties {
+  .usernamePosition {
     position: absolute;
 
-    top: 225px;
-    left: 15px;
+    top: 30px;
+    left: 210px;
 
-    font-size: 58px;
-  }
+    right: 100px;
 
-  #pullDownProperties:hover {
-    color: $pulldown_color;
-  }
+    .username{
+      width: 100%;
+      height: $su_user_height;
 
-  .username{
-    width: 100%;
-    height: $su_user_height;
-
-    // border: solid;
-    // border-width: 3px;
-    // border-color: $su_banner_flame;
-    // temporary color
-    background-color: #fff;
-  }
-
-    .usernamePosition {
-      position: absolute;
-
-      top: 30px;
-      left: 210px;
-
-      right: 100px;
+      // temporary color
+      background-color: #fff;
     }
-
-  .email {
-    width: $su_user_width;
-    height: $su_user_height;
-   }
+  }
 
   .emailPosition {
     position: absolute;
@@ -460,42 +425,29 @@ export default {
     left: 120px !important;
 
     right: 0px;
-  }
 
-  .password {
-    width: $su_pass_width;
-    height: $su_pass_height;
-
-    background-color: #fff;
-
-    border: solid;
-    border-width: 3px;
-    border-color: $su_banner_flame;
+    .email {
+      width: $su_user_width;
+      height: $su_user_height;
+     }
   }
 
   .passwordPosition {
     position: absolute;
-    top: 175px;
-    left: 70px;
-    right: 0px;
-  }
-
-  .passwordPosition {
-    position: absolute;
-
     top: 150px;
     left: 120px;
     right: 0px;
-  }
 
-  .passwordConfirm {
-    width: $su_pass_width;
-    height: $su_pass_height;
-    background-color: #fff;
+    .password {
+      width: $su_pass_width;
+      height: $su_pass_height;
 
-    border: solid;
-    border-width: 3px;
-    border-color: $su_banner_flame;
+      background-color: #fff;
+
+      border: solid;
+      border-width: 3px;
+      border-color: $su_banner_flame;
+    }
   }
 
   .passwordConfirmPosition {
@@ -504,6 +456,16 @@ export default {
     top: 200px;
     left: 120px;
     right: 0px;
+
+    .passwordConfirm {
+      width: $su_pass_width;
+      height: $su_pass_height;
+      background-color: #fff;
+
+      border: solid;
+      border-width: 3px;
+      border-color: $su_banner_flame;
+    }
   }
 }
 

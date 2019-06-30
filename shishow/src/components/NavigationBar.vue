@@ -43,16 +43,22 @@ import NormalBanner from "../components/NormalBanner";
 
 export default {
   name: "navi",
+
   data() {
     return {
       word: ""
     };
   },
-  comportnents: {},
+
+  components: {
+
+  },
+
   methods: {
     onChangeInput() {
       this.commitChange(this.word);
     },
+
     commitChange(newValue) {
       this.$emit("input", newValue);
     }
@@ -130,6 +136,7 @@ $searchbar_width: 400px;
             color: #ccc;
           }
         }
+
         &:focus {
           outline: none;
 
@@ -141,6 +148,10 @@ $searchbar_width: 400px;
 
           ~ .bar {
             background: $secondary-color;
+          }
+
+          ~ .sch {
+            color: $secondary-color;
           }
         }
 
@@ -162,6 +173,7 @@ $searchbar_width: 400px;
 
         transition: 0.3s ease;
       }
+
       .sch {
         position: absolute;
 
@@ -172,6 +184,14 @@ $searchbar_width: 400px;
         top: 22px;
 
         color:#fff;
+
+        cursor: pointer;
+
+        transition: 0.3s ease;
+      }
+
+      .sch:hover {
+        color: $secondary-color;
       }
     }
   }
@@ -184,8 +204,6 @@ $searchbar_width: 400px;
 
     top: 10px;
     left: 10px;
-
-
   }
 
   .logoSentence {

@@ -32,7 +32,6 @@ export default {
     position: absolute;
 
     width: $banner_width;
-    //temporary height
     height: $banner_height;
 
     background-color: $g_banner_color;
@@ -44,8 +43,6 @@ export default {
 
 
     z-index: 2;
-
-    //children
 
     .iconPic {
       width: $icon_width;
@@ -127,6 +124,19 @@ export default {
       left: 139.161111px;
     } */
 
+    #pullDownProperties {
+      position: absolute;
+
+      top: 225px;
+      left: 15px;
+
+      font-size: 58px;
+    }
+
+    #pullDownProperties:hover {
+      color: $pulldown_color;
+    }
+
     .gamename{
       width: $user_width;
       height: $user_height;
@@ -157,10 +167,6 @@ export default {
       left: 202px;
       right: 25px;
     }
-
-    /*.editBioButton{
-
-    }*/
   }
 
   .gamebanner:hover{
