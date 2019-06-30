@@ -6,7 +6,11 @@
     <div class="centered">
       <div class="group">
         <div id="get_data">
-          <input v-model="word" type="text" id="search" required="required">
+          <input v-model="word"
+                 type="text"
+                 id="search"
+                 required="required"
+                 @keydown.enter="onChangeInput">
           <label for="search">Search...</label>
           <div class="bar"></div>
           <!-- <img class="sch" src="../assets/search-button.png" @click="onChangeInput"> -->
@@ -37,16 +41,22 @@ import NormalBanner from "../components/NormalBanner";
 
 export default {
   name: "navi",
+
   data() {
     return {
       word: ""
     };
   },
-  comportnents: {},
+
+  components: {
+
+  },
+
   methods: {
     onChangeInput() {
       this.commitChange(this.word);
     },
+
     commitChange(newValue) {
       this.$emit("input", newValue);
     }
@@ -124,6 +134,7 @@ $searchbar_width: 400px;
             color: #ccc;
           }
         }
+
         &:focus {
           outline: none;
 
@@ -135,6 +146,10 @@ $searchbar_width: 400px;
 
           ~ .bar {
             background: $secondary-color;
+          }
+
+          ~ .sch {
+            color: $secondary-color;
           }
         }
 
@@ -156,6 +171,7 @@ $searchbar_width: 400px;
 
         transition: 0.3s ease;
       }
+
       .sch {
         position: absolute;
 
@@ -166,6 +182,14 @@ $searchbar_width: 400px;
         top: 22px;
 
         color:#fff;
+
+        cursor: pointer;
+
+        transition: 0.3s ease;
+      }
+
+      .sch:hover {
+        color: $secondary-color;
       }
     }
   }
@@ -178,8 +202,6 @@ $searchbar_width: 400px;
 
     top: 10px;
     left: 10px;
-
-    
   }
 
   .logoSentence {
@@ -210,7 +232,7 @@ $searchbar_width: 400px;
     top: 18px;
 
     right: 0;
-    
+
 
     .dm {
       position: absolute;

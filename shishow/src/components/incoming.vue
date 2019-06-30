@@ -46,8 +46,6 @@ import firebase from '../plugin/firestore'
 import 'firebase/firestore'
 import '@firebase/auth'
 
-
-
 const db = firebase.firestore();
 const currentUser = firebase.auth().currentUser;
 
@@ -68,8 +66,8 @@ export default {
       this.isB = !this.isB;
       const sign_db = db.collection("USER").doc(this.signuser.email);
       const user_db = db.collection("USER").doc(this.user.email);
-  
-      
+
+
       sign_db.collection("incoming").doc(this.user.email).delete().then(()=>{
           sign_db.collection("friends").doc(this.user.email).set({
             username:this.user.username,
@@ -81,7 +79,7 @@ export default {
             this.$parent.income ="";
           })
       }).catch(e=>{console.log(e)});
-      
+
       user_db.collection("outgoing").doc(this.signuser.email).delete().then(()=>{
           user_db.collection("friends").doc(this.signuser.email).set({
             username:this.signuser.username,
@@ -89,10 +87,10 @@ export default {
           })
       }).catch(e=>{console.log(e)});
 
-      
 
 
-      
+
+
     }
   }
 }
@@ -117,7 +115,7 @@ export default {
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 
     //children
-    
+
 
 
     .iconPic {

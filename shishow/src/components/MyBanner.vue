@@ -4,30 +4,31 @@
       <div class="iconPic"></div>
     </span>
     <div class="achievementPosition1">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
     <div class="achievementPosition2">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
     <div class="achievementPosition3">
-      <div class="achievement">
-      </div>
+      <div class="achievement"></div>
     </div>
     <div class="usernamePosition">
       <div class="fieldForUserName">
-        <div class="username">
-          Nakataku
-        </div>
-      </div>
-      <div class="fieldForDisplayDeshi">
-        <div class="deshiPosition">
-          <div class="deshi">
+        <div class="username">{{loginedUser}}
+          <!--
+            // FIXME:弟子要素を付けると領域デカすぎてボタン押せなくなる問題
+             <div class="deshiPosition">
+            <div class="deshi"></div>
           </div>
+           -->
         </div>
       </div>
+      </div>
+      <!--
+    <div class="idPosition">
+      <div class="id">{{loginedUerId}}</div>
     </div>
+  -->
     <div class="profilePosition">
       <div class="profile">
         新しいことにチャレンジすることが好き!
@@ -36,7 +37,7 @@
       </div>
     </div>
     <div class="userInfoPosition">
-        <div class="userInfo">仲野巧ですから</div>
+      <div class="userInfo">仲野巧ですから</div>
     </div>
     <router-link to="/friend">
       <div class="friendsButton">
@@ -44,263 +45,276 @@
       </div>
     </router-link>
     <div class="logoutButton">
-      <div @click="logout"
-           class="btn-circle-3d">ログアウト
-      </div>
+      <div @click="logout" class="btn-circle-3d">ログアウト</div>
     </div>
     <span v-bind:class="{ reverse:isC }" @click="doExtend" id="pullDownProperties">
-     <i class="fas fa-caret-down"></i>
+      <i class="fas fa-caret-down"></i>
     </span>
   </div>
 </template>
 
 <script>
-import firebase from '../plugin/firestore'
-import 'firebase/firestore'
-import router from '../router'
+import firebase from "../plugin/firestore";
+import "firebase/firestore";
+import router from "../router";
 
 const db = firebase.firestore();
 
 export default {
-  name: 'myBanner',
+  name: "myBanner",
+
+  props: [
+    "loginedUser",
+    "loginedUerId"
+  ],
 
   data: function() {
     return {
       isA: true,
       isB: false,
-      isC: false
+      isC: false,
+      sign: ""
+    };
+  },
+
+  watch: {
+    loginedUser: function() {
+      console.log(this.loginedUser);
+      this.$forceUpdate();
     }
   },
 
   methods: {
     doExtend: function() {
-      this.isA = !this.isA,
-      this.isB = !this.isB,
-      this.isC = !this.isC,
-      this.$emit('extendMyBanner')
+      (this.isA = !this.isA),
+        (this.isB = !this.isB),
+        (this.isC = !this.isC),
+        this.$emit("extendMyBanner");
     },
 
     logout: function() {
-      firebase.auth().signOut()
-      .then(function() {
-        alert('Signed out.');
-        router.push('/');
-      })
-      .catch(function(e) {
-        console.log(e)
-      })
-    }
-  }
-}
+      firebase
+        .auth()
+        .signOut()
+        .then(function() {
+          alert("Signed out.");
+          router.push("/");
+        })
+        .catch(function(e) {
+          console.log(e);
+        });
 
+    }
+  },
+
+  created: function() {
+    console.log(this.loginedUser);
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  .banner {
-    overflow-y: hidden;
-    overflow-x: hidden;
 
-    position: absolute;
+.banner {
+  overflow-y: hidden;
+  overflow-x: hidden;
 
-    width: $banner_width;
-    //temporary height
-    height: $banner_height;
+  position: absolute;
 
-    background-color: $banner_color;
+  width: $banner_width;
+  height: $banner_height;
 
-    border-radius: 3px;
+  background-color: $banner_color;
 
-    box-shadow: 0px 0px 3px  rgba(0, 0, 0, 0.1);
+  border: solid;
+  border-width: 5px;
+  border-radius: 3px;
+  border-color: $banner_color;
 
-    transition:0.3s;
-    //children
-  }
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
-  .banner:hover{
-    box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
-  }
+  transition: 0.3s;
+}
+
+.banner:hover {
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+.extend {
+  position: absolute;
+
+  width: $banner_width;
+  //temporary height
+  height: $banner_height * 2;
+
+  z-index: 2;
+
+  border: solid;
+  border-width: 5px;
+  border-color: $banner_flame;
+
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+
+  transition: 0.3s;
+}
 
 
+.iconPicPosition {
+  position: absolute;
 
-  .extend{
-    position: absolute;
-
-    width: $banner_width;
-    //temporary height
-    height: $banner_height*2;
-
-    background-color: $banner_color;
-
-    z-index: 2;
-
-    transition:0.3s;
-
-  }
+  top: 15px;
+  left: 34.1611111px;
 
   .iconPic {
     width: $icon_width;
     height: $icon_height;
 
-      // temporary color
+    // temporary color
     background-color: #fff;
-
     border-radius: 50%;
-    border: solid;
-    border-width: 2px;
-    border-color: $window_flame;
   }
+}
 
-  .iconPicPosition {
-    position: absolute;
+.achievement {
+  position: relative;
+  width: $achievement_width;
+  height: $achievement_height; //√3
+  background-color: #ffffff;
+  margin: $root_twelve 0;
+}
 
-    top: 15px;
-    left: 34.1611111px;
-  }
+.achievement:before,
+.achievement:after {
+  content: "";
+  position: absolute;
 
-  .achievement {
-    position: relative;
-    width: $achievement_width;
-    height: $achievement_height; //√3
-    background-color: #ffffff;
-    margin: $root_twelve 0;
-  }
+  left: 0;
 
-  .achievement:before,
-  .achievement:after {
-    content: "";
-    position: absolute;
+  width: 0;
+  border-left: $a_half_width solid transparent;
+  border-right: $a_half_width dashed transparent;
+}
 
-    left: 0;
+.achievement:before {
+  bottom: 100%;
+  border-bottom: $root_twelve solid #fff;
+}
 
-    width: 0;
-    border-left: $a_half_width solid transparent;
-    border-right: $a_half_width dashed transparent;
-  }
+.achievement:after {
+  top: 100%;
+  width: 0;
+  border-top: $root_twelve solid #fff;
+}
 
-  .achievement:before {
-    bottom: 100%;
-    border-bottom: $root_twelve solid #fff;
-  }
+.achievementPosition1 {
+  position: absolute;
 
-  .achievement:after {
-    top: 100%;
-    width: 0;
-    border-top: $root_twelve solid #fff;
-  }
+  //top: -1.3vh;
+  //left: -1.8vh;
+  top: 145px;
+  left: 16.1611111px;
+}
 
-  .achievementPosition1 {
-    position: absolute;
+.achievementPosition2 {
+  position: absolute;
 
-    //top: -1.3vh;
-    //left: -1.8vh;
-    top: 145px;
-    left: 16.1611111px;
-  }
+  //top: -4.4vh;
+  //left: 5.9vh;
+  top: 160px;
+  left: 77.6611111px;
+}
 
-  .achievementPosition2 {
-    position: absolute;
+.achievementPosition3 {
+  position: absolute;
 
-    //top: -4.4vh;
-    //left: 5.9vh;
-    top: 160px;
-    left: 77.6611111px;
-  }
+  //top: -12.46vh;
+  //left: 14vh;
+  top: 145px;
+  left: 139.161111px;
+}
 
-  .achievementPosition3 {
-    position: absolute;
+#pullDownProperties {
+  position: absolute;
 
-    //top: -12.46vh;
-    //left: 14vh;
-    top: 145px;
-    left: 139.161111px;
-  }
+  bottom: -5px;
+  left: 15px;
 
-  #pullDownProperties {
-    position: absolute;
+  font-size: 58px;
+}
 
-    bottom: -5px;
-    left: 15px;
+#pullDownProperties:hover {
+  color: $pulldown_color;
+}
 
-    font-size: 58px;
-  }
+.username {
+  position: absolute;
 
-  #pullDownProperties:hover {
-    color: $pulldown_color;
-  }
+  top: 20px;
+  left: 202px;
 
-  .username{
-    width: $user_width;
-    height: $user_height;
 
-    background-color: #fff;
+  width: $user_width;
+  height: $user_height;
 
-      border: solid;
-      border-width: 3px;
-      border-color: $window_flame;
+  background-color: #fff;
 
-      .fieldForDisplayDeshi{
-        .deshiPosition{
-          position: relative;
-          top: 0px;
-          right: 0px;
-          z-index: 99;
+    .deshiPosition {
+      position: relative;
 
-          .deshi{
-            width: $deshi_width;
-            height: $deshi_height;
+      top: 0px;
+      left: 50%;
 
-            background-color: $window_flame;
-          }
+      height: 100%;
+      z-index: 5;
 
-          .deshi:before{
-            position: absolute;
-            content: '';
-            left: 0;
-            top: 0;
-            width: 0;
-            height: 0;
-            border: none;
-            border-left: solid 40px white;
-            border-bottom: solid 50px transparent;
-          }
-        }
+      .deshi {
+        width: $deshi_width;
+        height: 100%;
+
+        background-color: $window_flame;
       }
-    }
 
-  .usernamePosition{
-    position: absolute;
+      .deshi:before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        border: none;
+        border-left: solid 40px white;
+        border-bottom: solid 50px transparent;
+      }
+
+  }
+}
+
+.profilePosition {
+  position: absolute;
+
+  top: 120px;
+  left: 202px;
+  right: 25px;
+
+  .profile {
+    width: $profile_width;
+    height: $profile_height;
 
     top: 30px;
     left: 202px;
     right: 0px;
-  }
-
-
-
-  .profile{
-    width: $profile_width;
-    height: $profile_height;
 
     background-color: #fff;
 
-    border: solid;
-    border-width: 3px;
-    border-color: $window_flame;
-  }
 
-  .profilePosition{
-    position: absolute;
-
-    top: 120px;
-    left: 202px;
-    right: 25px;
   }
+}
 
   .userInfo {
     width: 100%;
     height: 230px;
 
-      // temporary color
+    // temporary color
     background-color: #fff;
 
     border-radius: 5%;
@@ -320,21 +334,21 @@ export default {
   .logoutButton {
     position: absolute;
 
-    right: 13%;
-    top: 20px;
+    right: 19%;
+    top: -10px;
   }
 
   .friendsButton {
     position: absolute;
 
-    right: 2%;
-    top: 20px;
+    right: 6%;
+    top: -10px;
   }
 
   .btn-circle-3d {
     display: inline-block;
     text-decoration: none;
-    background: #FFC107;
+    background: #ffc107;
     color: #fff;
     width: 130px;
     height: 80px;
@@ -344,21 +358,43 @@ export default {
     font-weight: bold;
     overflow: hidden;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-    border-bottom: solid 3px #FFB300;
-    transition: .4s;
+    border-bottom: solid 3px #ffb300;
+    transition: 0.4s;
 
     cursor: pointer;
   }
 
-  .btn-circle-3d:active {
-    -webkit-transform: translateY(2px);
-    transform: translateY(2px);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-    border-bottom: none;
-  }
+.btn-circle-3d {
+  position: relative;
+  top: 30px;
+  left: 39%;
+  display: inline-block;
+  text-decoration: none;
+  background: #ff8181;
+  color: #fff;
+  width: 130px;
+  height: 80px;
+  line-height: 79px;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+  overflow: hidden;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+  border-bottom: solid 3px #bd6565;
+  transition: 0.4s;
 
-  .reverse{
-    transform: rotateX(180deg);
-  }
+  cursor: pointer;
+}
+
+.btn-circle-3d:active {
+  -webkit-transform: translateY(2px);
+  transform: translateY(2px);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+  border-bottom: none;
+}
+
+.reverse {
+  transform: rotateX(180deg);
+}
 
 </style>
