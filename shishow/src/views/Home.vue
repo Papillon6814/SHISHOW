@@ -17,7 +17,8 @@
         <div class="normalBannerPosition">
           <div v-for="N in filteredUser.length"
            :key="N" v-bind:class="'n'+N">
-            <normalBanner :user="filteredUser[N-1]"
+            <normalBanner
+             :user="filteredUser[N-1]"
              @extendNormalBanner="moveDown(N)">
             </normalBanner>
           </div>
@@ -57,7 +58,8 @@ export default {
       searchWord: "",
       filteredUser: [],
       currentUser: "",
-      signuser: []
+      signuser: [],
+      normalBannerActive: []
     };
   },
 
@@ -72,6 +74,7 @@ export default {
     user() {
       return this.$store.getters.user;
     },
+
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
@@ -135,13 +138,21 @@ export default {
 
     moveDown: function(N) {
       let move;
-      var i;
-      for(i = N; i < this.filteredUser.length; i++) {
-        move = document.getElementsByClassName('n'+i);
-        console.log(move)
-        move[0].style.top = (200 * (i+1)) + 'px';
-        console.log(move[0].style.top);
+      let elementTop;
+      let i, j;
+      this.normalBannerActive.push(N);
+
+      for (i = 1; i <= this.normalBannerActive.length; i++) {
+        for(j = N+1; j < this.filteredUser.length; j++) {
+          move = document.getElementsByClassName('n'+j);
+
+          move[0].style.top = (200 * j+1) + 'px';
+          console.log(move[0].style.top)
+        }
       }
+
+      i = j =0;
+      this.$forceUpdate();
     }
   },
 
@@ -168,6 +179,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 html {
   overflow-y: scroll;
   overflow-x: hidden;
@@ -195,23 +207,35 @@ body {
     left: 10%;*/
 }
 
-.normalBannerPosition {
-  position: absolute;
+#moving {
+  .normalBannerPosition {
+    position: absolute;
 
-  margin-left: 10%;
-  width: 100%;
-  padding-top: 165px;
-  $i: 1;
+    top: 0;
+    left: 0;
 
-  @while $i <= 30 {
-    .n#{$i} {
-      top: (200px * $i);
+    margin-left: 10%;
+    width: 100%;
+    height: 100%;
+    padding-top: 165px;
+    $i: 1;
+
+    @while $i <= 30 {
+      .n#{$i} {
+        position: absolute;
+
+        top: (200px * $i);
+        left: 10%;
+
+        width: $n_banner_width;
+        height: $n_banner_height;
+      }
+      $i: $i + 1;
     }
-    $i: $i + 1;
-  }
 
-  list-style: none;
-  // z-index: -1
+    list-style: none;
+    // z-index: -1
+  }
 }
 
 #myBannerPosition {
@@ -226,29 +250,6 @@ body {
   /*top: 45px;
     left: 10%;*/
   z-index: 1;
-}
-
-.normalBannerPosition {
-  position: absolute;
-
-  margin-left: 10%;
-  padding-top: 200px;
-
-  width: 100%;
-  $i: 1;
-
-  @while $i <= 30 {
-    .n#{$i} {
-      position: relative;
-
-      top: (200px * $i);
-      left: 10%;
-    }
-
-    $i: $i + 1;
-  }
-
-  list-style: none;
 }
 
 .gameBannerPosition {

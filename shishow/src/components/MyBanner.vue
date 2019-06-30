@@ -87,9 +87,9 @@ export default {
   methods: {
     doExtend: function() {
       (this.isA = !this.isA),
-        (this.isB = !this.isB),
-        (this.isC = !this.isC),
-        this.$emit("extendMyBanner");
+      (this.isB = !this.isB),
+      (this.isC = !this.isC),
+      this.$emit("extendMyBanner");
     },
 
     logout: function() {

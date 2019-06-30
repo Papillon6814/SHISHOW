@@ -1,5 +1,5 @@
 <template>
-  <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'nextend': isB }">
+  <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'normalExtend': isB }">
     <span class="iconPicPosition">
       <img class="icon" :src="user['image']" />
     </span>
@@ -22,7 +22,9 @@
       <div class="userInfo">仲野巧ですから</div>
     </div>
     <div @click="sendFriendReq()" class="n_btn-circle-3d">江崎にフレ申請</div>
-    <div class="pullDownProperties" @click="callNormalExtend">
+    <div class="pullDownProperties"
+         @click="callNormalExtend"
+         v-bind:class="{ reverse:arrowUp }">
       <i class="fas fa-caret-down"></i>
     </div>
   </div>
@@ -44,7 +46,7 @@ export default {
     return {
       isA: true,
       isB: false,
-      isC: false
+      arrowUp: false
     };
   },
 
@@ -66,7 +68,10 @@ export default {
     callNormalExtend: function() {
       console.log("extend");
 
-      this.$emit("extendNormalBanner")
+      this.isA = !this.isA;
+      this.isB = !this.isB;
+      this.arrowUp = !this.arrowUp;
+      this.$emit("extendNormalBanner");
     },
 
     sendFriendReq: function() {
@@ -133,7 +138,7 @@ export default {
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
 
-.extend {
+.normalExtend {
   position: absolute;
 
   width: $n_banner_width;
@@ -326,7 +331,6 @@ export default {
 
 .nreverse {
   transform: rotateX(180deg);
-  transition: 0.3s;
 }
 
 .icon {
