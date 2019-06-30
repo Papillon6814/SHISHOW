@@ -40,37 +40,36 @@ export default {
       left: 15px;
 
       font-size: 35px;
-
   }
-    .iconPic {
-      position: absolute;
 
-      top: 10px;
-      left: 65px;
+  .iconPic {
+    position: absolute;
 
-      width: 45px;
-      height: 45px;
+    top: 10px;
+    left: 65px;
 
-      // temporary color
-      background-color: #fff;
+    width: 45px;
+    height: 45px;
 
-      border-radius: 50%;
-      border: solid;
-      border-width: 3px;
-      border-color: #000;
-    }
+    background-color: #fff;
 
-    .messageInfo{
-      position: absolute;
-
-      width:90%;
-      height:40%;
-
-      left:90px;
-      bottom:10px;
-      background-color: #fff;
-    }
+    border-radius: 50%;
+    border: solid;
+    border-width: 3px;
+    border-color: #000;
   }
-  
+
+  .messageInfo{
+    position: absolute;
+
+    width:90%;
+    height:40%;
+
+    left:90px;
+    bottom:10px;
+    background-color: #fff;
+  }
+}
+
 
 </style>

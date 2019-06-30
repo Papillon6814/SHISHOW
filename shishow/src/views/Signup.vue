@@ -25,29 +25,29 @@ export default {
 
 <style lang="scss">
 
-  body {
-    padding: 0;
-    margin: 0;
-    width:100%;
+body {
+  padding: 0;
+  margin: 0;
+  width:100%;
 
-    height: 2000px;
+  height: 2000px;
 
-    background-color: $dark_color;
-  }
+  background-color: $dark_color;
+}
 
-  #signupBannerPosition {
-    position: absolute;
-    width: 100%;
-    //temporary top
-    top: 150px;
-    left: 10%;
-  }
+#signupBannerPosition {
+  position: absolute;
+  width: 100%;
+  //temporary top
+  top: 150px;
+  left: 10%;
+}
 
-  .trimmingButtonPosition {
-    position: absolute;
+.trimmingButtonPosition {
+  position: absolute;
 
-    top: 450px;
-    left: 45%;
-  }
+  top: 450px;
+  left: 45%;
+}
 
 </style>

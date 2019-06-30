@@ -19,8 +19,9 @@
       <div class="btn-circle-3d">Sign up</div>
     </router-link>
 
-    <!-- XXX:変な影が出現中 -->
-    <div class="btn-circle-3d-ver2" @click="login">Sign in</div>
+    <div class="btn-circle-3d-ver2" @click="login">
+      Sign in
+    </div>
   </div>
 </template>
 
@@ -85,7 +86,6 @@ export default {
   position: absolute;
 
   width: $banner_width;
-  //temporary height
   height: $banner_height;
 
   background-color: $si_banner_color;
@@ -96,17 +96,19 @@ export default {
 
   z-index: 2;
 
-  //children
-
   .LoginTitle{
-    text-align: center;
     padding: auto;
+
     color:#fff;
     background-color: #333;
+
     height:30px;
+
+    text-align: center;
 
     .LoginCenter{
       position: absolute;
+
       left:50%;
       top:5px;
     }
@@ -115,6 +117,7 @@ export default {
   .username{
     width: 900px; //$user_width
     height: 30px; //$user_height
+
     background-color: #fff;
   }
 
@@ -142,17 +145,23 @@ export default {
 
 .btn-circle-3d{
     position: absolute;
-    bottom:8% ;
-    left: 30%;
     display: inline-block;
+
+    bottom: 8%;
+    left: 30%;
+
     text-decoration: none;
-    background: #FFC107;
+    text-align: center;
+
+    background-color: #FFC107;
     color: #fff;
+
     width: 130px;
     height: 80px;
+
     line-height: 79px;
+
     border-radius: 50%;
-    text-align: center;
     font-weight: bold;
     overflow: hidden;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
@@ -173,17 +182,22 @@ export default {
 
   .btn-circle-3d-ver2{
     position: absolute;
-    bottom:8% ;
+
+    bottom: 8%;
     right: 30%;
+
     display: inline-block;
     text-decoration: none;
-    background: #FFC107;
+    text-align: center;
+
+    background-color: #FFC107;
     color: #fff;
+
     width: 130px;
     height: 80px;
+
     line-height: 79px;
     border-radius: 50%;
-    text-align: center;
     font-weight: bold;
     overflow: hidden;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
@@ -196,6 +210,7 @@ export default {
   .btn-circle-3d-ver2:active {
     -webkit-transform: translateY(2px);
     transform: translateY(2px);
+    
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
     border-bottom: none;
   }

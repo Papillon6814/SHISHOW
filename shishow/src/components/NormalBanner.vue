@@ -1,9 +1,7 @@
 <template>
   <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'nextend': isB }">
     <span class="iconPicPosition">
-      <div class="iconPic">
-        <img id="image" :src="user['image']" />
-      </div>
+      <img class="icon" :src="user['image']" />
     </span>
     <div class="achievementPosition1">
       <div class="achievement"></div>
@@ -15,16 +13,16 @@
       <div class="achievement"></div>
     </div>
     <div class="usernamePosition">
-      <div class="username">{{user.username}}</div>
+      <div class="username">{{ user.username }}</div>
     </div>
     <div class="profilePosition">
-      <div class="profile">{{user.bio}}</div>
+      <div class="profile">{{ user.bio }}</div>
     </div>
     <div class="userInfoPosition">
       <div class="userInfo">仲野巧ですから</div>
     </div>
     <div @click="sendFriendReq()" class="n_btn-circle-3d">江崎にフレ申請</div>
-    <span v-bind:class="{nreverse:isC}" id="pullDownProperties">
+    <span v-bind:class="{ nreverse:isC }" class="pullDownProperties">
       <i class="fas fa-caret-down"></i>
     </span>
   </div>
@@ -114,7 +112,6 @@ export default {
   overflow-y: hidden;
 
   width: $n_banner_width;
-  //temporary height
   height: $n_banner_height;
 
   background-color: $n_banner_color;
@@ -125,11 +122,6 @@ export default {
 
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
   transition: 0.3s;
-  //children
-
-  /*.editBioButton{
-
-    }*/
 }
 
 .normalBanner:hover {
@@ -140,7 +132,6 @@ export default {
   position: absolute;
 
   width: $n_banner_width;
-  //temporary height
   height: $n_banner_height * 2;
 
   background-color: $n_banner_color;
@@ -149,11 +140,6 @@ export default {
 
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
   transition: 0.3s;
-  //children
-
-  /*.editBioButton{
-
-    }*/
 }
 
 .iconPicPosition {
@@ -165,8 +151,10 @@ export default {
 
 .achievement {
   position: relative;
+
   width: $n_achievement_width;
   height: $n_achievement_height; //√3
+
   background-color: #ffffff;
   margin: $n_root_twelve 0;
 }
@@ -179,6 +167,7 @@ export default {
   left: 0;
 
   width: 0;
+
   border-left: $n_a_half_width solid transparent;
   border-right: $n_a_half_width dashed transparent;
 }
@@ -190,6 +179,7 @@ export default {
 
 .achievement:after {
   top: 100%;
+
   width: 0;
   border-top: $n_root_twelve solid #fff;
 }
@@ -197,8 +187,6 @@ export default {
 .achievementPosition1 {
   position: absolute;
 
-  //top: -1.3vh;
-  //left: -1.8vh;
   top: 100.6875px;
   left: 23.11076388px;
 }
@@ -206,8 +194,6 @@ export default {
 .achievementPosition2 {
   position: absolute;
 
-  //top: -4.4vh;
-  //left: 5.9vh;
   top: 115px;
   left: 65.392px;
 }
@@ -215,8 +201,6 @@ export default {
 .achievementPosition3 {
   position: absolute;
 
-  //top: -12.46vh;
-  //left: 14vh;
   top: 100.6875px;
   left: 106.673px;
 }
@@ -231,7 +215,7 @@ export default {
   z-index: 4;
 }
 
-#pullDownProperties:hover {
+.pullDownProperties:hover {
   color: $pulldown_color;
 }
 
@@ -250,9 +234,6 @@ export default {
   right: 0px;
 }
 
-.idPosition {
-}
-
 .profilePosition {
   position: absolute;
 
@@ -264,13 +245,14 @@ export default {
 .profile {
   width: $profile_width;
   height: $n_profile_height;
+
   background-color: #fff;
 }
+
 .userInfo {
   width: 100%;
   height: 160px;
 
-  // temporary color
   background-color: #fff;
 
   border-radius: 5%;
@@ -289,14 +271,19 @@ export default {
 
 .n_btn-circle-3d {
   position: relative;
+
   top: 15px;
   left: 39%;
-  display: inline-block;
-  text-decoration: none;
-  background: #ffc107;
-  color: #fff;
+
   width: 100px;
   height: 60px;
+
+  display: inline-block;
+  text-decoration: none;
+
+  background-color: #ffc107;
+  color: #fff;
+
   line-height: 63px;
   border-radius: 50%;
   text-align: center;
@@ -312,6 +299,7 @@ export default {
 .n_btn-circle-3d:active {
   -webkit-transform: translateY(2px);
   transform: translateY(2px);
+
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
   border-bottom: none;
 }
@@ -324,7 +312,6 @@ export default {
   position: absolute;
 
   width: $n_banner_width;
-  //temporary height
   height: $n_banner_height * 2;
 
   background-color: $n_banner_color;
@@ -337,7 +324,7 @@ export default {
   transition: 0.3s;
 }
 
-#icon {
+.icon {
   position: absolute;
 
   width: $n_icon_width;
@@ -345,9 +332,4 @@ export default {
   left: 7%;
 }
 
-/*.editBioButton{
-
-    }*
-
-}*/
 </style>

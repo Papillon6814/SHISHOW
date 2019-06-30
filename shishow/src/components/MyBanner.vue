@@ -14,17 +14,21 @@
     </div>
     <div class="usernamePosition">
       <div class="fieldForUserName">
-        <div class="username">{{loginedUser}}</div>
-      </div>
-      <div class="fieldForDisplayDeshi">
-        <div class="deshiPosition">
-          <div class="deshi"></div>
+        <div class="username">{{loginedUser}}
+          <!--
+            // FIXME:弟子要素を付けると領域デカすぎてボタン押せなくなる問題
+             <div class="deshiPosition">
+            <div class="deshi"></div>
+          </div>
+           -->
         </div>
       </div>
-    </div>
+      </div>
+      <!--
     <div class="idPosition">
       <div class="id">{{loginedUerId}}</div>
     </div>
+  -->
     <div class="profilePosition">
       <div class="profile">
         新しいことにチャレンジすることが好き!
@@ -58,7 +62,12 @@ const db = firebase.firestore();
 
 export default {
   name: "myBanner",
-  props: ["loginedUser", "loginedUerId"],
+
+  props: [
+    "loginedUser",
+    "loginedUerId"
+  ],
+
   data: function() {
     return {
       isA: true,
@@ -67,6 +76,7 @@ export default {
       sign: ""
     };
   },
+
   watch: {
     loginedUser: function() {
       console.log(this.loginedUser);
@@ -93,8 +103,10 @@ export default {
         .catch(function(e) {
           console.log(e);
         });
+
     }
   },
+
   created: function() {
     console.log(this.loginedUser);
   }
@@ -102,6 +114,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .banner {
   overflow-y: hidden;
   overflow-x: hidden;
@@ -109,25 +122,22 @@ export default {
   position: absolute;
 
   width: $banner_width;
-  //temporary height
   height: $banner_height;
 
   background-color: $banner_color;
 
+  border: solid;
+  border-width: 5px;
   border-radius: 3px;
+  border-color: $banner_color;
 
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
-  background-color: $banner_color;
-
-  .banner:hover {
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-  }
-
-  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
-
   transition: 0.3s;
-  //children
+}
+
+.banner:hover {
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
 
 .extend {
@@ -142,28 +152,27 @@ export default {
   border: solid;
   border-width: 5px;
   border-color: $banner_flame;
-  z-index: 2;
+
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 
   transition: 0.3s;
 }
 
-.iconPic {
-  width: $icon_width;
-  height: $icon_height;
-
-  // temporary color
-  background-color: #fff;
-  border-radius: 50%;
-  border: solid;
-  border-width: 2px;
-  border-color: $window_flame;
-}
 
 .iconPicPosition {
   position: absolute;
 
   top: 15px;
   left: 34.1611111px;
+
+  .iconPic {
+    width: $icon_width;
+    height: $icon_height;
+
+    // temporary color
+    background-color: #fff;
+    border-radius: 50%;
+  }
 }
 
 .achievement {
@@ -238,75 +247,68 @@ export default {
 }
 
 .username {
+  position: absolute;
+
+  top: 20px;
+  left: 202px;
+
+
   width: $user_width;
   height: $user_height;
 
   background-color: #fff;
 
-  border: solid;
-  border-width: 3px;
-  border-color: $window_flame;
-
-  .fieldForUserName {
-  }
-
-  .fieldForDisplayDeshi {
     .deshiPosition {
       position: relative;
+
       top: 0px;
-      right: 0px;
-      z-index: 99;
+      left: 50%;
 
-      .fieldForDisplayDeshi {
-        .deshiPosition {
-          position: relative;
-          top: 0px;
-          right: 0px;
-          z-index: 99;
+      height: 100%;
+      z-index: 5;
 
-          .deshi {
-            width: $deshi_width;
-            height: $deshi_height;
+      .deshi {
+        width: $deshi_width;
+        height: 100%;
 
-            background-color: $window_flame;
-          }
-
-          .deshi:before {
-            position: absolute;
-            content: "";
-            left: 0;
-            top: 0;
-            width: 0;
-            height: 0;
-            border: none;
-            border-left: solid 40px white;
-            border-bottom: solid 50px transparent;
-          }
-        }
+        background-color: $window_flame;
       }
-    }
+
+      .deshi:before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        border: none;
+        border-left: solid 40px white;
+        border-bottom: solid 50px transparent;
+      }
+
   }
 }
 
-.profile {
-  width: $profile_width;
-  height: $profile_height;
-  top: 30px;
+.profilePosition {
+  position: absolute;
+
+  top: 120px;
   left: 202px;
-  right: 0px;
-}
+  right: 25px;
 
-.id {
-  width: $id_width;
-  height: $id_height;
+  .profile {
+    width: $profile_width;
+    height: $profile_height;
 
-  .profilePosition {
-    position: absolute;
-
-    top: 120px;
+    top: 30px;
     left: 202px;
-    right: 25px;
+    right: 0px;
+
+    background-color: #fff;
+
+
   }
+}
 
   .userInfo {
     width: 100%;
@@ -332,15 +334,15 @@ export default {
   .logoutButton {
     position: absolute;
 
-    right: 13%;
-    top: 20px;
+    right: 19%;
+    top: -10px;
   }
 
   .friendsButton {
     position: absolute;
 
-    right: 2%;
-    top: 20px;
+    right: 6%;
+    top: -10px;
   }
 
   .btn-circle-3d {
@@ -361,11 +363,6 @@ export default {
 
     cursor: pointer;
   }
-
-  top: 150px;
-  left: 202px;
-  right: 25px;
-}
 
 .btn-circle-3d {
   position: relative;
@@ -399,4 +396,5 @@ export default {
 .reverse {
   transform: rotateX(180deg);
 }
+
 </style>
