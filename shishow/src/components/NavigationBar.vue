@@ -16,7 +16,9 @@
           <label for="search">Search...</label>
           <div class="bar"></div>
           <!-- <img class="sch" src="../assets/search-button.png" @click="onChangeInput"> -->
-          <i class="fas fa-search fa-2x sch" @click="onChangeInput"></i>
+          <router-link to="search">
+            <i class="fas fa-search fa-2x sch" @click="onChangeInput"></i>
+          </router-link>
         </div>
       </div>
     </div>
@@ -39,6 +41,7 @@
 
 <script>
 import NormalBanner from "../components/NormalBanner";
+import store from "../store";
 
 export default {
   name: "navi",
@@ -57,7 +60,8 @@ export default {
     },
 
     commitChange(newValue) {
-      this.$emit("input", newValue);
+      //this.$emit("input", newValue);
+      store.commit("onSearchWordInput", newValue);
     }
   }
 };
