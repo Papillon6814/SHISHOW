@@ -147,6 +147,7 @@ export default {
         console.log("Error adding document: ", error);
       })
     },
+
     onFileChange(event) {
       //file変数定義
       let files = event.target.files || event.dataTransfer.files;
@@ -156,6 +157,7 @@ export default {
         console.log("This is not image");
       }
     },
+
     // 画像表示の関数
     showImage(file) {
       //FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
@@ -432,8 +434,8 @@ export default {
 
   .passwordPosition {
     position: absolute;
-    top: 175px;
-    left: 70px;
+    top: 150px;
+    left: 120px;
     right: 0px;
 
     .password {
