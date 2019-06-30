@@ -1,6 +1,6 @@
 <template>
   <div id="root">
-    <navi @input="getSearchWord"></navi>
+    <navi></navi>
     <transition appear name="v">
       <div id="myBannerPosition">
         <myBanner
@@ -98,37 +98,10 @@ export default {
     },
     getCurrentUserId: function() {
       return this.$store.getters.user.uid;
-    },
-    filterUser() {
-      let key = this.searchWord;
-      let data = [];
-      let results = [];
-      let users_i;
-      if (key) {
-        for (users_i in this.users) {
-          //ユーザーネームの走査
-          if (this.users[users_i].data().username.indexOf(key) !== -1) {
-            results.push(this.users[users_i].data());
-          }
-        }
-        this.filteredUser = results;
-      } else {
-        //オブジェクトに変換
-        for (users_i in this.users) {
-          data[users_i] = this.users[users_i].data();
-        }
-        //何も入力されてないときにフィルターする前のデータをする
-        this.filteredUser = data;
-      }
-      this.$forceUpdate();
     }
   },
 
   methods: {
-    getSearchWord(word) {
-      this.searchWord = word;
-      this.filterUser();
-    },
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};

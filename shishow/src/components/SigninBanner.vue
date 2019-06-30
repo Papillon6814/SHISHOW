@@ -4,33 +4,33 @@
       <div class="LoginCenter">Login</div>
     </div>
     <div class="usernamePosition">
-      <input class="username" type="text" placeholder="E-mail" v-model="e_mail">
+      <input class="username" type="text" placeholder="E-mail" v-model="e_mail" />
     </div>
 
     <div class="passwordPosition">
-      <input class="password"
-             type="password"
-             placeholder="PASSWORD"
-             v-model="password"
-             @keydown.enter="login">
+      <input
+        class="password"
+        type="password"
+        placeholder="PASSWORD"
+        v-model="password"
+        @keydown.enter="login"
+      />
     </div>
 
     <router-link to="/signup">
       <div class="btn-circle-3d">Sign up</div>
     </router-link>
 
-    <div class="btn-circle-3d-ver2" @click="login">
-      Sign in
-    </div>
+    <div class="btn-circle-3d-ver2" @click="login">Sign in</div>
   </div>
 </template>
 
 <script>
-import firebase from '../plugin/firestore'
-import 'firebase/firestore'
-import '@firebase/auth'
-import store from '../store'
-import router from '../router'
+import firebase from "../plugin/firestore";
+import "firebase/firestore";
+import "@firebase/auth";
+import store from "../store";
+import router from "../router";
 
 export default {
   name: "Signin",
@@ -92,29 +92,29 @@ export default {
 
   border-radius: 3px;
 
-  box-shadow: 0px 0px 3px  rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
   z-index: 2;
 
-  .LoginTitle{
+  .LoginTitle {
     padding: auto;
 
-    color:#fff;
+    color: #fff;
     background-color: #333;
 
-    height:30px;
+    height: 30px;
 
     text-align: center;
 
-    .LoginCenter{
+    .LoginCenter {
       position: absolute;
 
-      left:50%;
-      top:5px;
+      left: 50%;
+      top: 5px;
     }
   }
 
-  .username{
+  .username {
     width: 900px; //$user_width
     height: 30px; //$user_height
 
@@ -129,7 +129,7 @@ export default {
     right: 100px;
   }
 
-  .password{
+  .password {
     width: 900px; //$id_width
     height: 30px; //$id_height
 
@@ -143,7 +143,7 @@ export default {
     left: 22%;
   }
 
-.btn-circle-3d{
+  .btn-circle-3d {
     position: absolute;
     display: inline-block;
 
@@ -153,7 +153,7 @@ export default {
     text-decoration: none;
     text-align: center;
 
-    background-color: #FFC107;
+    background-color: #ffc107;
     color: #fff;
 
     width: 130px;
@@ -165,8 +165,8 @@ export default {
     font-weight: bold;
     overflow: hidden;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-    border-bottom: solid 3px #FFB300;
-    transition: .4s;
+    border-bottom: solid 3px #ffb300;
+    transition: 0.4s;
 
     cursor: pointer;
   }
@@ -177,47 +177,44 @@ export default {
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
     border-bottom: none;
   }
-
 }
 
-  .btn-circle-3d-ver2{
-    position: absolute;
+.btn-circle-3d-ver2 {
+  position: absolute;
 
-    bottom: 8%;
-    right: 30%;
+  bottom: 8%;
+  right: 30%;
 
-    display: inline-block;
-    text-decoration: none;
-    text-align: center;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
 
-    background-color: #FFC107;
-    color: #fff;
+  background-color: #ffc107;
+  color: #fff;
 
-    width: 130px;
-    height: 80px;
+  width: 130px;
+  height: 80px;
 
-    line-height: 79px;
-    border-radius: 50%;
-    font-weight: bold;
-    overflow: hidden;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-    border-bottom: solid 3px #FFB300;
-    transition: .4s;
+  line-height: 79px;
+  border-radius: 50%;
+  font-weight: bold;
+  overflow: hidden;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+  border-bottom: solid 3px #ffb300;
+  transition: 0.4s;
 
-    cursor: pointer;
-  }
+  cursor: pointer;
+}
 
-  .btn-circle-3d-ver2:active {
-    -webkit-transform: translateY(2px);
-    transform: translateY(2px);
-    
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-    border-bottom: none;
-  }
+.btn-circle-3d-ver2:active {
+  -webkit-transform: translateY(2px);
+  transform: translateY(2px);
 
-  .signinBanner:hover{
-    box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
-  }
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+  border-bottom: none;
+}
 
-
+.signinBanner:hover {
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+}
 </style>
