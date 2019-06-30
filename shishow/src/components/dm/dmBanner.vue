@@ -63,9 +63,9 @@ export default {
       position: relative;
 
       bottom: 80px;
-      left: 140px;
+      left: 110px;
 
-      width: 10%;
+      width: 30%;
       height: 35px;
 
       // temporary color
@@ -81,7 +81,7 @@ export default {
       bottom: 70px;
       left: 150px;
 
-      width: 10%;
+      width: 50%;
       height: 60px;
 
       background-color: #fff;
@@ -90,7 +90,7 @@ export default {
   }
 
   .dmBanner:hover {
-    background-color: $dm_banner_color_hover;
+     
   }
 
 </style>
