@@ -34,11 +34,11 @@ export default {
 
   background-color: $dm_banner_color;
 
-    border-bottom: solid;
-    border-width: 1px;
-    border-color: #444;
+  border-bottom: solid;
+  border-width: 1px;
+  border-color: #444;
+    
 
-  transition: .15s;
   cursor: pointer;
 
   .dmBannerIcon {
@@ -91,6 +91,17 @@ export default {
 
 .dmBanner:hover {
   background-color: $dm_banner_color_hover;
+
 }
+
+.dmBanner:hover > .dmBannerName{
+  background-color: $dm_banner_color_hover;
+}
+
+.dmBanner:hover > .dmMsgArea{
+  background-color: $dm_banner_color_hover;
+}
+
+
 
 </style>
