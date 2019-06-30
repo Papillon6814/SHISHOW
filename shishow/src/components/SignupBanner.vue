@@ -90,7 +90,8 @@ export default {
       email: "",
       password: "",
       p_confirm: "",
-      uploadedImage: ""
+      uploadedImage: "",
+      roundimg:""
     };
   },
   methods: {
@@ -123,7 +124,8 @@ export default {
               email = User.email;
               alert("Create account: " + email);
               if (!this.uploadedImage) this.uploadedImage = url;
-              this.addToDatabase(this.email, this.username, this.uploadedImage);
+              console.log(this.roundimg);
+              this.addToDatabase(this.email, this.username, this.roundimg);
             });
           })
           .catch(error => {
@@ -243,6 +245,16 @@ export default {
         roundedImage.height = 130;
         result.innerHTML = "";
 
+        canvas.toBlob(function(blob){
+          let reader = new FileReader();
+          reader.onload = event => {
+            //htmlにファイルを反映
+            root.roundimg = event.target.result;
+          };
+          
+          //読み込み開始
+          reader.readAsDataURL(blob);
+        });
         var del = document.getElementById("delete");
         if (del != null) {
           del.textContent = null;
@@ -251,7 +263,6 @@ export default {
         cropper.destroy();
         modal.style.display = "none";
         root.uploadedImage = "";
-
         result.appendChild(roundedImage);
       };
     }
