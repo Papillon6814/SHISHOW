@@ -16,7 +16,7 @@
       <div class="fieldForUserName">
         <div class="username">{{loginedUser}}
           <!--
-            // FIXME:弟子要素を付けると領域デカすぎてボタン押せなくなる問題
+            // FIXME: 弟子要素を付けると領域デカすぎてボタン押せなくなる問題
              <div class="deshiPosition">
             <div class="deshi"></div>
           </div>
@@ -103,7 +103,6 @@ export default {
         .catch(function(e) {
           console.log(e);
         });
-
     }
   },
 

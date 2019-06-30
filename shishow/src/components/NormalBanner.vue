@@ -22,9 +22,9 @@
       <div class="userInfo">仲野巧ですから</div>
     </div>
     <div @click="sendFriendReq()" class="n_btn-circle-3d">江崎にフレ申請</div>
-    <span v-bind:class="{ nreverse:isC }" class="pullDownProperties">
+    <div class="pullDownProperties" @click="callNormalExtend">
       <i class="fas fa-caret-down"></i>
-    </span>
+    </div>
   </div>
 </template>
 
@@ -40,12 +40,6 @@ const currentUser = firebase.auth().currentUser;
 export default {
   name: "normalBanner",
 
-  props: ["user", "signuser", "searchWord"],
-
-  created: function() {
-    this.onAuth();
-  },
-
   data: function() {
     return {
       isA: true,
@@ -53,6 +47,12 @@ export default {
       isC: false
     };
   },
+
+  props: [
+    "user",
+    "signuser",
+    "searchWord"
+  ],
 
   methods: {
     onAuth: function() {
@@ -63,12 +63,13 @@ export default {
       });
     },
 
+    callNormalExtend: function() {
+      console.log("extend");
+
+      this.$emit("extendNormalBanner")
+    },
+
     sendFriendReq: function() {
-      /*
-      this.isA = !this.isA;
-      this.isB = !this.isB;
-      this.isC = !this.isC,
-      */
       this.$emit("extendNormalBanner");
       this.$emit("extendNbanner");
 
@@ -101,7 +102,11 @@ export default {
           });
       }
     }
-  }
+  },
+
+  created: function() {
+    this.onAuth();
+  },
 };
 </script>
 
@@ -205,7 +210,7 @@ export default {
   left: 106.673px;
 }
 
-#pullDownProperties {
+.pullDownProperties {
   position: absolute;
 
   bottom: -5px;

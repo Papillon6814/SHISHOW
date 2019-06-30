@@ -15,8 +15,11 @@
     <div id="moving">
       <transition appear name="v2">
         <div class="normalBannerPosition">
-          <div v-for="N in filteredUser.length" :key="N" v-bind:class="'n'+N">
-            <normalBanner :user="filteredUser[N-1]"></normalBanner>
+          <div v-for="N in filteredUser.length"
+           :key="N" v-bind:class="'n'+N">
+            <normalBanner :user="filteredUser[N-1]"
+             @extendNormalBanner="moveDown(N)">
+            </normalBanner>
           </div>
         </div>
       </transition>
@@ -48,33 +51,6 @@ let currentUser;
 export default {
   name: "home",
 
-  created: function() {
-    this.onAuth();
-    db.collection("USER")
-      .doc(this.user.email)
-      .get()
-      .then(doc => {
-        this.signuser = doc.data();
-      });
-    db.collection("USER")
-      .get()
-      .then(doc => {
-        this.users = doc.docs;
-        doc.forEach(docs => {
-          if (docs.data().username !== this.signuser.username) {
-            this.filteredUser.push(docs.data());
-          }
-        });
-      });
-  },
-
-  components: {
-    navi,
-    myBanner,
-    normalBanner,
-    BlurBanner
-  },
-
   data: function() {
     return {
       users: [],
@@ -83,6 +59,13 @@ export default {
       currentUser: "",
       signuser: []
     };
+  },
+
+  components: {
+    navi,
+    myBanner,
+    normalBanner,
+    BlurBanner
   },
 
   computed: {
@@ -96,9 +79,11 @@ export default {
     getCurrentUserName: function() {
       return this.$store.getters.user.displayName;
     },
+
     getCurrentUserId: function() {
       return this.$store.getters.user.uid;
     },
+
     filterUser() {
       let key = this.searchWord;
       let data = [];
@@ -129,6 +114,7 @@ export default {
       this.searchWord = word;
       this.filterUser();
     },
+
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};
@@ -136,24 +122,47 @@ export default {
         store.commit("onUserStatusChanged", user.uid ? true : false);
       });
     },
+
     extendOther: function() {
-      var active = true;
-      var move = document.getElementById("moving");
+      let active = true;
+      let move = document.getElementById("moving");
       move.style.top = "340px";
       this.active = !this.active;
       if (this.active === false) {
         move.style.top = "60px";
       }
-    } /*,
-    extendNother:function(){
-      var active = true;
-      var move=document.getElementById('moven')
-      move.style.top = "350px";
-      this.active = !this.active;
-      if(this.active === false){
-        move.style.top = "45px"
+    },
+
+    moveDown: function(N) {
+      let move;
+      var i;
+      for(i = N; i < this.filteredUser.length; i++) {
+        move = document.getElementsByClassName('n'+i);
+        console.log(move)
+        move[0].style.top = (200 * (i+1)) + 'px';
+        console.log(move[0].style.top);
       }
-    }*/
+    }
+  },
+
+  created: function() {
+    this.onAuth();
+    db.collection("USER")
+      .doc(this.user.email)
+      .get()
+      .then(doc => {
+        this.signuser = doc.data();
+      });
+    db.collection("USER")
+      .get()
+      .then(doc => {
+        this.users = doc.docs;
+        doc.forEach(docs => {
+          if (docs.data().username !== this.signuser.username) {
+            this.filteredUser.push(docs.data());
+          }
+        });
+      });
   }
 };
 </script>
@@ -171,6 +180,7 @@ body {
 
   background-color: $dark_color;
 }
+
 #myBannerPosition {
   //position: relative;
   //temporary top
@@ -186,17 +196,20 @@ body {
 }
 
 .normalBannerPosition {
+  position: absolute;
+
   margin-left: 10%;
   width: 100%;
-  position: absolute;
   padding-top: 165px;
   $i: 1;
+
   @while $i <= 30 {
     .n#{$i} {
-      padding-top: 210px; /* + (200px * $i);*/
+      top: (200px * $i);
     }
     $i: $i + 1;
   }
+
   list-style: none;
   // z-index: -1
 }
@@ -226,7 +239,9 @@ body {
 
   @while $i <= 30 {
     .n#{$i} {
-      padding-top: 210px; /* + (200px * $i);*/
+      position: relative;
+
+      top: (200px * $i);
       left: 10%;
     }
 
@@ -302,4 +317,5 @@ body {
 .v2-leave-active {
   transition: all 0.5s 0s ease;
 }
+
 </style>
