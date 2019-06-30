@@ -258,18 +258,23 @@ body {
 }
 
 .normalBannerPosition {
-  margin-left: 10%;
-  width: 100%;
   position: absolute;
+
+  margin-left: 10%;
   padding-top: 200px;
+
+  width: 100%;
   $i: 1;
+
   @while $i <= 30 {
     .n#{$i} {
       padding-top: 210px; /* + (200px * $i);*/
       left: 10%;
     }
+
     $i: $i + 1;
   }
+
   list-style: none;
 }
 

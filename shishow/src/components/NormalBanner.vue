@@ -13,16 +13,16 @@
       <div class="achievement"></div>
     </div>
     <div class="usernamePosition">
-      <div class="username">{{user.username}}</div>
+      <div class="username">{{ user.username }}</div>
     </div>
     <div class="profilePosition">
-      <div class="profile">{{user.bio}}</div>
+      <div class="profile">{{ user.bio }}</div>
     </div>
     <div class="userInfoPosition">
       <div class="userInfo">仲野巧ですから</div>
     </div>
     <div @click="sendFriendReq()" class="n_btn-circle-3d">江崎にフレ申請</div>
-    <span v-bind:class="{nreverse:isC}" id="pullDownProperties">
+    <span v-bind:class="{ nreverse:isC }" id="pullDownProperties">
       <i class="fas fa-caret-down"></i>
     </span>
   </div>

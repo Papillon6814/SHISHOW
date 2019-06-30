@@ -1,16 +1,26 @@
 <template>
   <div>
-    <router-link to="/signup">
     <div class="instead-banner">
       <div v-blur="isBlurred" class="banner">
     </div>
-      <div class="recommendToCreate" v-if="isBlurred === true">
-        {{message}}
+    <router-link to="/signup">
+      <div class="whyDontYouCreate" v-if="isBlurred === true">
+        {{ signupMessage }}
       </div>
-    </div>
     </router-link>
+    <div class="orMessagePosition">
+      {{ orMessage }}
+    </div>
+    <router-link to="/signin">
+      <div class="goSignin">
+        {{ signinMessage }}
+      </div>
+    </router-link>
+    </div>
   </div>
 </template>
+
+
 <script>
 
 export default {
@@ -18,7 +28,9 @@ export default {
   data: function(){
     return{
         isBlurred:true,
-        message:"Create an Account?"
+        signupMessage: "Create Account?",
+        orMessage: "or",
+        signinMessage: "Sign in?"
       }
     }
   }
@@ -27,33 +39,82 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .instead-banner{
+
+  .instead-banner {
     width: $banner_width;
     height: $banner_height;
     position: relative;
-    .recommendToCreate{
+
+    .whyDontYouCreate {
       position: absolute;
+
       top: 70px;
       bottom: 0;
+
       margin: auto;
-      width: 100%;
+
+      width: 45%;
       height: 3.2rem;
+
       z-index: 3;
+
       -webkit-transform: translate(-50%, -50%);
       -moz-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
-      left: 48%;
+      left: 30%;
 
-      font-size: 40px
+      font-size: 40px;
+    }
+
+    .orMessagePosition {
+      position: absolute;
+
+      top: 70px;
+      bottom: 0;
+
+      margin: auto;
+
+      width: 10%;
+      height: 3.2rem;
+
+      z-index: 3;
+
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      left: 50%;
+
+      font-size: 40px;
+    }
+
+    .goSignin {
+      position: absolute;
+
+      top: 70px;
+      bottom: 0;
+
+      margin: auto;
+
+      width: 10%;
+      height: 3.2rem;
+
+      z-index: 3;
+
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      left: 70%;
+
+      font-size: 40px;
     }
   }
 
   .banner {
     position: absolute;
 
-    width:100%;
+    width: 100%;
     //temporary height
-    height:100%;
+    height: 100%;
 
     background-color: $banner_color;
 

@@ -19,8 +19,9 @@
       <div class="btn-circle-3d">Sign up</div>
     </router-link>
 
-    <!-- XXX:変な影が出現中 -->
-    <div class="btn-circle-3d-ver2" @click="login">Sign in</div>
+    <div class="btn-circle-3d-ver2" @click="login">
+      Sign in
+    </div>
   </div>
 </template>
 
