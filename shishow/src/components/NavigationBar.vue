@@ -1,20 +1,22 @@
 <template>
   <div id="header">
     <div>
-      <img class="logo" src="../assets/logoShishow.png">
+      <img class="logo" src="../assets/logoShishow.png" />
     </div>
     <div class="centered">
       <div class="group">
         <div id="get_data">
-          <input v-model="word"
-                 type="text"
-                 id="search"
-                 required="required"
-                 @keydown.enter="onChangeInput">
+          <input
+            v-model="word"
+            type="text"
+            id="search"
+            required="required"
+            @keydown.enter="onChangeInput"
+          />
           <label for="search">Search...</label>
           <div class="bar"></div>
           <!-- <img class="sch" src="../assets/search-button.png" @click="onChangeInput"> -->
-          <i class="fas fa-search fa-2x sch"  @click="onChangeInput"></i>
+          <i class="fas fa-search fa-2x sch" @click="onChangeInput"></i>
         </div>
       </div>
     </div>
@@ -32,7 +34,6 @@
         <i class="fas fa-home fa-3x home"></i>
       </router-link>
     </div>
-
   </div>
 </template>
 
@@ -48,9 +49,7 @@ export default {
     };
   },
 
-  components: {
-
-  },
+  components: {},
 
   methods: {
     onChangeInput() {
@@ -181,7 +180,7 @@ $searchbar_width: 400px;
         left: 355px;
         top: 22px;
 
-        color:#fff;
+        color: #fff;
 
         cursor: pointer;
 
@@ -217,7 +216,8 @@ $searchbar_width: 400px;
 
     color: $logo_sentence_color;
 
-    text-shadow: 2px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    text-shadow: 2px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
+      -1px 1px 0 #000, 1px 1px 0 #000;
   }
 
   ::selection {
@@ -232,7 +232,6 @@ $searchbar_width: 400px;
     top: 18px;
 
     right: 0;
-
 
     .dm {
       position: absolute;
@@ -282,19 +281,19 @@ $searchbar_width: 400px;
       color: #fff;
     }
 
-    .dm:hover{
+    .dm:hover {
       opacity: 0.5;
     }
 
-    .game:hover{
+    .game:hover {
       opacity: 0.5;
     }
 
-    .bell:hover{
+    .bell:hover {
       opacity: 0.5;
     }
 
-    .home:hover{
+    .home:hover {
       opacity: 0.5;
     }
   }
