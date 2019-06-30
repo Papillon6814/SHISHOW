@@ -65,6 +65,11 @@ export default {
     left: 30%;
 
     font-size: 40px;
+    transition: 0.3s;
+  }
+
+  .whyDontYouCreate:hover {
+    color: #eee;
   }
 
   .orMessagePosition {
@@ -107,6 +112,11 @@ export default {
     left: 70%;
 
     font-size: 40px;
+    transition: 0.3s ease;
+  }
+
+  .goSignin:hover {
+    color: #eee;
   }
 }
 
