@@ -182,6 +182,14 @@ $searchbar_width: 400px;
         top: 22px;
 
         color:#fff;
+
+        cursor: pointer;
+
+        transition: 0.3s ease;
+      }
+
+      .sch:hover {
+        color: $secondary-color;
       }
     }
   }
@@ -194,8 +202,6 @@ $searchbar_width: 400px;
 
     top: 10px;
     left: 10px;
-
-
   }
 
   .logoSentence {
