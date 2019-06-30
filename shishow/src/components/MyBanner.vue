@@ -1,7 +1,7 @@
 <template>
   <div class="banner" v-bind:class="{ 'banner': isA, 'extend': isB }">
     <span class="iconPicPosition">
-      <div class="iconPic"></div>
+      <div class="iconPic"><img id="image" v-show="icon" :src="icon" width="130" height="130"></div>
     </span>
     <div class="achievementPosition1">
       <div class="achievement"></div>
@@ -25,11 +25,6 @@
         </div>
       </div>
     </div>
-    <!--
-    <div class="idPosition">
-      <div class="id">{{loginedUerId}}</div>
-    </div>
-    -->
     <div class="profilePosition">
       <div class="profile">
         新しいことにチャレンジすることが好き!
@@ -56,25 +51,42 @@
 
 <script>
 import firebase from "../plugin/firestore";
+import "@firebase/auth";
 import "firebase/firestore";
 import router from "../router";
+import store from "../store";
 
 const db = firebase.firestore();
+
+
 
 export default {
   name: "myBanner",
 
-  props: ["loginedUser", "loginedUerId"],
+  props: ["loginedUser"],
 
   data: function() {
     return {
       isA: true,
       isB: false,
       isC: false,
-      sign: ""
+      sign: "",
+      icon: ""
+
     };
   },
 
+  created:function(){
+    console.log("created");
+    this.onAuth();
+    var root = this;
+    var User = firebase.auth().currentUser;
+    db.collection("USER").doc(User.email).get()
+    .then( doc => {
+      root.icon = doc.data()["image"];
+    });
+    console.log(this.icon);
+  },
   watch: {
     loginedUser: function() {
       console.log(this.loginedUser);
@@ -83,6 +95,13 @@ export default {
   },
 
   methods: {
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit("onAuthStateChanged", user);
+        store.commit("onUserStatusChanged", user.uid ? true : false);
+      });
+    },
     doExtend: function() {
       (this.isA = !this.isA),
         (this.isB = !this.isB),

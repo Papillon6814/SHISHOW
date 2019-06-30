@@ -7,7 +7,6 @@
           @extendMyBanner="extendOther"
           v-if="userStatus"
           :loginedUser="getCurrentUserName"
-          :loginedUerId="getCurrentUserId"
         ></myBanner>
         <BlurBanner v-else></BlurBanner>
       </div>
