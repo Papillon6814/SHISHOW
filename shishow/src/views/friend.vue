@@ -1,6 +1,8 @@
 <template>
+  <div>
+    <navi></navi>
     <div class="friend">
-        <div style="width:80%;height:50px;margin:0 auto;">
+        <div style="top:800px;width:80%;height:50px;margin:0 auto;">
             <div class="tab" id="black" @click="T"><span style="color:white;"></span></div>
             <div class="tab" id="white" @click="F">outgoing</div>
         </div>
@@ -16,25 +18,75 @@
             </div>
         </div>
     </div>
+  </div>
 </template>
 
 <script>
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
-import incoming from "./incoming"
-import outgoing from "./outgoing"
-import store from '../store'
 import '@firebase/auth'
 
+import navi from '../components/NavigationBar.vue';
+import incoming from "../components/incoming.vue"
+import outgoing from "../components/outgoing.vue"
+import store from '../store'
 
 const db = firebase.firestore();
 
 
 export default {
     name:"friend",
+
+    data:function(){
+        return{
+            TorF:true,
+            income:"",
+            outgo:"",
+            signuser:"",
+        }
+    },
+
+    components: {
+        incoming,
+        outgoing,
+        navi
+    },
+
+    computed: {
+      user() {
+        return this.$store.getters.user;
+      },
+      userStatus() {
+        return this.$store.getters.isSignedIn;
+      }
+    },
+
+    methods:{
+        T(){
+            this.TorF=true;
+
+        },
+        F(){
+            this.TorF=false;
+
+
+            console.log(this.outgo.length);
+        },
+        onAuth: function () {
+        firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false);
+      })
+    },
+
     created:function(){
             this.onAuth();
-            db.collection("USER").doc(this.user.email).collection("incoming").get().then(doc =>{
+            db.collection("USER")
+              .doc(this.user.email)
+              .collection("incoming")
+              .get()
+              .then(doc =>{
                 this.income = doc.docs;
             })
 
@@ -46,44 +98,6 @@ export default {
                 this.signuser = doc.data();
             })
     },
-    components:{
-        incoming,
-        outgoing,
-    },
-    data:function(){
-        return{
-            TorF:true,
-            income:"",
-            outgo:"",
-            signuser:"",
-        }
-    },
-    computed: {
-    user() {
-      return this.$store.getters.user;
-    },
-    userStatus() {
-      return this.$store.getters.isSignedIn;
-    }
-  },
-    methods:{
-        T(){
-            this.TorF=true;
-           
-        },
-        F(){
-            this.TorF=false;
-            
-           
-            console.log(this.outgo.length);
-        },
-        onAuth: function () {
-        firebase.auth().onAuthStateChanged(user => {
-        user = user ? user : {};
-        store.commit('onAuthStateChanged', user);
-        store.commit('onUserStatusChanged', user.uid ? true : false);
-      })
-    },
 
     }
 }
@@ -91,10 +105,18 @@ export default {
 
 
 <style lang="scss">
+.friend {
+  position: absolute;
+
+  width: 100%;
+
+  top: 200px;
+}
+
     .tab{
         width:50%;
         height: 100%;
-        
+
     }
     #black{
 
@@ -119,6 +141,3 @@ export default {
       $i: $i + 1;
     }
 </style>
-
-
-

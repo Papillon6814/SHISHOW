@@ -5,7 +5,7 @@ import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
 import Notification from './views/Notification.vue'
 import DirectMessage from './views/DirectMessage.vue'
-import Friend from './test/friend.vue'
+import Friend from './views/friend.vue'
 
 
 import firebase from 'firebase'
