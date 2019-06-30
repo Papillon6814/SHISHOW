@@ -27,7 +27,9 @@ export default {
 body {
   padding: 0;
   margin: 0;
+
   width: 100%;
+  
   overflow: hidden;
 
   background-color: $dark_color;
@@ -35,7 +37,9 @@ body {
 
 #signinBannerPosition {
   position: absolute;
+
   width: 100%;
+
   //temporary top
   top: 150px;
   left: 10%;

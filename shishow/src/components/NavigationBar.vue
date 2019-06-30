@@ -134,6 +134,7 @@ $searchbar_width: 400px;
             color: #ccc;
           }
         }
+
         &:focus {
           outline: none;
 
@@ -145,6 +146,10 @@ $searchbar_width: 400px;
 
           ~ .bar {
             background: $secondary-color;
+          }
+
+          ~ .sch {
+            color: $secondary-color;
           }
         }
 
@@ -166,6 +171,7 @@ $searchbar_width: 400px;
 
         transition: 0.3s ease;
       }
+
       .sch {
         position: absolute;
 
