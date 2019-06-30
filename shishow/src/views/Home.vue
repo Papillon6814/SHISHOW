@@ -51,18 +51,20 @@ export default {
   created: function() {
     this.onAuth();
     db.collection("USER")
-      .get()
-      .then(doc => {
-        this.users = doc.docs;
-        doc.forEach(docs => {
-          this.filteredUser.push(docs.data());
-        });
-      });
-    db.collection("USER")
       .doc(this.user.email)
       .get()
       .then(doc => {
         this.signuser = doc.data();
+      });
+    db.collection("USER")
+      .get()
+      .then(doc => {
+        this.users = doc.docs;
+        doc.forEach(docs => {
+          if (docs.data().username !== this.signuser.username) {
+            this.filteredUser.push(docs.data());
+          }
+        });
       });
   },
 
@@ -78,7 +80,8 @@ export default {
       users: [],
       searchWord: "",
       filteredUser: [],
-      currentUser: ""
+      currentUser: "",
+      signuser: []
     };
   },
 
@@ -156,7 +159,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 html {
   overflow-y: scroll;
   overflow-x: hidden;
@@ -300,5 +302,4 @@ body {
 .v2-leave-active {
   transition: all 0.5s 0s ease;
 }
-
 </style>
