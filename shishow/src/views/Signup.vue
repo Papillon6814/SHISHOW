@@ -11,7 +11,7 @@
 // @ is an alias to /sonBar.vue'
 import navi from '../components/NavigationBar.vue'
 import signupBanner from '../components/SignupBanner.vue'
-import trimmingButton from '../components/trimmingButton.vue'
+//import trimmingButton from '../components/trimmingButton.vue'
 
 export default {
   name: 'signup',
