@@ -64,7 +64,6 @@ export default {
     methods:{
         T(){
             this.TorF=true;
-
         },
         F(){
             this.TorF=false;
@@ -78,7 +77,7 @@ export default {
       })
     },
 
-    
+
     },
 
     created:function(){
@@ -99,7 +98,7 @@ export default {
                 this.signuser = doc.data();
             })
     }
-    
+
 }
 </script>
 

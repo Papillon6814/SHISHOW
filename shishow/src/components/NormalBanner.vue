@@ -1,5 +1,5 @@
 <template>
-  <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'nextend': isB }">
+  <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'normalExtend': isB }">
     <span class="iconPicPosition">
       <img class="icon" :src="user['image']" />
     </span>
@@ -22,9 +22,11 @@
       <div class="userInfo">仲野巧ですから</div>
     </div>
     <div @click="sendFriendReq()" class="n_btn-circle-3d">江崎にフレ申請</div>
-    <span v-bind:class="{ nreverse:isC }" class="pullDownProperties">
+    <div class="pullDownProperties"
+         @click="callNormalExtend"
+         v-bind:class="{ reverse:arrowUp }">
       <i class="fas fa-caret-down"></i>
-    </span>
+    </div>
   </div>
 </template>
 
@@ -40,19 +42,19 @@ const currentUser = firebase.auth().currentUser;
 export default {
   name: "normalBanner",
 
-  props: ["user", "signuser", "searchWord"],
-
-  created: function() {
-    this.onAuth();
-  },
-
   data: function() {
     return {
       isA: true,
       isB: false,
-      isC: false
+      arrowUp: false
     };
   },
+
+  props: [
+    "user",
+    "signuser",
+    "searchWord"
+  ],
 
   methods: {
     onAuth: function() {
@@ -63,14 +65,16 @@ export default {
       });
     },
 
-    sendFriendReq: function() {
-      /*
+    callNormalExtend: function() {
+      console.log("extend");
+
       this.isA = !this.isA;
       this.isB = !this.isB;
-      this.isC = !this.isC,
-      */
+      this.arrowUp = !this.arrowUp;
       this.$emit("extendNormalBanner");
-      this.$emit("extendNbanner");
+    },
+
+    sendFriendReq: function() {
 
       if (store.state.status) {
         console.log(this.signuser["email"]);
@@ -101,7 +105,11 @@ export default {
           });
       }
     }
-  }
+  },
+
+  created: function() {
+    this.onAuth();
+  },
 };
 </script>
 
@@ -128,7 +136,7 @@ export default {
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
 
-.extend {
+.normalExtend {
   position: absolute;
 
   width: $n_banner_width;
@@ -205,7 +213,7 @@ export default {
   left: 106.673px;
 }
 
-#pullDownProperties {
+.pullDownProperties {
   position: absolute;
 
   bottom: -5px;
@@ -321,7 +329,6 @@ export default {
 
 .nreverse {
   transform: rotateX(180deg);
-  transition: 0.3s;
 }
 
 .icon {
