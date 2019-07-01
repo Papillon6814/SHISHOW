@@ -75,8 +75,6 @@ export default {
     },
 
     sendFriendReq: function() {
-      this.$emit("extendNormalBanner");
-      this.$emit("extendNbanner");
 
       if (store.state.status) {
         console.log(this.signuser["email"]);
