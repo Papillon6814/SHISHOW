@@ -136,18 +136,18 @@ export default {
 
       addToDatabase(email, username,image) {
 
-      db.collection("USER").doc(""+email).set({
-          email: email,
-          username: username,
-          image: image,
-          bio: ''
-      })
-      .then(function(docRef) {
-        console.log('Document written with ID: ', docRef.id);
-      })
-      .catch(function(error) {
-        console.log("Error adding document: ", error);
-      })
+        db.collection("USER").doc(""+email).set({
+            email: email,
+            username: username,
+            image: image,
+            bio: ''
+        })
+        .then(function(docRef) {
+          console.log('Document written with ID: ', docRef.id);
+        })
+        .catch(function(error) {
+          console.log("Error adding document: ", error);
+        })
     },
 
     onFileChange(event) {
@@ -251,7 +251,7 @@ export default {
             //htmlにファイルを反映
             root.roundimg = event.target.result;
           };
-          
+
           //読み込み開始
           reader.readAsDataURL(blob);
         });
