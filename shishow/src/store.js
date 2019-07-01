@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    searchWord: "",
     user: {},
     status: false,
     id_list: {},
@@ -13,6 +14,9 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    onSearchWordInput(state, word) {
+      state.searchWord = word
+    },
     onAuthStateChanged(state, user) {
       state.user = user;
       // firebaseが返したユーザー情報
@@ -31,13 +35,21 @@ export default new Vuex.Store({
   },
 
   actions: {
-    openChatArea({commit}, id_list, user_name_list) {
-      let userData = {"id_list": id_list, "user_name_list": user_name_list};
+    openChatArea({
+      commit
+    }, id_list, user_name_list) {
+      let userData = {
+        "id_list": id_list,
+        "user_name_list": user_name_list
+      };
       commit('onOpeningChatArea', userData)
     }
   },
 
   getters: {
+    getSearchWord(state) {
+      return state.searchWord
+    },
     user(state) {
       return state.user;
     },
@@ -53,7 +65,7 @@ export default new Vuex.Store({
     }
   },
 
-  plugins : [
+  plugins: [
     createPersistedState({
       storage: window.sessionStorage,
     })
