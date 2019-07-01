@@ -31,13 +31,11 @@
   -->
     <div class="profilePosition">
       <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
-        最近では、予想外の趣味に没頭中！
+        profile
       </div>
     </div>
     <div class="userInfoPosition">
-      <div class="userInfo">仲野巧ですから</div>
+      <div class="userInfo">userinfo</div>
     </div>
     <router-link to="/friend">
       <div class="friendsButton">
@@ -110,6 +108,7 @@ export default {
     console.log(this.loginedUser);
   }
 };
+
 </script>
 
 <style lang="scss" scoped>

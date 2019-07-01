@@ -59,7 +59,8 @@ export default {
       filteredUser: [],
       currentUser: "",
       signuser: [],
-      normalBannerActiveArray: []
+      normalBannerActiveArray: [],
+      isNormalBannerActive: []
     };
   },
 
@@ -138,19 +139,33 @@ export default {
 
     moveDown: function(N) {
       let move, i, j;
-      this.normalBannerActiveArray.push(N);
-      console.log(this.filteredUser.length);
-      console.log(this.normalBannerActiveArray.length);
+
+      if(!this.isNormalBannerActive[N-1]) {
+        this.normalBannerActiveArray.push(N);
+      } else {
+        this.normalBannerActiveArray.splice(
+          this.normalBannerActiveArray.indexOf(N), 1
+        );
+      }
+
+      console.log(this.normalBannerActiveArray.indexOf(N));
 
       for(i = 1; i <= this.normalBannerActiveArray.length; i++) {
         for(j = this.normalBannerActiveArray[i-1] + 1; j <= this.filteredUser.length; j++) {
           move = document.getElementsByClassName('n'+j);
           move[0].style.top = (200 * j + 200 * i) + 'px';
-          console.log('iteration');
         }
       }
 
+      this.isNormalBannerActive[N-1] = !this.isNormalBannerActive[N-1];
+
       this.$forceUpdate();
+    },
+
+    initIsNormalBannerActive: function() {
+      for(let i = 0; i < this.filteredUser.length; i++) {
+        this.isNormalBannerActive.push(false);
+      }
     }
   },
 
@@ -162,6 +177,7 @@ export default {
       .then(doc => {
         this.signuser = doc.data();
       });
+
     db.collection("USER")
       .get()
       .then(doc => {
@@ -172,6 +188,8 @@ export default {
           }
         });
       });
+
+    this.initIsNormalBannerActive();
   }
 };
 </script>
