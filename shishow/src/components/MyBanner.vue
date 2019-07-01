@@ -27,9 +27,7 @@
     </div>
     <div class="profilePosition">
       <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
-        最近では、予想外の趣味に没頭中！
+        {{bio}}
       </div>
     </div>
     <div class="userInfoPosition">
@@ -71,7 +69,8 @@ export default {
       isB: false,
       isC: false,
       sign: "",
-      icon: ""
+      icon: "",
+      bio: "",
 
     };
   },
@@ -80,10 +79,18 @@ export default {
     console.log("created");
     this.onAuth();
     var root = this;
+
     var User = firebase.auth().currentUser;
-    db.collection("USER").doc(User.email).get()
+    var email;
+
+    if (User != null){
+      email = User.email;
+    };
+
+    db.collection("USER").doc(email).get()
     .then( doc => {
       root.icon = doc.data()["image"];
+      root.bio = doc.data()["bio"];
     });
     console.log(this.icon);
   },
