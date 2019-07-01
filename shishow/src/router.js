@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
+import Edit from './views/Edit.vue'
 import SearchResult from './views/SearchResult.vue'
 import Notification from './views/Notification.vue'
 import DirectMessage from './views/DirectMessage.vue'
@@ -24,6 +25,7 @@ let router = new Router({
       name: 'home',
       component: Home
     },
+
     {
       path: '/signup',
       name: 'signup',
@@ -60,7 +62,12 @@ let router = new Router({
       path:'/search',
       name:'search',
       component: SearchResult
-    }
+    },
+    {
+      path: '/edit',
+      name: 'edit',
+      component: Edit
+    },
   ]
 })
 

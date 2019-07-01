@@ -2,14 +2,16 @@
   <div id="root">
     <navi></navi>
     <transition appear name="v">
-      <div id="myBannerPosition">
-        <myBanner
-          @extendMyBanner="extendOther"
-          v-if="userStatus"
-          :loginedUser="getCurrentUserName"
-        ></myBanner>
-        <BlurBanner v-else></BlurBanner>
-      </div>
+      <router-link to="/edit">
+        <div id="myBannerPosition">
+          <myBanner
+            @extendMyBanner="extendOther"
+            v-if="userStatus"
+            :loginedUser="getCurrentUserName"
+          ></myBanner>
+          <BlurBanner v-else></BlurBanner>
+        </div>
+      </router-link>
     </transition>
     <div id="moving">
       <transition appear name="v2">
