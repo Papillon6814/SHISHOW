@@ -246,6 +246,8 @@ body {
 }
 
 #moving {
+  width: 100%;
+
   .normalBannerPosition {
     position: absolute;
 
@@ -267,6 +269,8 @@ body {
 
         width: $n_banner_width;
         height: $n_banner_height;
+
+        transition: 0.3s;
       }
       $i: $i + 1;
     }

@@ -64,6 +64,8 @@ export default {
           })
 
           console.log("onload: " + this.msgList[0].msg)
+          window.scroll(0, 90000);
+          console.log("end")
         }).catch(e=>{
           console.log(e)
         })
