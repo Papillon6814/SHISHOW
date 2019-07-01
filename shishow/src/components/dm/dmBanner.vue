@@ -26,69 +26,71 @@ export default {
 
 <style lang="scss" scoped>
 
-  .dmBanner {
-    display: block;
+.dmBanner {
+  display: block;
 
-    width: 100%;
-    height: 120px;
+  width: 100%;
+  height: 120px;
 
-    background-color: $dm_banner_color;
+  background-color: $dm_banner_color;
 
-    border-bottom: solid;
-    border-width: 3px;
-    border-color: #555;
+  border-bottom: solid;
+  border-width: 3px;
+  border-color: #555;
 
-    transition: .15s;
-    cursor: pointer;
+  transition: .15s;
+  cursor: pointer;
 
-    .dmBannerIcon {
-      position: relative;
+  .dmBannerIcon {
+    position: relative;
 
-      top: 10px;
-      left: 15px;
+    top: 10px;
+    left: 15px;
 
-      width: $dm_icon_width;
-      height: $dm_icon_width;
+    width: $dm_icon_width;
+    height: $dm_icon_width;
 
-      // temporary color
-      background-color: #fff;
+    // temporary color
+    background-color: #fff;
 
-      border-radius: 50%;
-      border: solid;
-      border-width: 1px;
-      border-color: $window_flame;
-    }
-
-    .dmBannerName {
-      position: relative;
-
-      bottom: 80px;
-      left: 130px;
-
-      width: 60%;
-      height: 35px;
-
-      // temporary color
-      background-color: #fff;
-
-      font-size: 35px;
-    }
-
-    .dmMsgArea {
-      position: relative;
-
-      bottom: 70px;
-      left: 130px;
-
-      width: 70%;
-      height: 60px;
-
-      background-color: #fff;
-    }
+    border-radius: 50%;
+    border: solid;
+    border-width: 1px;
+    border-color: $window_flame;
   }
 
-  .dmBanner:hover {
-    background-color: $dm_banner_color_hover;
+  .dmBannerName {
+    position: relative;
+
+    bottom: 80px;
+    left: 130px;
+
+    width: 60%;
+    height: 35px;
+
+    // temporary color
+    background-color: #fff;
+
+    font-size: 35px;
+    // font-family: 'Noto Sans JP', sans-serif;
   }
+
+  .dmMsgArea {
+    position: relative;
+
+    bottom: 70px;
+    left: 130px;
+
+    width: 70%;
+    height: 60px;
+
+    background-color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+}
+
+.dmBanner:hover {
+  background-color: $dm_banner_color_hover;
+}
 
 </style>
