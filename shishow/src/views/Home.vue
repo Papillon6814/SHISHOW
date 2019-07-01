@@ -19,7 +19,7 @@
           <div v-for="N in filteredUser.length"
            :key="N" v-bind:class="'n'+N">
             <normalBanner
-             :signuser="filteredUser[N-1]"
+             :user="filteredUser[N-1]"
              @extendNormalBanner="moveDown(N)">
             </normalBanner>
           </div>

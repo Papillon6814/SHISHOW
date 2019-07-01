@@ -9,7 +9,6 @@
         </div>
       </div>
     </div>
-    <div id="trimmingButton">
       <span class="iconCirclePosition">
         <label>
           <div class="iconCircle">
@@ -23,7 +22,6 @@
           </div>
         </label>
       </span>
-    </div>
 
     <!-- achievements -->
 
