@@ -58,14 +58,14 @@ export default {
         .orderBy("date")
         .onSnapshot(chatSnapshot => {
           this.msgList = [];
-          scroll(0, 100);
 
           chatSnapshot.forEach(doc1 => {
             this.msgList.push(doc1.data());
           })
 
           console.log("onload: " + this.msgList[0].msg)
-          window.scroll()
+          window.scroll(0, 90000);
+          console.log("end")
         }).catch(e=>{
           console.log(e)
         })

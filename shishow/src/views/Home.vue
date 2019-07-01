@@ -224,6 +224,8 @@ body {
 }
 
 #moving {
+  width: 100%;
+
   .normalBannerPosition {
     position: absolute;
 
