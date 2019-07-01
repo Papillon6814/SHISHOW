@@ -152,7 +152,7 @@ export default {
           this.normalBannerActiveArray.indexOf(N), 1
         );
 
-        for(i=N+1;i<this.filteredUser.length;i++){
+        for(i=N+1;i<=this.filteredUser.length;i++){
         move = document.getElementsByClassName('n'+i);
         style = window.getComputedStyle(move[0]);
         move[0].style.top = (parseInt(style.top)-200)+"px";
