@@ -245,6 +245,8 @@ body {
 
         width: $n_banner_width;
         height: $n_banner_height;
+
+        transition: 0.3s;
       }
       $i: $i + 1;
     }

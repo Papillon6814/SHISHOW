@@ -131,7 +131,7 @@ export default {
   z-index: 2;
 
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
-  transition: 0.6s;
+  transition: 0.3s;
 }
 
 .normalBanner:hover {
@@ -149,7 +149,7 @@ export default {
   z-index: 2;
 
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-  transition: 0.6s;
+  transition: 0.3s;
 }
 
 .iconPicPosition {
