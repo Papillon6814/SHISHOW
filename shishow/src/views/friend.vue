@@ -64,11 +64,9 @@ export default {
     methods:{
         T(){
             this.TorF=true;
-
         },
         F(){
             this.TorF=false;
-
 
             console.log(this.outgo.length);
         },
