@@ -17,7 +17,7 @@
       <transition appear name="v2">
         <div class="normalBannerPosition">
           <div v-for="N in filteredUser.length" :key="N" v-bind:class="'n'+N">
-            <normalBanner :user="filteredUser[N-1]"></normalBanner>
+            <normalBanner :user="filteredUser[N-1]" :signuser="signuser"></normalBanner>
           </div>
         </div>
       </transition>
@@ -82,7 +82,7 @@ export default {
       searchWord: "",
       filteredUser: [],
       currentUser: "",
-      signuser: []
+      signuser: "",
     };
   },
 

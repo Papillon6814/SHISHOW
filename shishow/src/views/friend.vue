@@ -68,8 +68,6 @@ export default {
         },
         F(){
             this.TorF=false;
-
-
             console.log(this.outgo.length);
         },
         onAuth: function () {
@@ -78,6 +76,9 @@ export default {
         store.commit('onAuthStateChanged', user);
         store.commit('onUserStatusChanged', user.uid ? true : false);
       })
+    },
+
+    
     },
 
     created:function(){
@@ -97,9 +98,8 @@ export default {
             db.collection("USER").doc(this.user.email).get().then(doc =>{
                 this.signuser = doc.data();
             })
-    },
-
     }
+    
 }
 </script>
 
