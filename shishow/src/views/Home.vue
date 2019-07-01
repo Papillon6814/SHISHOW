@@ -138,8 +138,29 @@ export default {
     },
 
     moveDown: function(N) {
-      let move, i, j;
+      let move, i, j,style;
+      
+      if(this.normalBannerActiveArray.indexOf(N)==-1) {
+        this.normalBannerActiveArray.push(N);
+        for(i=N+1;i<this.filteredUser.length;i++){
+        move = document.getElementsByClassName('n'+i);
+        style = window.getComputedStyle(move[0]);
+        move[0].style.top = (parseInt(style.top)+200)+"px";
+      }
+      } else {
+        this.normalBannerActiveArray.splice(
+          this.normalBannerActiveArray.indexOf(N), 1
+        );
 
+        for(i=N+1;i<this.filteredUser.length;i++){
+        move = document.getElementsByClassName('n'+i);
+        style = window.getComputedStyle(move[0]);
+        move[0].style.top = (parseInt(style.top)-200)+"px";
+        }
+      }
+      
+      
+      /*
       if(!this.isNormalBannerActive[N-1]) {
         this.normalBannerActiveArray.push(N);
       } else {
@@ -160,6 +181,7 @@ export default {
       this.isNormalBannerActive[N-1] = !this.isNormalBannerActive[N-1];
 
       this.$forceUpdate();
+      */
     },
 
     initIsNormalBannerActive: function() {
