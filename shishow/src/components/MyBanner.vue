@@ -75,24 +75,42 @@ export default {
     };
   },
 
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+    userStatus() {
+      return this.$store.getters.isSignedIn;
+    },
+
+    getCurrentUserName: function() {
+      return this.$store.getters.user.displayName;
+    },
+    getCurrentUserId: function() {
+      return this.$store.getters.user.uid;
+    }
+  },
   created:function(){
     console.log("created");
     this.onAuth();
     var root = this;
 
-    var User = firebase.auth().currentUser;
+
+    var User = this.user;
     var email;
 
     if (User != null){
       email = User.email;
     };
-
+    console.log("gazouが"+email);
     db.collection("USER").doc(email).get()
     .then( doc => {
+      console.log(doc.data()["image"]);
       root.icon = doc.data()["image"];
       root.bio = doc.data()["bio"];
+      console.log(root.icon);
     });
-    console.log(this.icon);
+    
   },
   watch: {
     loginedUser: function() {

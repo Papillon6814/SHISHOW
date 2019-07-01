@@ -42,7 +42,7 @@ export default {
 
             email = User.email;
             var root = this;
-            db.collection("USER").doc(email).set({
+            db.collection("USER").doc(email).update({
                 bio: root.bio
             })
             console.log(this.bio);

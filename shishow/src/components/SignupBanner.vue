@@ -125,7 +125,7 @@ export default {
               alert("Create account: " + email);
               if (!this.uploadedImage) this.uploadedImage = url;
               console.log(this.roundimg);
-              this.addToDatabase(this.email, this.username, this.roundimg);
+              this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
             });
           })
           .catch(error => {
