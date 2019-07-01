@@ -26,16 +26,32 @@
       <router-link to="/">
         <img class="home" src="../assets/home-button.png">
       </router-link>
-      <a class="menu-trigger" href="#">
-        <span>
-        </span>
-        <span>
-        </span>
-        <span>
-        </span>
-      </a>
+      <div class="header-logo-menu">
+        <div id="nav-drawer">
+          <input id="nav-input" type="checkbox" class="nav-unshown">
+          <label id="nav-open" for="nav-input"><span></span></label>
+          <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+          <div id="nav-content"></div>
+        </div>
+      <!-- <a class="menu-trigger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </a> -->
+        <!--<input id="nav-input" type="checkbox" class="nav-unshown">
+        <label id="nav-open" for="nav-input">
+        </label>
+        <label class="nav-unshown" id="nav-close" for="nav-input">
+        </label>
+        <div id="nav-content">
+          <ul class="menu">
+          </ul>
+        </div>
+      </div>
+      -->
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -58,6 +74,41 @@ export default {
     }
   }
 };
+/*
+//menuボタンコンポーネント
+var menuBtnComp = {
+  template: `
+    <div>
+        <span class="menu_trigger">
+            <span></span><span></span><span></span>
+        </span>
+    </div>
+`
+}
+
+//root
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuFlag: false,
+    headH: "0px",
+  },
+  methods: {
+    menuToggle: function() {
+      //menuFlag切り替え
+      this.menuFlag = !this.menuFlag;
+    }
+  },
+  mounted: function() {
+    //headerの高さ取得
+    let h = document.getElementById("header").offsetHeight;
+    this.headH = h + "px";
+  },
+  components: {
+    'menu-btn': menuBtnComp,
+  }
+});*/
+
 </script>
 
 <style lang="scss" scoped>
@@ -177,6 +228,7 @@ $searchbar_width: 400px;
         top: 22px;
       }
     }
+
   }
 
   .logo {
@@ -255,11 +307,11 @@ $searchbar_width: 400px;
       top: 10px;
     }
   }
+  .nav-unshown {
+    display:none;
+  }
 }
 @media (max-width: 800px){
-  .bar {
-    width: 300px;
-  }
   #menuButtons {
     .dm {
       display: none;
@@ -277,7 +329,98 @@ $searchbar_width: 400px;
       display: none;
     }
   }
-  .menu-trigger,
+#nav-drawer {
+  position: relative;
+}
+
+/*チェックボックス等は非表示に*/
+.nav-unshown {
+  display:none;
+}
+
+/*アイコンのスペース*/
+#nav-open {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  vertical-align: middle;
+}
+
+/*ハンバーガーの形をCSSで表現*/
+#nav-open span, #nav-open span:before, #nav-open span:after {
+  position: absolute;
+  margin-top: 10px;
+  bottom:30px;
+  height: 5px;/*線の太さ*/
+  width: 80px;/*長さ*/
+  border-radius:100px;
+  background: #fff;
+  display: block;
+  content: '';
+  cursor: pointer;
+}
+#nav-open span:before {
+  bottom: -8px;
+}
+#nav-open span:after {
+  bottom: -16px;
+}
+
+/*閉じる用の薄黒箇所*/
+#nav-close {
+  display: none;
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0;
+  transition: .3s ease-in-out;
+}
+
+/*メニューの中身*/
+#nav-content {
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 90%;
+  max-width: 330px;/*最大幅（お好みで調整を）*/
+  height: 100%;
+  background: #fff;
+  transition: .3s ease-in-out;
+  -webkit-transform: translateX(250%);
+  transform: translateX(250%);
+}
+
+/*チェックがついたら表示させる*/
+#nav-input:checked ~ #nav-close {
+  display: block;
+  opacity: .5;
+}
+
+#nav-input:checked ~ #nav-content {
+  -webkit-transform: translateX(105%);
+  transform: translateX(105%);
+  box-shadow: 6px 0 25px rgba(0,0,0,.15);
+}
+
+.header-logo-menu{
+	display: flex;
+	display: -moz-flex;
+	display: -o-flex;
+	display: -webkit-flex;
+	display: -ms-flex;
+	flex-direction: row;
+	-moz-flex-direction: row;
+	-o-flex-direction: row;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+}
+  /*.menu-trigger,
   .menu-trigger span {
     display: inline-block;
     transition: all .4s;
@@ -297,29 +440,26 @@ $searchbar_width: 400px;
     border-radius: 4px;
   }
   .menu-trigger span:nth-of-type(1) {
-    top: 25px;
-    left: -30px;
+    top: 0;
+  }
+  .menu-trigger span:nth-of-type(2) {
+    top: 20px;
+  }
+  .menu-trigger span:nth-of-type(3) {
+    bottom: 0;
   }
   .menu-trigger.active span:nth-of-type(1) {
     -webkit-transform: translateY(20px) rotate(-45deg);
     transform: translateY(20px) rotate(-45deg);
   }
-  
-  .menu-trigger span:nth-of-type(2) {
-    top: 45px;
-    left: -30px;
-  }
   .menu-trigger.active span:nth-of-type(2) {
     opacity: 0;
-  }
-
-  .menu-trigger span:nth-of-type(3) {
-    top: 65px;
-    left: -30px;
   }
   .menu-trigger.active span:nth-of-type(3) {
     -webkit-transform: translateY(-20px) rotate(45deg);
     transform: translateY(-20px) rotate(45deg);
-  }
+  }*/
 }
+
+
 </style>
