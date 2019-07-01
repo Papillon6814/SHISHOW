@@ -59,7 +59,7 @@ export default {
       filteredUser: [],
       currentUser: "",
       signuser: [],
-      normalBannerActive: []
+      normalBannerActiveArray: []
     };
   },
 
@@ -137,21 +137,19 @@ export default {
     },
 
     moveDown: function(N) {
-      let move;
-      let elementTop;
-      let i, j;
-      this.normalBannerActive.push(N);
+      let move, i, j;
+      this.normalBannerActiveArray.push(N);
+      console.log(this.filteredUser.length);
+      console.log(this.normalBannerActiveArray.length);
 
-      for (i = 1; i <= this.normalBannerActive.length; i++) {
-        for(j = N+1; j < this.filteredUser.length; j++) {
+      for(i = 1; i <= this.normalBannerActiveArray.length; i++) {
+        for(j = this.normalBannerActiveArray[i-1] + 1; j <= this.filteredUser.length; j++) {
           move = document.getElementsByClassName('n'+j);
-
-          move[0].style.top = (200 * j+1) + 'px';
-          console.log(move[0].style.top)
+          move[0].style.top = (200 * j + 200 * i) + 'px';
+          console.log('iteration');
         }
       }
 
-      i = j =0;
       this.$forceUpdate();
     }
   },
