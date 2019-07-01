@@ -25,39 +25,38 @@
     <div class="logoSentence">SHISHOW</div>
 
     <div id="menuButtons">
-      <router-link to="/directMessage">
-        <i class="fas fa-envelope fa-3x dm"></i>
-      </router-link>
-      <i class="fas fa-gamepad fa-3x game"></i>
-      <router-link to="/notification">
-        <i class="fas fa-bell fa-3x bell"></i>
-      </router-link>
-      <router-link to="/">
-        <i class="fas fa-home fa-3x home"></i>
-      </router-link>
+      <div class="buttons">
+        <router-link to="/directMessage">
+          <i class="fas fa-envelope fa-3x dm"></i>
+        </router-link>
+        <i class="fas fa-gamepad fa-3x game"></i>
+        <router-link to="/notification">
+          <i class="fas fa-bell fa-3x bell"></i>
+        </router-link>
+        <router-link to="/">
+          <i class="fas fa-home fa-3x home"></i>
+        </router-link>
+      </div>
       <div class="header-logo-menu">
         <div id="nav-drawer">
           <input id="nav-input" type="checkbox" class="nav-unshown">
-          <label id="nav-open" for="nav-input"><span></span></label>
+          <label id="nav-open" for="nav-input">
+            <span></span>
+          </label>
           <label class="nav-unshown" id="nav-close" for="nav-input"></label>
-          <div id="nav-content"></div>
+          <div id="nav-content">
+            <router-link to="/directMessage">
+              <i class="fas fa-envelope fa-3x dm"></i>
+            </router-link>
+            <i class="fas fa-gamepad fa-3x game"></i>
+            <router-link to="/notification">
+              <i class="fas fa-bell fa-3x bell"></i>
+            </router-link>
+            <router-link to="/">
+              <i class="fas fa-home fa-3x home"></i>
+            </router-link>
+          </div>
         </div>
-      <!-- <a class="menu-trigger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </a> -->
-        <!--<input id="nav-input" type="checkbox" class="nav-unshown">
-        <label id="nav-open" for="nav-input">
-        </label>
-        <label class="nav-unshown" id="nav-close" for="nav-input">
-        </label>
-        <div id="nav-content">
-          <ul class="menu">
-          </ul>
-        </div>
-      </div>
-      -->
     </div>
   </div>
 </div>
@@ -364,25 +363,11 @@ $searchbar_width: 400px;
   .nav-unshown {
     display:none;
   }
+  .buttons{
+    display: none;
+  }
 }
 @media (max-width: 800px){
-  #menuButtons {
-    .dm {
-      display: none;
-    }
-
-    .game {
-      display: none;
-    }
-
-    .bell {
-      display: none;
-    }
-
-    .home {
-      display: none;
-    }
-  }
 #nav-drawer {
   position: relative;
 }
@@ -395,29 +380,61 @@ $searchbar_width: 400px;
 /*アイコンのスペース*/
 #nav-open {
   display: inline-block;
-  width: 100px;
-  height: 100px;
+  right:10px;
+  width: 90px;
+  height: 90px;
   vertical-align: middle;
+  cursor: pointer;
 }
 
 /*ハンバーガーの形をCSSで表現*/
 #nav-open span, #nav-open span:before, #nav-open span:after {
   position: absolute;
-  margin-top: 10px;
-  bottom:30px;
-  height: 5px;/*線の太さ*/
-  width: 80px;/*長さ*/
+  bottom:55px;
+  height: 6px;//線の太さ
+  width: 60px;//長さ
   border-radius:100px;
   background: #fff;
   display: block;
   content: '';
   cursor: pointer;
+  /*.menu-trigger,
+  .menu-trigger span {
+    display: inline-block;
+    transition: all .4s;
+    box-sizing: border-box;
+  }
+  .menu-trigger {
+    position: relative;
+    width: 50px;
+    height: 44px;
+  }
+  .menu-trigger span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #fff;
+    border-radius: 4px;
+  }
+  .menu-trigger span:nth-of-type(1) {
+    top: 0;
+  }
+  .menu-trigger span:nth-of-type(2) {
+    top: 20px;
+  }
+  .menu-trigger span:nth-of-type(3) {
+    bottom: 0;
+  }*/
 }
 #nav-open span:before {
-  bottom: -8px;
+  top: -22px;
 }
 #nav-open span:after {
-  bottom: -16px;
+  bottom: -22px;
+}
+#nav-open:hover {
+  opacity: 0.5;
 }
 
 /*閉じる用の薄黒箇所*/
@@ -438,16 +455,67 @@ $searchbar_width: 400px;
 #nav-content {
   overflow: auto;
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0px;
+  right: 20px;
   z-index: 9999;
   width: 90%;
-  max-width: 330px;/*最大幅（お好みで調整を）*/
-  height: 100%;
-  background: #fff;
+  max-width: 380px;/*最大幅（お好みで調整を）*/
+  height: 90px;
+  background: $dark_color;
+  border: solid;
+  border-radius: 3px;
+  border-color: #fff;
   transition: .3s ease-in-out;
-  -webkit-transform: translateX(250%);
-  transform: translateX(250%);
+  -webkit-transform: translateY(-1000px);
+  transform: translateY(-1000px);
+  box-shadow: 6px 0 25px rgba(0,0,0,.15);
+    .dm {
+      position: absolute;
+
+      width: $button_width;
+      height: $button_height;
+
+      left: 290px;
+      bottom: px;
+
+      color: #fff;
+    }
+
+    .game {
+      position: relative;
+
+      width: $button_width;
+      height: $button_height;
+
+      left: 190px;
+      top: 10px;
+
+      color: #fff;
+    }
+
+    .bell {
+      position: absolute;
+
+      width: $button_width;
+      height: $button_height;
+
+      left: 100px;
+      top: 10px;
+
+      color: #fff;
+    }
+
+    .home {
+      position: absolute;
+
+      width: $button_width;
+      height: $button_height;
+
+      left: 10px;
+      top: 10px;
+
+      color: #fff;
+    }
 }
 
 /*チェックがついたら表示させる*/
@@ -457,9 +525,20 @@ $searchbar_width: 400px;
 }
 
 #nav-input:checked ~ #nav-content {
-  -webkit-transform: translateX(105%);
-  transform: translateX(105%);
+  -webkit-transform: translateY(100px);
+  transform: translateY(100px);
   box-shadow: 6px 0 25px rgba(0,0,0,.15);
+  /*.menu-trigger.active span:nth-of-type(1) {
+    -webkit-transform: translateY(20px) rotate(-45deg);
+    transform: translateY(20px) rotate(-45deg);
+  }
+  .menu-trigger.active span:nth-of-type(2) {
+    opacity: 0;
+  }
+  .menu-trigger.active span:nth-of-type(3) {
+    -webkit-transform: translateY(-20px) rotate(45deg);
+    transform: translateY(-20px) rotate(45deg);
+  }*/
 }
 
 .header-logo-menu{
@@ -473,6 +552,7 @@ $searchbar_width: 400px;
 	-o-flex-direction: row;
 	-webkit-flex-direction: row;
 	-ms-flex-direction: row;
+
 }
   /*.menu-trigger,
   .menu-trigger span {
