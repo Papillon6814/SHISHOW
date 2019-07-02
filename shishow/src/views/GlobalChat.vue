@@ -9,7 +9,7 @@
 import navi from "../components/NavigationBar.vue";
 
 export default {
-  name: globalChat,
+  name: "globalChat",
   components: {
     navi
   }
