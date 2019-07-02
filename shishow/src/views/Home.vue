@@ -13,35 +13,23 @@
           ></myBanner>
           <BlurBanner v-else></BlurBanner>
         </div>
-    </transition>
-    <div id="moving">
-      <transition appear name="v2">
-        <div class="normalBannerPosition">
-          <div v-for="N in filteredUser.length"
-           :key="N" v-bind:class="'n'+N">
-            <normalBanner
-             :user="filteredUser[N-1]"
-             :signuser="signuser"
-             :relations="relation[N-1]"
-             @extendNormalBanner="moveDown(N)">
-            </normalBanner>
-          </div>
-        </div>
       </transition>
-        <div id="moving">
-          <transition appear name="v2">
-            <div class="normalBannerPosition">
-              <div v-for="N in filteredUser.length"
-               :key="N" v-bind:class="'n'+N">
-                <normalBanner
-                 :user="filteredUser[N-1]"
-                 @extendNormalBanner="moveDown(N)">
-                </normalBanner>
-              </div>
+      <div id="moving">
+        <transition appear name="v2">
+          <div class="normalBannerPosition">
+            <div v-for="N in filteredUser.length"
+              :key="N" v-bind:class="'n'+N">
+              <normalBanner
+              :user="filteredUser[N-1]"
+              :signuser="signuser"
+              :relations="relation[N-1]"
+              @extendNormalBanner="moveDown(N)">
+              </normalBanner>
             </div>
-          </transition>
-        </div>
-      </main>
+          </div>
+        </transition>
+      </div>
+    </main>
       <!--
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
@@ -74,7 +62,8 @@ let currentUser;
 
 export default {
   name: "home",
-  created: function() {
+
+  mounted: function() {
     this.onAuth();
     const sign_db = db.collection("USER").doc(this.user.email);
 
@@ -98,10 +87,15 @@ export default {
           }
 
         })
+        this.placeFooter();
       })
+
     });
 
-    db.collection("USER").doc(this.user.email).get().then(doc =>{
+    db.collection("USER")
+    .doc(this.user.email)
+    .get()
+    .then(doc =>{
       this.signuser = doc.data();
     });
   },
@@ -133,6 +127,7 @@ export default {
     BlurBanner,
     ourFooter
   },
+
   computed: {
     user() {
       return this.$store.getters.user;
@@ -172,7 +167,6 @@ export default {
   },
 
   methods: {
-
 
     getSearchWord(word) {
       this.searchWord = word;
@@ -221,15 +215,15 @@ export default {
         this.normalBannerActiveArray.push(N);
 
         for(i=N+1;i<=this.filteredUser.length;i++){
-        move = document.getElementsByClassName('n'+i);
-        style = window.getComputedStyle(move[0]);
-        move[0].style.top = (parseInt(style.top)-200)+"px";
+          move = document.getElementsByClassName('n'+i);
+          style = window.getComputedStyle(move[0]);
+          move[0].style.top = (parseInt(style.top)+200)+"px";
         }
-      }
 
+        footer = document.getElementsByTagName('footer')
+        footerStyle = getComputedStyle(footer[0]);
 
-      if(!this.isNormalBannerActive[N-1]) {
-        this.normalBannerActiveArray.push(N);
+        footer[0].style.top = (parseInt(footerStyle.top) + 200) + 'px';
       } else {
         // Nが配列の中にある時は、削除を行う
         this.normalBannerActiveArray.splice(
@@ -249,29 +243,6 @@ export default {
       }
       this.$forceUpdate();
     }
-  },
-
-  mounted: function() {
-    this.onAuth();
-
-    db.collection("USER")
-      .doc(this.user.email)
-      .get()
-      .then(doc => {
-        this.signuser = doc.data();
-      });
-
-    db.collection("USER")
-      .get()
-      .then(doc => {
-        this.users = doc.docs;
-        doc.forEach(docs => {
-          if (docs.data().username !== this.signuser.username) {
-            this.filteredUser.push(docs.data());
-          }
-        });
-        this.placeFooter();
-      });
   }
 };
 </script>
