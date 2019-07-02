@@ -5,21 +5,21 @@
             <EditBanner></EditBanner>
         </div>
         <div id="myBannerposition"> 
-          <myBanner></myBanner>
+          <MBforEdit></MBforEdit>
         </div>
     </div>
     
 </template>
 <script>
 import EditBanner from '../components/EditBanner.vue'
-import myBanner from "../components/MyBanner.vue";
+import MBforEdit from "../components/MBforEdit.vue";
 import navi from "../components/NavigationBar.vue";
 
 export default {
     name: "Edit",
     components: {
         EditBanner,
-        myBanner,
+        MBforEdit,
         navi
     }
 }

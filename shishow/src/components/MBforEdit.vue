@@ -1,3 +1,4 @@
+
 <template>
   <div class="banner" v-bind:class="{ 'banner': isA, 'extend': isB }">
     <span class="iconPicPosition">
@@ -12,26 +13,6 @@
     <div class="achievementPosition3">
       <div class="achievement"></div>
     </div>
-    <div class="usernamePosition">
-      <div class="fieldForUserName">
-        <div class="username">
-          {{loginedUser}}
-          <!--
-            // FIXME: 弟子要素を付けると領域デカすぎてボタン押せなくなる問題
-             <div class="deshiPosition">
-            <div class="deshi"></div>
-          </div>
-          -->
-        </div>
-      </div>
-    </div>
-    <router-link to="/edit">
-    <div class="profilePosition">
-      <div class="profile">
-        {{bio}}
-      </div>
-    </div>
-    </router-link>
     <div class="userInfoPosition">
       <div class="userInfo">userinfo</div>
     </div>
