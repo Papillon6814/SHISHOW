@@ -1,33 +1,37 @@
 <template>
-  <div id="root">
-    <navi @input="getSearchWord"></navi>
-    <transition appear name="v">
-      <div id="myBannerPosition">
-        <myBanner
-          @extendMyBanner="extendOther"
-          v-if="userStatus"
-          :loginedUser="getCurrentUserName"
-          :loginedUerId="getCurrentUserId"
-        ></myBanner>
-        <BlurBanner v-else></BlurBanner>
-      </div>
-    </transition>
-    <div id="moving">
-      <transition appear name="v2">
-        <div class="normalBannerPosition">
-          <div v-for="N in filteredUser.length" :key="N" v-bind:class="'n'+N">
-            <normalBanner :user="filteredUser[N-1]"></normalBanner>
+  <div id="app">
+    <div v-show="loading">loading...</div>
+    <div v-show="!loading">
+      <div id="root">
+        <navi @input="getSearchWord"></navi>
+        <transition appear name="v">
+          <div id="myBannerPosition">
+            <myBanner
+              @extendMyBanner="extendOther"
+              v-if="userStatus"
+              :loginedUser="getCurrentUserName"
+              :loginedUerId="getCurrentUserId"
+            ></myBanner>
+            <BlurBanner v-else></BlurBanner>
           </div>
+        </transition>
+        <div id="moving">
+          <transition appear name="v2">
+            <div class="normalBannerPosition">
+              <div v-for="N in filteredUser.length" :key="N" v-bind:class="'n'+N">
+                <normalBanner :user="filteredUser[N-1]"></normalBanner>
+              </div>
+            </div>
+          </transition>
+          <!--
+            <div class="gameBannerPosition">
+              <gameBanner></gameBanner>
+            </div>
+          -->
         </div>
-      </transition>
-      <!--
-        <div class="gameBannerPosition">
-          <gameBanner></gameBanner>
       </div>
-      -->
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -45,6 +49,18 @@ import store from "../store";
 
 const db = firebase.firestore();
 let currentUser;
+
+new Vue({
+  el: "#app",
+  data: {
+    loading: true
+  },
+  mounted() {
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
+  }
+});
 
 export default {
 
@@ -145,7 +161,7 @@ export default {
       if (this.active === false) {
         move.style.top = "60px";
       }
-    } /*,
+    },
     extendNother:function(){
       var active = true;
       var move=document.getElementById('moven')
