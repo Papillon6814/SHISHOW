@@ -2,7 +2,7 @@
   <div id="root">
     <navi></navi>
     <div id="notificationField">
-      <div> 
+      <div>
         <notificationBanner></notificationBanner>
       </div>
     </div>
@@ -23,6 +23,7 @@ export default {
 </script>
 
 <style lang='scss'>
+
   body {
     padding: 0;
     margin: 0;
@@ -44,4 +45,5 @@ export default {
     background-color: #fff;
     box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
   }
+
 </style>

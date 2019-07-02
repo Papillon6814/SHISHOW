@@ -19,9 +19,9 @@
       <div class="profile">{{ user.bio }}</div>
     </div>
     <div class="userInfoPosition">
-      <div class="userInfo">仲野巧ですから</div>
+      <div class="userInfo">userinfo</div>
     </div>
-    <div @click="sendFriendReq()" class="n_btn-circle-3d">江崎にフレ申請</div>
+    <div @click="sendFriendReq()" class="n_btn-circle-3d">申請</div>
     <div class="pullDownProperties"
          @click="callNormalExtend"
          v-bind:class="{ reverse:arrowUp }">

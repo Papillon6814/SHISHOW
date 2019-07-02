@@ -30,6 +30,8 @@
       </div>
       -->
     </div>
+    <ourFooter></ourFooter>
+
   </div>
 </template>
 
@@ -40,6 +42,7 @@ import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
 import signinBanner from "../components/SigninBanner";
 import BlurBanner from "../components/BlurBanner.vue";
+import ourFooter from "../components/Footer.vue";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
@@ -68,7 +71,8 @@ export default {
     navi,
     myBanner,
     normalBanner,
-    BlurBanner
+    BlurBanner,
+    ourFooter
   },
 
   computed: {
@@ -139,49 +143,25 @@ export default {
 
     moveDown: function(N) {
       let move, i, j,style;
-      
+
       if(this.normalBannerActiveArray.indexOf(N)==-1) {
-        this.normalBannerActiveArray.push(N);
+          this.normalBannerActiveArray.push(N);
         for(i=N+1;i<=this.filteredUser.length;i++){
-        move = document.getElementsByClassName('n'+i);
-        style = window.getComputedStyle(move[0]);
-        move[0].style.top = (parseInt(style.top)+200)+"px";
-      }
+          move = document.getElementsByClassName('n'+i);
+          style = window.getComputedStyle(move[0]);
+          move[0].style.top = (parseInt(style.top)+200)+"px";
+        }
       } else {
-        this.normalBannerActiveArray.splice(
+          this.normalBannerActiveArray.splice(
           this.normalBannerActiveArray.indexOf(N), 1
         );
 
         for(i=N+1;i<=this.filteredUser.length;i++){
-        move = document.getElementsByClassName('n'+i);
-        style = window.getComputedStyle(move[0]);
-        move[0].style.top = (parseInt(style.top)-200)+"px";
+          move = document.getElementsByClassName('n'+i);
+          style = window.getComputedStyle(move[0]);
+          move[0].style.top = (parseInt(style.top)-200)+"px";
         }
       }
-      
-      
-      /*
-      if(!this.isNormalBannerActive[N-1]) {
-        this.normalBannerActiveArray.push(N);
-      } else {
-        this.normalBannerActiveArray.splice(
-          this.normalBannerActiveArray.indexOf(N), 1
-        );
-      }
-
-      console.log(this.normalBannerActiveArray.indexOf(N));
-
-      for(i = 1; i <= this.normalBannerActiveArray.length; i++) {
-        for(j = this.normalBannerActiveArray[i-1] + 1; j <= this.filteredUser.length; j++) {
-          move = document.getElementsByClassName('n'+j);
-          move[0].style.top = (200 * j + 200 * i) + 'px';
-        }
-      }
-
-      this.isNormalBannerActive[N-1] = !this.isNormalBannerActive[N-1];
-
-      this.$forceUpdate();
-      */
     },
 
     initIsNormalBannerActive: function() {
@@ -193,6 +173,7 @@ export default {
 
   created: function() {
     this.onAuth();
+
     db.collection("USER")
       .doc(this.user.email)
       .get()
@@ -265,9 +246,9 @@ body {
         position: absolute;
 
         top: (200px * $i);
-        left: 10%;
+        left: 0;
 
-        width: $n_banner_width;
+        width: 100%;
         height: $n_banner_height;
 
         transition: 0.3s;
@@ -359,6 +340,16 @@ body {
 
 .v2-leave-active {
   transition: all 0.5s 0s ease;
+}
+
+.footerPosition {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: $footer_height;
 }
 
 </style>

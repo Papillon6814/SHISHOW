@@ -7,7 +7,12 @@
 </script>
 
 <style>
+
   #footer {
-    position: absolute;
+    width: 100%;
+    height: $footer_height;
+
+    background-color: $footer_color;
   }
+
 </style>
