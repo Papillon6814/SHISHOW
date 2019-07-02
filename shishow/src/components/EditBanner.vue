@@ -4,6 +4,7 @@
         <router-link to="/">
         <div class="refresh" type="button" @click="txtchange()">更新</div>
         </router-link>
+        <input v-model="username" name="username">
     </div>
 </template>
 <script>
