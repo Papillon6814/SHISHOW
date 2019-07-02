@@ -280,6 +280,7 @@ body {
 
         transition: 0.3s;
       }
+
       $i: $i + 1;
     }
   }
@@ -287,7 +288,7 @@ body {
   .footerPosition {
     position: absolute;
 
-    top: $temporary_top + 200px;
+    top: $temporary_top;
     left: 0;
 
     width: 100%;
