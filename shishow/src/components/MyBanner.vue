@@ -103,7 +103,7 @@ export default {
 
     if (User != null){
       email = User.email;
-    };
+    }
     console.log("gazouが"+email);
     db.collection("USER").doc(email).get()
     .then( doc => {

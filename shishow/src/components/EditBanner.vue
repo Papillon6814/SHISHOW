@@ -20,20 +20,41 @@ export default {
     data:function(){
         return{
             bio: " 自由に意見を記述してください ",
+            username: ""
+        }
+    },
+    computed: {
+        user() {
+            return this.$store.getters.user;
+        },
+        userStatus() {
+            return this.$store.getters.isSignedIn;
+        },
+
+        getCurrentUserName: function() {
+            return this.$store.getters.user.displayName;
+        },
+        getCurrentUserId: function() {
+            return this.$store.getters.user.uid;
         }
     },
     created:function(){
         console.log()
-        var User = firebase.auth().currentUser;
+        var User = this.user;
         var email;
         
         email = User.email;
         console.log(email);
+
         db.collection("USER").doc(email).get()
         .then(doc =>{
 
             if(doc.data()["bio"] != ""){
                 this.bio =  doc.data()["bio"];
+            }
+
+            if(doc.data()["username"] != ""){
+                this.username =  doc.data()["username"];
             }
 
         })
@@ -47,6 +68,9 @@ export default {
             var root = this;
             db.collection("USER").doc(email).update({
                 bio: root.bio
+            })
+            db.collection("USER").doc(email).update({
+                username: root.username
             })
             console.log(this.bio);
 
