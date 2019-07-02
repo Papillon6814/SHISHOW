@@ -1,7 +1,10 @@
 <template>
   <div id="root">
-    <navi></navi>
-    <transition appear name="v">
+    <header>
+      <navi @input="getSearchWord"></navi>
+    </header>
+    <main>
+      <transition appear name="v">
         <div id="myBannerPosition">
           <myBanner
             @extendMyBanner="extendOther"
@@ -25,12 +28,30 @@
           </div>
         </div>
       </transition>
+        <div id="moving">
+          <transition appear name="v2">
+            <div class="normalBannerPosition">
+              <div v-for="N in filteredUser.length"
+               :key="N" v-bind:class="'n'+N">
+                <normalBanner
+                 :user="filteredUser[N-1]"
+                 @extendNormalBanner="moveDown(N)">
+                </normalBanner>
+              </div>
+            </div>
+          </transition>
+        </div>
+      </main>
       <!--
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
       </div>
       -->
-    </div>
+      <footer>
+        <div class="footerPosition">
+          <ourFooter></ourFooter>
+        </div>
+      </footer>
   </div>
 </template>
 
@@ -41,6 +62,7 @@ import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
 import signinBanner from "../components/SigninBanner";
 import BlurBanner from "../components/BlurBanner.vue";
+import ourFooter from "../components/Footer.vue";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
@@ -100,7 +122,6 @@ export default {
       currentUser: "",
       signuser: [],
       normalBannerActiveArray: [],
-      isNormalBannerActive: [],
       relation:[],
     };
   },
@@ -109,7 +130,8 @@ export default {
     navi,
     myBanner,
     normalBanner,
-    BlurBanner
+    BlurBanner,
+    ourFooter
   },
   computed: {
     user() {
@@ -167,27 +189,36 @@ export default {
     extendOther: function() {
       let active = true;
       let move = document.getElementById("moving");
+      let footer = document.getElementsByTagName('footer');
+
+      let footerStyle = getComputedStyle(footer[0]);
+      footer[0].style.top = (parseInt(footerStyle.top) + 280) + 'px';
+
       move.style.top = "340px";
       this.active = !this.active;
       if (this.active === false) {
+        footer[0].style.top = (parseInt(footerStyle.top) - 280) + 'px';
+
         move.style.top = "60px";
       }
     },
 
-    moveDown: function(N) {
-      let move, i, j,style;
+    placeFooter: function() {
+      let footer = document.getElementsByTagName('footer');
+      footer[0].style.top = (200 * (1 + this.filteredUser.length) + 300) + 'px';
 
-      if(this.normalBannerActiveArray.indexOf(N)==-1) {
+      this.$forceUpdate();
+      console.log(this.filteredUser.length);
+    },
+
+    moveDown: function(N) {
+      let move, style;
+      let footer, footerStyle;
+      let i, j;
+
+      if(this.normalBannerActiveArray.indexOf(N) == -1) {
+        // normalBannerActiveArrayの中にNが格納されていない時
         this.normalBannerActiveArray.push(N);
-        for(i=N+1;i<=this.filteredUser.length;i++){
-        move = document.getElementsByClassName('n'+i);
-        style = window.getComputedStyle(move[0]);
-        move[0].style.top = (parseInt(style.top)+200)+"px";
-      }
-      } else {
-        this.normalBannerActiveArray.splice(
-          this.normalBannerActiveArray.indexOf(N), 1
-        );
 
         for(i=N+1;i<=this.filteredUser.length;i++){
         move = document.getElementsByClassName('n'+i);
@@ -197,39 +228,32 @@ export default {
       }
 
 
-      /*
       if(!this.isNormalBannerActive[N-1]) {
         this.normalBannerActiveArray.push(N);
       } else {
+        // Nが配列の中にある時は、削除を行う
         this.normalBannerActiveArray.splice(
           this.normalBannerActiveArray.indexOf(N), 1
         );
-      }
 
-      console.log(this.normalBannerActiveArray.indexOf(N));
+        for(i = N+1; i <= this.filteredUser.length; i++) {
+          move = document.getElementsByClassName('n'+i);
+          style = window.getComputedStyle(move[0]);
 
-      for(i = 1; i <= this.normalBannerActiveArray.length; i++) {
-        for(j = this.normalBannerActiveArray[i-1] + 1; j <= this.filteredUser.length; j++) {
-          move = document.getElementsByClassName('n'+j);
-          move[0].style.top = (200 * j + 200 * i) + 'px';
+          move[0].style.top = (parseInt(style.top) - 200) + "px";
         }
+        footer = document.getElementsByTagName('footer')
+        footerStyle = getComputedStyle(footer[0]);
+
+        footer[0].style.top = (parseInt(footerStyle.top) - 200) + 'px';
       }
-
-      this.isNormalBannerActive[N-1] = !this.isNormalBannerActive[N-1];
-
       this.$forceUpdate();
-      */
-    },
-
-    initIsNormalBannerActive: function() {
-      for(let i = 0; i < this.filteredUser.length; i++) {
-        this.isNormalBannerActive.push(false);
-      }
     }
   },
 
-  created: function() {
+  mounted: function() {
     this.onAuth();
+
     db.collection("USER")
       .doc(this.user.email)
       .get()
@@ -246,9 +270,8 @@ export default {
             this.filteredUser.push(docs.data());
           }
         });
+        this.placeFooter();
       });
-
-    this.initIsNormalBannerActive();
   }
 };
 </script>
@@ -271,6 +294,7 @@ body {
 #myBannerPosition {
   //position: relative;
   //temporary top
+
   padding-top: 70px;
   margin-left: 10%;
   margin-right: 10%;
@@ -291,30 +315,46 @@ body {
     top: 0;
     left: 0;
 
-    margin-left: 10%;
     width: 100%;
     height: 100%;
+
     padding-top: 165px;
+    margin-left: 10%;
+
     $i: 1;
 
+    list-style: none;
     @while $i <= 30 {
+
+      $temporary_top: (200px * $i) !global;
+
       .n#{$i} {
         position: absolute;
 
-        top: (200px * $i);
-        left: 10%;
+        top: $temporary_top;
+        left: 0;
 
-        width: $n_banner_width;
+        width: 100%;
         height: $n_banner_height;
 
         transition: 0.3s;
       }
+
       $i: $i + 1;
     }
-
-    list-style: none;
-    // z-index: -1
   }
+}
+
+footer {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: $footer_height;
+
+  transition: .3s;
 }
 
 #myBannerPosition {
@@ -328,7 +368,6 @@ body {
   z-index: 1;
   /*top: 45px;
     left: 10%;*/
-  z-index: 1;
 }
 
 .gameBannerPosition {

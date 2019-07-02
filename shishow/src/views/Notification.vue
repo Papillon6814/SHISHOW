@@ -23,6 +23,7 @@ export default {
 </script>
 
 <style lang='scss'>
+
   body {
     padding: 0;
     margin: 0;
@@ -63,4 +64,5 @@ export default {
   #notificationField::webkit-scrollbar{
     display: none;
   }
+
 </style>

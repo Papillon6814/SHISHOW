@@ -20,7 +20,7 @@
       <div class="profile">{{ user.bio }}</div>
     </div>
     <div class="userInfoPosition">
-      <div class="userInfo">仲野巧ですから</div>
+      <div class="userInfo">userinfo</div>
     </div>
     <div v-if="relation==0" @click="sendFriendReq" class="n_btn-circle-3d">江崎にフレ申請</div>
     <div v-else-if="relation==1" @click="add_db" class="n_btn-circle-3d">承認</div>
@@ -124,7 +124,7 @@ export default {
         }).catch(e =>{
           console.log(e)
         })
-      
+
       }
 
       this.relation = 2;
@@ -133,10 +133,10 @@ export default {
     delete_db:function(){
       const sign_db = db.collection("USER").doc(this.signuser.email);
       const user_db = db.collection("USER").doc(this.user.email)
-      
+
       user_db.collection("incoming").doc(this.signuser.email).delete()
       .catch(e=>{console.log(e)});
-    
+
       sign_db.collection("outgoing").doc(this.user.email).delete()
       .catch(e=>{console.log(e)});
 
@@ -162,7 +162,7 @@ export default {
             email:this.user.email
           });
       }).catch(e=>{console.log(e)});
-      
+
       user_db.collection("outgoing").doc(this.signuser.email).delete().then(()=>{
           user_db.collection("friends").doc(this.signuser.email).set({
             username:this.signuser.username,
