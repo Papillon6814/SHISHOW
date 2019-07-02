@@ -99,8 +99,8 @@ $n_profile_height: 83.75px;
 
  $theme_color_dm: #ddddff;
  $dm_icon_width: 90px;
- $dm_banner_color: #ccc;
- $dm_banner_color_hover : #e5e5e5;
+ $dm_banner_color: #FFF;
+ $dm_banner_color_hover : rgb(230, 236, 240);
  $selected_dm_banner_color: #555;
 
  /* --- */
@@ -113,3 +113,17 @@ $n_profile_height: 83.75px;
  $not_banner_height: 140px;
 
  /* --- */
+
+ /*around nav */
+
+ $secondary-color: rgba(255, 255, 255, 0.87);
+ $searchbar_width: 400px;
+
+/* --- */
+  /* text color */
+
+  $main_text_color: rgba(0, 0, 0, 0.87);
+  $sub_text_color: rgba(0, 0, 0, 0.54);
+  $invisible_text_color: rgba(0, 0, 0, 0.38);
+ 
+  /* --- */

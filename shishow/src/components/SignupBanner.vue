@@ -9,7 +9,6 @@
         </div>
       </div>
     </div>
-    <div id="trimmingButton">
       <span class="iconCirclePosition">
         <label>
           <div class="iconCircle">
@@ -23,7 +22,6 @@
           </div>
         </label>
       </span>
-    </div>
 
     <!-- achievements -->
 
@@ -90,7 +88,8 @@ export default {
       email: "",
       password: "",
       p_confirm: "",
-      uploadedImage: ""
+      uploadedImage: "",
+      roundimg:""
     };
   },
   methods: {
@@ -123,7 +122,8 @@ export default {
               email = User.email;
               alert("Create account: " + email);
               if (!this.uploadedImage) this.uploadedImage = url;
-              this.addToDatabase(this.email, this.username, this.uploadedImage);
+              console.log(this.roundimg);
+              this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
             });
           })
           .catch(error => {
@@ -134,18 +134,18 @@ export default {
 
       addToDatabase(email, username,image) {
 
-      db.collection("USER").doc(""+email).set({
-          email: email,
-          username: username,
-          image: image,
-          bio: ''
-      })
-      .then(function(docRef) {
-        console.log('Document written with ID: ', docRef.id);
-      })
-      .catch(function(error) {
-        console.log("Error adding document: ", error);
-      })
+        db.collection("USER").doc(""+email).set({
+            email: email,
+            username: username,
+            image: image,
+            bio: ''
+        })
+        .then(function(docRef) {
+          console.log('Document written with ID: ', docRef.id);
+        })
+        .catch(function(error) {
+          console.log("Error adding document: ", error);
+        })
     },
 
     onFileChange(event) {
@@ -243,6 +243,16 @@ export default {
         roundedImage.height = 130;
         result.innerHTML = "";
 
+        canvas.toBlob(function(blob){
+          let reader = new FileReader();
+          reader.onload = event => {
+            //htmlにファイルを反映
+            root.roundimg = event.target.result;
+          };
+
+          //読み込み開始
+          reader.readAsDataURL(blob);
+        });
         var del = document.getElementById("delete");
         if (del != null) {
           del.textContent = null;
@@ -251,7 +261,6 @@ export default {
         cropper.destroy();
         modal.style.display = "none";
         root.uploadedImage = "";
-
         result.appendChild(roundedImage);
       };
     }

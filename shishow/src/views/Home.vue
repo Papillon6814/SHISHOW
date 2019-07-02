@@ -1,18 +1,25 @@
 <template>
-  <div id="app">
-    <div v-show="loading">loading...</div>
-    <div v-show="!loading">
-      <div id="root">
-        <navi @input="getSearchWord"></navi>
-        <transition appear name="v">
-          <div id="myBannerPosition">
-            <myBanner
-              @extendMyBanner="extendOther"
-              v-if="userStatus"
-              :loginedUser="getCurrentUserName"
-              :loginedUerId="getCurrentUserId"
-            ></myBanner>
-            <BlurBanner v-else></BlurBanner>
+  <div id="root">
+    <navi></navi>
+    <transition appear name="v">
+        <div id="myBannerPosition">
+          <myBanner
+            @extendMyBanner="extendOther"
+            v-if="userStatus"
+            :loginedUser="getCurrentUserName"
+          ></myBanner>
+          <BlurBanner v-else></BlurBanner>
+        </div>
+    </transition>
+    <div id="moving">
+      <transition appear name="v2">
+        <div class="normalBannerPosition">
+          <div v-for="N in filteredUser.length"
+           :key="N" v-bind:class="'n'+N">
+            <normalBanner
+             :user="filteredUser[N-1]"
+             @extendNormalBanner="moveDown(N)">
+            </normalBanner>
           </div>
         </transition>
         <div id="moving">
@@ -66,6 +73,116 @@ export default {
 
   name: "home",
 
+  data: function() {
+    return {
+      users: [],
+      searchWord: "",
+      filteredUser: [],
+      currentUser: "",
+      signuser: [],
+      normalBannerActiveArray: [],
+      isNormalBannerActive: []
+    };
+  },
+
+  components: {
+    navi,
+    myBanner,
+    normalBanner,
+    BlurBanner
+  },
+
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+
+    userStatus() {
+      return this.$store.getters.isSignedIn;
+    },
+
+    getCurrentUserName: function() {
+      return this.$store.getters.user.displayName;
+    },
+
+    getCurrentUserId: function() {
+      return this.$store.getters.user.uid;
+    }
+  },
+
+  methods: {
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit("onAuthStateChanged", user);
+        store.commit("onUserStatusChanged", user.uid ? true : false);
+      });
+    },
+
+    extendOther: function() {
+      let active = true;
+      let move = document.getElementById("moving");
+      move.style.top = "340px";
+      this.active = !this.active;
+      if (this.active === false) {
+        move.style.top = "60px";
+      }
+    },
+
+    moveDown: function(N) {
+      let move, i, j,style;
+
+      if(this.normalBannerActiveArray.indexOf(N)==-1) {
+        this.normalBannerActiveArray.push(N);
+        for(i=N+1;i<=this.filteredUser.length;i++){
+        move = document.getElementsByClassName('n'+i);
+        style = window.getComputedStyle(move[0]);
+        move[0].style.top = (parseInt(style.top)+200)+"px";
+      }
+      } else {
+        this.normalBannerActiveArray.splice(
+          this.normalBannerActiveArray.indexOf(N), 1
+        );
+
+        for(i=N+1;i<this.filteredUser.length;i++){
+        move = document.getElementsByClassName('n'+i);
+        style = window.getComputedStyle(move[0]);
+        move[0].style.top = (parseInt(style.top)-200)+"px";
+        }
+      }
+
+
+      /*
+      if(!this.isNormalBannerActive[N-1]) {
+        this.normalBannerActiveArray.push(N);
+      } else {
+        this.normalBannerActiveArray.splice(
+          this.normalBannerActiveArray.indexOf(N), 1
+        );
+      }
+
+      console.log(this.normalBannerActiveArray.indexOf(N));
+
+      for(i = 1; i <= this.normalBannerActiveArray.length; i++) {
+        for(j = this.normalBannerActiveArray[i-1] + 1; j <= this.filteredUser.length; j++) {
+          move = document.getElementsByClassName('n'+j);
+          move[0].style.top = (200 * j + 200 * i) + 'px';
+        }
+      }
+
+      this.isNormalBannerActive[N-1] = !this.isNormalBannerActive[N-1];
+
+      this.$forceUpdate();
+      */
+    },
+
+    initIsNormalBannerActive: function() {
+      for(let i = 0; i < this.filteredUser.length; i++) {
+        this.isNormalBannerActive.push(false);
+      }
+    }
+  },
+
   created: function() {
     this.onAuth();
     db.collection("USER")
@@ -74,6 +191,7 @@ export default {
       .then(doc => {
         this.signuser = doc.data();
       });
+
     db.collection("USER")
       .get()
       .then(doc => {
@@ -84,98 +202,14 @@ export default {
           }
         });
       });
-  },
 
-  components: {
-    navi,
-    myBanner,
-    normalBanner
-  },
-
-  data: function() {
-    return {
-      users: [],
-      searchWord: "",
-      filteredUser: [],
-      currentUser: "",
-      signuser: []
-    };
-  },
-
-  computed: {
-    user() {
-      return this.$store.getters.user;
-    },
-    userStatus() {
-      return this.$store.getters.isSignedIn;
-    },
-
-    getCurrentUserName: function() {
-      return this.$store.getters.user.displayName;
-    },
-    getCurrentUserId: function() {
-      return this.$store.getters.user.uid;
-    },
-    filterUser() {
-      let key = this.searchWord;
-      let data = [];
-      let results = [];
-      let users_i;
-      if (key) {
-        for (users_i in this.users) {
-          //ユーザーネームの走査
-          if (this.users[users_i].data().username.indexOf(key) !== -1) {
-            results.push(this.users[users_i].data());
-          }
-        }
-        this.filteredUser = results;
-      } else {
-        //オブジェクトに変換
-        for (users_i in this.users) {
-          data[users_i] = this.users[users_i].data();
-        }
-        //何も入力されてないときにフィルターする前のデータをする
-        this.filteredUser = data;
-      }
-      this.$forceUpdate();
-    }
-  },
-
-  methods: {
-    getSearchWord(word) {
-      this.searchWord = word;
-      this.filterUser();
-    },
-    onAuth: function() {
-      firebase.auth().onAuthStateChanged(user => {
-        user = user ? user : {};
-        store.commit("onAuthStateChanged", user);
-        store.commit("onUserStatusChanged", user.uid ? true : false);
-      });
-    },
-    extendOther: function() {
-      var active = true;
-      var move = document.getElementById("moving");
-      move.style.top = "340px";
-      this.active = !this.active;
-      if (this.active === false) {
-        move.style.top = "60px";
-      }
-    },
-    extendNother:function(){
-      var active = true;
-      var move=document.getElementById('moven')
-      move.style.top = "350px";
-      this.active = !this.active;
-      if (this.active === false) {
-        move.style.top = "45px";
-      }
-    }
+    this.initIsNormalBannerActive();
   }
 };
 </script>
 
 <style lang="scss">
+
 html {
   overflow-y: scroll;
   overflow-x: hidden;
@@ -188,6 +222,7 @@ body {
 
   background-color: $dark_color;
 }
+
 #myBannerPosition {
   //position: relative;
   //temporary top
@@ -202,20 +237,39 @@ body {
     left: 10%;*/
 }
 
-.normalBannerPosition {
-  margin-left: 10%;
+#moving {
   width: 100%;
-  position: absolute;
-  padding-top: 165px;
-  $i: 1;
-  @while $i <= 30 {
-    .n#{$i} {
-      padding-top: 210px; /* + (200px * $i);*/
+
+  .normalBannerPosition {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    margin-left: 10%;
+    width: 100%;
+    height: 100%;
+    padding-top: 165px;
+    $i: 1;
+
+    @while $i <= 30 {
+      .n#{$i} {
+        position: absolute;
+
+        top: (200px * $i);
+        left: 10%;
+
+        width: $n_banner_width;
+        height: $n_banner_height;
+
+        transition: 0.3s;
+      }
+      $i: $i + 1;
     }
-    $i: $i + 1;
+
+    list-style: none;
+    // z-index: -1
   }
-  list-style: none;
-  // z-index: -1
 }
 
 #myBannerPosition {
@@ -230,27 +284,6 @@ body {
   /*top: 45px;
     left: 10%;*/
   z-index: 1;
-}
-
-.normalBannerPosition {
-  position: absolute;
-
-  margin-left: 10%;
-  padding-top: 200px;
-
-  width: 100%;
-  $i: 1;
-
-  @while $i <= 30 {
-    .n#{$i} {
-      padding-top: 210px; /* + (200px * $i);*/
-      left: 10%;
-    }
-
-    $i: $i + 1;
-  }
-
-  list-style: none;
 }
 
 .gameBannerPosition {
@@ -319,4 +352,5 @@ body {
 .v2-leave-active {
   transition: all 0.5s 0s ease;
 }
+
 </style>

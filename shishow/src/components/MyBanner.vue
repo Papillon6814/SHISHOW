@@ -1,7 +1,7 @@
 <template>
   <div class="banner" v-bind:class="{ 'banner': isA, 'extend': isB }">
     <span class="iconPicPosition">
-      <div class="iconPic"></div>
+      <div class="iconPic"><img id="image" v-show="icon" :src="icon" width="130" height="130"></div>
     </span>
     <div class="achievementPosition1">
       <div class="achievement"></div>
@@ -14,30 +14,26 @@
     </div>
     <div class="usernamePosition">
       <div class="fieldForUserName">
-        <div class="username">{{loginedUser}}
+        <div class="username">
+          {{loginedUser}}
           <!--
-            // FIXME:弟子要素を付けると領域デカすぎてボタン押せなくなる問題
+            // FIXME: 弟子要素を付けると領域デカすぎてボタン押せなくなる問題
              <div class="deshiPosition">
             <div class="deshi"></div>
           </div>
-           -->
+          -->
         </div>
       </div>
-      </div>
-      <!--
-    <div class="idPosition">
-      <div class="id">{{loginedUerId}}</div>
     </div>
-  -->
+    <router-link to="/edit">
     <div class="profilePosition">
       <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
-        最近では、予想外の趣味に没頭中！
+        {{bio}}
       </div>
     </div>
+    </router-link>
     <div class="userInfoPosition">
-      <div class="userInfo">仲野巧ですから</div>
+      <div class="userInfo">userinfo</div>
     </div>
     <router-link to="/friend">
       <div class="friendsButton">
@@ -55,28 +51,69 @@
 
 <script>
 import firebase from "../plugin/firestore";
+import "@firebase/auth";
 import "firebase/firestore";
 import router from "../router";
+import store from "../store";
 
 const db = firebase.firestore();
+
+
 
 export default {
   name: "myBanner",
 
-  props: [
-    "loginedUser",
-    "loginedUerId"
-  ],
+  props: ["loginedUser"],
 
   data: function() {
     return {
       isA: true,
       isB: false,
       isC: false,
-      sign: ""
+      sign: "",
+      icon: "",
+      bio: "",
+
     };
   },
 
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+    userStatus() {
+      return this.$store.getters.isSignedIn;
+    },
+
+    getCurrentUserName: function() {
+      return this.$store.getters.user.displayName;
+    },
+    getCurrentUserId: function() {
+      return this.$store.getters.user.uid;
+    }
+  },
+  created:function(){
+    console.log("created");
+    this.onAuth();
+    var root = this;
+
+
+    var User = this.user;
+    var email;
+
+    if (User != null){
+      email = User.email;
+    };
+    console.log("gazouが"+email);
+    db.collection("USER").doc(email).get()
+    .then( doc => {
+      console.log(doc.data()["image"]);
+      root.icon = doc.data()["image"];
+      root.bio = doc.data()["bio"];
+      console.log(root.icon);
+    });
+
+  },
   watch: {
     loginedUser: function() {
       console.log(this.loginedUser);
@@ -85,11 +122,18 @@ export default {
   },
 
   methods: {
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit("onAuthStateChanged", user);
+        store.commit("onUserStatusChanged", user.uid ? true : false);
+      });
+    },
     doExtend: function() {
       (this.isA = !this.isA),
-        (this.isB = !this.isB),
-        (this.isC = !this.isC),
-        this.$emit("extendMyBanner");
+      (this.isB = !this.isB),
+      (this.isC = !this.isC),
+      this.$emit("extendMyBanner");
     },
 
     logout: function() {
@@ -103,18 +147,13 @@ export default {
         .catch(function(e) {
           console.log(e);
         });
-
     }
-  },
-
-  created: function() {
-    console.log(this.loginedUser);
   }
 };
+
 </script>
 
 <style lang="scss" scoped>
-
 .banner {
   overflow-y: hidden;
   overflow-x: hidden;
@@ -157,7 +196,6 @@ export default {
 
   transition: 0.3s;
 }
-
 
 .iconPicPosition {
   position: absolute;
@@ -252,40 +290,38 @@ export default {
   top: 20px;
   left: 202px;
 
-
   width: $user_width;
   height: $user_height;
 
   background-color: #fff;
 
-    .deshiPosition {
-      position: relative;
+  .deshiPosition {
+    position: relative;
 
-      top: 0px;
-      left: 50%;
+    top: 0px;
+    left: 50%;
 
+    height: 100%;
+    z-index: 5;
+
+    .deshi {
+      width: $deshi_width;
       height: 100%;
-      z-index: 5;
 
-      .deshi {
-        width: $deshi_width;
-        height: 100%;
+      background-color: $window_flame;
+    }
 
-        background-color: $window_flame;
-      }
-
-      .deshi:before {
-        position: absolute;
-        content: "";
-        left: 0;
-        top: 0;
-        width: 0;
-        height: 0;
-        border: none;
-        border-left: solid 40px white;
-        border-bottom: solid 50px transparent;
-      }
-
+    .deshi:before {
+      position: absolute;
+      content: "";
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      border: none;
+      border-left: solid 40px white;
+      border-bottom: solid 50px transparent;
+    }
   }
 }
 
@@ -305,64 +341,62 @@ export default {
     right: 0px;
 
     background-color: #fff;
-
-
   }
 }
 
-  .userInfo {
-    width: 100%;
-    height: 230px;
+.userInfo {
+  width: 100%;
+  height: 230px;
 
-    // temporary color
-    background-color: #fff;
+  // temporary color
+  background-color: #fff;
 
-    border-radius: 5%;
-    border: dashed;
-    border-width: 2px;
-    border-color: $window_flame;
-  }
+  border-radius: 5%;
+  border: dashed;
+  border-width: 2px;
+  border-color: $window_flame;
+}
 
-  .userInfoPosition {
-    position: absolute;
+.userInfoPosition {
+  position: absolute;
 
-    top: 300px;
-    left: 75px;
-    right: 25px;
-  }
+  top: 300px;
+  left: 75px;
+  right: 25px;
+}
 
-  .logoutButton {
-    position: absolute;
+.logoutButton {
+  position: absolute;
 
-    right: 19%;
-    top: -10px;
-  }
+  right: 19%;
+  top: -10px;
+}
 
-  .friendsButton {
-    position: absolute;
+.friendsButton {
+  position: absolute;
 
-    right: 6%;
-    top: -10px;
-  }
+  right: 6%;
+  top: -10px;
+}
 
-  .btn-circle-3d {
-    display: inline-block;
-    text-decoration: none;
-    background: #ffc107;
-    color: #fff;
-    width: 130px;
-    height: 80px;
-    line-height: 79px;
-    border-radius: 50%;
-    text-align: center;
-    font-weight: bold;
-    overflow: hidden;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-    border-bottom: solid 3px #ffb300;
-    transition: 0.4s;
+.btn-circle-3d {
+  display: inline-block;
+  text-decoration: none;
+  background: #ffc107;
+  color: #fff;
+  width: 130px;
+  height: 80px;
+  line-height: 79px;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+  overflow: hidden;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+  border-bottom: solid 3px #ffb300;
+  transition: 0.4s;
 
-    cursor: pointer;
-  }
+  cursor: pointer;
+}
 
 .btn-circle-3d {
   position: relative;
@@ -396,5 +430,4 @@ export default {
 .reverse {
   transform: rotateX(180deg);
 }
-
 </style>

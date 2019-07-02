@@ -101,7 +101,7 @@ export default {
 
     margin: auto;
 
-    width: 10%;
+    width: 45%;
     height: 3.2rem;
 
     z-index: 3;

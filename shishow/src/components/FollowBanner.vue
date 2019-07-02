@@ -1,5 +1,5 @@
 <template>
-  <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'normalExtend': isB }">
+  <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'nextend': isB }">
     <span class="iconPicPosition">
       <img class="icon" :src="user['image']" />
     </span>
@@ -13,20 +13,18 @@
       <div class="achievement"></div>
     </div>
     <div class="usernamePosition">
-      <div class="username">{{ user.username }}</div>
+      <div class="username">{{user.username}}</div>
     </div>
     <div class="profilePosition">
-      <div class="profile">{{ user.bio }}</div>
+      <div class="profile">{{user.bio}}</div>
     </div>
     <div class="userInfoPosition">
       <div class="userInfo">仲野巧ですから</div>
     </div>
     <div @click="sendFriendReq()" class="n_btn-circle-3d">江崎にフレ申請</div>
-    <div class="pullDownProperties"
-         @click="callNormalExtend"
-         v-bind:class="{ reverse:arrowUp }">
+    <span v-bind:class="{nreverse:isC}" id="pullDownProperties">
       <i class="fas fa-caret-down"></i>
-    </div>
+    </span>
   </div>
 </template>
 
@@ -42,19 +40,19 @@ const currentUser = firebase.auth().currentUser;
 export default {
   name: "normalBanner",
 
+  props: ["user", "signuser", "searchWord"],
+
+  created: function() {
+    this.onAuth();
+  },
+
   data: function() {
     return {
       isA: true,
       isB: false,
-      arrowUp: false
+      isC: false
     };
   },
-
-  props: [
-    "user",
-    "signuser",
-    "searchWord"
-  ],
 
   methods: {
     onAuth: function() {
@@ -65,16 +63,14 @@ export default {
       });
     },
 
-    callNormalExtend: function() {
-      console.log("extend");
-
+    sendFriendReq: function() {
+      /*
       this.isA = !this.isA;
       this.isB = !this.isB;
-      this.arrowUp = !this.arrowUp;
+      this.isC = !this.isC,
+      */
       this.$emit("extendNormalBanner");
-    },
-
-    sendFriendReq: function() {
+      this.$emit("extendNbanner");
 
       if (store.state.status) {
         console.log(this.signuser["email"]);
@@ -105,11 +101,7 @@ export default {
           });
       }
     }
-  },
-
-  created: function() {
-    this.onAuth();
-  },
+  }
 };
 </script>
 
@@ -120,6 +112,7 @@ export default {
   overflow-y: hidden;
 
   width: $n_banner_width;
+  //temporary height
   height: $n_banner_height;
 
   background-color: $n_banner_color;
@@ -130,16 +123,22 @@ export default {
 
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
   transition: 0.3s;
+  //children
+
+  /*.editBioButton{
+
+    }*/
 }
 
 .normalBanner:hover {
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
 
-.normalExtend {
+.extend {
   position: absolute;
 
   width: $n_banner_width;
+  //temporary height
   height: $n_banner_height * 2;
 
   background-color: $n_banner_color;
@@ -148,6 +147,11 @@ export default {
 
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
   transition: 0.3s;
+  //children
+
+  /*.editBioButton{
+
+    }*/
 }
 
 .iconPicPosition {
@@ -159,10 +163,8 @@ export default {
 
 .achievement {
   position: relative;
-
   width: $n_achievement_width;
   height: $n_achievement_height; //√3
-
   background-color: #ffffff;
   margin: $n_root_twelve 0;
 }
@@ -175,7 +177,6 @@ export default {
   left: 0;
 
   width: 0;
-
   border-left: $n_a_half_width solid transparent;
   border-right: $n_a_half_width dashed transparent;
 }
@@ -187,7 +188,6 @@ export default {
 
 .achievement:after {
   top: 100%;
-
   width: 0;
   border-top: $n_root_twelve solid #fff;
 }
@@ -195,6 +195,8 @@ export default {
 .achievementPosition1 {
   position: absolute;
 
+  //top: -1.3vh;
+  //left: -1.8vh;
   top: 100.6875px;
   left: 23.11076388px;
 }
@@ -202,6 +204,8 @@ export default {
 .achievementPosition2 {
   position: absolute;
 
+  //top: -4.4vh;
+  //left: 5.9vh;
   top: 115px;
   left: 65.392px;
 }
@@ -209,11 +213,13 @@ export default {
 .achievementPosition3 {
   position: absolute;
 
+  //top: -12.46vh;
+  //left: 14vh;
   top: 100.6875px;
   left: 106.673px;
 }
 
-.pullDownProperties {
+#pullDownProperties {
   position: absolute;
 
   bottom: -5px;
@@ -223,7 +229,7 @@ export default {
   z-index: 4;
 }
 
-.pullDownProperties:hover {
+#pullDownProperties:hover {
   color: $pulldown_color;
 }
 
@@ -253,14 +259,13 @@ export default {
 .profile {
   width: $profile_width;
   height: $n_profile_height;
-
   background-color: #fff;
 }
-
 .userInfo {
   width: 100%;
   height: 160px;
 
+  // temporary color
   background-color: #fff;
 
   border-radius: 5%;
@@ -279,19 +284,14 @@ export default {
 
 .n_btn-circle-3d {
   position: relative;
-
   top: 15px;
   left: 39%;
-
-  width: 100px;
-  height: 60px;
-
   display: inline-block;
   text-decoration: none;
-
-  background-color: #ffc107;
+  background: #ffc107;
   color: #fff;
-
+  width: 100px;
+  height: 60px;
   line-height: 63px;
   border-radius: 50%;
   text-align: center;
@@ -307,7 +307,6 @@ export default {
 .n_btn-circle-3d:active {
   -webkit-transform: translateY(2px);
   transform: translateY(2px);
-
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
   border-bottom: none;
 }
@@ -320,6 +319,7 @@ export default {
   position: absolute;
 
   width: $n_banner_width;
+  //temporary height
   height: $n_banner_height * 2;
 
   background-color: $n_banner_color;
@@ -329,6 +329,7 @@ export default {
 
 .nreverse {
   transform: rotateX(180deg);
+  transition: 0.3s;
 }
 
 .icon {
