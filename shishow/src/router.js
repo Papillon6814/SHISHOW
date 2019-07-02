@@ -9,6 +9,7 @@ import Notification from './views/Notification.vue'
 import DirectMessage from './views/DirectMessage.vue'
 import Follow from './views/Follow.vue'
 import Friend from './views/friend.vue'
+import GlobalChat from "./views/GlobalChat.vue"
 
 
 
@@ -19,8 +20,7 @@ Vue.use(Router)
 let router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'home',
       component: Home
@@ -45,22 +45,24 @@ let router = new Router({
       path: '/directMessage',
       name: 'directMessage',
       component: DirectMessage,
-      meta: { requiresAuth: true }
+      meta: {
+        requiresAuth: true
+      }
     },
     {
-      path:'/friend',
-      name:'friend',
-      component:Friend
-    },
-    {
-      path:'/follow',
-      name:'follow',
-      component:Follow,
+      path: '/friend',
+      name: 'friend',
       component: Friend
     },
     {
-      path:'/search',
-      name:'search',
+      path: '/follow',
+      name: 'follow',
+      component: Follow,
+      component: Friend
+    },
+    {
+      path: '/search',
+      name: 'search',
       component: SearchResult
     },
     {
@@ -68,6 +70,11 @@ let router = new Router({
       name: 'edit',
       component: Edit
     },
+    {
+      path: "/GlobalChat",
+      name: 'GlobalChat',
+      component: GlobalChat
+    }
   ]
 })
 
