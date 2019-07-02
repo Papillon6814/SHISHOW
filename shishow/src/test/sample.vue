@@ -1,6 +1,7 @@
 <template>
     <div>
-        <aa></aa>
+
+
         <input type="file" accept="image/*" id="file" @change="filechange">
         <input type="text" v-model="text">
         <button type="button" @click="click">aaa</button>
@@ -12,9 +13,8 @@
 
 <script>
 import firebase from 'firebase'
-    import 'firebase/firestore'
-    import aa from "./aa"
-import { Promise } from 'q';
+import 'firebase/firestore'
+
 
     // Your web app's Firebase configuration
     var firebaseConfig = {
@@ -27,13 +27,15 @@ import { Promise } from 'q';
     appId: "1:476890822571:web:508b49508a91c0d3"
     };
     // Initialize Firebase
-   
 
-    var db = firebase.firestore();
+   const db = firebase.firestore()
+    
 export default {
     name:"sample",
+    created:function() {
+       
+    },
         components:{
-            aa,
         },
         data(){
             return{
@@ -42,7 +44,8 @@ export default {
                 name:"",
                 task:"",
                 photo:db.collection('users').doc("photo"),
-                text:"",
+                text:"aaa",
+
                 
             }
         },
@@ -64,84 +67,26 @@ export default {
                 
             },
 
-            click(){
+            aaa(){
+                let pro = new Promise((res,rej)=>{
+                    db.collection("USER").doc("mikan@gmail.com").get().then(doc=>{
+                    console.log("ccc")
+                    res(doc.data())
+                })
+                console.log("abc")
+                })
                 
-                db.collection("USER").get().then(qudocs=>{
-                    qudocs.forEach(qdoc=>{
-                        /*
-                        db.collection("USER").doc(qdoc.id).collection("incoming").get().then(docs=>{
-                            docs.forEach(doc=>{
-                                db.collection("USER").doc(qdoc.id).collection("incoming").doc(doc.id).delete();
-                            })
-                            
-                        })
-                        
-                        db.collection("USER").doc(qdoc.id).collection("outgoing").get().then(docs=>{
-                            docs.forEach(doc=>{
-                                db.collection("USER").doc(qdoc.id).collection("outgoing").doc(doc.id).delete();
-                            })
-                            
-                        })
-                        db.collection("USER").doc(qdoc.id).collection("friends").get().then(docs=>{
-                            docs.forEach(doc=>{
-                                db.collection("USER").doc(qdoc.id).collection("friends").doc(doc.id).delete();
-                            })
-                            
-                        })*/
-                    })
+                pro.then(doc=>{
+                    console.log("aaaa")
+                    return doc
                 })
-
-
-
-                /*
-                let promice = new Promise((res,rej)=>{
-                    db.collection("USER").doc("mikan@gmail.com").get().then(doc =>{
-                    console.log("aaa");
-                    res();
-                })
-                })
-                promice.then(()=>{
-                    console.log("bbb")
-                    return Promise((res,rej)=>{
-                        db.collection("USER").doc("mikan@gmail.com").get().then(doc =>{
-                    console.log("ccc");
-                    res();
-                    })
-                })}).then(()=>{
-                    console.log("ddd")
-                })
-                */
                 
-                
-                /*
-                if(this.task)console.log
-                this.photo.get().then(doc =>{
-                    console.log(doc.data()["name"]);
-                });.where("email","==",this.text)*/
-                /*db.collection("USER").get().then(querySnapshot => {
-                    //this.url = querySnapshot.docs[0].data()["image"];
-                    if(!querySnapshot.docs[0])console.log("bbb");
-                    querySnapshot.forEach(doc =>{
-                        //this.url = doc.data()["image"]
-                        
-                        console.log(doc.data()["email"]+"=>"+doc.id);
-                    })
-                
-                }).catch(e =>{
-                    console.log("aaa")
-                })
-                db.collection("USER").doc("").collection("user").doc();
             },
 
-            delete(){
-                db.collection("users").where("name","==","mikan").get().then(querySnapshot => {
-                    //db.collection("users").doc(querySnapshot.docs[0].id).delete();
-
-                    /*querySnapshot.forEach(doc =>{
-                        db.collection("users").doc(doc.id).delete();
-                    }
+            click(){
+                console.log(this.aaa())
                 
-                });*/
+                console.log("aaa")
             }
 
              

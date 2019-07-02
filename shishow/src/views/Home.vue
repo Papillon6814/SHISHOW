@@ -18,6 +18,8 @@
            :key="N" v-bind:class="'n'+N">
             <normalBanner
              :user="filteredUser[N-1]"
+             :signuser="signuser" 
+             :relations="relation[N-1]"
              @extendNormalBanner="moveDown(N)">
             </normalBanner>
           </div>
@@ -50,17 +52,36 @@ let currentUser;
 
 export default {
   name: "home",
+  created: function() {
+    this.onAuth();
+    const sign_db = db.collection("USER").doc(this.user.email);
 
-  data: function() {
-    return {
-      users: [],
-      searchWord: "",
-      filteredUser: [],
-      currentUser: "",
-      signuser: [],
-      normalBannerActiveArray: [],
-      isNormalBannerActive: []
-    };
+    sign_db.collection("relation").get().then(docs_r=>{
+    db.collection("USER").get().then(docs_p =>{
+      docs_p.forEach(doc=>{
+        if(doc.data().email != this.user.email){
+          this.users.push(doc.data());
+          this.filteredUser.push(doc.data());
+          if(docs_r.docs){
+            let i;
+            for(i=0;i<docs_r.docs.length && doc.data().email != docs_r.docs[i].id;i++);
+            if(i==docs_r.docs.length){
+              this.relation.push(0)
+            }else{
+              this.relation.push(docs_r.docs[i].data().relation);
+            }
+          }else{
+            this.relation.push(0)
+          }
+          }
+          
+        })
+      })      
+    });
+    
+    db.collection("USER").doc(this.user.email).get().then(doc =>{
+      this.signuser = doc.data();
+    });
   },
 
   components: {
@@ -70,6 +91,26 @@ export default {
     BlurBanner
   },
 
+
+  data: function() {
+    return {
+      users: [],
+      searchWord: "",
+      filteredUser: [],
+      currentUser: "",
+      signuser: [],
+      normalBannerActiveArray: [],
+      isNormalBannerActive: [],
+      relation:[],
+    };
+  },
+
+  components: {
+    navi,
+    myBanner,
+    normalBanner,
+    BlurBanner
+  },
   computed: {
     user() {
       return this.$store.getters.user;
@@ -78,17 +119,42 @@ export default {
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
-
     getCurrentUserName: function() {
       return this.$store.getters.user.displayName;
     },
 
     getCurrentUserId: function() {
       return this.$store.getters.user.uid;
-    }
+    },
+    filterUser: function() {
+      let key = this.searchWord;
+      let data = [];
+      let results = [];
+      //console.log(this.users[3].data().username);
+      //console.log(Object.keys(this.users).length);
+      let i;
+      //オブジェクトに変換
+      for (i in this.users) {
+        data[i] = this.users[i].data();
+      }
+      //console.log(data);
+      if (key) {
+        if (data.username.indexOf(key) !== -1) {
+          results.push(data);
+        }
+      }
+      console.log(results);
+    },
+    
   },
 
   methods: {
+    
+
+    getSearchWord(word) {
+      this.searchWord = word;
+    },
+    
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};
@@ -122,7 +188,7 @@ export default {
           this.normalBannerActiveArray.indexOf(N), 1
         );
 
-        for(i=N+1;i<this.filteredUser.length;i++){
+        for(i=N+1;i<=this.filteredUser.length;i++){
         move = document.getElementsByClassName('n'+i);
         style = window.getComputedStyle(move[0]);
         move[0].style.top = (parseInt(style.top)-200)+"px";
