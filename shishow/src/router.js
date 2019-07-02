@@ -3,10 +3,13 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
+import Edit from './views/Edit.vue'
 import SearchResult from './views/SearchResult.vue'
 import Notification from './views/Notification.vue'
 import DirectMessage from './views/DirectMessage.vue'
+import Follow from './views/Follow.vue'
 import Friend from './views/friend.vue'
+
 
 
 import firebase from 'firebase'
@@ -22,6 +25,7 @@ let router = new Router({
       name: 'home',
       component: Home
     },
+
     {
       path: '/signup',
       name: 'signup',
@@ -46,13 +50,24 @@ let router = new Router({
     {
       path:'/friend',
       name:'friend',
+      component:Friend
+    },
+    {
+      path:'/follow',
+      name:'follow',
+      component:Follow,
       component: Friend
     },
     {
       path:'/search',
       name:'search',
       component: SearchResult
-    }
+    },
+    {
+      path: '/edit',
+      name: 'edit',
+      component: Edit
+    },
   ]
 })
 

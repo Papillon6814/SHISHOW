@@ -17,7 +17,7 @@
         <div class="username">
           {{loginedUser}}
           <!--
-            // FIXME:弟子要素を付けると領域デカすぎてボタン押せなくなる問題
+            // FIXME: 弟子要素を付けると領域デカすぎてボタン押せなくなる問題
              <div class="deshiPosition">
             <div class="deshi"></div>
           </div>
@@ -27,13 +27,11 @@
     </div>
     <div class="profilePosition">
       <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
-        最近では、予想外の趣味に没頭中！
+        {{bio}}
       </div>
     </div>
     <div class="userInfoPosition">
-      <div class="userInfo">仲野巧ですから</div>
+      <div class="userInfo">userinfo</div>
     </div>
     <router-link to="/friend">
       <div class="friendsButton">
@@ -71,21 +69,48 @@ export default {
       isB: false,
       isC: false,
       sign: "",
-      icon: ""
+      icon: "",
+      bio: "",
 
     };
   },
 
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+    userStatus() {
+      return this.$store.getters.isSignedIn;
+    },
+
+    getCurrentUserName: function() {
+      return this.$store.getters.user.displayName;
+    },
+    getCurrentUserId: function() {
+      return this.$store.getters.user.uid;
+    }
+  },
   created:function(){
     console.log("created");
     this.onAuth();
     var root = this;
-    var User = firebase.auth().currentUser;
-    db.collection("USER").doc(User.email).get()
+
+
+    var User = this.user;
+    var email;
+
+    if (User != null){
+      email = User.email;
+    };
+    console.log("gazouが"+email);
+    db.collection("USER").doc(email).get()
     .then( doc => {
+      console.log(doc.data()["image"]);
       root.icon = doc.data()["image"];
+      root.bio = doc.data()["bio"];
+      console.log(root.icon);
     });
-    console.log(this.icon);
+
   },
   watch: {
     loginedUser: function() {
@@ -104,9 +129,9 @@ export default {
     },
     doExtend: function() {
       (this.isA = !this.isA),
-        (this.isB = !this.isB),
-        (this.isC = !this.isC),
-        this.$emit("extendMyBanner");
+      (this.isB = !this.isB),
+      (this.isC = !this.isC),
+      this.$emit("extendMyBanner");
     },
 
     logout: function() {
@@ -123,6 +148,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style lang="scss" scoped>

@@ -93,9 +93,6 @@ export default {
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css?family=Pangolin&display=swap");
 
-$secondary-color: #2196f3;
-$searchbar_width: 400px;
-
 #header {
   position: absolute;
 
@@ -128,7 +125,7 @@ $searchbar_width: 400px;
         left: 0;
 
         top: $searchbar_width/15;
-        color: #ccc;
+        color: #fff;
 
         font: 400 $searchbar_width/15 Roboto;
 
@@ -157,7 +154,7 @@ $searchbar_width: 400px;
           ~ label {
             top: 0;
             font: 700 $searchbar_width/25 Roboto;
-            color: #ccc;
+            color: #fff;
           }
         }
 
@@ -193,7 +190,7 @@ $searchbar_width: 400px;
         width: $searchbar_width;
         height: $searchbar_width/150;
 
-        background: #ccc;
+        background: #fff;
 
         transition: 0.3s ease;
       }
