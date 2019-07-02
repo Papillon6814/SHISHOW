@@ -1,32 +1,37 @@
 
 <template>
-  <div class="banner" v-bind:class="{ 'banner': isA, 'extend': isB }">
+  <div class="extend ">
+    <div>
+        <textarea v-model="bio" name="freeans" rows="4" cols="40"></textarea>
+    </div>
+    <div>
+        <router-link to="/">
+          <span class="refreshButtonPosition">
+            <div class="btn-circle-3d" type="button" @click="txtchange()">更新</div>
+          </span>
+        </router-link>
+        <input class="email" v-model="username" name="username">
+    </div>
+    
+    <!-- ここまでがEditBanner -->
+
     <span class="iconPicPosition">
       <div class="iconPic"><img id="image" v-show="icon" :src="icon" width="130" height="130"></div>
     </span>
-    <div class="achievementPosition1">
-      <div class="achievement"></div>
-    </div>
-    <div class="achievementPosition2">
-      <div class="achievement"></div>
-    </div>
-    <div class="achievementPosition3">
-      <div class="achievement"></div>
+    <div class="AllAchievementPosition">
+      <div class="achievementPosition1">
+        <div class="achievement"></div>
+      </div>
+      <div class="achievementPosition2">
+        <div class="achievement"></div>
+      </div>
+      <div class="achievementPosition3">
+        <div class="achievement"></div>
+      </div>
     </div>
     <div class="userInfoPosition">
       <div class="userInfo">userinfo</div>
     </div>
-    <router-link to="/friend">
-      <div class="friendsButton">
-        <div class="btn-circle-3d">フレンズ</div>
-      </div>
-    </router-link>
-    <div class="logoutButton">
-      <div @click="logout" class="btn-circle-3d">ログアウト</div>
-    </div>
-    <span v-bind:class="{ reverse:isC }" @click="doExtend" id="pullDownProperties">
-      <i class="fas fa-caret-down"></i>
-    </span>
   </div>
 </template>
 
@@ -110,12 +115,6 @@ export default {
         store.commit("onUserStatusChanged", user.uid ? true : false);
       });
     },
-    doExtend: function() {
-      (this.isA = !this.isA),
-      (this.isB = !this.isB),
-      (this.isC = !this.isC),
-      this.$emit("extendMyBanner");
-    },
 
     logout: function() {
       firebase
@@ -135,37 +134,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.banner {
+
+.extend:hover {
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+.extend {
   overflow-y: hidden;
   overflow-x: hidden;
 
   position: absolute;
 
-  width: $banner_width;
-  height: $banner_height;
-
   background-color: $banner_color;
-
-  border: solid;
-  border-width: 5px;
-  border-radius: 3px;
-  border-color: $banner_color;
-
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
-
-  transition: 0.3s;
-}
-
-.banner:hover {
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-}
-
-.extend {
-  position: absolute;
 
   width: $banner_width;
   //temporary height
-  height: $banner_height * 2;
+  height: $banner_height * 2.8;
 
   z-index: 2;
 
@@ -173,7 +157,7 @@ export default {
   border-width: 5px;
   border-color: $banner_flame;
 
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
   transition: 0.3s;
 }
@@ -181,12 +165,12 @@ export default {
 .iconPicPosition {
   position: absolute;
 
-  top: 15px;
-  left: 34.1611111px;
+  top: 20px;
+  left: 8%;
 
   .iconPic {
-    width: $icon_width;
-    height: $icon_height;
+    width: $icon_width*2.1;
+    height: $icon_height*2.1;
 
     // temporary color
     background-color: #fff;
@@ -230,8 +214,8 @@ export default {
 
   //top: -1.3vh;
   //left: -1.8vh;
-  top: 145px;
-  left: 16.1611111px;
+  top: 50px;
+  left: 50px;
 }
 
 .achievementPosition2 {
@@ -239,8 +223,8 @@ export default {
 
   //top: -4.4vh;
   //left: 5.9vh;
-  top: 160px;
-  left: 77.6611111px;
+  top: 50px;
+  left: 150px;
 }
 
 .achievementPosition3 {
@@ -248,86 +232,22 @@ export default {
 
   //top: -12.46vh;
   //left: 14vh;
-  top: 145px;
-  left: 139.161111px;
+  top: 50px;
+  left: 250px;
 }
 
-#pullDownProperties {
+.AllAchievementPosition{
   position: absolute;
-
-  bottom: -5px;
-  left: 15px;
-
-  font-size: 58px;
-}
-
-#pullDownProperties:hover {
-  color: $pulldown_color;
-}
-
-.username {
-  position: absolute;
-
-  top: 20px;
-  left: 202px;
-
-  width: $user_width;
-  height: $user_height;
-
-  background-color: #fff;
-
-  .deshiPosition {
-    position: relative;
-
-    top: 0px;
-    left: 50%;
-
-    height: 100%;
-    z-index: 5;
-
-    .deshi {
-      width: $deshi_width;
-      height: 100%;
-
-      background-color: $window_flame;
-    }
-
-    .deshi:before {
-      position: absolute;
-      content: "";
-      left: 0;
-      top: 0;
-      width: 0;
-      height: 0;
-      border: none;
-      border-left: solid 40px white;
-      border-bottom: solid 50px transparent;
-    }
-  }
-}
-
-.profilePosition {
-  position: absolute;
-
-  top: 120px;
-  left: 202px;
-  right: 25px;
-
-  .profile {
-    width: $profile_width;
-    height: $profile_height;
-
-    top: 30px;
-    left: 202px;
-    right: 0px;
-
-    background-color: #fff;
-  }
+  top: 50px;
+  left: 50%;
 }
 
 .userInfo {
-  width: 100%;
-  height: 230px;
+  position: absolute;
+  width: 91%;
+  height: 220px;
+
+  left: 3%;
 
   // temporary color
   background-color: #fff;
@@ -341,23 +261,16 @@ export default {
 .userInfoPosition {
   position: absolute;
 
-  top: 300px;
+  bottom: 280px;
   left: 75px;
   right: 25px;
 }
 
-.logoutButton {
+.refreshButtonPosition{
   position: absolute;
 
-  right: 19%;
-  top: -10px;
-}
-
-.friendsButton {
-  position: absolute;
-
-  right: 6%;
-  top: -10px;
+  right: 13%;
+  top: 70px;
 }
 
 .btn-circle-3d {
@@ -408,7 +321,23 @@ export default {
   border-bottom: none;
 }
 
-.reverse {
-  transform: rotateX(180deg);
-}
+textarea{
+    position: absolute;
+    top: 320px;
+    left: 7.9%;
+
+    height:20%;
+    width: 84.5%;
+  }
+
+  .email{
+    position: absolute;
+    resize: none;
+    width: 65%;
+    height: 40px;
+
+    top: 250px;
+    right:110px;
+  }
+
 </style>
