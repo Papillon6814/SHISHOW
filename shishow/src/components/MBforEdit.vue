@@ -13,6 +13,9 @@
     <div class="achievementPosition3">
       <div class="achievement"></div>
     </div>
+    <div class="userInfoPosition">
+      <div class="userInfo">userinfo</div>
+    </div>
     <router-link to="/friend">
       <div class="friendsButton">
         <div class="btn-circle-3d">フレンズ</div>
