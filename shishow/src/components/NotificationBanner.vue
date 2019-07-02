@@ -9,13 +9,14 @@
 </template>
 
 <script>
+
 import firebase from 'firebase'
 import 'firebase/firestore'
 
 const db = firebase.firestore();
 
 export default {
-  name: 'notBanner'
+  name: 'notificationBanner'
 }
 
 </script>
@@ -33,10 +34,13 @@ export default {
     border-width: 1.2px;
     border-color: #ddd;
 
+    //padding-top: 160px;
+
+
   .human{
       position: absolute;
 
-      top: 15px;
+      top: 5px;
       left: 15px;
 
       font-size: 35px;
@@ -70,7 +74,9 @@ export default {
       bottom:10px;
       background-color: #fff;
     }
+
   }
-  
+
+
 
 </style>

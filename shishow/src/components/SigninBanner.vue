@@ -267,6 +267,7 @@ export default {
 
   .usernamePosition{
     position: absolute;
+    display: inline-block;
 
     top: 50px;
     left: 200px;
@@ -286,9 +287,10 @@ export default {
 
   .passwordPosition{
     position: absolute;
+    display: inline-block;
 
     top: 160px;
-    left: 100px;
+    left: 97px;
     right: 150px;
   }
 

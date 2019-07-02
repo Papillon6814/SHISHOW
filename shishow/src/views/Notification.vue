@@ -2,14 +2,15 @@
   <div id="root">
     <navi></navi>
     <div id="notificationField">
-      <div> 
-        <notificationBanner></notificationBanner>
+      <div v-for="N in 30" :key="N" v-bind:class="'n'+N">
+        <notificationBanner></notificationBanner><!--通知された分のみ表示する-->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
 import navi from '../components/NavigationBar.vue'
 import notificationBanner from '../components/NotificationBanner.vue'
 
@@ -23,6 +24,16 @@ export default {
 </script>
 
 <style lang='scss'>
+
+$i: 1;
+@while $i <= 30 {
+  .n#{$i} {
+    padding-top: 141px; /* + (200px * $i);*/
+    left: 10%;
+  }
+  $i: $i + 1;
+}
+
   body {
     padding: 0;
     margin: 0;
@@ -43,5 +54,7 @@ export default {
 
     background-color: #fff;
     box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
+
   }
+
 </style>
