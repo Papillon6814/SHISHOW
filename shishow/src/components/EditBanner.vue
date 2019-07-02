@@ -1,6 +1,7 @@
 <template>
     <div>
         <textarea v-model="bio" name="freeans" rows="4" cols="40"></textarea>
+
         <router-link to="/">
         <div class="refresh" type="button" @click="txtchange()">更新</div>
         </router-link>
@@ -58,6 +59,7 @@ export default {
 <style lang="scss" scoped>
     textarea{
         position: relative;
+
         resize: none;
         width: 1293px;
         height: 125px;
