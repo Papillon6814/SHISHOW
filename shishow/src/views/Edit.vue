@@ -1,10 +1,12 @@
 <template>
     <div>
         <navi></navi>
-        <div class="Editposition">
+        <div id="Editposition">
             <EditBanner></EditBanner>
         </div>
-        <myBanner></myBanner>
+        <div id="myBannerposition"> 
+          <myBanner></myBanner>
+        </div>
     </div>
     
 </template>
@@ -22,7 +24,8 @@ export default {
     }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+
 html {
   overflow-y: scroll;
   overflow-x: hidden;
@@ -35,87 +38,20 @@ body {
 
   background-color: $dark_color;
 }
-.Editposition{
-    position:absolute;
-    top: 500px;
-    left: 100px;
-}
-#myBannerPosition {
-  //position: relative;
-  //temporary top
-  padding-top: 70px;
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 100%;
-  position: absolute;
-  z-index: 1;
 
-  /*top: 45px;
-    left: 10%;*/
+#Editposition{
+  position:absolute;
+  top: 255px;
+  left: 395px;
+  z-index: 2;
 }
 
-.normalBannerPosition {
-  margin-left: 10%;
-  width: 100%;
-  position: absolute;
-  padding-top: 165px;
-  $i: 1;
-  @while $i <= 30 {
-    .n#{$i} {
-      padding-top: 210px; /* + (200px * $i);*/
-    }
-    $i: $i + 1;
-  }
-  list-style: none;
-  // z-index: -1
-}
-
-#myBannerPosition {
-  //position: relative;
-  //temporary top
-  padding-top: 70px;
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 100%;
-  position: absolute;
-  z-index: 1;
-  /*top: 45px;
-    left: 10%;*/
-  z-index: 1;
-}
-
-.normalBannerPosition {
-  position: absolute;
-
-  margin-left: 10%;
-  padding-top: 200px;
-
-  width: 100%;
-  $i: 1;
-
-  @while $i <= 30 {
-    .n#{$i} {
-      padding-top: 210px; /* + (200px * $i);*/
-      left: 10%;
-    }
-
-    $i: $i + 1;
-  }
-
-  list-style: none;
-}
-
-.gameBannerPosition {
-  position: absolute;
-  //temporary top
-  top: 45px;
+#myBannerposition {
+  top: 130px;
   left: 10%;
-}
-
-#moving {
-  position: absolute;
   width: 100%;
-  transition: 0.3s;
+  position: absolute;
+  z-index: 1;
 }
 
 .v-enter {

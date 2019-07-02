@@ -35,17 +35,17 @@ export default {
   background-color: $dm_banner_color;
 
   border-bottom: solid;
-  border-width: 3px;
-  border-color: #555;
+  border-width: 1px;
+  border-color: #444;
+    
 
-  transition: .15s;
   cursor: pointer;
 
   .dmBannerIcon {
     position: relative;
 
-    top: 10px;
-    left: 15px;
+      top: 15px;
+      left: 20px;
 
     width: $dm_icon_width;
     height: $dm_icon_width;
@@ -62,27 +62,27 @@ export default {
   .dmBannerName {
     position: relative;
 
-    bottom: 80px;
-    left: 130px;
+      bottom: 80px;
+      left: 110px;
 
-    width: 60%;
-    height: 35px;
+      width: 30%;
+      height: 35px;
 
     // temporary color
     background-color: #fff;
 
-    font-size: 35px;
-    // font-family: 'Noto Sans JP', sans-serif;
-  }
+      font-size: 25px;
+      // font-family: 'Noto Sans JP', sans-serif;
+    }
 
   .dmMsgArea {
     position: relative;
 
-    bottom: 70px;
-    left: 130px;
+      bottom: 70px;
+      left: 150px;
 
-    width: 70%;
-    height: 60px;
+      width: 50%;
+      height: 60px;
 
     background-color: #fff;
     font-family: 'Noto Sans JP', sans-serif;
@@ -91,6 +91,17 @@ export default {
 
 .dmBanner:hover {
   background-color: $dm_banner_color_hover;
+
 }
+
+.dmBanner:hover > .dmBannerName{
+  background-color: $dm_banner_color_hover;
+}
+
+.dmBanner:hover > .dmMsgArea{
+  background-color: $dm_banner_color_hover;
+}
+
+
 
 </style>

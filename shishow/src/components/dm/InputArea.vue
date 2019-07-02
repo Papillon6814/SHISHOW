@@ -1,5 +1,6 @@
 <template>
   <div id="inputBar">
+    <div class="border"></div>
     <div class="smileEmojiPlace">
       <i class="fas fa-smile"></i>
     </div>
@@ -73,6 +74,7 @@ export default {
   width: 100%;
   height: 100%;
 
+
   background-color: #fff;
 
   .smileEmojiPlace {
@@ -102,5 +104,15 @@ export default {
 
     font-size: 40px;
   }
+}
+
+.border{
+  position: relative;
+  bottom:1px;
+  border-top:solid 1px;
+  border-radius: 3px;
+  color: #aaa;
+  width: 100%;
+  margin: 0px auto;
 }
 </style>
