@@ -21,7 +21,8 @@
              @extendNormalBanner="moveDown(N)">
             </normalBanner>
           </div>
-        </transition>
+        </div>
+      </transition>
         <div id="moving">
           <transition appear name="v2">
             <div class="normalBannerPosition">
@@ -38,7 +39,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
