@@ -1,39 +1,44 @@
 <template>
   <div id="root">
-    <navi @input="getSearchWord"></navi>
-    <transition appear name="v">
-      <div id="myBannerPosition">
-        <myBanner
-          @extendMyBanner="extendOther"
-          v-if="userStatus"
-          :loginedUser="getCurrentUserName"
-          :loginedUerId="getCurrentUserId"
-        ></myBanner>
-        <BlurBanner v-else></BlurBanner>
-      </div>
-    </transition>
-    <div id="moving">
-      <transition appear name="v2">
-        <div class="normalBannerPosition">
-          <div v-for="N in filteredUser.length"
-           :key="N" v-bind:class="'n'+N">
-            <normalBanner
-             :user="filteredUser[N-1]"
-             @extendNormalBanner="moveDown(N)">
-            </normalBanner>
-          </div>
+    <header>
+      <navi @input="getSearchWord"></navi>
+    </header>
+    <main>
+      <transition appear name="v">
+        <div id="myBannerPosition">
+          <myBanner
+            @extendMyBanner="extendOther"
+            v-if="userStatus"
+            :loginedUser="getCurrentUserName"
+            :loginedUerId="getCurrentUserId"
+          ></myBanner>
+          <BlurBanner v-else></BlurBanner>
         </div>
       </transition>
+        <div id="moving">
+          <transition appear name="v2">
+            <div class="normalBannerPosition">
+              <div v-for="N in filteredUser.length"
+               :key="N" v-bind:class="'n'+N">
+                <normalBanner
+                 :user="filteredUser[N-1]"
+                 @extendNormalBanner="moveDown(N)">
+                </normalBanner>
+              </div>
+            </div>
+          </transition>
+        </div>
+      </main>
       <!--
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
       </div>
       -->
-      <div class="footerPosition">
-        <ourFooter></ourFooter>
-      </div>
-    </div>
-
+      <footer>
+        <div class="footerPosition">
+          <ourFooter></ourFooter>
+        </div>
+      </footer>
   </div>
 </template>
 
@@ -135,20 +140,26 @@ export default {
     extendOther: function() {
       let active = true;
       let move = document.getElementById("moving");
+      let footer = document.getElementsByTagName('footer');
+
+      let footerStyle = getComputedStyle(footer[0]);
+      footer[0].style.top = (parseInt(footerStyle.top) + 280) + 'px';
+
       move.style.top = "340px";
       this.active = !this.active;
       if (this.active === false) {
+        footer[0].style.top = (parseInt(footerStyle.top) - 280) + 'px';
+
         move.style.top = "60px";
       }
     },
 
     placeFooter: function() {
-      let footer;
-
-      footer = document.getElementsByClassName('footerPosition');
-      footer[0].style.top = (200 * (1 + this.filteredUser.length));
+      let footer = document.getElementsByTagName('footer');
+      footer[0].style.top = (200 * (1 + this.filteredUser.length) + 300) + 'px';
 
       this.$forceUpdate();
+      console.log(this.filteredUser.length);
     },
 
     moveDown: function(N) {
@@ -164,13 +175,14 @@ export default {
           move = document.getElementsByClassName('n'+i);
           style = window.getComputedStyle(move[0]);
 
-          footer = document.getElementsByClassName('footerPosition');
-          footerStyle = getComputedStyle(footer[0]);
-
           move[0].style.top = (parseInt(style.top) + 200) + "px";
           // １バナーごとに+200していく処理
-          footer[0].style.top = (parseInt(footerStyle.top) + 200) + 'px';
+          console.log(footerStyle.top)
         }
+        footer = document.getElementsByTagName('footer');
+        footerStyle = getComputedStyle(footer[0]);
+
+        footer[0].style.top = (parseInt(footerStyle.top) + 200) + 'px';
 
       } else {
         // Nが配列の中にある時は、削除を行う
@@ -182,13 +194,14 @@ export default {
           move = document.getElementsByClassName('n'+i);
           style = window.getComputedStyle(move[0]);
 
-          footer = document.getElementsByClassName('footerPosition');
-          footerStyle = getComputedStyle(footer[0]);
-
           move[0].style.top = (parseInt(style.top) - 200) + "px";
-          footer[0].style.top = (parseInt(footerStyle.top) - 200) + 'px';
         }
+        footer = document.getElementsByTagName('footer')
+        footerStyle = getComputedStyle(footer[0]);
+
+        footer[0].style.top = (parseInt(footerStyle.top) - 200) + 'px';
       }
+      this.$forceUpdate();
     }
   },
 
@@ -284,16 +297,18 @@ body {
       $i: $i + 1;
     }
   }
+}
 
-  .footerPosition {
-    position: absolute;
+footer {
+  position: absolute;
 
-    top: $temporary_top;
-    left: 0;
+  top: 0;
+  left: 0;
 
-    width: 100%;
-    height: $footer_height;
-  }
+  width: 100%;
+  height: $footer_height;
+
+  transition: .3s;
 }
 
 #myBannerPosition {

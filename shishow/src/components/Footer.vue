@@ -16,9 +16,6 @@ export default {
   #footer {
     position: absolute;
 
-    top: 0;
-    left: 0;
-
     width: 100%;
     height: $footer_height;
 
