@@ -26,6 +26,9 @@
 
     <div id="menuButtons">
       <div class="buttons">
+        <router-link to="/GlobalChat">
+          <i class="fas fa-comment fa-3x grobal"></i>
+        </router-link>
         <router-link to="/directMessage">
           <i class="fas fa-envelope fa-3x dm"></i>
         </router-link>
@@ -45,6 +48,9 @@
           </label>
           <label class="nav-unshown" id="nav-close" for="nav-input"></label>
           <div id="nav-content">
+            <router-link to="/GlobalChat">
+              <i class="fas fa-comment fa-3x grobal"></i>
+            </router-link>
             <router-link to="/directMessage">
               <i class="fas fa-envelope fa-3x dm"></i>
             </router-link>
@@ -295,15 +301,27 @@ export default {
     }
 
     .home {
-      position: absolute;
+        position: absolute;
 
-      width: $button_width;
-      height: $button_height;
+        width: $button_width;
+        height: $button_height;
 
-      right: 350px;
-      top: 10px;
+        right: 450px;
+        top: 10px;
 
-      color: #fff;
+        color: #fff;
+    }
+
+    .grobal{
+        position: absolute;
+
+        width: $button_width;
+        height: $button_height;
+
+        right: 350px;
+        top: 10px;
+
+        color: #fff;
     }
 
     .dm:hover {
@@ -319,6 +337,10 @@ export default {
     }
 
     .home:hover {
+      opacity: 0.5;
+    }
+
+    .grobal:hover{
       opacity: 0.5;
     }
   }
