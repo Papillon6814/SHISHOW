@@ -1,7 +1,9 @@
 <template>
     <div>
         <textarea v-model="bio" name="freeans" rows="4" cols="40"></textarea>
+        <router-link to="/">
         <div class="refresh" type="button" @click="txtchange()">更新</div>
+        </router-link>
     </div>
 </template>
 <script>
