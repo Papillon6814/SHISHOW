@@ -4,7 +4,7 @@
         <router-link to="/">
         <div class="refresh" type="button" @click="txtchange()">更新</div>
         </router-link>
-        <input v-model="username" name="username">
+        <input class="email" v-model="username" name="username">
     </div>
 </template>
 <script>
@@ -57,6 +57,7 @@ export default {
 
 <style lang="scss" scoped>
     textarea{
+        position: relative;
         resize: none;
         width: 1293px;
         height: 125px;
@@ -90,6 +91,14 @@ export default {
         transform: translateY(2px);
         box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
         border-bottom: none;
+    }
+
+    .email{
+        position: absolute;
+        height:48%;
+        width: 64.5%;
+        top: -100px;
+        left: 0%;
     }
 </style>
 
