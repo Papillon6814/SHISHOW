@@ -29,8 +29,10 @@
           <gameBanner></gameBanner>
       </div>
       -->
+      <div class="footerPosition">
+        <ourFooter></ourFooter>
+      </div>
     </div>
-    <ourFooter></ourFooter>
 
   </div>
 </template>
@@ -62,8 +64,7 @@ export default {
       filteredUser: [],
       currentUser: "",
       signuser: [],
-      normalBannerActiveArray: [],
-      isNormalBannerActive: []
+      normalBannerActiveArray: []
     };
   },
 
@@ -142,36 +143,47 @@ export default {
     },
 
     moveDown: function(N) {
-      let move, i, j,style;
+      let move, style;
+      let footer, footerStyle;
+      let i, j;
 
-      if(this.normalBannerActiveArray.indexOf(N)==-1) {
-          this.normalBannerActiveArray.push(N);
-        for(i=N+1;i<=this.filteredUser.length;i++){
+      if(this.normalBannerActiveArray.indexOf(N) == -1) {
+        // normalBannerActiveArrayの中にNが格納されていない時
+        this.normalBannerActiveArray.push(N);
+
+        for(i = N+1; i <= this.filteredUser.length; i++) {
           move = document.getElementsByClassName('n'+i);
           style = window.getComputedStyle(move[0]);
-          move[0].style.top = (parseInt(style.top)+200)+"px";
+
+          footer = document.getElementsByClassName('footerPosition');
+          footerStyle = getComputedStyle(footer[0]);
+
+          move[0].style.top = (parseInt(style.top) + 200) + "px";
+          // １バナーごとに+200していく処理
+          footer[0].style.top = (parseInt(footerStyle.top) + 200) + 'px';
         }
+
       } else {
-          this.normalBannerActiveArray.splice(
+        // Nが配列の中にある時は、削除を行う
+        this.normalBannerActiveArray.splice(
           this.normalBannerActiveArray.indexOf(N), 1
         );
 
-        for(i=N+1;i<=this.filteredUser.length;i++){
+        for(i = N+1; i <= this.filteredUser.length; i++) {
           move = document.getElementsByClassName('n'+i);
           style = window.getComputedStyle(move[0]);
-          move[0].style.top = (parseInt(style.top)-200)+"px";
-        }
-      }
-    },
 
-    initIsNormalBannerActive: function() {
-      for(let i = 0; i < this.filteredUser.length; i++) {
-        this.isNormalBannerActive.push(false);
+          footer = document.getElementsByClassName('footerPosition');
+          footerStyle = getComputedStyle(footer[0]);
+
+          move[0].style.top = (parseInt(style.top) - 200) + "px";
+          footer[0].style.top = (parseInt(footerStyle.top) - 200) + 'px';
+        }
       }
     }
   },
 
-  created: function() {
+  mounted: function() {
     this.onAuth();
 
     db.collection("USER")
@@ -191,8 +203,6 @@ export default {
           }
         });
       });
-
-    this.initIsNormalBannerActive();
   }
 };
 </script>
@@ -215,6 +225,7 @@ body {
 #myBannerPosition {
   //position: relative;
   //temporary top
+
   padding-top: 70px;
   margin-left: 10%;
   margin-right: 10%;
@@ -235,17 +246,23 @@ body {
     top: 0;
     left: 0;
 
-    margin-left: 10%;
     width: 100%;
     height: 100%;
+
     padding-top: 165px;
+    margin-left: 10%;
+
     $i: 1;
 
+    list-style: none;
     @while $i <= 30 {
+
+      $temporary_top: (200px * $i) !global;
+
       .n#{$i} {
         position: absolute;
 
-        top: (200px * $i);
+        top: $temporary_top;
         left: 0;
 
         width: 100%;
@@ -255,9 +272,16 @@ body {
       }
       $i: $i + 1;
     }
+  }
 
-    list-style: none;
-    // z-index: -1
+  .footerPosition {
+    position: absolute;
+
+    top: $temporary_top + 200px;
+    left: 0;
+
+    width: 100%;
+    height: $footer_height;
   }
 }
 
@@ -272,7 +296,6 @@ body {
   z-index: 1;
   /*top: 45px;
     left: 10%;*/
-  z-index: 1;
 }
 
 .gameBannerPosition {
@@ -340,16 +363,6 @@ body {
 
 .v2-leave-active {
   transition: all 0.5s 0s ease;
-}
-
-.footerPosition {
-  position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: $footer_height;
 }
 
 </style>
