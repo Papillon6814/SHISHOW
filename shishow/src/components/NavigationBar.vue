@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import NormalBanner from "../components/NormalBanner";
 
 export default {
   name: "navi",
@@ -46,10 +45,6 @@ export default {
     return {
       word: ""
     };
-  },
-
-  components: {
-
   },
 
   methods: {

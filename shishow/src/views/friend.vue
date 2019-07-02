@@ -114,17 +114,18 @@ export default {
     .tab{
         width:50%;
         height: 100%;
-
     }
-    #black{
 
+    #black{
         background-color:black;
         float: left;
     }
+
     #white{
         background-color:white;
         float: right
     }
+    
     .mainobject{
         width:90%;
         margin:0 auto;

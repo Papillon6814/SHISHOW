@@ -142,6 +142,15 @@ export default {
       }
     },
 
+    placeFooter: function() {
+      let footer;
+
+      footer = document.getElementsByClassName('footerPosition');
+      footer[0].style.top = (200 * (1 + this.filteredUser.length));
+
+      this.$forceUpdate();
+    },
+
     moveDown: function(N) {
       let move, style;
       let footer, footerStyle;
@@ -202,6 +211,7 @@ export default {
             this.filteredUser.push(docs.data());
           }
         });
+        this.placeFooter();
       });
   }
 };
