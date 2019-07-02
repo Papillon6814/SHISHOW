@@ -34,7 +34,10 @@ export default {
     border-width: 1.2px;
     border-color: #ddd;
 
+<<<<<<< Updated upstream
     //padding-top: 160px;
+=======
+>>>>>>> Stashed changes
 
 
   .human{
