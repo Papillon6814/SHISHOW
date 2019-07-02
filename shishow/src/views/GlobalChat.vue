@@ -3,11 +3,12 @@
     <navi></navi>
     <!-- とりあえずクエリしたデータを表示したい -->
     <div class="msg-position">
-      <li v-for="message in msgs">{{message.msg}}</li>
+      <li v-for="message in msgs">{{message}}</li>
     </div>
     <div class="textarea-position">
       <textarea name="submit" v-model="submit" id="" cols="30" rows="10"></textarea>
       <button type="button" @click="submittxt()">送信</button>
+      <button type="button" @click="kakunin()">確認</button>
     </div>
   </div>
 </template>
@@ -39,19 +40,22 @@ export default {
 
   //チャットのデータベースからデータを取得
   created: function(){
-    db.collection("GlobalChat").get()
+    db.collection("GlobalChat").doc("LoL").collection("Chat").get()
     .then(doc => {
-        this.users = doc.docs;
         doc.forEach(docs => {
-          this.msgs.push(docs.data());
+          this.msgs.push(docs.data()["msg"]);
         });
     });
   },
   methods:{
+    kakunin(){
+      console.log(this.msgs);
+    },
     submittxt(){
-      db.collection("GlobalChat").add({
+      db.collection("GlobalChat").doc("LoL").collection("Chat").add({
         msg: this.submit
       });
+      this.msgs.push(this.submit);
     }
   },
 };
