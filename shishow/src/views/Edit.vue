@@ -1,9 +1,9 @@
 <template>
     <div>
         <navi></navi>
-        <div id="Editposition">
+        <!-- <div id="Editposition">
             <EditBanner></EditBanner>
-        </div>
+        </div> -->
         <div id="myBannerposition"> 
           <MBforEdit></MBforEdit>
         </div>
