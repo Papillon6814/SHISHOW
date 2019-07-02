@@ -18,7 +18,7 @@
            :key="N" v-bind:class="'n'+N">
             <normalBanner
              :user="filteredUser[N-1]"
-             :signuser="signuser" 
+             :signuser="signuser"
              :relations="relation[N-1]"
              @extendNormalBanner="moveDown(N)">
             </normalBanner>
@@ -74,11 +74,11 @@ export default {
             this.relation.push(0)
           }
           }
-          
+
         })
-      })      
+      })
     });
-    
+
     db.collection("USER").doc(this.user.email).get().then(doc =>{
       this.signuser = doc.data();
     });
@@ -126,6 +126,7 @@ export default {
     getCurrentUserId: function() {
       return this.$store.getters.user.uid;
     },
+
     filterUser: function() {
       let key = this.searchWord;
       let data = [];
@@ -145,16 +146,16 @@ export default {
       }
       console.log(results);
     },
-    
+
   },
 
   methods: {
-    
+
 
     getSearchWord(word) {
       this.searchWord = word;
     },
-    
+
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};
