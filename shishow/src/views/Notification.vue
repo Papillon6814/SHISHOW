@@ -60,7 +60,4 @@ export default {
       $i: $i + 1;
     }
   }
-  #notificationField::webkit-scrollbar{
-    display: none;
-  }
 </style>
