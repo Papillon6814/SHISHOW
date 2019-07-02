@@ -73,6 +73,7 @@
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
 import Cropper from "cropperjs";
+import router from "../router"
 
 const db = firebase.firestore();
 let files;
@@ -124,6 +125,7 @@ export default {
               if (!this.uploadedImage) this.uploadedImage = url;
               console.log(this.roundimg);
               this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
+              router.push("/")
             });
           })
           .catch(error => {
@@ -138,13 +140,7 @@ export default {
             email: email,
             username: username,
             image: image,
-            bio: ''
-        })
-        .then(function(docRef) {
-          console.log('Document written with ID: ', docRef.id);
-        })
-        .catch(function(error) {
-          console.log("Error adding document: ", error);
+            bio: 'No bio'
         })
     },
 
