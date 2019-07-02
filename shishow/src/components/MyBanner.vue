@@ -25,11 +25,13 @@
         </div>
       </div>
     </div>
+    <router-link to="/edit">
     <div class="profilePosition">
       <div class="profile">
         {{bio}}
       </div>
     </div>
+    </router-link>
     <div class="userInfoPosition">
       <div class="userInfo">userinfo</div>
     </div>
