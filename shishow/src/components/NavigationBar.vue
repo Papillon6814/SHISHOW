@@ -351,7 +351,10 @@ export default {
     display: none;
   }
 }
-@media (max-width: 800px){　//ナビゲーションバーのレスポンシブ表示
+@media (max-width: 1360px){　//ナビゲーションバーのレスポンシブ表示
+  /*.logoSentence{
+    top: 100px;
+  }*/
   #nav-drawer {
     position: relative;
   }
@@ -443,7 +446,7 @@ export default {
     right: 20px;
     z-index: 9999;//最前
     width: 90%;
-    max-width: 380px;//メニューバーの幅
+    max-width: 450px;//メニューバーの幅
     height: 90px;//高さ
     background: $dark_color;//メニューバーの色
     border: solid;
@@ -457,7 +460,7 @@ export default {
       position: absolute;
       width: $button_width;
       height: $button_height;
-      left: 290px;
+      left: 370px;
       top: 10px;
       color: #fff;
     }
@@ -465,7 +468,7 @@ export default {
       position: absolute;
       width: $button_width;
       height: $button_height;
-      left: 190px;
+      left: 280px;
       top: 10px;
       color: #fff;
     }
@@ -473,7 +476,7 @@ export default {
       position: absolute;
       width: $button_width;
       height: $button_height;
-      left: 100px;
+      left: 190px;
       top: 10px;
       color: #fff;
     }
@@ -482,6 +485,14 @@ export default {
       width: $button_width;
       height: $button_height;
       left: 10px;
+      top: 10px;
+      color: #fff;
+    }
+    .grobal{
+      position: absolute;
+      width: $button_width;
+      height: $button_height;
+      left: 100px;
       top: 10px;
       color: #fff;
     }
@@ -497,7 +508,10 @@ export default {
     -webkit-transform: translateY(100px); //メニューバーの表示
     transform: translateY(100px);
     box-shadow: 6px 0 25px rgba(0,0,0,.15);
-    /*.menu-trigger.active span:nth-of-type(1) {
+  }
+
+  /*#nav-input:checked ~ #nav-open {
+    .menu-trigger.active span:nth-of-type(1) {
       -webkit-transform: translateY(20px) rotate(-45deg);
       transform: translateY(20px) rotate(-45deg);
     }
@@ -507,8 +521,8 @@ export default {
     .menu-trigger.active span:nth-of-type(3) {
       -webkit-transform: translateY(-20px) rotate(45deg);
       transform: translateY(-20px) rotate(45deg);
-    }*/
-  }
+    }
+  }*/
 
   .header-logo-menu{ /*以下コピペにつき，意味が分からない CSSって何なのですか*/
 	  display: flex;

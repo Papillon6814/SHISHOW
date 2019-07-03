@@ -40,7 +40,7 @@ export default {
     left: 5%;
 
     width: 90%;
-    height: 87%;
+    height: 80%;
 
     background-color: #fff;
     box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
