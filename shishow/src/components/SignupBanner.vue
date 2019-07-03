@@ -94,6 +94,7 @@ export default {
       roundimg:""
     };
   },
+
   methods: {
     signUp: function() {
       let url;
@@ -269,6 +270,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style lang="scss" scoped>

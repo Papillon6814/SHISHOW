@@ -12,7 +12,7 @@
         </router-link>
         <input class="email" v-model="username" name="username">
     </div>
-    
+
     <!-- ここまでがEditBanner -->
 
     <span class="iconPicPosition">
@@ -89,7 +89,7 @@ export default {
 
     if (User != null){
       email = User.email;
-    };
+    }
     console.log("gazouが"+email);
     db.collection("USER").doc(email).get()
     .then( doc => {
