@@ -2,7 +2,7 @@
   <div id="root">
     <navi></navi>
     <div id="notificationField">
-      <div> 
+      <div v-for="N in 30" :key="N" v-bind:class="'not'+N">
         <notificationBanner></notificationBanner>
       </div>
     </div>
@@ -23,11 +23,13 @@ export default {
 </script>
 
 <style lang='scss'>
+
   body {
     padding: 0;
     margin: 0;
     width: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
 
     background-color: $dark_color;
   }
@@ -43,5 +45,24 @@ export default {
 
     background-color: #fff;
     box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+
+
+    .not1{
+    }
+    $i: 2;
+    @while $i<=30 {
+      .not#{$i}{
+        padding-top: $not_banner_height;
+      }
+      $i: $i + 1;
+    }
   }
+  #notificationField::webkit-scrollbar{
+    display: none;
+  }
+
 </style>
