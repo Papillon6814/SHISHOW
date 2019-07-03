@@ -4,12 +4,22 @@
 </template>
 
 <script>
+
+export default {
+  name: 'ourFooter'
+}
+
 </script>
 
-<style>
+<style lang='scss' scoped>
+
   #footer {
     position: absolute;
 
-    
+    width: 100%;
+    height: $footer_height;
+
+    background-color: $footer_color;
   }
+
 </style>
