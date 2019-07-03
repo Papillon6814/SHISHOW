@@ -63,7 +63,6 @@ export default {
             this.msgList.push(doc1.data());
           })
 
-          console.log("onload: " + this.msgList[0].msg)
           console.log("end")
         })
     }
@@ -86,7 +85,7 @@ export default {
             this.msgList.push(doc1.data());
           })
 
-          console.log("onload: " + this.msgList[0].msg)
+          console.log("onload: " + this.msgList[0].msg);
         })
   }
 };
