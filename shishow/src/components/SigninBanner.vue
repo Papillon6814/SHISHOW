@@ -116,7 +116,7 @@ export default {
   }
 
   .username {
-    width: 900px; //$user_width
+    width:  100%; //$user_width
     height: 30px; //$user_height
 
     background-color: #fff;
@@ -126,12 +126,15 @@ export default {
     position: absolute;
 
     top: 50px;
-    left: 22%;
-    right: 100px;
+    left: 50%;
+    width: 75%;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
   }
 
   .password {
-    width: 900px; //$id_width
+    width: 100%; //$id_width
     height: 30px; //$id_height
 
     background-color: #fff;
@@ -141,7 +144,11 @@ export default {
     position: absolute;
 
     top: 120px;
-    left: 22%;
+    left: 50%;
+    width: 75%;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
   }
 
   .btn-circle-3d {
