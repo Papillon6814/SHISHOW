@@ -3,7 +3,9 @@
     <navi></navi>
     <!-- とりあえずクエリしたデータを表示したい -->
     <div class="msg-position">
-      <li v-for="message in msgs">{{message}}</li>
+      <ul style="text-align:left">
+        <li v-for="message in msgs">{{message}}</li>
+      </ul>
     </div>
     <div class="textarea-position">
       <textarea name="submit" v-model="submit" id="" cols="30" rows="10"></textarea>
@@ -46,16 +48,34 @@ export default {
           this.msgs.push(docs.data()["msg"]);
         });
     });
+    var root = this;
+    db.collection("GlobalChat").doc("LoL")
+    .onSnapshot(function(doc){
+      db.collection("GlobalChat").doc("LoL").collection("Chat").orderBy("date").get()
+      .then(doc => {
+        console.log("できた");
+        root.msgs = [];
+        console.log(root.msgs);
+        doc.forEach(docs => {
+          root.msgs.push(docs.data()["msg"]);
+        });
+        console.log(root.msgs);
+      });
+    });
   },
   methods:{
     kakunin(){
       console.log(this.msgs);
     },
     submittxt(){
-      db.collection("GlobalChat").doc("LoL").collection("Chat").add({
-        msg: this.submit
-      });
-      this.msgs.push(this.submit);
+      if(this.msgs){
+        var root = this;
+        let now = new Date();
+        db.collection("GlobalChat").doc("LoL").collection("Chat").add({
+          msg: this.submit,
+          date: now
+        });
+      }
     }
   },
 };
