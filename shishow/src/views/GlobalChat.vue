@@ -49,19 +49,23 @@ export default {
         });
     });
     var root = this;
-    db.collection("GlobalChat").doc("LoL")
-    .onSnapshot(function(doc){
-      db.collection("GlobalChat").doc("LoL").collection("Chat").orderBy("date").get()
-      .then(doc => {
-        console.log("できた");
-        root.msgs = [];
-        console.log(root.msgs);
-        doc.forEach(docs => {
-          root.msgs.push(docs.data()["msg"]);
-        });
-        console.log(root.msgs);
+    db.collection("GlobalChat")
+    .doc("LoL")
+    .collection("Chat")
+    .orderBy("date")
+    .onSnapshot(chat =>{
+
+      this.msgs = [];
+
+      chat.forEach(doc =>{
+        this.msgs.push(doc.data()["msg"])
       });
-    });
+
+      console.log("onload: " + this.msg[0])
+    })
+    .catch(e=>{
+      console.log(e)
+    })
   },
   methods:{
     kakunin(){
