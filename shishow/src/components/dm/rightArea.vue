@@ -22,7 +22,6 @@ import { types } from 'util';
 
 const db = firebase.firestore();
 let currentUserEmail;
-let friendDocID;
 let chatID;
 
 export default {
@@ -49,12 +48,31 @@ export default {
   },
 
   watch:{
+    friendDocID: function(newval) {
+      this.msgList = [];
+      currentUserEmail = firebase.auth().currentUser.email;
 
+      db.collection("")
+
+
+    }
   },
 
   created: function() {
     this.onAuth();
     console.log("rightArea created");
+
+    currentUserEmail = firebase.auth().currentUser.email;
+
+    db.collection("USER")
+      .doc(currentUserEmail)
+      .collection('friends')
+      .doc(this.friendDocID)
+      .get()
+      .then(doc => {
+        chatID = doc.data()['chatID'];
+        console.log('chatID: '+chatID);
+      })
   }
 };
 </script>
