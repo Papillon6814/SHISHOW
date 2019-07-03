@@ -60,11 +60,6 @@ export default {
       chat.forEach(doc =>{
         this.msgs.push(doc.data()["msg"])
       });
-
-      console.log("onload: " + this.msg[0])
-    })
-    .catch(e=>{
-      console.log(e)
     })
   },
   methods:{
