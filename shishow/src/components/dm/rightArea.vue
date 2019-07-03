@@ -65,8 +65,6 @@ export default {
 
           console.log("onload: " + this.msgList[0].msg)
           console.log("end")
-        }).catch(e=>{
-          console.log(e)
         })
     }
   },
