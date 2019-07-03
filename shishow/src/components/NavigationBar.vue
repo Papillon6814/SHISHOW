@@ -69,7 +69,6 @@
 </template>
 
 <script>
-import NormalBanner from "../components/NormalBanner";
 import store from "../store";
 
 export default {
@@ -80,8 +79,6 @@ export default {
       word: ""
     };
   },
-
-  components: {},
 
   methods: {
     onChangeInput() {

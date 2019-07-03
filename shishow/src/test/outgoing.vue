@@ -85,6 +85,15 @@ export default {
           this.$parent.outgo = "";
        })
       }).catch(e=>{console.log(e)});
+
+      db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).delete()
+      .catch(e =>{
+        console.log(e)
+      })
+      db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).delete()
+      .catch(e =>{
+        console.log(e)
+      })
     },
   }
 }
