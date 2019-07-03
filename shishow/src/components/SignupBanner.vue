@@ -39,7 +39,8 @@
     <!-- ... -->
 
     <div class="usernamePosition">
-      <input class="username" type="text" placeholder="Display name" v-model="username">
+      <input class="username" type="text" placeholder="Display name"
+      v-model="username" required>
     </div>
 
     <div class="emailPosition">
