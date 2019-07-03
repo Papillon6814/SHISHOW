@@ -115,7 +115,7 @@ export default {
   }
 
   .username {
-    width: 700px; //$user_width
+    width:  100%; //$user_width
     height: 30px; //$user_height
 
     background-color: #fff;
@@ -126,13 +126,14 @@ export default {
 
     top: 50px;
     left: 50%;
+    width: 75%;
     -webkit-transform: translate(-50%, 0);
     -moz-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
   }
 
   .password {
-    width: 700px; //$id_width
+    width: 100%; //$id_width
     height: 30px; //$id_height
 
     background-color: #fff;
@@ -143,6 +144,7 @@ export default {
 
     top: 120px;
     left: 50%;
+    width: 75%;
     -webkit-transform: translate(-50%, 0);
     -moz-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
