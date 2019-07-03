@@ -1,7 +1,10 @@
 <template>
   <div id="root">
-    <navi></navi>
-    <transition appear name="v">
+    <header>
+      <navi @input="getSearchWord"></navi>
+    </header>
+    <main>
+      <transition appear name="v">
         <div id="myBannerPosition">
           <myBanner
             @extendMyBanner="extendOther"
@@ -10,25 +13,33 @@
           ></myBanner>
           <BlurBanner v-else></BlurBanner>
         </div>
-    </transition>
-    <div id="moving">
-      <transition appear name="v2">
-        <div class="normalBannerPosition">
-          <div v-for="N in filteredUser.length"
-           :key="N" v-bind:class="'n'+N">
-            <normalBanner
-             :user="filteredUser[N-1]"
-             @extendNormalBanner="moveDown(N)">
-            </normalBanner>
-          </div>
-        </div>
       </transition>
+      <div id="moving">
+        <transition appear name="v2">
+          <div class="normalBannerPosition">
+            <div v-for="N in filteredUser.length"
+              :key="N" v-bind:class="'n'+N">
+              <normalBanner
+              :user="filteredUser[N-1]"
+              :signuser="signuser"
+              :relations="relation[N-1]"
+              @extendNormalBanner="moveDown(N)">
+              </normalBanner>
+            </div>
+          </div>
+        </transition>
+      </div>
+    </main>
       <!--
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
       </div>
       -->
-    </div>
+      <footer>
+        <div class="footerPosition">
+          <ourFooter></ourFooter>
+        </div>
+      </footer>
   </div>
 </template>
 
@@ -39,6 +50,7 @@ import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
 import signinBanner from "../components/SigninBanner";
 import BlurBanner from "../components/BlurBanner.vue";
+import ourFooter from "../components/Footer.vue";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
@@ -51,6 +63,51 @@ let currentUser;
 export default {
   name: "home",
 
+  mounted: function() {
+    this.onAuth();
+    const sign_db = db.collection("USER").doc(this.user.email);
+
+    sign_db.collection("relation").get().then(docs_r=>{
+    db.collection("USER").get().then(docs_p =>{
+      docs_p.forEach(doc=>{
+        if(doc.data().email != this.user.email){
+          this.users.push(doc.data());
+          this.filteredUser.push(doc.data());
+          if(docs_r.docs){
+            let i;
+            for(i=0;i<docs_r.docs.length && doc.data().email != docs_r.docs[i].id;i++);
+            if(i==docs_r.docs.length){
+              this.relation.push(0)
+            }else{
+              this.relation.push(docs_r.docs[i].data().relation);
+            }
+          }else{
+            this.relation.push(0)
+          }
+          }
+
+        })
+        this.placeFooter();
+      })
+
+    });
+
+    db.collection("USER")
+    .doc(this.user.email)
+    .get()
+    .then(doc =>{
+      this.signuser = doc.data();
+    });
+  },
+
+  components: {
+    navi,
+    myBanner,
+    normalBanner,
+    BlurBanner
+  },
+
+
   data: function() {
     return {
       users: [],
@@ -59,7 +116,7 @@ export default {
       currentUser: "",
       signuser: [],
       normalBannerActiveArray: [],
-      isNormalBannerActive: []
+      relation:[],
     };
   },
 
@@ -67,7 +124,8 @@ export default {
     navi,
     myBanner,
     normalBanner,
-    BlurBanner
+    BlurBanner,
+    ourFooter
   },
 
   computed: {
@@ -78,17 +136,42 @@ export default {
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
-
     getCurrentUserName: function() {
       return this.$store.getters.user.displayName;
     },
 
     getCurrentUserId: function() {
       return this.$store.getters.user.uid;
-    }
+    },
+
+    filterUser: function() {
+      let key = this.searchWord;
+      let data = [];
+      let results = [];
+      //console.log(this.users[3].data().username);
+      //console.log(Object.keys(this.users).length);
+      let i;
+      //オブジェクトに変換
+      for (i in this.users) {
+        data[i] = this.users[i].data();
+      }
+      //console.log(data);
+      if (key) {
+        if (data.username.indexOf(key) !== -1) {
+          results.push(data);
+        }
+      }
+      console.log(results);
+    },
+
   },
 
   methods: {
+
+    getSearchWord(word) {
+      this.searchWord = word;
+    },
+
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};
@@ -100,88 +183,66 @@ export default {
     extendOther: function() {
       let active = true;
       let move = document.getElementById("moving");
+      let footer = document.getElementsByTagName('footer');
+
+      let footerStyle = getComputedStyle(footer[0]);
+      footer[0].style.top = (parseInt(footerStyle.top) + 280) + 'px';
+
       move.style.top = "340px";
       this.active = !this.active;
       if (this.active === false) {
+        footer[0].style.top = (parseInt(footerStyle.top) - 280) + 'px';
+
         move.style.top = "60px";
       }
     },
 
-    moveDown: function(N) {
-      let move, i, j,style;
-
-      if(this.normalBannerActiveArray.indexOf(N)==-1) {
-        this.normalBannerActiveArray.push(N);
-        for(i=N+1;i<=this.filteredUser.length;i++){
-        move = document.getElementsByClassName('n'+i);
-        style = window.getComputedStyle(move[0]);
-        move[0].style.top = (parseInt(style.top)+200)+"px";
-      }
-      } else {
-        this.normalBannerActiveArray.splice(
-          this.normalBannerActiveArray.indexOf(N), 1
-        );
-
-        for(i=N+1;i<this.filteredUser.length;i++){
-        move = document.getElementsByClassName('n'+i);
-        style = window.getComputedStyle(move[0]);
-        move[0].style.top = (parseInt(style.top)-200)+"px";
-        }
-      }
-
-
-      /*
-      if(!this.isNormalBannerActive[N-1]) {
-        this.normalBannerActiveArray.push(N);
-      } else {
-        this.normalBannerActiveArray.splice(
-          this.normalBannerActiveArray.indexOf(N), 1
-        );
-      }
-
-      console.log(this.normalBannerActiveArray.indexOf(N));
-
-      for(i = 1; i <= this.normalBannerActiveArray.length; i++) {
-        for(j = this.normalBannerActiveArray[i-1] + 1; j <= this.filteredUser.length; j++) {
-          move = document.getElementsByClassName('n'+j);
-          move[0].style.top = (200 * j + 200 * i) + 'px';
-        }
-      }
-
-      this.isNormalBannerActive[N-1] = !this.isNormalBannerActive[N-1];
+    placeFooter: function() {
+      let footer = document.getElementsByTagName('footer');
+      footer[0].style.top = (200 * (1 + this.filteredUser.length) + 300) + 'px';
 
       this.$forceUpdate();
-      */
+      console.log(this.filteredUser.length);
     },
 
-    initIsNormalBannerActive: function() {
-      for(let i = 0; i < this.filteredUser.length; i++) {
-        this.isNormalBannerActive.push(false);
+    moveDown: function(N) {
+      let move, style;
+      let footer, footerStyle;
+      let i, j;
+
+      if(this.normalBannerActiveArray.indexOf(N) == -1) {
+        // normalBannerActiveArrayの中にNが格納されていない時
+        this.normalBannerActiveArray.push(N);
+
+        for(i=N+1;i<=this.filteredUser.length;i++){
+          move = document.getElementsByClassName('n'+i);
+          style = window.getComputedStyle(move[0]);
+          move[0].style.top = (parseInt(style.top)+200)+"px";
+        }
+
+        footer = document.getElementsByTagName('footer')
+        footerStyle = getComputedStyle(footer[0]);
+
+        footer[0].style.top = (parseInt(footerStyle.top) + 200) + 'px';
+      } else {
+        // Nが配列の中にある時は、削除を行う
+        this.normalBannerActiveArray.splice(
+          this.normalBannerActiveArray.indexOf(N), 1
+        );
+
+        for(i = N+1; i <= this.filteredUser.length; i++) {
+          move = document.getElementsByClassName('n'+i);
+          style = window.getComputedStyle(move[0]);
+
+          move[0].style.top = (parseInt(style.top) - 200) + "px";
+        }
+        footer = document.getElementsByTagName('footer')
+        footerStyle = getComputedStyle(footer[0]);
+
+        footer[0].style.top = (parseInt(footerStyle.top) - 200) + 'px';
       }
+      this.$forceUpdate();
     }
-  },
-
-  created: function() {
-    this.onAuth();
-    db.collection("USER")
-      .doc(this.user.email)
-      .get()
-      .then(doc => {
-        this.signuser = doc.data();
-      });
-
-    db.collection("USER")
-      .get()
-      .then(doc => {
-        this.users = doc.docs;
-        doc.forEach(docs => {
-          if (docs.data().username !== this.signuser.username) {
-            this.filteredUser.push(docs.data());
-          }
-        });
-      });
-
-    this.initIsNormalBannerActive();
   }
 };
 </script>
@@ -204,6 +265,7 @@ body {
 #myBannerPosition {
   //position: relative;
   //temporary top
+
   padding-top: 70px;
   margin-left: 10%;
   margin-right: 10%;
@@ -224,30 +286,46 @@ body {
     top: 0;
     left: 0;
 
-    margin-left: 10%;
     width: 100%;
     height: 100%;
+
     padding-top: 165px;
+    margin-left: 10%;
+
     $i: 1;
 
+    list-style: none;
     @while $i <= 30 {
+
+      $temporary_top: (200px * $i) !global;
+
       .n#{$i} {
         position: absolute;
 
-        top: (200px * $i);
-        left: 10%;
+        top: $temporary_top;
+        left: 0;
 
-        width: $n_banner_width;
+        width: 100%;
         height: $n_banner_height;
 
         transition: 0.3s;
       }
+
       $i: $i + 1;
     }
-
-    list-style: none;
-    // z-index: -1
   }
+}
+
+footer {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: $footer_height;
+
+  transition: .3s;
 }
 
 #myBannerPosition {
@@ -261,7 +339,6 @@ body {
   z-index: 1;
   /*top: 45px;
     left: 10%;*/
-  z-index: 1;
 }
 
 .gameBannerPosition {

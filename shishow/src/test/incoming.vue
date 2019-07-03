@@ -89,8 +89,17 @@ export default {
           })
       }).catch(e=>{console.log(e)});
 
-      
-
+      db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).set({
+        relation:3,
+      })
+      .catch(e =>{
+        console.log(e)
+      })
+      db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).set({
+        relation:3,
+      }).catch(e =>{
+        console.log(e)
+      })
 
       
     }
