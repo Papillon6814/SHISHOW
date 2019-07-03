@@ -58,12 +58,12 @@ import store from "../store";
 
 const db = firebase.firestore();
 
-
-
 export default {
   name: "myBanner",
 
-  props: ["loginedUser"],
+  props: [
+    "loginedUser"
+  ],
 
   data: function() {
     return {
@@ -106,7 +106,7 @@ export default {
     }
     console.log("gazouが"+email);
     db.collection("USER").doc(email).get()
-    .then( doc => {
+    .then(doc => {
       console.log(doc.data()["image"]);
       root.icon = doc.data()["image"];
       root.bio = doc.data()["bio"];
@@ -114,6 +114,7 @@ export default {
     });
 
   },
+
   watch: {
     loginedUser: function() {
       console.log(this.loginedUser);
@@ -129,6 +130,7 @@ export default {
         store.commit("onUserStatusChanged", user.uid ? true : false);
       });
     },
+
     doExtend: function() {
       (this.isA = !this.isA),
       (this.isB = !this.isB),

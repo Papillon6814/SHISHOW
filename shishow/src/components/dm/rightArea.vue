@@ -49,12 +49,12 @@ export default {
   watch:{
     friendDocID: function(newval){
       this.msgList=[];
+
       currentUserEmail = firebase.auth().currentUser.email;
-        db.collection("USER")
-        .doc(currentUserEmail)
-        .collection("friends")
-        .doc(newval)
-        .collection("CHAT")
+
+        db.collection("PrivateChat")
+        .doc(currentUserEmail + newval)
+        .collection("contents")
         .orderBy("date")
         .onSnapshot(chatSnapshot => {
           this.msgList = [];
@@ -64,23 +64,20 @@ export default {
           })
 
           console.log("onload: " + this.msgList[0].msg)
-          window.scroll(0, 90000);
           console.log("end")
-        }).catch(e=>{
-          console.log(e)
         })
     }
   },
 
   created: function() {
     this.onAuth();
-    console.log("rightArea created")
+    console.log("rightArea created");
+
     currentUserEmail = firebase.auth().currentUser.email;
-    db.collection("USER")
-        .doc(currentUserEmail)
-        .collection("friends")
-        .doc(this.friendDocID)
-        .collection("CHAT")
+
+    db.collection("PrivateChat")
+        .doc(currentUserEmail + this.friendDocID)
+        .collection("content")
         .orderBy("date")
         .onSnapshot(chatSnapshot => {
           this.msgList = [];
@@ -90,8 +87,6 @@ export default {
           })
 
           console.log("onload: " + this.msgList[0].msg)
-        }).catch(e=>{
-          console.log(e)
         })
   }
 };
