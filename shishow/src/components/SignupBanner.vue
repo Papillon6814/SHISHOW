@@ -106,32 +106,38 @@ export default {
           url = doc.data()["image"];
         });
       }
-      if(this.p_confirm != this.password) {
-        console.log('Password does not match!');
-      }
-      else if(this.errorIndication());
-      else {
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.email, this.password)
-          .then(user => {
-            var User = firebase.auth().currentUser;
-            var email;
-            User.updateProfile({
-              displayName: this.username
-            }).then(() => {
-              //変数に情報を格納
-              email = User.email;
-              alert("Create account: " + email);
-              if (!this.uploadedImage) this.uploadedImage = url;
-              console.log(this.roundimg);
-              this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
-              router.push("/")
+
+      if(this.username == "") {
+        alert('Fill in your Display Name!');
+      } else {
+
+        if(this.p_confirm != this.password) {
+          alert('Password does not match!');
+        }
+        else if(this.errorIndication());
+        else {
+          firebase
+            .auth()
+            .createUserWithEmailAndPassword(this.email, this.password)
+            .then(user => {
+              var User = firebase.auth().currentUser;
+              var email;
+              User.updateProfile({
+                displayName: this.username
+              }).then(() => {
+                //変数に情報を格納
+                email = User.email;
+                alert("Create account: " + email);
+                if (!this.uploadedImage) this.uploadedImage = url;
+                console.log(this.roundimg);
+                this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
+                router.push("/")
+              });
+            })
+            .catch(error => {
+              alert(error.message);
             });
-          })
-          .catch(error => {
-            alert(error.message);
-          });
+          }
       }
     },
 
