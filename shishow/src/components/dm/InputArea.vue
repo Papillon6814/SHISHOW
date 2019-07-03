@@ -4,7 +4,8 @@
     <div class="smileEmojiPlace">
       <i class="fas fa-smile"></i>
     </div>
-    <input v-model="msg" type="text" class="inputText" @keydown.enter="sendMsg">
+    <input v-model="msg" type="text"
+          class="inputText" @keydown.enter="sendMsg">
     <div class="checkEmojiPlace">
       <i class="fas fa-check" @click="sendMsg"></i>
     </div>
@@ -26,7 +27,8 @@ export default {
 
   data() {
     return {
-      msg: ""
+      msg: "",
+      chatID: ""
     };
   },
 
@@ -37,30 +39,34 @@ export default {
 
   created: function () {
     currentUser = firebase.auth().currentUser;
+
+    db.collection('USER')
+      .doc(currentUser.email)
+      .collection('friends')
+      .doc(this.friendDocID)
+      .get()
+      .then(doc => {
+        this.chatID = doc.data()['chatID'];
+      })
   },
 
   methods: {
     //メッセージを送る
     sendMsg() {
-      //console.log("clicked");
-      const db = firebase.firestore();
-      //ログインしているかの確認(今はいらない)
-      //if (!this.SignIn) return;
-      //データベースに値をpush
-      //文字が入力されているときにのみ送信
+      // 文字が入力されているときにのみ送信
       let msg = this.msg;
-      //現在の日時を取得(文字列型)
+      // 現在の日時を取得(文字列型)
       let now = new Date();
+
       if (msg) {
-        db.collection("USER")
-        .doc(currentUser.email)
-        .collection("friends")
-        .doc(this.friendDocID)
-        .collection("CHAT")
-        .add({
-          msg: this.msg,
-          date: now
-        });
+        db.collection("PrivateChat")
+          .doc(this.chatID)
+          .collection("contents")
+          .add({
+            msg: this.msg,
+            date: now,
+            sender: currentUser.email
+          });
 
         this.msg = '';
       }

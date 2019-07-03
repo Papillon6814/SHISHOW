@@ -67,6 +67,7 @@ export default {
           router.push("/");
         })
         .catch(function(e) {
+          alert('Could not signed in.');
           console.log(e);
         });
     },

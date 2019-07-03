@@ -49,6 +49,15 @@ export default {
     dmBanner
   },
 
+  created: function() {
+    this.onAuth();
+    console.log("leftarea created")
+    currentUserEmail = firebase.auth().currentUser.email;
+    this.loadLastMsgAndDate();
+    // lastMsg = msg, lastMsgDate = date;
+
+  },
+
   methods: {
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
@@ -68,30 +77,25 @@ export default {
         .then(friendsSnapshot => {
 
           friendsSnapshot.forEach(doc1 => {
+            // doc1にはフレンドのメールアドレスが格納されている
+
             this.usernames.push(doc1.data().username)
             console.log(usernames)
 
-            db.collection("USER")
-              .doc(currentUserEmail)
-              .collection('friends')
-              .doc(doc1.id)
-              .collection("CHAT")
+            db.collection("PrivateChat")
+              .doc(currentUserEmail + doc1.id)
+              .collection('contents')
+              .get()
               .limit(1)
               .orderBy('date', 'desc')
-              .get()
-              .then(lastMsgSnapshot => {
-                lastMsgSnapshot.forEach(doc2 => {
-                  // doc2はチャットのデータが格納されている
-
-                    this.lastMsg.push(doc2.data().msg);
-                    // NOTE: lastMsgDateもlastMsgも配列だが typeof を使うとObjectが返される
-                    lastMsgDate.push(doc2.data().date);
-
-                  })
-                  console.log("length" + lastMsgDate.length)
+              .then(contentsSnapshot => {
+                contentsSnapshot.forEach(doc2 => {
+                  this.lastMsg.push(doc2.data().msg);
+                  lastMsgDate.push(doc2.data().date);
                 })
+              })
+
             })
-            console.log("last")
       })
     },
 
@@ -103,16 +107,7 @@ export default {
     toggleColor: function() {
       console.log("toggleColor")
     }
-  },
-
-  created: function() {
-    this.onAuth();
-    console.log("leftarea created")
-    currentUserEmail = firebase.auth().currentUser.email;
-    this.loadLastMsgAndDate();
-    // lastMsg = msg, lastMsgDate = date;
-
-  },
+  }
 }
 
 </script>

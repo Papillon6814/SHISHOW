@@ -1,5 +1,5 @@
 <template>
-  <div class="incoming" v-bind:class="{ 'banner': isA, 'extend': isB }">
+  <div class="incoming">
     <span class="iconPicPosition">
       <div class="iconPic">
         <img id="image" :src="user['image']" />
@@ -51,46 +51,64 @@ const currentUser = firebase.auth().currentUser;
 
 export default {
   name: 'incoming',
-  props:["user","signuser"],
+
+  props:[
+    "user",
+    "signuser"
+  ],
+
   created:function(){
   },
-  data: function() {
-    return{
-      isA: true,
-      isB: false,
-    }
-  },
+
   methods: {
     doExtend: function() {
-      this.isA = !this.isA;
-      this.isB = !this.isB;
-      const sign_db = db.collection("USER").doc(this.signuser.email);
-      const user_db = db.collection("USER").doc(this.user.email);
+      const sign_db = db.collection("USER")
+                        .doc(this.signuser.email);
 
+      const user_db = db.collection("USER")
+                        .doc(this.user.email);
 
-      sign_db.collection("incoming").doc(this.user.email).delete().then(()=>{
-          sign_db.collection("friends").doc(this.user.email).set({
-            username:this.user.username,
-            email:this.user.email
-          });
-          sign_db.collection("incoming").get().then(doc =>{
-            this.$parent.income = doc.docs();
-          }).catch(()=>{
-            this.$parent.income ="";
-          })
-      }).catch(e=>{console.log(e)});
+      db.collection("PrivateChat")
+             .add({
+               email1: this.signuser.email,
+               email2: this.user.email
+             })
+             .then(querySnapshot => {
+               sign_db.collection("incoming")
+                      .doc(this.user.email)
+                      .delete()
+                      .then(()=>{
+                        sign_db.collection("friends")
+                               .doc(this.user.email)
+                               .set({
+                                 username: this.user.username,
+                                 email: this.user.email,
+                                 chatID: querySnapshot.id
+                               });
 
-      user_db.collection("outgoing").doc(this.signuser.email).delete().then(()=>{
-          user_db.collection("friends").doc(this.signuser.email).set({
-            username:this.signuser.username,
-            email:this.signuser.email
-          })
-      }).catch(e=>{console.log(e)});
+                        sign_db.collection("incoming")
+                               .get()
+                               .then(doc =>{
+                                 this.$parent.income = doc.docs();
+                               }).catch(()=>{
+                                 this.$parent.income ="";
+                               })
 
+                      }).catch(e=>{console.log(e)});
 
-
-
-
+               user_db.collection("outgoing")
+                      .doc(this.signuser.email)
+                      .delete()
+                      .then(()=>{
+                        user_db.collection("friends")
+                               .doc(this.signuser.email)
+                               .set({
+                                 username: this.signuser.username,
+                                 email: this.signuser.email,
+                                 chatID: querySnapshot.id
+                               })
+                      }).catch(e=>{console.log(e)});
+             })
     }
   }
 }
