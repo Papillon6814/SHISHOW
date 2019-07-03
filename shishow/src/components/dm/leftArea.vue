@@ -40,7 +40,6 @@ export default {
     }
   },
 
-
   props: [
     'friendsDocID'
   ],
@@ -55,7 +54,6 @@ export default {
     currentUserEmail = firebase.auth().currentUser.email;
     this.loadLastMsgAndDate();
     // lastMsg = msg, lastMsgDate = date;
-
   },
 
   methods: {
@@ -86,15 +84,14 @@ export default {
               .doc(currentUserEmail + doc1.id)
               .collection('contents')
               .get()
-              .limit(1)
               .orderBy('date', 'desc')
+              .limit(1)
               .then(contentsSnapshot => {
                 contentsSnapshot.forEach(doc2 => {
                   this.lastMsg.push(doc2.data().msg);
                   lastMsgDate.push(doc2.data().date);
                 })
               })
-
             })
       })
     },
