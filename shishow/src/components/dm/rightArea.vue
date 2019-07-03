@@ -52,9 +52,26 @@ export default {
       this.msgList = [];
       currentUserEmail = firebase.auth().currentUser.email;
 
-      db.collection("")
+      db.collection("USER")
+        .doc(currentUserEmail)
+        .collection('friends')
+        .doc(newval)
+        .get()
+        .then(doc1 => {
+          chatID = doc1.data()['chatID'];
+          console.log('chatID: '+chatID);
 
-
+          db.collection("PrivateChat")
+            .doc(chatID)
+            .collection("contents")
+            .orderBy('date')
+            .onSnapshot(querySnapshot => {
+              this.msgList = [];
+              querySnapshot.forEach(doc2 => {
+                this.msgList.push(doc2.data());
+              })
+            })
+        })
     }
   },
 
@@ -63,16 +80,6 @@ export default {
     console.log("rightArea created");
 
     currentUserEmail = firebase.auth().currentUser.email;
-
-    db.collection("USER")
-      .doc(currentUserEmail)
-      .collection('friends')
-      .doc(this.friendDocID)
-      .get()
-      .then(doc => {
-        chatID = doc.data()['chatID'];
-        console.log('chatID: '+chatID);
-      })
   }
 };
 </script>
