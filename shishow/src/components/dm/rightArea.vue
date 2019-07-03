@@ -22,6 +22,8 @@ import { types } from 'util';
 
 const db = firebase.firestore();
 let currentUserEmail;
+let friendDocID;
+let chatID;
 
 export default {
   name: 'rightArea',
@@ -47,46 +49,12 @@ export default {
   },
 
   watch:{
-    friendDocID: function(newval){
-      this.msgList=[];
 
-      currentUserEmail = firebase.auth().currentUser.email;
-
-        db.collection("PrivateChat")
-        .doc(currentUserEmail + newval)
-        .collection("contents")
-        .orderBy("date")
-        .onSnapshot(chatSnapshot => {
-          this.msgList = [];
-
-          chatSnapshot.forEach(doc1 => {
-            this.msgList.push(doc1.data());
-          })
-
-          console.log("end")
-        })
-    }
   },
 
   created: function() {
     this.onAuth();
     console.log("rightArea created");
-
-    currentUserEmail = firebase.auth().currentUser.email;
-
-    db.collection("PrivateChat")
-        .doc(currentUserEmail + this.friendDocID)
-        .collection("content")
-        .orderBy("date")
-        .onSnapshot(chatSnapshot => {
-          this.msgList = [];
-
-          chatSnapshot.forEach(doc1 => {
-            this.msgList.push(doc1.data());
-          })
-
-          console.log("onload: " + this.msgList[0].msg);
-        })
   }
 };
 </script>
