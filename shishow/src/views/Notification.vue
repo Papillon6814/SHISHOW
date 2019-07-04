@@ -2,7 +2,8 @@
   <div id="root">
     <navi></navi>
     <div id="notificationField">
-
+      <span v-if="!(notice.length-1)" class="no_notification">no notification</span>
+      <div v-if="notice.length-1">
       <div v-for="N in notice.length" 
       :key="N" 
       v-bind:class="'not'+N">
@@ -11,6 +12,7 @@
         :user="users[N-1]" 
         :notice="notice[N-1]">
         </notificationBanner>
+      </div>
       </div>
     </div>
   </div>
@@ -34,7 +36,6 @@ export default {
   data:function(){
     return{
       notice:[],
-      signuser:"",
       users:[],
     }
   },
@@ -98,6 +99,13 @@ export default {
   }
   #notificationField::webkit-scrollbar{
     display: none;
+  }
+
+  .no_notification{
+    position: relative;
+    top:250px;
+    font-size: 130px;
+    color:rgba(122,122,122,122)
   }
 
 </style>
