@@ -121,10 +121,29 @@ $n_profile_height: 83.75px;
  $searchbar_width: 400px;
 
 /* --- */
-  /* text color */
+/* text color */
 
   $main_text_color: rgba(0, 0, 0, 0.87);
   $sub_text_color: rgba(0, 0, 0, 0.54);
   $invisible_text_color: rgba(0, 0, 0, 0.38);
  
-  /* --- */
+/* --- */
+
+/* scrollbar */
+  ::-webkit-scrollbar {
+    width: 12px;
+}
+
+/*スクロールバーの軌道*/
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+}
+
+/*スクロールバーの動く部分*/
+::-webkit-scrollbar-thumb {
+  background-color:#ccc;
+  border-radius: 10px;
+  box-shadow:0 0 0 1px rgba(255, 255, 255, .3);
+}
+/* --- */
