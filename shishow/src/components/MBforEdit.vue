@@ -47,7 +47,7 @@ const db = firebase.firestore();
 
 
 export default {
-  name: "myBanner",
+  name: "MBforEdit",
 
   props: ["loginedUser"],
 

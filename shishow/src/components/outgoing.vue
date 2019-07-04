@@ -242,7 +242,7 @@ export default {
       left:32%;
       display: inline-block;
       text-decoration: none;
-      background: #ff8181;
+      background: #ffc107;
       color: #fff;
       width: 150px;
       height: 60px;
@@ -252,7 +252,7 @@ export default {
       font-weight: bold;
       overflow: hidden;
       box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-      border-bottom: solid 3px #bd6565;
+      border-bottom: solid 3px #ffb300;
       transition: .4s;
 
       cursor: pointer;
