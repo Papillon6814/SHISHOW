@@ -2,10 +2,12 @@
   <div>
     <navi></navi>
     <div class="friend">
+
         <div style="top:800px;width:80%;height:50px;margin:0 auto;">
             <div class="tab" id="black" @click="T">incoming<span style="color:white;"></span></div>
             <div class="tab" id="white" @click="F">outgoing</div>
         </div>
+
         <div class="mainobject" v-if="TorF" style="background-color:white">
             <div v-for="N in income.length" :key="N" v-bind:class="'n'+N">
                 <incoming :user="income[N-1].data()" :signuser="signuser"></incoming>
@@ -17,6 +19,7 @@
                 <outgoing :user="outgo[N-1].data()" :signuser="signuser"></outgoing>
             </div>
         </div>
+
     </div>
   </div>
 </template>
@@ -115,7 +118,8 @@ export default {
   $i: 1;
   @while $i <= 30{
     .n#{$i}{
-      padding-top: 10px;/* + (200px * $i);*/      
+      padding-top: 5px;/* + (200px * $i);*/     
+      padding-bottom: 5px; 
     }
     $i: $i + 1;
   }
@@ -127,12 +131,12 @@ export default {
   }
 
   #black{
-    background-color:rgb(0, 255, 149);
+    background-color:#ff8181;
     float: left;
   }
 
   #white{
-    background-color:rgb(135, 215, 235);
+    background-color:#ffc107;
     float: right
   }
   
@@ -143,6 +147,5 @@ export default {
     overflow-x: hidden;
     overflow-y: scroll;  
   }
-
 
 </style>
