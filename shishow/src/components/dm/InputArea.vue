@@ -4,8 +4,7 @@
     <div class="smileEmojiPlace">
       <i class="fas fa-smile"></i>
     </div>
-    <input v-model="msg" type="text"
-          class="inputText" @keydown.enter="sendMsg">
+    <input v-model="msg" type="text" class="inputText" @keydown.enter="sendMsg" />
     <div class="checkEmojiPlace">
       <i class="fas fa-check" @click="sendMsg"></i>
     </div>
@@ -42,6 +41,9 @@ export default {
   },
 
   methods: {
+    doFilterUser(){
+      //this.$emit("")
+    }
     //メッセージを送る
     sendMsg() {
       // 文字が入力されているときにのみ送信
@@ -80,7 +82,6 @@ export default {
   width: 100%;
   height: 100%;
 
-
   background-color: #fff;
 
   .smileEmojiPlace {
@@ -112,10 +113,10 @@ export default {
   }
 }
 
-.border{
+.border {
   position: relative;
-  bottom:1px;
-  border-top:solid 1px;
+  bottom: 1px;
+  border-top: solid 1px;
   border-radius: 3px;
   color: #aaa;
   width: 100%;
