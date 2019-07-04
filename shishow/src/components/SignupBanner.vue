@@ -131,7 +131,7 @@ export default {
                 if (!this.roundimg) {
                   
                   console.log("urlは"+url);
-                  this.roungimg = url;
+                  this.roundimg = url;
                   console.log("変更したよ"+this.roundimg);
 
                 }else{
