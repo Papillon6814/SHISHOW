@@ -4,7 +4,8 @@
       <div v-blur="isBlurred" class="banner">
     </div>
     <router-link to="/signup">
-      <div class="whyDontYouCreate" v-if="isBlurred === true">
+      <div class="whyDontYouCreate"
+          v-if="isBlurred === true">
         {{ signupMessage }}
       </div>
     </router-link>
@@ -19,7 +20,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 
