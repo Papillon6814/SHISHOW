@@ -12,6 +12,7 @@ import firebase, { functions } from "firebase";
 import navi from "../components/NavigationBar.vue";
 import normalBanner from "../components/NormalBanner";
 import store from "../store";
+import inputArea from "../components/dm/InputArea";
 
 const db = firebase.firestore();
 
@@ -20,7 +21,8 @@ export default {
 
   components: {
     navi,
-    normalBanner
+    normalBanner,
+    inputArea
   },
 
   data: function() {
@@ -30,6 +32,7 @@ export default {
       searchResults: []
     };
   },
+
   created() {
     db.collection("USER")
       .get()
@@ -42,11 +45,13 @@ export default {
         this.filterUser(/*word = */ this.getSearchWordFromStore);
       });
   },
+
   computed: {
     getSearchWordFromStore() {
       return this.$store.getters.getSearchWord;
     }
   },
+
   methods: {
     filterUser(word) {
       let data = [];

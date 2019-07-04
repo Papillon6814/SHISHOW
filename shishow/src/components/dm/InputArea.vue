@@ -4,8 +4,7 @@
     <div class="smileEmojiPlace">
       <i class="fas fa-smile"></i>
     </div>
-    <input v-model="msg" type="text"
-          class="inputText" @keydown.enter="sendMsg">
+    <input v-model="msg" type="text" class="inputText" @keydown.enter="sendMsg" />
     <div class="checkEmojiPlace">
       <i class="fas fa-check" @click="sendMsg"></i>
     </div>
@@ -13,11 +12,10 @@
 </template>
 
 <script>
-
 import firebase from "../../plugin/firestore";
-import 'firebase/firestore'
-import '@firebase/auth'
-import store from '../../store'
+import "firebase/firestore";
+import "@firebase/auth";
+import store from "../../store";
 
 let db = firebase.firestore();
 let currentUser;
@@ -34,14 +32,17 @@ export default {
 
   props: [
     // leftAreaでクリックされたフレンドのドキュメントID
-    'friendDocID'
+    "friendDocID"
   ],
 
-  created: function () {
+  created: function() {
     currentUser = firebase.auth().currentUser;
   },
 
   methods: {
+    doFilterUser() {
+      //this.$emit("")
+    },
     //メッセージを送る
     sendMsg() {
       // 文字が入力されているときにのみ送信
@@ -49,14 +50,14 @@ export default {
       // 現在の日時を取得(文字列型)
       let now = new Date();
 
-      db.collection('USER')
+      db.collection("USER")
         .doc(currentUser.email)
-        .collection('friends')
+        .collection("friends")
         .doc(this.friendDocID)
         .get()
         .then(doc => {
-          this.chatID = doc.data()['chatID'];
-        })
+          this.chatID = doc.data()["chatID"];
+        });
 
       if (msg) {
         db.collection("PrivateChat")
@@ -68,7 +69,7 @@ export default {
             sender: currentUser.email
           });
 
-        this.msg = '';
+        this.msg = "";
       }
     }
   }
@@ -79,7 +80,6 @@ export default {
 #inputBar {
   width: 100%;
   height: 100%;
-
 
   background-color: #fff;
 
@@ -112,10 +112,10 @@ export default {
   }
 }
 
-.border{
+.border {
   position: relative;
-  bottom:1px;
-  border-top:solid 1px;
+  bottom: 1px;
+  border-top: solid 1px;
   border-radius: 3px;
   color: #aaa;
   width: 100%;
