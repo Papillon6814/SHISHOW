@@ -94,6 +94,14 @@ export default {
                       }).catch(()=>{
                         this.$parent.income ="";
                       })
+
+                      sign_db.collection("friends")
+                      .get()
+                      .then(doc=>{
+                        this.$parent.fri = doc.docs;
+                      }).catch(()=>{
+                        this.$parent.fri = "";
+                    })
                       }).catch(e=>{console.log(e)});
 
                   user_db.collection("outgoing")
@@ -109,11 +117,23 @@ export default {
                       })
                   }).catch(e=>{console.log(e)});
 
+                  db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).set({
+                    relation:3,
+                  })
+                  .catch(e =>{
+                    console.log(e)
+                  })
+                  db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).set({
+                    relation:3,
+                  }).catch(e =>{
+                    console.log(e)
+                  })
+
                   user_db.collection("notice")
                   .doc(this.signuser.email)
                   .set({
                     msg:this.signuser.username+"とフレンドになりました。",
-                    date:Date()
+                    date:new Date()
                   })
 
                   sign_db.collection("notice")
