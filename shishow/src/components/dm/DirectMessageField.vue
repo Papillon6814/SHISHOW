@@ -79,6 +79,7 @@ export default {
     this.onAuth();
     currentUser = firebase.auth().currentUser;
     this.loadFriendID();
+
     this.leftAreaData = friendsDocID;
 
     db.collection("USER")
