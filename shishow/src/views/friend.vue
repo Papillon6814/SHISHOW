@@ -3,10 +3,10 @@
     <navi></navi>
     <div class="friend">
         <div style="top:800px;width:80%;height:50px;margin:0 auto;">
-            <div class="tab" id="black" @click="T"><span style="color:white;"></span></div>
+            <div class="tab" id="black" @click="T">incoming<span style="color:white;"></span></div>
             <div class="tab" id="white" @click="F">outgoing</div>
         </div>
-        <div class="mainobject" v-if="TorF" style="background-color:black">
+        <div class="mainobject" v-if="TorF" style="background-color:white">
             <div v-for="N in income.length" :key="N" v-bind:class="'n'+N">
                 <incoming :user="income[N-1].data()" :signuser="signuser"></incoming>
             </div>
@@ -110,34 +110,35 @@ export default {
   width: 100%;
 
   top: 200px;
-}
-
-    .tab{
-        width:50%;
-        height: 100%;
-    }
-
-    #black{
-        background-color:black;
-        float: left;
-    }
-
-    #white{
-        background-color:white;
-        float: right
-    }
-    
-    .mainobject{
-        width:80%;
-        margin:0 auto;
-        height:500px
-    }
 
     $i: 1;
-    @while $i <= 30{
-      .n#{$i}{
-        padding-top: 210px;/* + (200px * $i);*/
-      }
-      $i: $i + 1;
+  @while $i <= 30{
+    .n#{$i}{
+      padding-top: 10px;/* + (200px * $i);*/
     }
+    $i: $i + 1;
+  }
+}
+
+  .tab{
+    width:50%;
+    height: 100%;
+  }
+
+  #black{
+    background-color:rgb(0, 255, 149);
+    float: left;
+  }
+
+  #white{
+    background-color:rgb(135, 215, 235);
+    float: right
+  }
+  
+  .mainobject{
+    width:80%;
+    margin:0 auto;   
+  }
+
+
 </style>

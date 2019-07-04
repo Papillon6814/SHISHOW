@@ -283,7 +283,7 @@ body {
   .normalBannerPosition {
     position: absolute;
 
-    top: 0;
+    top: 173px;
     left: 0;
 
     width: 100%;
@@ -319,7 +319,7 @@ body {
 footer {
   position: absolute;
 
-  top: 0;
+  bottom: 0px;
   left: 0;
 
   width: 100%;

@@ -90,7 +90,8 @@ export default {
 
 <style lang="scss" scoped>
   .outgoing {
-    position: absolute;
+
+    position: relative;
 
     width: $n_banner_width;
     //temporary height
@@ -100,8 +101,9 @@ export default {
 
     z-index: 2;
 
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-
+    margin: 0px auto;
+    
+    transition: 0.3s;
     //children
     
 
@@ -268,4 +270,7 @@ export default {
     }*/
   }
 
+  .outgoing:hover{
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+  }
 </style>
