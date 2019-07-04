@@ -67,9 +67,6 @@
   </div>
 </template>
 
-
-
-
 <script>
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
@@ -142,14 +139,26 @@ export default {
       }
     },
 
-      addToDatabase(email, username,image) {
+      addToDatabase(email, username, image) {
 
-        db.collection("USER").doc(""+email).set({
+        db.collection("USER")
+        .doc(""+email)
+        .set({
             email: email,
             username: username,
             image: image,
             bio: 'No bio'
         })
+
+        doc.collection("USER")
+           .doc(""+email)
+           .collection('notification')
+           .add({
+             kind: '',
+             who: '',
+             date: '',
+             icon: ''
+           })
     },
 
     onFileChange(event) {
