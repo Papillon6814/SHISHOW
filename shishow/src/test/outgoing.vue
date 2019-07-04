@@ -94,6 +94,8 @@ export default {
       .catch(e =>{
         console.log(e)
       })
+
+      user_db.collection("notice").doc(this.signuser.email).delete();
     },
   }
 }
