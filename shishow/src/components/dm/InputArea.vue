@@ -39,15 +39,6 @@ export default {
 
   created: function () {
     currentUser = firebase.auth().currentUser;
-
-    db.collection('USER')
-      .doc(currentUser.email)
-      .collection('friends')
-      .doc(this.friendDocID)
-      .get()
-      .then(doc => {
-        this.chatID = doc.data()['chatID'];
-      })
   },
 
   methods: {
@@ -57,6 +48,15 @@ export default {
       let msg = this.msg;
       // 現在の日時を取得(文字列型)
       let now = new Date();
+
+      db.collection('USER')
+        .doc(currentUser.email)
+        .collection('friends')
+        .doc(this.friendDocID)
+        .get()
+        .then(doc => {
+          this.chatID = doc.data()['chatID'];
+        })
 
       if (msg) {
         db.collection("PrivateChat")

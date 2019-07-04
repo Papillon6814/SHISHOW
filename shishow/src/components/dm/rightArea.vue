@@ -22,6 +22,7 @@ import { types } from 'util';
 
 const db = firebase.firestore();
 let currentUserEmail;
+let chatID;
 
 export default {
   name: 'rightArea',
@@ -47,24 +48,32 @@ export default {
   },
 
   watch:{
-    friendDocID: function(newval){
-      this.msgList=[];
-
+    friendDocID: function(newval) {
+      this.msgList = [];
       currentUserEmail = firebase.auth().currentUser.email;
 
-        db.collection("PrivateChat")
-        .doc(currentUserEmail + newval)
-        .collection("contents")
-        .orderBy("date")
-        .onSnapshot(chatSnapshot => {
-          this.msgList = [];
+      db.collection("USER")
+        .doc(currentUserEmail)
+        .collection('friends')
+        .doc(newval)
+        .get()
+        .then(doc1 => {
+          chatID = doc1.data()['chatID'];
+          console.log('chatID: '+chatID);
 
-          chatSnapshot.forEach(doc1 => {
-            this.msgList.push(doc1.data());
-          })
+          db.collection("PrivateChat")
+            .doc(chatID)
+            .collection("contents")
+            .orderBy('date')
+            .onSnapshot(querySnapshot => {
+              this.msgList = [];
 
-          console.log("onload: " + this.msgList[0].msg)
-          console.log("end")
+              querySnapshot.forEach(doc2 => {
+                this.msgList.push(doc2.data());
+              })
+
+              window.scrollBy(0, 1000);
+            })
         })
     }
   },
@@ -74,20 +83,6 @@ export default {
     console.log("rightArea created");
 
     currentUserEmail = firebase.auth().currentUser.email;
-
-    db.collection("PrivateChat")
-        .doc(currentUserEmail + this.friendDocID)
-        .collection("content")
-        .orderBy("date")
-        .onSnapshot(chatSnapshot => {
-          this.msgList = [];
-
-          chatSnapshot.forEach(doc1 => {
-            this.msgList.push(doc1.data());
-          })
-
-          console.log("onload: " + this.msgList[0].msg)
-        })
   }
 };
 </script>

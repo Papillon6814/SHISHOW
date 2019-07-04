@@ -35,9 +35,6 @@
     </div>
     <div v-if="signuser">
     <div class="n_btn-circle-3d" @click="doExtend" >削除</div>
-    <span  id="pullDownProperties">
-     <i class="fas fa-caret-down"></i>
-    </span>
     </div>
   </div>
 </template>
@@ -93,7 +90,8 @@ export default {
 
 <style lang="scss" scoped>
   .outgoing {
-    position: absolute;
+
+    position: relative;
 
     width: $n_banner_width;
     //temporary height
@@ -101,16 +99,13 @@ export default {
 
     background-color: $n_banner_color;
 
-    border: solid;
-    border-width: 5px;
-    border-color: $n_banner_flame;
     z-index: 2;
 
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-
+    margin: 0px auto;
+    
+    transition: 0.3s;
     //children
     
-
 
     .iconPic {
       width: $n_icon_width;
@@ -120,9 +115,6 @@ export default {
       background-color: #fff;
 
       border-radius: 50%;
-      border: solid;
-      border-width: 2px;
-      border-color: $n_window_flame;
     }
 
     #image{
@@ -196,34 +188,18 @@ export default {
       left: 106.673px;
     }
 
-    #pullDownProperties {
-      position: absolute;
-
-      top: 154.6875px;
-      left: 10.3px;
-
-      font-size: 39.875px;
-    }
-
-    #pullDownProperties:hover {
-      color: $pulldown_color;
-    }
-
     .username{
       width: $user_width;
       height: $n_user_height;
 
       background-color: #fff;
 
-      border: solid;
-      border-width: 3px;
-      border-color: $n_window_flame;
     }
 
     .usernamePosition{
       position: absolute;
 
-      top: 18px;
+      top: 8px;
       left: 172px;
       right: 0px;
     }
@@ -234,9 +210,6 @@ export default {
 
       background-color: #fff;
 
-      border: solid;
-      border-width: 3px;
-      border-color: $n_window_flame;
     }
 
     .idPosition{
@@ -253,28 +226,25 @@ export default {
 
       background-color: #fff;
 
-      border: solid;
-      border-width: 3px;
-      border-color: $n_window_flame;
     }
 
     .profilePosition{
       position: absolute;
 
-      top: 108px;
+      top: 95px;
       left: 172px;
       right: 25px;
     }
 
     .n_btn-circle-3d {
       position: relative;
-      top: 32px;
-      left:39%;
+      top: 15px;
+      left:32%;
       display: inline-block;
       text-decoration: none;
       background: #ff8181;
       color: #fff;
-      width: 100px;
+      width: 150px;
       height: 60px;
       line-height: 63px;
       border-radius: 50%;
@@ -300,4 +270,7 @@ export default {
     }*/
   }
 
+  .outgoing:hover{
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+  }
 </style>

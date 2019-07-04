@@ -83,9 +83,9 @@ export default {
             db.collection("PrivateChat")
               .doc(currentUserEmail + doc1.id)
               .collection('contents')
-              .get()
               .orderBy('date', 'desc')
               .limit(1)
+              .get()
               .then(contentsSnapshot => {
                 contentsSnapshot.forEach(doc2 => {
                   this.lastMsg.push(doc2.data().msg);
