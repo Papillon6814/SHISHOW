@@ -125,9 +125,18 @@ export default {
           console.log(e)
         })
 
-      }
+        db.collection("USER").doc(this.user.email)
+        .collection("notice")
+        .doc(this.signuser.email)
+        .set({
+          msg:this.signuser.username+"からフレンド申請が来ました。",
+          date: new Date()
+        })
+      
+
 
       this.relation = 2;
+      }
     },
 
     delete_db:function(){
@@ -148,6 +157,8 @@ export default {
       .catch(e =>{
         console.log(e)
       })
+
+      user_db.collection("notice").doc(this.signuser.email).delete();
 
       this.relation = 0
     },
@@ -182,13 +193,21 @@ export default {
         console.log(e)
       })
 
+      user_db.collection("notice").doc(this.signuser.email).set({
+        msg:this.signuser.usernam+"とフレンドになりました。",
+        date: new Date()
+      })
+
+      sign_db.collection("notice").doc(this.user.email).get().then(doc=>{
+        if(doc.exists){
+          sign_db.collection("notice").doc(this.user.email).delete();
+        }
+      })
+
       this.relation = 3
     }
   },
 
-  created: function() {
-    this.onAuth();
-  },
 };
 </script>
 

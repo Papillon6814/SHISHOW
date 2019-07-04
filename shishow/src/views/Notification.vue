@@ -2,10 +2,15 @@
   <div id="root">
     <navi></navi>
     <div id="notificationField">
-      <div v-for="N in 30"
-          :key="N"
-           v-bind:class="'not'+N">
-        <notificationBanner></notificationBanner>
+
+      <div v-for="N in notice.length" 
+      :key="N" 
+      v-bind:class="'not'+N">
+      
+        <notificationBanner 
+        :user="users[N-1]" 
+        :notice="notice[N-1]">
+        </notificationBanner>
       </div>
     </div>
   </div>
@@ -14,12 +19,44 @@
 <script>
 import navi from '../components/NavigationBar.vue'
 import notificationBanner from '../components/NotificationBanner.vue'
+import store from "../store";
+import firebase from '../plugin/firestore'
+import 'firebase/firestore'
+
+const db = firebase.firestore();
 
 export default {
   name: 'home',
   components: {
     navi,
     notificationBanner
+  },
+  data:function(){
+    return{
+      notice:[],
+      signuser:"",
+      users:[],
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+    userStatus() {
+      // ログインするとtrue
+      return this.$store.getters.isSignedIn;
+    }
+  },
+  created:function(){
+    db.collection("USER").doc(this.user.email).collection("notice").orderBy("date").get().then(querydocs=>{
+      querydocs.forEach(docu=>{
+        this.notice.push(docu.data());
+        db.collection("USER").doc(docu.id).get().then(doc=>{
+          this.users.push(doc.data());
+        })
+      })
+    })
+
   }
 }
 </script>
@@ -62,4 +99,5 @@ export default {
   #notificationField::webkit-scrollbar{
     display: none;
   }
+
 </style>

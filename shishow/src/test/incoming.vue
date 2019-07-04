@@ -101,6 +101,16 @@ export default {
         console.log(e)
       })
 
+      user_db.collection("notice").doc(this.signuser.email).set({
+        msg:this.signuser.email+"とフレンドになりました。",
+        date:new Date()
+      })
+
+      sign_db.collection("notice").doc(this.user.email).get().then(doc=>{
+        if(doc.exists){
+          sign_db.collection("notice").doc(this.user.email).delete();
+        }
+      })
       
     }
   }
