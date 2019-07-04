@@ -96,7 +96,7 @@ export default {
     signUp: function() {
       let url;
 
-      if(!this.uploadedImage){
+      if(!this.roundimg){
         db.collection("Image")
         .doc("SampleImage")
         .get()
@@ -126,7 +126,18 @@ export default {
                 //変数に情報を格納
                 email = User.email;
                 alert("Create account: " + email);
-                if (!this.roundimg) this.roungimg = url;
+                console.log("urlは"+url);
+                console.log(!this.roundimg);
+                if (!this.roundimg) {
+                  
+                  console.log("urlは"+url);
+                  this.roungimg = url;
+                  console.log("変更したよ"+this.roundimg);
+
+                }else{
+                  console.log("エラーだよ"+this.roundimg);
+                }
+                
                 this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
                 router.push("/")
               });
@@ -149,15 +160,6 @@ export default {
             bio: 'No bio'
         })
 
-        doc.collection("USER")
-           .doc(""+email)
-           .collection('notification')
-           .add({
-             kind: '',
-             who: '',
-             date: '',
-             icon: ''
-           })
     },
 
     onFileChange(event) {
