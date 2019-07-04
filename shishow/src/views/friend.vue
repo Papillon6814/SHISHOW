@@ -105,16 +105,17 @@ export default {
 
 <style lang="scss">
 .friend {
+
   position: absolute;
 
   width: 100%;
 
   top: 200px;
 
-    $i: 1;
+  $i: 1;
   @while $i <= 30{
     .n#{$i}{
-      padding-top: 10px;/* + (200px * $i);*/
+      padding-top: 10px;/* + (200px * $i);*/      
     }
     $i: $i + 1;
   }
@@ -137,7 +138,10 @@ export default {
   
   .mainobject{
     width:80%;
-    margin:0 auto;   
+    max-height: 600px;
+    margin:0 auto; 
+    overflow-x: hidden;
+    overflow-y: scroll;  
   }
 
 

@@ -126,8 +126,7 @@ export default {
                 //変数に情報を格納
                 email = User.email;
                 alert("Create account: " + email);
-                if (!this.uploadedImage) this.uploadedImage = url;
-                console.log(this.roundimg);
+                if (!this.roundimg) this.roungimg = url;
                 this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
                 router.push("/")
               });
