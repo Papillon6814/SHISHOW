@@ -39,7 +39,8 @@
     <!-- ... -->
 
     <div class="usernamePosition">
-      <input class="username" type="text" placeholder="Display name" v-model="username">
+      <input class="username" type="text" placeholder="Display name"
+      v-model="username" required>
     </div>
 
     <div class="emailPosition">
@@ -73,6 +74,7 @@
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
 import Cropper from "cropperjs";
+import router from "../router"
 
 const db = firebase.firestore();
 let files;
@@ -92,6 +94,7 @@ export default {
       roundimg:""
     };
   },
+
   methods: {
     signUp: function() {
       let url;
@@ -104,31 +107,38 @@ export default {
           url = doc.data()["image"];
         });
       }
-      if(this.p_confirm != this.password) {
-        console.log('Password does not match!');
-      }
-      else if(this.errorIndication());
-      else {
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.email, this.password)
-          .then(user => {
-            var User = firebase.auth().currentUser;
-            var email;
-            User.updateProfile({
-              displayName: this.username
-            }).then(() => {
-              //変数に情報を格納
-              email = User.email;
-              alert("Create account: " + email);
-              if (!this.uploadedImage) this.uploadedImage = url;
-              console.log(this.roundimg);
-              this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
+
+      if(this.username == "") {
+        alert('Fill in your Display Name!');
+      } else {
+
+        if(this.p_confirm != this.password) {
+          alert('Password does not match!');
+        }
+        else if(this.errorIndication());
+        else {
+          firebase
+            .auth()
+            .createUserWithEmailAndPassword(this.email, this.password)
+            .then(user => {
+              var User = firebase.auth().currentUser;
+              var email;
+              User.updateProfile({
+                displayName: this.username
+              }).then(() => {
+                //変数に情報を格納
+                email = User.email;
+                alert("Create account: " + email);
+                if (!this.uploadedImage) this.uploadedImage = url;
+                console.log(this.roundimg);
+                this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
+                router.push("/")
+              });
+            })
+            .catch(error => {
+              alert(error.message);
             });
-          })
-          .catch(error => {
-            alert(error.message);
-          });
+          }
       }
     },
 
@@ -138,13 +148,7 @@ export default {
             email: email,
             username: username,
             image: image,
-            bio: ''
-        })
-        .then(function(docRef) {
-          console.log('Document written with ID: ', docRef.id);
-        })
-        .catch(function(error) {
-          console.log("Error adding document: ", error);
+            bio: 'No bio'
         })
     },
 
@@ -266,6 +270,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style lang="scss" scoped>

@@ -13,6 +13,7 @@ import GlobalChat from "./views/GlobalChat.vue"
 
 
 
+
 import firebase from 'firebase'
 
 Vue.use(Router)

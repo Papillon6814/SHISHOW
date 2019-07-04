@@ -16,12 +16,16 @@
       <div class="username">{{ user.username }}</div>
     </div>
     <div class="profilePosition">
+
       <div class="profile">{{ user.bio }}</div>
     </div>
     <div class="userInfoPosition">
-      <div class="userInfo">仲野巧ですから</div>
+      <div class="userInfo">userinfo</div>
     </div>
-    <div @click="sendFriendReq()" class="n_btn-circle-3d">江崎にフレ申請</div>
+    <div v-if="relation==0" @click="sendFriendReq" class="n_btn-circle-3d">江崎にフレ申請</div>
+    <div v-else-if="relation==1" @click="add_db" class="n_btn-circle-3d">承認</div>
+    <div v-else-if="relation==2" @click="delete_db" class="n_btn-circle-3d">削除</div>
+    <div v-else-if="relation==3"  class="n_btn-circle-3d">友達</div>
     <div class="pullDownProperties"
          @click="callNormalExtend"
          v-bind:class="{ reverse:arrowUp }">
@@ -40,21 +44,21 @@ const db = firebase.firestore();
 const currentUser = firebase.auth().currentUser;
 
 export default {
-  name: "normalBanner",
+  name: 'normalBanner',
+  props:["user","signuser","relations"],
+  created:function(){
+    this.onAuth();
+    this.relation = this.relations;
+  },
 
   data: function() {
     return {
       isA: true,
       isB: false,
-      arrowUp: false
+      arrowUp: false,
+      relation:0,
     };
   },
-
-  props: [
-    "user",
-    "signuser",
-    "searchWord"
-  ],
 
   methods: {
     onAuth: function() {
@@ -103,7 +107,82 @@ export default {
           .catch(e => {
             console.log(e);
           });
+
+        db.collection("USER").doc(this.user.email)
+        .collection("relation")
+        .doc(this.signuser.email).set({
+          relation:1,
+        })
+        .catch(e =>{
+          console.log(e)
+        })
+
+        db.collection("USER").doc(this.signuser.email)
+        .collection("relation")
+        .doc(this.user.email).set({
+          relation:2,
+        }).catch(e =>{
+          console.log(e)
+        })
+
       }
+
+      this.relation = 2;
+    },
+
+    delete_db:function(){
+      const sign_db = db.collection("USER").doc(this.signuser.email);
+      const user_db = db.collection("USER").doc(this.user.email)
+
+      user_db.collection("incoming").doc(this.signuser.email).delete()
+      .catch(e=>{console.log(e)});
+
+      sign_db.collection("outgoing").doc(this.user.email).delete()
+      .catch(e=>{console.log(e)});
+
+      db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).delete()
+      .catch(e =>{
+        console.log(e)
+      })
+      db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).delete()
+      .catch(e =>{
+        console.log(e)
+      })
+
+      this.relation = 0
+    },
+
+    add_db:function(){
+      const sign_db = db.collection("USER").doc(this.signuser.email);
+      const user_db = db.collection("USER").doc(this.user.email)
+
+      sign_db.collection("incoming").doc(this.user.email).delete().then(()=>{
+          sign_db.collection("friends").doc(this.user.email).set({
+            username:this.user.username,
+            email:this.user.email
+          });
+      }).catch(e=>{console.log(e)});
+
+      user_db.collection("outgoing").doc(this.signuser.email).delete().then(()=>{
+          user_db.collection("friends").doc(this.signuser.email).set({
+            username:this.signuser.username,
+            email:this.signuser.email
+          })
+      }).catch(e=>{console.log(e)});
+
+      db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).set({
+        relation:3,
+      })
+      .catch(e =>{
+        console.log(e)
+      })
+      db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).set({
+        relation:3,
+      }).catch(e =>{
+        console.log(e)
+      })
+
+      this.relation = 3
     }
   },
 
