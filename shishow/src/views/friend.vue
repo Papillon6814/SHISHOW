@@ -128,9 +128,9 @@ export default {
     }
     
     .mainobject{
-        width:90%;
+        width:80%;
         margin:0 auto;
-        height:200px
+        height:500px
     }
 
     $i: 1;
