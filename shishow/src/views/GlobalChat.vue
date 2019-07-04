@@ -18,6 +18,7 @@
 
 <script>
 import navi from "../components/NavigationBar.vue";
+
 import firebase from "../plugin/firestore";
 import "@firebase/auth";
 import "firebase/firestore";

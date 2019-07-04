@@ -67,9 +67,12 @@ export default {
             .orderBy('date')
             .onSnapshot(querySnapshot => {
               this.msgList = [];
+
               querySnapshot.forEach(doc2 => {
                 this.msgList.push(doc2.data());
               })
+
+              window.scrollBy(0, 1000);
             })
         })
     }
