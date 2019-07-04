@@ -16,7 +16,7 @@
     <!-- ここまでがEditBanner -->
 
     <span class="iconPicPosition">
-      <div class="iconPic"><img id="image" v-show="icon" :src="icon" width="130" height="130"></div>
+      <div class="iconPic"><img id="image" v-show="icon" :src="icon" width="261.3" height="261.3"></div>
     </span>
     <div class="AllAchievementPosition">
       <div class="achievementPosition1">
@@ -47,7 +47,7 @@ const db = firebase.firestore();
 
 
 export default {
-  name: "myBanner",
+  name: "MBforEdit",
 
   props: ["loginedUser"],
 
@@ -59,6 +59,7 @@ export default {
       sign: "",
       icon: "",
       bio: "",
+      username: ""
 
     };
   },
@@ -90,6 +91,7 @@ export default {
     if (User != null){
       email = User.email;
     }
+
     console.log("gazouが"+email);
     db.collection("USER").doc(email).get()
     .then( doc => {
@@ -115,18 +117,18 @@ export default {
         store.commit("onUserStatusChanged", user.uid ? true : false);
       });
     },
+    txtchange(){
+      var User = firebase.auth().currentUser;
+      var email;
 
-    logout: function() {
-      firebase
-        .auth()
-        .signOut()
-        .then(function() {
-          alert("Signed out.");
-          router.push("/");
-        })
-        .catch(function(e) {
-          console.log(e);
-        });
+      email = User.email;
+      var root = this;
+      db.collection("USER").doc(email).update({
+        bio: root.bio,
+        username: root.username
+      });
+      console.log(this.bio+this.username);
+
     }
   }
 };
