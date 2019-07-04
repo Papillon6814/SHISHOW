@@ -319,7 +319,7 @@ body {
 footer {
   position: absolute;
 
-  top: 0;
+  top: 110%;
   left: 0;
 
   width: 100%;

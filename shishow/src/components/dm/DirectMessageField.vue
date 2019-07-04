@@ -60,6 +60,8 @@ export default {
     },
 
     loadFriendID: function() {
+      friendsDocID = [];
+
       db.collection("USER")
         .doc(currentUser.email)
         .collection("friends")
@@ -88,9 +90,6 @@ export default {
         this.idFromLeftArea = friendsSnapshot.id;
       })
   },
-
-
-
 }
 
 </script>

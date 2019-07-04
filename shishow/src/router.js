@@ -11,10 +11,9 @@ import Follow from './views/Follow.vue'
 import Friend from './views/friend.vue'
 import GlobalChat from "./views/GlobalChat.vue"
 
-
-
-
-import firebase from 'firebase'
+import firebase from './plugin/firestore'
+import 'firebase/firestore'
+import '@firebase/auth'
 
 Vue.use(Router)
 
@@ -59,7 +58,6 @@ let router = new Router({
       path: '/follow',
       name: 'follow',
       component: Follow,
-      component: Friend
     },
     {
       path: '/search',
@@ -100,5 +98,6 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
 
 export default router

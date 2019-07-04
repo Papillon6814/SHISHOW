@@ -2,7 +2,9 @@
   <div id="root">
     <navi></navi>
     <div id="notificationField">
-      <div v-for="N in 30" :key="N" v-bind:class="'not'+N">
+      <div v-for="N in 30"
+          :key="N"
+           v-bind:class="'not'+N">
         <notificationBanner></notificationBanner>
       </div>
     </div>
@@ -49,14 +51,10 @@ export default {
     overflow-y: scroll;
     overflow-x: hidden;
 
-
-
-    .not1{
-    }
     $i: 2;
     @while $i<=30 {
       .not#{$i}{
-        padding-top: $not_banner_height;
+        padding-top: $not_banner_height + 1.2px;
       }
       $i: $i + 1;
     }
