@@ -12,7 +12,7 @@ import firebase, { functions } from "firebase";
 import navi from "../components/NavigationBar.vue";
 import normalBanner from "../components/NormalBanner";
 import store from "../store";
-import inputArea from "../components/dm/InputArea";
+import navigationBar from "../components/NavigationBar";
 
 const db = firebase.firestore();
 
@@ -22,7 +22,7 @@ export default {
   components: {
     navi,
     normalBanner,
-    inputArea
+    navigationBar
   },
 
   data: function() {
@@ -54,6 +54,7 @@ export default {
 
   methods: {
     filterUser(word) {
+      console.log("search");
       let data = [];
       let results = [];
       let users_i;
