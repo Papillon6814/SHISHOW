@@ -17,7 +17,7 @@
           <div class="bar"></div>
           <!-- <img class="sch" src="../assets/search-button.png" @click="onChangeInput"> -->
           <router-link to="search">
-            <i class="fas fa-search fa-2x sch" @click="onChangeInput,doFilterUser"></i>
+            <i class="fas fa-search fa-2x sch" @click="onChangeInput"></i>
           </router-link>
         </div>
       </div>
@@ -81,17 +81,15 @@ export default {
   },
 
   methods: {
-    doFilterUser(filterUser) {
-      console.log("fired");
-      this.$emit("filterUser", this.word);
-    },
     onChangeInput() {
       this.commitChange(this.word);
     },
 
     commitChange(newValue) {
       //this.$emit("input", newValue);
+      console.log("fired");
       store.commit("onSearchWordInput", newValue);
+      this.$emit("search", newValue);
     }
   }
 };
