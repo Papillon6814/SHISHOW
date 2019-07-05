@@ -1,21 +1,27 @@
 <template>
   <div id = "notificationBanner">
+    <div class="userinfo">
       <i class = "fas fa-user human"></i>
-      <div class = "iconPic"></div>
+      <img class = "iconPic" :src="user.image">
+      <span class="name">{{user.username}}</span>
+    </div>
+
     <div class = "messageInfo">
-      <div > message </div>
+      <div class="message"> {{notice.msg}} </div>
+      <div class="date"> {{notice.date.toDate().toLocaleString()}}</div>
     </div>
   </div>
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from '../plugin/firestore'
 import 'firebase/firestore'
 
 const db = firebase.firestore();
 
 export default {
-  name: 'notBanner'
+  name: 'notBanner',
+  props:["user","notice"],
 }
 
 </script>
@@ -33,6 +39,10 @@ export default {
     border-width: 1.2px;
     border-color: #ddd;
 
+  .useringo{
+    width: 100%;
+  }
+
   .human{
       position: absolute;
 
@@ -46,17 +56,21 @@ export default {
     position: absolute;
 
     top: 10px;
-    left: 65px;
+    left: 60px;
 
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
 
     background-color: #fff;
+  }
 
-    border-radius: 50%;
-    border: solid;
-    border-width: 3px;
-    border-color: #000;
+  .name{
+    position: absolute;
+
+    top: 23px;
+    left: 120px;
+
+    font-size: 33px
   }
 
   .messageInfo{
@@ -68,6 +82,16 @@ export default {
     left:90px;
     bottom:10px;
     background-color: #fff;
+  }
+
+  .message{
+    width: 100%;
+  }
+
+  .date{
+    position: relative;
+    right: 15px;
+    float: right;
   }
 }
 

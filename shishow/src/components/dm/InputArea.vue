@@ -4,7 +4,7 @@
     <div class="smileEmojiPlace">
       <i class="fas fa-smile"></i>
     </div>
-    <input v-model="msg" type="text" class="inputText" @keydown.enter="sendMsg">
+    <input v-model="msg" type="text" class="inputText" @keydown.enter="sendMsg" />
     <div class="checkEmojiPlace">
       <i class="fas fa-check" @click="sendMsg"></i>
     </div>
@@ -12,11 +12,10 @@
 </template>
 
 <script>
-
 import firebase from "../../plugin/firestore";
-import 'firebase/firestore'
-import '@firebase/auth'
-import store from '../../store'
+import "firebase/firestore";
+import "@firebase/auth";
+import store from "../../store";
 
 let db = firebase.firestore();
 let currentUser;
@@ -26,43 +25,51 @@ export default {
 
   data() {
     return {
-      msg: ""
+      msg: "",
+      chatID: ""
     };
   },
 
   props: [
     // leftAreaでクリックされたフレンドのドキュメントID
-    'friendDocID'
+    "friendDocID"
   ],
 
-  created: function () {
+  created: function() {
     currentUser = firebase.auth().currentUser;
   },
 
   methods: {
+    doFilterUser() {
+      //this.$emit("")
+    },
     //メッセージを送る
     sendMsg() {
-      //console.log("clicked");
-      const db = firebase.firestore();
-      //ログインしているかの確認(今はいらない)
-      //if (!this.SignIn) return;
-      //データベースに値をpush
-      //文字が入力されているときにのみ送信
+      // 文字が入力されているときにのみ送信
       let msg = this.msg;
-      //現在の日時を取得(文字列型)
+      // 現在の日時を取得(文字列型)
       let now = new Date();
-      if (msg) {
-        db.collection("USER")
+
+      db.collection("USER")
         .doc(currentUser.email)
         .collection("friends")
         .doc(this.friendDocID)
-        .collection("CHAT")
-        .add({
-          msg: this.msg,
-          date: now
+        .get()
+        .then(doc => {
+          this.chatID = doc.data()["chatID"];
         });
 
-        this.msg = '';
+      if (msg) {
+        db.collection("PrivateChat")
+          .doc(this.chatID)
+          .collection("contents")
+          .add({
+            msg: this.msg,
+            date: now,
+            sender: currentUser.email
+          });
+
+        this.msg = "";
       }
     }
   }
@@ -73,7 +80,6 @@ export default {
 #inputBar {
   width: 100%;
   height: 100%;
-
 
   background-color: #fff;
 
@@ -106,10 +112,10 @@ export default {
   }
 }
 
-.border{
+.border {
   position: relative;
-  bottom:1px;
-  border-top:solid 1px;
+  bottom: 1px;
+  border-top: solid 1px;
   border-radius: 3px;
   color: #aaa;
   width: 100%;

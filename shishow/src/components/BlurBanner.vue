@@ -4,7 +4,8 @@
       <div v-blur="isBlurred" class="banner">
     </div>
     <router-link to="/signup">
-      <div class="whyDontYouCreate" v-if="isBlurred === true">
+      <div class="whyDontYouCreate"
+          v-if="isBlurred === true">
         {{ signupMessage }}
       </div>
     </router-link>
@@ -19,7 +20,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 
@@ -65,7 +65,6 @@ export default {
     left: 30%;
 
     font-size: 40px;
-    transition: 0.3s;
   }
 
   .whyDontYouCreate:hover {
@@ -112,7 +111,6 @@ export default {
     left: 70%;
 
     font-size: 40px;
-    transition: 0.3s ease;
   }
 
   .goSignin:hover {

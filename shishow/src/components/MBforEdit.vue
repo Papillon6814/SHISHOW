@@ -12,7 +12,7 @@
         </router-link>
         <input class="email" v-model="username" name="username">
     </div>
-    
+
     <!-- ここまでがEditBanner -->
 
     <span class="iconPicPosition">
@@ -47,7 +47,7 @@ const db = firebase.firestore();
 
 
 export default {
-  name: "myBanner",
+  name: "MBforEdit",
 
   props: ["loginedUser"],
 
@@ -89,7 +89,7 @@ export default {
 
     if (User != null){
       email = User.email;
-    };
+    }
     console.log("gazouが"+email);
     db.collection("USER").doc(email).get()
     .then( doc => {
@@ -180,33 +180,31 @@ export default {
 
 .achievement {
   position: relative;
-  width: $achievement_width;
-  height: $achievement_height; //√3
-  background-color: #ffffff;
-  margin: $root_twelve 0;
+  width: 100px; 
+  height: 57.74px;
+  background-color: #fff;
+  margin: 28.87px 0;
 }
 
 .achievement:before,
 .achievement:after {
   content: "";
   position: absolute;
-
-  left: 0;
-
+  right: 1%;
   width: 0;
-  border-left: $a_half_width solid transparent;
-  border-right: $a_half_width dashed transparent;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
 }
 
 .achievement:before {
   bottom: 100%;
-  border-bottom: $root_twelve solid #fff;
+  border-bottom: 28.87px solid #fff;
 }
 
 .achievement:after {
   top: 100%;
   width: 0;
-  border-top: $root_twelve solid #fff;
+  border-top: 28.87px solid #fff;
 }
 
 .achievementPosition1 {
@@ -215,7 +213,7 @@ export default {
   //top: -1.3vh;
   //left: -1.8vh;
   top: 50px;
-  left: 50px;
+  right: 50px;
 }
 
 .achievementPosition2 {
@@ -224,7 +222,7 @@ export default {
   //top: -4.4vh;
   //left: 5.9vh;
   top: 50px;
-  left: 150px;
+  right: -150px;
 }
 
 .achievementPosition3 {
@@ -233,13 +231,13 @@ export default {
   //top: -12.46vh;
   //left: 14vh;
   top: 50px;
-  left: 250px;
+  right: 250px;
 }
 
 .AllAchievementPosition{
   position: absolute;
-  top: 50px;
-  left: 50%;
+  top: 20px;
+  left: 60%;
 }
 
 .userInfo {

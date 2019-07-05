@@ -1,8 +1,8 @@
 <template>
   <div id="searchRoot">
     <navi></navi>
-    <div v-for="N in filteredUser.length" :key="N" v-bind:class="'n'+N">
-      <normalBanner :user="filteredUser[N-1]"></normalBanner>
+    <div v-for="N in searchResults.length" :key="N" v-bind:class="'n'+N">
+      <normalBanner :user="searchResults[N-1]"></normalBanner>
     </div>
   </div>
 </template>
@@ -12,24 +12,27 @@ import firebase, { functions } from "firebase";
 import navi from "../components/NavigationBar.vue";
 import normalBanner from "../components/NormalBanner";
 import store from "../store";
+import inputArea from "../components/dm/InputArea";
 
-let db = firebase.firestore();
+const db = firebase.firestore();
 
 export default {
   name: "search",
 
   components: {
     navi,
-    normalBanner
+    normalBanner,
+    inputArea
   },
 
   data: function() {
     return {
       users: [],
-      searchWord: "",
-      filteredUser: []
+      filteredUser: [],
+      searchResults: []
     };
   },
+
   created() {
     db.collection("USER")
       .get()
@@ -37,40 +40,39 @@ export default {
         this.users = doc.docs;
         doc.forEach(docs => {
           this.filteredUser.push(docs.data());
+          console.log(docs.data());
         });
+        this.filterUser(/*word = */ this.getSearchWordFromStore);
       });
   },
+
   computed: {
     getSearchWordFromStore() {
-      this.searchWord = this.$store.getters.getSearchWord;
-      this.filterUser();
-      return this.searchWord;
+      return this.$store.getters.getSearchWord;
     }
   },
+
   methods: {
-    filterUser() {
-      let key = this.searchWord;
+    filterUser(word) {
       let data = [];
       let results = [];
       let users_i;
-      if (key) {
+      let index = 0;
+      if (word) {
         for (users_i in this.users) {
           //ユーザーネームの走査
-          if (this.users[users_i].data().username.indexOf(key) !== -1) {
-            results.push(this.users[users_i].data());
+          if (this.users[users_i].data().username.indexOf(word) !== -1) {
+            this.$set(this.searchResults, index, {
+              username: this.users[index].data().username,
+              bio: this.users[index].data().bio,
+              email: this.users[index].data().email,
+              image: this.users[index].data().image
+            });
+            index++;
           }
+          this.$forceUpdate();
         }
-        this.filteredUser = results;
-      } else {
-        //オブジェクトに変換
-        for (users_i in this.users) {
-          data[users_i] = this.users[users_i].data();
-        }
-        //何も入力されてないときにフィルターする前のデータをする
-        this.filteredUser = data;
       }
-      return this.filteredUser;
-      //this.$forceUpdate();
     }
   }
 };

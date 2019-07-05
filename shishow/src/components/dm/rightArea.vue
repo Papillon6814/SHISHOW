@@ -2,10 +2,16 @@
   <div class="rightArea">
     {{ friendDocID }}
     <div v-for="N in msgList" v-bind:key="N">
-      <div class="chatBalloon">
+      <div v-show="isMine(N)" class="myChatBalloon">
         {{ N.msg }}
       </div>
-      <div class="datePosition">
+      <div v-show="isHis(N)" class="hisChatBalloon">
+        {{ N.msg }}
+      </div>
+      <div v-show="isMine(N)" class="myDatePosition">
+        {{ N.date.toDate().toLocaleString() }}
+      </div>
+      <div v-show="isHis(N)" class="hisDatePosition">
         {{ N.date.toDate().toLocaleString() }}
       </div>
     </div>
@@ -17,18 +23,17 @@ import firebase from "../../plugin/firestore";
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
-import { type } from 'os';
-import { types } from 'util';
 
 const db = firebase.firestore();
 let currentUserEmail;
+let chatID;
 
 export default {
   name: 'rightArea',
 
   data() {
     return {
-      msgList: []
+      msgList: [],
     }
   },
 
@@ -43,58 +48,56 @@ export default {
         store.commit('onAuthStateChanged', user);
         store.commit('onUserStatusChanged', user.uid ? true : false);
       })
+    },
+
+    isMine: function(msg) {
+      console.log(msg.sender);
+      console.log(currentUserEmail);
+      return (msg.sender == currentUserEmail);
+    },
+
+    isHis: function(msg) {
+      return (msg.sender != currentUserEmail);
     }
   },
 
   watch:{
-    friendDocID: function(newval){
-      this.msgList=[];
+    friendDocID: function(newval) {
+      this.msgList = [];
       currentUserEmail = firebase.auth().currentUser.email;
-        db.collection("USER")
+
+      db.collection("USER")
         .doc(currentUserEmail)
-        .collection("friends")
+        .collection('friends')
         .doc(newval)
-        .collection("CHAT")
-        .orderBy("date")
-        .onSnapshot(chatSnapshot => {
-          this.msgList = [];
+        .get()
+        .then(doc1 => {
+          chatID = doc1.data()['chatID'];
+          console.log('chatID: '+chatID);
 
-          chatSnapshot.forEach(doc1 => {
-            this.msgList.push(doc1.data());
-          })
+          db.collection("PrivateChat")
+            .doc(chatID)
+            .collection("contents")
+            .orderBy('date')
+            .onSnapshot(querySnapshot => {
+              this.msgList = [];
 
-          console.log("onload: " + this.msgList[0].msg)
-          window.scroll(0, 90000);
-          console.log("end")
-        }).catch(e=>{
-          console.log(e)
+              querySnapshot.forEach(doc2 => {
+                this.msgList.push(doc2.data());
+              })
+            })
         })
     }
   },
 
   created: function() {
     this.onAuth();
-    console.log("rightArea created")
+    console.log("rightArea created");
+
     currentUserEmail = firebase.auth().currentUser.email;
-    db.collection("USER")
-        .doc(currentUserEmail)
-        .collection("friends")
-        .doc(this.friendDocID)
-        .collection("CHAT")
-        .orderBy("date")
-        .onSnapshot(chatSnapshot => {
-          this.msgList = [];
-
-          chatSnapshot.forEach(doc1 => {
-            this.msgList.push(doc1.data());
-          })
-
-          console.log("onload: " + this.msgList[0].msg)
-        }).catch(e=>{
-          console.log(e)
-        })
   }
 };
+
 </script>
 
 <style lang='scss' scoped>
@@ -113,7 +116,7 @@ export default {
   overflow-x: hidden;
 }
 
-.chatBalloon {
+.myChatBalloon {
   position: relative;
   display: inline-block;
 
@@ -138,10 +141,42 @@ export default {
   font-family: 'Noto Sans JP', sans-serif;
 }
 
-.datePosition {
+.hisChatBalloon {
+  position: relative;
+  display: inline-block;
+
+  border-radius: 20px;
+
+  border: solid 1px #bbb;/*線*/
+  border-radius: 20px;/*角の丸み*/
+
+  right: 38%;
+
+  margin: 1.5em 15px 1.5em 0;
+  padding: 7px 10px;
+
+  min-width: 125px;
+  max-width: 100%;
+
+  color: $main_text_color;
+  font-size: 16px;
+  background: #FFF;
+
+  text-align: right;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.myDatePosition {
   position: relative;
 
   left: 40%;
+  font-size: 13px;
+}
+
+.hisDatePosition {
+  position: relative;
+
+  right: 40%;
   font-size: 13px;
 }
 

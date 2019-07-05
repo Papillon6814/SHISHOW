@@ -1,5 +1,5 @@
 <template>
-  <div class="incoming" v-bind:class="{ 'banner': isA, 'extend': isB }">
+  <div class="incoming">
     <span class="iconPicPosition">
       <div class="iconPic">
         <img id="image" :src="user['image']" />
@@ -41,56 +41,140 @@
 </template>
 
 <script>
-import store from "../store"
 import firebase from '../plugin/firestore'
 import 'firebase/firestore'
 import '@firebase/auth'
 
 const db = firebase.firestore();
-const currentUser = firebase.auth().currentUser;
 
 export default {
   name: 'incoming',
-  props:["user","signuser"],
-  created:function(){
-  },
-  data: function() {
-    return{
-      isA: true,
-      isB: false,
-    }
-  },
+
+  props:[
+    "user",
+    "signuser"
+  ],
+
   methods: {
     doExtend: function() {
-      this.isA = !this.isA;
-      this.isB = !this.isB;
-      const sign_db = db.collection("USER").doc(this.signuser.email);
-      const user_db = db.collection("USER").doc(this.user.email);
 
+      // 自分のドキュメント
+      const sign_db = db.collection("USER")
+                        .doc(this.signuser.email);
+      // 相手のドキュメント
+      const user_db = db.collection("USER")
+                        .doc(this.user.email);
 
-      sign_db.collection("incoming").doc(this.user.email).delete().then(()=>{
-          sign_db.collection("friends").doc(this.user.email).set({
-            username:this.user.username,
-            email:this.user.email
-          });
-          sign_db.collection("incoming").get().then(doc =>{
-            this.$parent.income = doc.docs();
-          }).catch(()=>{
-            this.$parent.income ="";
-          })
-      }).catch(e=>{console.log(e)});
+      db.collection("PrivateChat")
+             .add({
+               email1: this.signuser.email,
+               email2: this.user.email
+             })
+             .then(doc1 => {
 
-      user_db.collection("outgoing").doc(this.signuser.email).delete().then(()=>{
-          user_db.collection("friends").doc(this.signuser.email).set({
-            username:this.signuser.username,
-            email:this.signuser.email
-          })
-      }).catch(e=>{console.log(e)});
+                     sign_db.collection("incoming")
+                            .doc(this.user.email)
+                            .delete()
+                            .then(()=>{
 
+                              sign_db.collection("friends")
+                                     .doc(this.user.email)
+                                     .set({
+                                       username: this.user.username,
+                                       email: this.user.email,
+                                       chatID: doc1.id
+                                     });
 
+                              sign_db.collection("incoming")
+                                     .get()
+                                     .then(doc2 =>{
+                                       this.$parent.income = doc2.docs;
+                                     }).catch(()=>{
+                                       this.$parent.income = "";
+                                     })
 
+                              sign_db.collection("friends")
+                                     .get()
+                                     .then(doc2 => {
+                                       this.$parent.fri = doc2.docs;
+                                     }).catch(()=>{
+                                       this.$parent.fri = "";
+                                     })
+                            }).catch(e => {
+                              console.log(e)
+                            });
 
+                  user_db.collection("outgoing")
+                         .doc(this.signuser.email)
+                         .delete()
+                         .then(()=>{
 
+                           user_db.collection("friends")
+                                  .doc(this.signuser.email)
+                                  .set({
+                                    username: this.signuser.username,
+                                    email: this.signuser.email,
+                                    chatID: doc1.id
+                                  })
+                         })
+                         .catch(e => {
+                           console.log(e)
+                         });
+
+                  db.collection("USER")
+                    .doc(this.user.email)
+                    .collection("relation")
+                    .doc(this.signuser.email)
+                    .set({
+                      relation:3,
+                    })
+                    .catch(e =>{
+                      console.log(e)
+                    })
+
+                  db.collection("USER")
+                    .doc(this.signuser.email)
+                    .collection("relation")
+                    .doc(this.user.email)
+                    .set({
+                      relation:3,
+                    }).catch(e =>{
+                      console.log(e)
+                    })
+
+                  db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).set({
+                    relation:3,
+                  })
+                  .catch(e =>{
+                    console.log(e)
+                  })
+                  db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).set({
+                    relation:3,
+                  }).catch(e =>{
+                    console.log(e)
+                  })
+
+                  user_db.collection("notice")
+                         .doc(this.signuser.email)
+                         .set({
+                           msg:this.signuser.username+"とフレンドになりました。",
+                           date:new Date()
+                         })
+
+                  sign_db.collection("notice")
+                         .doc(this.user.email)
+                         .get()
+                         .then(doc=>{
+                           if(doc.exists){
+                             sign_db.collection("notice")
+                                    .doc(this.user.email)
+                                    .delete();
+                            }
+                          })
+              })
+              .catch(e => {
+                console.log(e)
+              });
     }
   }
 }
@@ -99,7 +183,7 @@ export default {
 
 <style lang="scss" scoped>
   .incoming {
-    position: absolute;
+    position: relative;
 
     width: $n_banner_width;
     //temporary height
@@ -107,18 +191,13 @@ export default {
 
     background-color: $n_banner_color;
 
-    border: solid;
-    border-width: 5px;
-    border-color: $n_banner_flame;
     z-index: 2;
 
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    margin: 0px auto;
 
-    //children
+    transition: 0.3s;
 
-
-
-    .iconPic {
+   .iconPic {
       width: $n_icon_width;
       height: $n_icon_height;
 
@@ -126,15 +205,12 @@ export default {
       background-color: #fff;
 
       border-radius: 50%;
-      border: solid;
-      border-width: 2px;
-      border-color: $n_window_flame;
     }
 
     #image{
       width: $n_icon_width;
       height: $n_icon_height;
-      border-radius:50%,
+      border-radius:50%;
     }
 
     .iconPicPosition {
@@ -202,34 +278,18 @@ export default {
       left: 106.673px;
     }
 
-    #pullDownProperties {
-      position: absolute;
-
-      top: 154.6875px;
-      left: 10.3px;
-
-      font-size: 39.875px;
-    }
-
-    #pullDownProperties:hover {
-      color: $pulldown_color;
-    }
-
     .username{
       width: $user_width;
       height: $n_user_height;
 
       background-color: #fff;
 
-      border: solid;
-      border-width: 3px;
-      border-color: $n_window_flame;
     }
 
     .usernamePosition{
       position: absolute;
 
-      top: 18px;
+      top: 8px;
       left: 172px;
       right: 0px;
     }
@@ -240,9 +300,6 @@ export default {
 
       background-color: #fff;
 
-      border: solid;
-      border-width: 3px;
-      border-color: $n_window_flame;
     }
 
     .idPosition{
@@ -259,28 +316,25 @@ export default {
 
       background-color: #fff;
 
-      border: solid;
-      border-width: 3px;
-      border-color: $n_window_flame;
     }
 
     .profilePosition{
       position: absolute;
 
-      top: 108px;
+      top: 95px;
       left: 172px;
       right: 25px;
     }
 
     .n_btn-circle-3d {
       position: relative;
-      top: 32px;
-      left:39%;
+      top: 15px;
+      left:32%;
       display: inline-block;
       text-decoration: none;
       background: #ff8181;
       color: #fff;
-      width: 100px;
+      width: 150px;
       height: 60px;
       line-height: 63px;
       border-radius: 50%;
@@ -306,4 +360,7 @@ export default {
     }*/
   }
 
+  .incoming:hover{
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+  }
 </style>
