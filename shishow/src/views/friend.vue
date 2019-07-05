@@ -2,21 +2,31 @@
   <div>
     <navi></navi>
     <div class="friend">
+
         <div style="top:800px;width:80%;height:50px;margin:0 auto;">
-            <div class="tab" id="black" @click="T">incoming<span style="color:white;"></span></div>
-            <div class="tab" id="white" @click="F">outgoing</div>
+            <div class="tab" id="in" @click="I">incoming<span style="color:white;"></span></div>
+            <div class="tab" id="out" @click="O">outgoing</div>
+            <div class="tab" id="fri" @click="F">friend</div>
         </div>
-        <div class="mainobject" v-if="TorF" style="background-color:white">
+
+        <div class="mainobject" v-if="IOF==0" style="background-color:white">
             <div v-for="N in income.length" :key="N" v-bind:class="'n'+N">
                 <incoming :user="income[N-1].data()" :signuser="signuser"></incoming>
             </div>
         </div>
 
-        <div class="mainobject" v-if="!TorF" style="background-color:white">
+        <div class="mainobject" v-else-if="IOF==1" style="background-color:white">
             <div v-for="N in outgo.length" :key="N" v-bind:class="'n'+N">
                 <outgoing :user="outgo[N-1].data()" :signuser="signuser"></outgoing>
             </div>
         </div>
+
+        <div class="mainobject" v-else-if="IOF==2" style="background-color:white">
+            <div v-for="N in fri.length" :key="N" v-bind:class="'n'+N">
+                <friends :user="fri[N-1].data()" :signuser="signuser"></friends>
+            </div>
+        </div>
+
     </div>
   </div>
 </template>
@@ -29,6 +39,7 @@ import '@firebase/auth'
 import navi from '../components/NavigationBar.vue';
 import incoming from "../components/incoming.vue"
 import outgoing from "../components/outgoing.vue"
+import friends from "../test/friend"
 import store from '../store'
 
 const db = firebase.firestore();
@@ -39,17 +50,19 @@ export default {
 
     data:function(){
         return{
-            TorF:true,
+            IOF:0,
             income:"",
             outgo:"",
             signuser:"",
+            fri:"",
         }
     },
 
     components: {
         incoming,
         outgoing,
-        navi
+        navi,
+        friends,
     },
 
     computed: {
@@ -62,12 +75,15 @@ export default {
     },
 
     methods:{
-        T(){
-            this.TorF=true;
+        I(){
+            this.IOF=0;
+        },
+        O(){
+            this.IOF=1;
+            console.log(this.outgo.length);
         },
         F(){
-            this.TorF=false;
-            console.log(this.outgo.length);
+          this.IOF=2
         },
         onAuth: function () {
         firebase.auth().onAuthStateChanged(user => {
@@ -94,6 +110,10 @@ export default {
                 this.outgo = doc.docs;
             })
 
+            db.collection("USER").doc(this.user.email).collection("friends").get().then(doc=>{
+              this.fri = doc.docs;
+            })
+
             db.collection("USER").doc(this.user.email).get().then(doc =>{
                 this.signuser = doc.data();
             })
@@ -115,25 +135,29 @@ export default {
   $i: 1;
   @while $i <= 30{
     .n#{$i}{
-      padding-top: 10px;/* + (200px * $i);*/      
+      padding-top: 5px;/* + (200px * $i);*/     
+      padding-bottom: 5px; 
     }
     $i: $i + 1;
   }
 }
 
   .tab{
-    width:50%;
+    width:33%;
     height: 100%;
+    float:left;
   }
 
-  #black{
-    background-color:rgb(0, 255, 149);
-    float: left;
+  #in{
+    background-color:#ff8181;
   }
 
-  #white{
-    background-color:rgb(135, 215, 235);
-    float: right
+  #out{
+    background-color:#ffc107;
+  }
+
+  #fri{
+    background-color:#000000;
   }
   
   .mainobject{
@@ -143,6 +167,5 @@ export default {
     overflow-x: hidden;
     overflow-y: scroll;  
   }
-
 
 </style>

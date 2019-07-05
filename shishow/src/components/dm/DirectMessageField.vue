@@ -4,11 +4,13 @@
     :friendsDocID="leftAreaData"
     ></leftArea>
     <rightArea
-    :friendDocID="idFromLeftArea">
+    :friendDocID="idFromLeftArea"
+    ref="scrollArea">
     </rightArea>
     <div class="inputArea">
       <inputArea
-      :friendDocID="idFromLeftArea">
+      :friendDocID="idFromLeftArea"
+      @scrollRightArea="scrollRightArea">
       </inputArea>
     </div>
   </div>
@@ -72,6 +74,10 @@ export default {
             console.log("ID: " + friendsDocID)
           })
       })
+    },
+
+    scrollRightArea: function() {
+      this.$refs.scrollArea.chatScroll();
     }
   },
 

@@ -41,13 +41,11 @@
 </template>
 
 <script>
-import store from "../store"
 import firebase from '../plugin/firestore'
 import 'firebase/firestore'
 import '@firebase/auth'
 
 const db = firebase.firestore();
-const currentUser = firebase.auth().currentUser;
 
 export default {
   name: 'incoming',
@@ -57,14 +55,13 @@ export default {
     "signuser"
   ],
 
-  created:function(){
-  },
-
   methods: {
     doExtend: function() {
+
+      // 自分のドキュメント
       const sign_db = db.collection("USER")
                         .doc(this.signuser.email);
-
+      // 相手のドキュメント
       const user_db = db.collection("USER")
                         .doc(this.user.email);
 
@@ -73,42 +70,111 @@ export default {
                email1: this.signuser.email,
                email2: this.user.email
              })
-             .then(querySnapshot => {
-               sign_db.collection("incoming")
-                      .doc(this.user.email)
-                      .delete()
-                      .then(()=>{
-                        sign_db.collection("friends")
-                               .doc(this.user.email)
-                               .set({
-                                 username: this.user.username,
-                                 email: this.user.email,
-                                 chatID: querySnapshot.id
-                               });
+             .then(doc1 => {
 
-                        sign_db.collection("incoming")
-                               .get()
-                               .then(doc =>{
-                                 this.$parent.income = doc.docs();
-                               }).catch(()=>{
-                                 this.$parent.income ="";
-                               })
+                     sign_db.collection("incoming")
+                            .doc(this.user.email)
+                            .delete()
+                            .then(()=>{
 
-                      }).catch(e=>{console.log(e)});
+                              sign_db.collection("friends")
+                                     .doc(this.user.email)
+                                     .set({
+                                       username: this.user.username,
+                                       email: this.user.email,
+                                       chatID: doc1.id
+                                     });
 
-               user_db.collection("outgoing")
-                      .doc(this.signuser.email)
-                      .delete()
-                      .then(()=>{
-                        user_db.collection("friends")
-                               .doc(this.signuser.email)
-                               .set({
-                                 username: this.signuser.username,
-                                 email: this.signuser.email,
-                                 chatID: querySnapshot.id
-                               })
-                      }).catch(e=>{console.log(e)});
-             })
+                              sign_db.collection("incoming")
+                                     .get()
+                                     .then(doc2 =>{
+                                       this.$parent.income = doc2.docs;
+                                     }).catch(()=>{
+                                       this.$parent.income = "";
+                                     })
+
+                              sign_db.collection("friends")
+                                     .get()
+                                     .then(doc2 => {
+                                       this.$parent.fri = doc2.docs;
+                                     }).catch(()=>{
+                                       this.$parent.fri = "";
+                                     })
+                            }).catch(e => {
+                              console.log(e)
+                            });
+
+                  user_db.collection("outgoing")
+                         .doc(this.signuser.email)
+                         .delete()
+                         .then(()=>{
+
+                           user_db.collection("friends")
+                                  .doc(this.signuser.email)
+                                  .set({
+                                    username: this.signuser.username,
+                                    email: this.signuser.email,
+                                    chatID: doc1.id
+                                  })
+                         })
+                         .catch(e => {
+                           console.log(e)
+                         });
+
+                  db.collection("USER")
+                    .doc(this.user.email)
+                    .collection("relation")
+                    .doc(this.signuser.email)
+                    .set({
+                      relation:3,
+                    })
+                    .catch(e =>{
+                      console.log(e)
+                    })
+
+                  db.collection("USER")
+                    .doc(this.signuser.email)
+                    .collection("relation")
+                    .doc(this.user.email)
+                    .set({
+                      relation:3,
+                    }).catch(e =>{
+                      console.log(e)
+                    })
+
+                  db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).set({
+                    relation:3,
+                  })
+                  .catch(e =>{
+                    console.log(e)
+                  })
+                  db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).set({
+                    relation:3,
+                  }).catch(e =>{
+                    console.log(e)
+                  })
+
+                  user_db.collection("notice")
+                         .doc(this.signuser.email)
+                         .set({
+                           msg:this.signuser.username+"とフレンドになりました。",
+                           date:new Date()
+                         })
+
+                  sign_db.collection("notice")
+                         .doc(this.user.email)
+                         .get()
+                         .then(doc=>{
+                           if(doc.exists){
+                             sign_db.collection("notice")
+                                    .doc(this.user.email)
+                                    .delete();
+                            }
+                          })
+              })
+              .catch(e => {
+                console.log(e)
+              });
     }
   }
 }
@@ -128,16 +194,8 @@ export default {
     z-index: 2;
 
     margin: 0px auto;
-    
+
     transition: 0.3s;
-    
-    //children
-    
-
-
-    //children
-
-
 
    .iconPic {
       width: $n_icon_width;
@@ -302,7 +360,7 @@ export default {
     }*/
   }
 
-  .outgoing:hover{
+  .incoming:hover{
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
   }
 </style>
