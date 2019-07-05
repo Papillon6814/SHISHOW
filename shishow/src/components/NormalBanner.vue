@@ -56,7 +56,7 @@ export default {
       isA: true,
       isB: false,
       arrowUp: false,
-      relation:0,
+      relation: 0,
     };
   },
 
@@ -132,7 +132,7 @@ export default {
           msg:this.signuser.username+"からフレンド申請が来ました。",
           date: new Date()
         })
-      
+
 
 
       this.relation = 2;
@@ -164,47 +164,92 @@ export default {
     },
 
     add_db:function(){
-      const sign_db = db.collection("USER").doc(this.signuser.email);
-      const user_db = db.collection("USER").doc(this.user.email)
+      const sign_db = db.collection("USER")
+                        .doc(this.signuser.email);
+      const user_db = db.collection("USER")
+                        .doc(this.user.email);
 
-      sign_db.collection("incoming").doc(this.user.email).delete().then(()=>{
-          sign_db.collection("friends").doc(this.user.email).set({
-            username:this.user.username,
-            email:this.user.email
-          });
-      }).catch(e=>{console.log(e)});
+      db.collection("PrivateChat")
+        .add({
+          email1: this.signuser.email,
+          email2: this.user.email
+        })
+        .then(doc1 => {
 
-      user_db.collection("outgoing").doc(this.signuser.email).delete().then(()=>{
-          user_db.collection("friends").doc(this.signuser.email).set({
-            username:this.signuser.username,
-            email:this.signuser.email
+        sign_db.collection("incoming")
+               .doc(this.user.email)
+               .delete()
+               .then(()=>{
+
+                 sign_db.collection("friends")
+                 .doc(this.user.email)
+                 .set({
+                   username: this.user.username,
+                   email: this.user.email,
+                   chatID: doc1.id
+                 });
+               })
+               .catch(e => {
+                 console.log(e)
+               });
+
+        user_db.collection("outgoing")
+               .doc(this.signuser.email)
+               .delete()
+               .then(() => {
+                 user_db.collection("friends")
+                        .doc(this.signuser.email)
+                        .set({
+                          username: this.signuser.username,
+                          email: this.signuser.email,
+                          chatID: doc1.id
+                        })
+               })
+               .catch(e => {
+                 console.log(e)
+               });
+
+        db.collection("USER")
+          .doc(this.user.email)
+          .collection("relation")
+          .doc(this.signuser.email)
+          .set({
+            relation:3,
           })
-      }).catch(e=>{console.log(e)});
+          .catch(e =>{
+            console.log(e)
+          })
 
-      db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).set({
-        relation:3,
-      })
-      .catch(e =>{
-        console.log(e)
-      })
-      db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).set({
-        relation:3,
-      }).catch(e =>{
-        console.log(e)
-      })
+        db.collection("USER")
+          .doc(this.signuser.email)
+          .collection("relation")
+          .doc(this.user.email)
+          .set({
+            relation:3,
+          })
+          .catch(e =>{
+            console.log(e)
+          })
 
-      user_db.collection("notice").doc(this.signuser.email).set({
-        msg:this.signuser.usernam+"とフレンドになりました。",
-        date: new Date()
-      })
+        user_db.collection("notice")
+               .doc(this.signuser.email)
+               .set({
+                 msg: this.signuser.usernam+"とフレンドになりました。",
+                 date: new Date()
+               })
 
-      sign_db.collection("notice").doc(this.user.email).get().then(doc=>{
-        if(doc.exists){
-          sign_db.collection("notice").doc(this.user.email).delete();
-        }
+        sign_db.collection("notice")
+               .doc(this.user.email)
+               .get()
+               .then(doc => {
+                 if(doc.exists){
+                   sign_db.collection("notice")
+                          .doc(this.user.email)
+                          .delete();
+                 }
+               })
+        this.relation = 3
       })
-
-      this.relation = 3
     }
   },
 

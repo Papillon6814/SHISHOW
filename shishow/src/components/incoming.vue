@@ -57,9 +57,11 @@ export default {
 
   methods: {
     doExtend: function() {
+
+      // 自分のドキュメント
       const sign_db = db.collection("USER")
                         .doc(this.signuser.email);
-
+      // 相手のドキュメント
       const user_db = db.collection("USER")
                         .doc(this.user.email);
 
@@ -68,7 +70,7 @@ export default {
                email1: this.signuser.email,
                email2: this.user.email
              })
-             .then(() => {
+             .then(doc1 => {
 
                      sign_db.collection("incoming")
                             .doc(this.user.email)
@@ -80,21 +82,21 @@ export default {
                                      .set({
                                        username: this.user.username,
                                        email: this.user.email
-
+                                       chatID: doc1.id
                                      });
 
                               sign_db.collection("incoming")
                                      .get()
-                                     .then(doc =>{
-                                       this.$parent.income = doc.docs;
+                                     .then(doc2 =>{
+                                       this.$parent.income = doc2.docs;
                                      }).catch(()=>{
-                                       this.$parent.income ="";
+                                       this.$parent.income = "";
                                      })
 
                               sign_db.collection("friends")
                                      .get()
-                                     .then(doc=>{
-                                       this.$parent.fri = doc.docs;
+                                     .then(doc2 => {
+                                       this.$parent.fri = doc2.docs;
                                      }).catch(()=>{
                                        this.$parent.fri = "";
                                      })
@@ -110,8 +112,9 @@ export default {
                            user_db.collection("friends")
                                   .doc(this.signuser.email)
                                   .set({
-                                    username:this.signuser.username,
-                                    email:this.signuser.email
+                                    username: this.signuser.username,
+                                    email: this.signuser.email,
+                                    chatID: doc1.id
                                   })
                          })
                          .catch(e => {
@@ -181,14 +184,6 @@ export default {
     margin: 0px auto;
 
     transition: 0.3s;
-
-    //children
-
-
-
-    //children
-
-
 
    .iconPic {
       width: $n_icon_width;
