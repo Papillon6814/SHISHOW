@@ -40,9 +40,6 @@ export default {
   },
 
   methods: {
-    doFilterUser() {
-      //this.$emit("")
-    },
     //メッセージを送る
     sendMsg() {
       // 文字が入力されているときにのみ送信
