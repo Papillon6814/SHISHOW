@@ -1,9 +1,7 @@
 <template>
   <div class="banner" v-bind:class="{ 'banner': isA, 'extend': isB }">
     <span class="iconPicPosition">
-      <div class="iconPic">
-        <img id="image" v-show="icon" :src="icon" width="130" height="130">
-      </div>
+      <div class="iconPic"><img id="image" v-show="icon" :src="icon" width="130" height="130"></div>
     </span>
     <div class="achievementPosition1">
       <div class="achievement"></div>
@@ -98,6 +96,7 @@ export default {
     console.log("created");
     this.onAuth();
     var root = this;
+
 
     var User = this.user;
     var email;

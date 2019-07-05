@@ -82,7 +82,6 @@ export default {
 
       if (store.state.status) {
         console.log(this.signuser["email"]);
-
         db.collection("USER")
           .doc(this.signuser.email)
           .collection("outgoing")
@@ -94,7 +93,6 @@ export default {
           .catch(e => {
             console.log(e);
           });
-
         console.log(this.user.email);
         console.log(this.signuser.username);
 
@@ -110,176 +108,103 @@ export default {
             console.log(e);
           });
 
-        db.collection("USER")
-          .doc(this.user.email)
-          .collection("relation")
-          .doc(this.signuser.email)
-          .set({
-            relation:1,
-          })
-          .catch(e =>{
-            console.log(e)
-          })
+        db.collection("USER").doc(this.user.email)
+        .collection("relation")
+        .doc(this.signuser.email).set({
+          relation:1,
+        })
+        .catch(e =>{
+          console.log(e)
+        })
 
-        db.collection("USER")
-          .doc(this.signuser.email)
-          .collection("relation")
-          .doc(this.user.email)
-          .set({
-            relation:2,
-          }).catch(e =>{
-            console.log(e)
-          })
+        db.collection("USER").doc(this.signuser.email)
+        .collection("relation")
+        .doc(this.user.email).set({
+          relation:2,
+        }).catch(e =>{
+          console.log(e)
+        })
 
-        db.collection("USER")
-          .doc(this.user.email)
-          .collection("notice")
-          .doc(this.signuser.email)
-          .set({
-            msg: this.signuser.username+"からフレンド申請が来ました。",
-            date: new Date()
-          })
-            this.relation = 2;
-        }
+        db.collection("USER").doc(this.user.email)
+        .collection("notice")
+        .doc(this.signuser.email)
+        .set({
+          msg:this.signuser.username+"からフレンド申請が来ました。",
+          date: new Date()
+        })
+      
+
+
+      this.relation = 2;
+      }
     },
 
-    // 送信したリクエストを削除するための処理
-    delete_db: function(){
-      // sign_dbは自分のドキュメント
-      const sign_db = db.collection("USER")
-                        .doc(this.signuser.email);
-      // user_ dbは相手のドキュメント
-      const user_db = db.collection("USER")
-                        .doc(this.user.email);
+    delete_db:function(){
+      const sign_db = db.collection("USER").doc(this.signuser.email);
+      const user_db = db.collection("USER").doc(this.user.email)
 
-      user_db.collection("incoming")
-             .doc(this.signuser.email)
-             .delete()
-             .catch(e=>{console.log(e)});
+      user_db.collection("incoming").doc(this.signuser.email).delete()
+      .catch(e=>{console.log(e)});
 
-      sign_db.collection("outgoing")
-             .doc(this.user.email)
-             .delete()
-             .catch(e=>{console.log(e)});
+      sign_db.collection("outgoing").doc(this.user.email).delete()
+      .catch(e=>{console.log(e)});
 
-      db.collection("USER")
-        .doc(this.user.email)
-        .collection("relation")
-        .doc(this.signuser.email)
-        .delete()
-        .catch(e =>{
-          console.log(e)
-        })
+      db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).delete()
+      .catch(e =>{
+        console.log(e)
+      })
+      db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).delete()
+      .catch(e =>{
+        console.log(e)
+      })
 
-      db.collection("USER")
-        .doc(this.signuser.email)
-        .collection("relation")
-        .doc(this.user.email)
-        .delete()
-        .catch(e =>{
-          console.log(e)
-        })
-
-      user_db.collection("notice")
-             .doc(this.signuser.email)
-             .delete();
+      user_db.collection("notice").doc(this.signuser.email).delete();
 
       this.relation = 0
     },
 
-    // friendsコレクションにお互いフレンド登録するための処理
-    add_db: function(){
-      const sign_db = db.collection("USER")
-                        .doc(this.signuser.email);
-      const user_db = db.collection("USER")
-                        .doc(this.user.email);
+    add_db:function(){
+      const sign_db = db.collection("USER").doc(this.signuser.email);
+      const user_db = db.collection("USER").doc(this.user.email)
 
-      db.collection("PrivateChat")
-        .add({
-          email1: this.signuser.email,
-          email2: this.user.email
-        })
-        .then(doc => {
+      sign_db.collection("incoming").doc(this.user.email).delete().then(()=>{
+          sign_db.collection("friends").doc(this.user.email).set({
+            username:this.user.username,
+            email:this.user.email
+          });
+      }).catch(e=>{console.log(e)});
 
-          // 自分のドキュメントのincomingコレクションからデータを削除
-          sign_db.collection("incoming")
-                 .doc(this.user.email)
-                 .delete()
-                 .then(()=>{
-                   // 削除したあと、自分のドキュメントのfriendsドキュメントに相手を追加
-                   sign_db.collection("friends")
-                          .doc(this.user.email)
-                          .set({
-                            username: this.user.username,
-                            email: this.user.email,
-                            chatID: doc.id
-                          });
-                 })
-                 .catch(e=>{
-                   console.log(e)
-                 });
+      user_db.collection("outgoing").doc(this.signuser.email).delete().then(()=>{
+          user_db.collection("friends").doc(this.signuser.email).set({
+            username:this.signuser.username,
+            email:this.signuser.email
+          })
+      }).catch(e=>{console.log(e)});
 
-          // 相手のドキュメントのoutgoingコレクションから自分のデータを削除
-          user_db.collection("outgoing")
-                 .doc(this.signuser.email)
-                 .delete()
-                 .then(()=>{
-                   // そのあと相手のドキュメントのfriendsコレクションに自分を追加
-                   user_db.collection("friends")
-                   .doc(this.signuser.email)
-                   .set({
-                     username: this.signuser.username,
-                     email: this.signuser.email,
-                     chatID: doc.id
-                   })
-                 }).catch(e=>{
-                   console.log(e)
-                 });
-
-            // 自分のrelationコレクションに相手との関係を格納
-            db.collection("USER")
-              .doc(this.user.email)
-              .collection("relation")
-              .doc(this.signuser.email)
-              .set({
-                relation:3,
-              })
-              .catch(e =>{
-                console.log(e)
-              })
-
-            // 相手のrelationコレクションに相手との関係を格納
-            db.collection("USER")
-              .doc(this.signuser.email)
-              .collection("relation")
-              .doc(this.user.email)
-              .set({
-                relation:3,
-              }).catch(e =>{
-                console.log(e)
-              })
-
-            // 相手の通知のコレクションにデータを追加
-            user_db.collection("notice")
-                   .doc(this.signuser.email)
-                   .set({
-                     msg:this.signuser.username+"とフレンドになりました。",
-                     date: new Date()
-                   })
-
-            // 自分の通知のコレクションにデータを追加
-            sign_db.collection("notice")
-                   .doc(this.user.email)
-                  .get()
-                  .then(doc=>{
-                    if(doc.exists){
-                      sign_db.collection("notice")
-                             .doc(this.user.email)
-                             .delete();
-                    }
-                  })
-            this.relation = 3;
+      db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).set({
+        relation:3,
       })
+      .catch(e =>{
+        console.log(e)
+      })
+      db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).set({
+        relation:3,
+      }).catch(e =>{
+        console.log(e)
+      })
+
+      user_db.collection("notice").doc(this.signuser.email).set({
+        msg:this.signuser.usernam+"とフレンドになりました。",
+        date: new Date()
+      })
+
+      sign_db.collection("notice").doc(this.user.email).get().then(doc=>{
+        if(doc.exists){
+          sign_db.collection("notice").doc(this.user.email).delete();
+        }
+      })
+
+      this.relation = 3
     }
   },
 
