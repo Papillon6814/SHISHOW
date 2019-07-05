@@ -81,7 +81,7 @@ export default {
                                      .doc(this.user.email)
                                      .set({
                                        username: this.user.username,
-                                       email: this.user.email
+                                       email: this.user.email,
                                        chatID: doc1.id
                                      });
 
