@@ -4,12 +4,12 @@
     <div id="notificationField">
       <span v-if="!notice.length" class="no_notification">no notification</span>
       <div v-if="notice.length">
-      <div v-for="N in notice.length"
-      :key="N"
+      <div v-for="N in notice.length" 
+      :key="N" 
       v-bind:class="'not'+N">
-
-        <notificationBanner
-        :user="users[N-1]"
+      
+        <notificationBanner 
+        :user="users[N-1]" 
         :notice="notice[N-1]">
         </notificationBanner>
       </div>

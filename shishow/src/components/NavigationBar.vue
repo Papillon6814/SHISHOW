@@ -23,6 +23,7 @@
       </div>
     </div>
     <div class="logoSentence">SHISHOW</div>
+
     <div id="menuButtons">
       <div class="buttons">
         <router-link to="/GlobalChat">
@@ -31,9 +32,7 @@
         <router-link to="/directMessage">
           <i class="fas fa-envelope fa-3x dm"></i>
         </router-link>
-        <router-link to="/follow">
-          <i class="fas fa-gamepad fa-3x game"></i>
-        </router-link>
+        <i class="fas fa-gamepad fa-3x game"></i>
         <router-link to="/notification">
           <i class="fas fa-bell fa-3x bell"></i>
         </router-link>
@@ -43,7 +42,7 @@
       </div>
       <div class="header-logo-menu">
         <div id="nav-drawer">
-          <input id="nav-input" type="checkbox" class="nav-unshown" />
+          <input id="nav-input" type="checkbox" class="nav-unshown">
           <label id="nav-open" for="nav-input">
             <span></span>
           </label>
@@ -55,9 +54,7 @@
             <router-link to="/directMessage">
               <i class="fas fa-envelope fa-3x dm"></i>
             </router-link>
-            <router-link to="/follow">
-              <i class="fas fa-gamepad fa-3x game"></i>
-            </router-link>
+            <i class="fas fa-gamepad fa-3x game"></i>
             <router-link to="/notification">
               <i class="fas fa-bell fa-3x bell"></i>
             </router-link>
@@ -68,6 +65,7 @@
         </div>
       </div>
     </div>
+    <div class="logoSentence">SHISHOW</div>
   </div>
 </template>
 
@@ -90,9 +88,7 @@ export default {
 
     commitChange(newValue) {
       //this.$emit("input", newValue);
-      console.log("fired");
       store.commit("onSearchWordInput", newValue);
-      this.$emit("search", newValue);
     }
   }
 };
@@ -101,11 +97,10 @@ export default {
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css?family=Pangolin&display=swap");
 
-
 #header {
   position: absolute;
 
-  top: $header_height;
+  top: 0;
   left: 0;
 
   width: 100%;
@@ -224,6 +219,7 @@ export default {
         color: $secondary-color;
       }
     }
+
   }
 
   .logo {
@@ -234,6 +230,23 @@ export default {
 
     top: 10px;
     left: 10px;
+  }
+
+  .logoSentence {
+    position: absolute;
+
+    font-family: "Pangolin", cursive;
+    top: 20px;
+    font-size: 60px;
+
+    left: 50%;
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+
+    color: $logo_sentence_color;
+
+    text-shadow: 2px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
+      -1px 1px 0 #000, 1px 1px 0 #000;
   }
 
   ::selection {
@@ -286,27 +299,27 @@ export default {
     }
 
     .home {
-      position: absolute;
+        position: absolute;
 
-      width: $button_width;
-      height: $button_height;
+        width: $button_width;
+        height: $button_height;
 
-      right: 450px;
-      top: 10px;
+        right: 450px;
+        top: 10px;
 
-      color: #fff;
+        color: #fff;
     }
 
-    .grobal {
-      position: absolute;
+    .grobal{
+        position: absolute;
 
-      width: $button_width;
-      height: $button_height;
+        width: $button_width;
+        height: $button_height;
 
-      right: 350px;
-      top: 10px;
+        right: 350px;
+        top: 10px;
 
-      color: #fff;
+        color: #fff;
     }
 
     .dm:hover {
@@ -325,14 +338,14 @@ export default {
       opacity: 0.5;
     }
 
-    .grobal:hover {
+    .grobal:hover{
       opacity: 0.5;
     }
   }
   .nav-unshown {
-    display: none;
+    display:none;
   }
-  .buttons {
+  .buttons{
     display: none;
   }
   .logoSentence {
@@ -370,13 +383,13 @@ export default {
 
   /*チェックボックス等を非表示*/
   .nav-unshown {
-    display: none;
+    display:none;
   }
 
   /*アイコンのスペース（クリック可能な領域）*/
   #nav-open {
     display: inline-block;
-    right: 10px;
+    right:10px;
     width: 90px;
     height: 90px;
     vertical-align: middle;
@@ -384,24 +397,50 @@ export default {
   }
 
   /*ハンバーガーボタンの形*/
-  #nav-open span,
-  #nav-open span:before,
-  #nav-open span:after {
+  #nav-open span, #nav-open span:before, #nav-open span:after {
     position: absolute;
-    bottom: 55px; //topで指定するとなぜか崩れるのでbottomで指定
-    height: 6px; //線の太さ
-    width: 60px; //長さ
-    border-radius: 100px; //線の丸み
-    background: #fff; //線の色
+    bottom:55px;//topで指定するとなぜか崩れるのでbottomで指定
+    height: 6px;//線の太さ
+    width: 60px;//長さ
+    border-radius:100px;//線の丸み
+    background: #fff;//線の色
     display: block;
-    content: "";
+    content: '';
     cursor: pointer;
+    /*.menu-trigger,
+    .menu-trigger span {
+      display: inline-block;
+      transition: all .4s;
+      box-sizing: border-box;
+    }
+    .menu-trigger {
+      position: relative;
+      width: 50px;
+      height: 44px;
+    }
+    .menu-trigger span {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background-color: #fff;
+      border-radius: 4px;
+    }
+    .menu-trigger span:nth-of-type(1) {
+      top: 0;
+    }
+    .menu-trigger span:nth-of-type(2) {
+      top: 20px;
+    }
+    .menu-trigger span:nth-of-type(3) {
+      bottom: 0;
+    }*/
   }
   #nav-open span:before {
-    top: -22px; //ハンバーガーボタンの一番上の線
+    top: -22px;//ハンバーガーボタンの一番上の線
   }
   #nav-open span:after {
-    bottom: -22px; //ハンバーガーボタンの一番下の線
+    bottom: -22px;//ハンバーガーボタンの一番下の線
   }
   #nav-open:hover {
     opacity: 0.5;
@@ -418,7 +457,7 @@ export default {
     height: 100%;
     background: black;
     opacity: 0;
-    transition: 0.3s ease-in-out;
+    transition: .3s ease-in-out;
   }
 
   /*メニューの中身*/
@@ -427,18 +466,18 @@ export default {
     position: fixed;
     top: 0px;
     right: 20px;
-    z-index: 9999; //最前
+    z-index: 9999;//最前
     width: 90%;
-    max-width: 450px; //メニューバーの幅
-    height: 90px; //高さ
-    background: $dark_color; //メニューバーの色
+    max-width: 450px;//メニューバーの幅
+    height: 90px;//高さ
+    background: $dark_color;//メニューバーの色
     border: solid;
     border-radius: 3px;
     border-color: #fff;
-    transition: 0.3s ease-in-out;
+    transition: .3s ease-in-out;
     -webkit-transform: translateY(-1000px); //最初は上に隠す
     transform: translateY(-1000px);
-    box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 6px 0 25px rgba(0,0,0,.15);
     .dm {
       position: absolute;
       width: $button_width;
@@ -471,7 +510,7 @@ export default {
       top: 10px;
       color: #fff;
     }
-    .grobal {
+    .grobal{
       position: absolute;
       width: $button_width;
       height: $button_height;
@@ -484,16 +523,55 @@ export default {
   /*チェックがついたら表示させる*/
   #nav-input:checked ~ #nav-close {
     display: block; //薄黒部分の表示
-    opacity: 0.5;
+    opacity: .5;
   }
 
   #nav-input:checked ~ #nav-content {
     -webkit-transform: translateY(100px); //メニューバーの表示
     transform: translateY(100px);
-    box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 6px 0 25px rgba(0,0,0,.15);
   }
 
-  .header-logo-menu{ /*以下コピペにつき，意味が分からない CSSって何なのですか*/
+  /*#nav-input:checked ~ #nav-open {
+    .menu-trigger.active span:nth-of-type(1) {
+      -webkit-transform: translateY(20px) rotate(-45deg);
+      transform: translateY(20px) rotate(-45deg);
+    }
+    .menu-trigger.active span:nth-of-type(2) {
+      opacity: 0;
+    }
+    .menu-trigger.active span:nth-of-type(3) {
+      -webkit-transform: translateY(-20px) rotate(45deg);
+      transform: translateY(-20px) rotate(45deg);
+    }
+  }*/
+
+  .header-logo-menu {
+    /*以下コピペにつき，意味が分からない CSSって何なのですか*/
+    display: flex;
+    display: -moz-flex;
+    display: -o-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    flex-direction: row;
+    -moz-flex-direction: row;
+    -o-flex-direction: row;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+  }
+  /*.menu-trigger,
+  .menu-trigger span {
+    display: inline-block;
+    transition: all .4s;
+    box-sizing: border-box;
+  }
+  .menu-trigger {
+    position: relative;
+    width: 50px;
+    height: 44px;
+  }
+
+  .header-logo-menu{ //以下コピペにつき，意味が分からない CSSって何なのですか
 	  display: flex;
 	  display: -moz-flex;
 	  display: -o-flex;
@@ -505,5 +583,18 @@ export default {
 	  -webkit-flex-direction: row;
 	  -ms-flex-direction: row;
   }
+  .menu-trigger.active span:nth-of-type(1) {
+    -webkit-transform: translateY(20px) rotate(-45deg);
+    transform: translateY(20px) rotate(-45deg);
+  }
+  .menu-trigger.active span:nth-of-type(2) {
+    opacity: 0;
+  }
+  .menu-trigger.active span:nth-of-type(3) {
+    -webkit-transform: translateY(-20px) rotate(45deg);
+    transform: translateY(-20px) rotate(45deg);
+  }*/
 }
+
+
 </style>
