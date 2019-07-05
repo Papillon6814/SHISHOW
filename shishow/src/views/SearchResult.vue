@@ -1,6 +1,6 @@
 <template>
   <div id="searchRoot">
-    <navi @search="filterUser"></navi>
+    <navi></navi>
     <div v-for="N in searchResults.length" :key="N" v-bind:class="'n'+N">
       <normalBanner :user="searchResults[N-1]"></normalBanner>
     </div>
@@ -12,7 +12,7 @@ import firebase, { functions } from "firebase";
 import navi from "../components/NavigationBar.vue";
 import normalBanner from "../components/NormalBanner";
 import store from "../store";
-import navigationBar from "../components/NavigationBar";
+import inputArea from "../components/dm/InputArea";
 
 const db = firebase.firestore();
 
@@ -22,7 +22,7 @@ export default {
   components: {
     navi,
     normalBanner,
-    navigationBar
+    inputArea
   },
 
   data: function() {
@@ -40,6 +40,7 @@ export default {
         this.users = doc.docs;
         doc.forEach(docs => {
           this.filteredUser.push(docs.data());
+          console.log(docs.data());
         });
         this.filterUser(/*word = */ this.getSearchWordFromStore);
       });
@@ -53,7 +54,6 @@ export default {
 
   methods: {
     filterUser(word) {
-      console.log(word);
       let data = [];
       let results = [];
       let users_i;
@@ -70,7 +70,6 @@ export default {
             });
             index++;
           }
-          console.log(this.searchResults);
           this.$forceUpdate();
         }
       }

@@ -1,39 +1,22 @@
 
 <template>
   <div class="extend ">
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-body">
-          <img id="image" v-show="uploadedImage" :src="uploadedImage">
-          <button id="button" type="button">Confirm</button>
-          <input type="button" id="closeBtn" value="close">
-        </div>
-      </div>
-    </div>
     <div>
         <textarea v-model="bio" name="freeans" rows="4" cols="40"></textarea>
     </div>
     <div>
-
-        <span class="refreshButtonPosition">
-          <div class="btn-circle-3d" type="button" @click="txtchange()">更新</div>
-        </span>
-
+        <router-link to="/">
+          <span class="refreshButtonPosition">
+            <div class="btn-circle-3d" type="button" @click="txtchange()">更新</div>
+          </span>
+        </router-link>
         <input class="email" v-model="username" name="username">
     </div>
 
     <!-- ここまでがEditBanner -->
 
     <span class="iconPicPosition">
-      <label>
-        <div class="iconPic">
-          <div id="result"></div>
-          <div id="delete">
-            <img id="image" v-show="icon" :src="icon" width="273" height="273">
-          </div>
-        </div>
-        <input hidden class="iconFile" type="file" @change="onFileChange">
-      </label>
+      <div class="iconPic"><img id="image" v-show="icon" :src="icon" width="130" height="130"></div>
     </span>
     <div class="AllAchievementPosition">
       <div class="achievementPosition1">
@@ -76,9 +59,6 @@ export default {
       sign: "",
       icon: "",
       bio: "",
-      username: "",
-      uploadedImage: "",
-      roundimg:""
 
     };
   },
@@ -110,13 +90,13 @@ export default {
     if (User != null){
       email = User.email;
     }
-
     console.log("gazouが"+email);
     db.collection("USER").doc(email).get()
     .then( doc => {
-      this.icon = doc.data()["image"];
-      this.bio = doc.data()["bio"];
-      this.username = doc.data()["username"];
+      console.log(doc.data()["image"]);
+      root.icon = doc.data()["image"];
+      root.bio = doc.data()["bio"];
+      console.log(root.icon);
     });
 
   },
@@ -135,145 +115,18 @@ export default {
         store.commit("onUserStatusChanged", user.uid ? true : false);
       });
     },
-    txtchange(){
-      var User = firebase.auth().currentUser;
-      var email;
 
-      email = User.email;
-      var root = this;
-      db
-      .collection("USER")
-      .doc(email)
-      .update({
-        bio: this.bio,
-        username: this.username,
-      });
-      if(this.roundimg){
-        db
-        .collection("USER")
-        .doc(email)
-        .update({
-          image: root.roundimg
+    logout: function() {
+      firebase
+        .auth()
+        .signOut()
+        .then(function() {
+          alert("Signed out.");
+          router.push("/");
+        })
+        .catch(function(e) {
+          console.log(e);
         });
-      }
-      User.updateProfile({
-        displayName: this.username,
-      }).then(function() {
-        alert("Update successful.") ;
-        router.push("/");
-      }).catch(function(error) {
-        alert("// An error happened.") ;
-      });
-      console.log("bioは"+this.bio+"名前は"+this.username);
-      
-    },
-
-    onFileChange(event) {
-      //file変数定義
-      let files = event.target.files || event.dataTransfer.files;
-      if (files[0].type.match(/image/)) {
-        this.showImage(files[0]);
-      } else {
-        console.log("This is not image");
-      }
-    },
-
-    showImage(file) {
-      //FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
-      let reader = new FileReader();
-      //ファイルが読み込まれたとき、eventを引数とするアロー関数作動
-      let place = this;
-      reader.onload = event => {
-        //htmlにファイルを反映
-        this.uploadedImage = event.target.result;
-        window.setTimeout(place.crop, 1);
-      };
-      //読み込み開始
-      console.log(typeof modal);
-      modal.style.display = "block";
-      reader.readAsDataURL(file);
-    },
-
-    crop: function() {
-      var root = this;
-      var image = document.getElementById("image");
-      var button = document.getElementById("button");
-      var result = document.getElementById("result");
-      var close = document.getElementById("closeBtn");
-
-      var croppable = false;
-
-      var cropper = new Cropper(image, {
-        aspectRatio: 1,
-        viewMode: 1,
-
-        ready: function() {
-          croppable = true;
-        }
-      });
-      close.onclick = function() {
-        modal.style.display = "none";
-        cropper.destroy();
-        this.uploadedImage = "";
-      };
-      button.onclick = function() {
-        var croppedCanvas;
-        var roundedImage;
-
-        if (!croppable) {
-          return;
-        }
-        // Crop
-        croppedCanvas = cropper.getCroppedCanvas();
-
-        // Show
-        roundedImage = document.createElement("img");
-
-        var canvas = document.createElement("canvas");
-        var context = canvas.getContext("2d");
-        var width = croppedCanvas.width;
-        var height = croppedCanvas.height;
-        canvas.width = width;
-        canvas.height = height;
-        context.imageSmoothingEnabled = true;
-        context.drawImage(croppedCanvas, 0, 0, width, height);
-        context.globalCompositeOperation = "destination-in";
-        context.beginPath();
-        context.arc(
-          width / 2,
-          height / 2,
-          Math.min(width, height) / 2,
-          0,
-          2 * Math.PI,
-          true
-        );
-        context.fill();
-
-        roundedImage.src = canvas.toDataURL();
-        roundedImage.width = 130*2.1;
-        roundedImage.height = 130*2.1;
-        result.innerHTML = "";
-
-        canvas.toBlob(function(blob){
-          let reader = new FileReader();
-          reader.onload = event => {
-            //htmlにファイルを反映
-            root.roundimg = event.target.result;
-          };
-
-          //読み込み開始
-          reader.readAsDataURL(blob);
-        });
-        var del = document.getElementById("delete");
-        if (del != null) {
-          del.textContent = null;
-          del.parentNode.removeChild(del);
-        }
-        cropper.destroy();
-        modal.style.display = "none";
-        root.uploadedImage = "";
-        result.appendChild(roundedImage);
-      };
     }
   }
 };
@@ -484,24 +337,5 @@ textarea{
     top: 250px;
     right:110px;
   }
-
-  //modal
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-  background-color: white;
-  width: 500px;
-  margin: 40% auto;
-}
 
 </style>

@@ -22,7 +22,7 @@
     <div class="userInfoPosition">
       <div class="userInfo">userinfo</div>
     </div>
-    <div v-if="relation==0" @click="sendFriendReq" class="n_btn-circle-3d">申請</div>
+    <div v-if="relation==0" @click="sendFriendReq" class="n_btn-circle-3d">江崎にフレ申請</div>
     <div v-else-if="relation==1" @click="add_db" class="n_btn-circle-3d">承認</div>
     <div v-else-if="relation==2" @click="delete_db" class="n_btn-circle-3d">削除</div>
     <div v-else-if="relation==3"  class="n_btn-circle-3d">友達</div>
@@ -82,7 +82,6 @@ export default {
 
       if (store.state.status) {
         console.log(this.signuser["email"]);
-
         db.collection("USER")
           .doc(this.signuser.email)
           .collection("outgoing")
@@ -110,13 +109,13 @@ export default {
           });
 
         db.collection("USER").doc(this.user.email)
-          .collection("relation")
-          .doc(this.signuser.email).set({
-            relation:1,
-          })
-          .catch(e =>{
-            console.log(e)
-          })
+        .collection("relation")
+        .doc(this.signuser.email).set({
+          relation:1,
+        })
+        .catch(e =>{
+          console.log(e)
+        })
 
         db.collection("USER").doc(this.signuser.email)
         .collection("relation")
@@ -141,42 +140,25 @@ export default {
     },
 
     delete_db:function(){
-      const sign_db = db.collection("USER")
-                        .doc(this.signuser.email);
-      const user_db = db.collection("USER")
-                        .doc(this.user.email)
+      const sign_db = db.collection("USER").doc(this.signuser.email);
+      const user_db = db.collection("USER").doc(this.user.email)
 
-      user_db.collection("incoming")
-             .doc(this.signuser.email)
-             .delete()
-             .catch(e => {console.log(e)});
+      user_db.collection("incoming").doc(this.signuser.email).delete()
+      .catch(e=>{console.log(e)});
 
-      sign_db.collection("outgoing")
-             .doc(this.user.email)
-             .delete()
-             .catch(e => {console.log(e)});
+      sign_db.collection("outgoing").doc(this.user.email).delete()
+      .catch(e=>{console.log(e)});
 
-      db.collection("USER")
-        .doc(this.user.email)
-        .collection("relation")
-        .doc(this.signuser.email)
-        .delete()
-        .catch(e =>{
-          console.log(e)
-        })
+      db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).delete()
+      .catch(e =>{
+        console.log(e)
+      })
+      db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).delete()
+      .catch(e =>{
+        console.log(e)
+      })
 
-      db.collection("USER")
-        .doc(this.signuser.email)
-        .collection("relation")
-        .doc(this.user.email)
-        .delete()
-        .catch(e =>{
-          console.log(e)
-        })
-
-      user_db.collection("notice")
-             .doc(this.signuser.email)
-             .delete();
+      user_db.collection("notice").doc(this.signuser.email).delete();
 
       this.relation = 0
     },

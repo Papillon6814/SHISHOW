@@ -6,8 +6,7 @@
     </div>
     <input v-model="msg" type="text" class="inputText" @keydown.enter="sendMsg" />
     <div class="checkEmojiPlace">
-      <i class="fas fa-check"
-       @click="sendMsg"></i>
+      <i class="fas fa-check" @click="sendMsg"></i>
     </div>
   </div>
 </template>
@@ -41,6 +40,9 @@ export default {
   },
 
   methods: {
+    doFilterUser() {
+      //this.$emit("")
+    },
     //メッセージを送る
     sendMsg() {
       // 文字が入力されているときにのみ送信
@@ -65,10 +67,7 @@ export default {
             msg: this.msg,
             date: now,
             sender: currentUser.email
-          })
-          .then(() => {
-            this.$emit('scrollRightArea');
-          })
+          });
 
         this.msg = "";
       }

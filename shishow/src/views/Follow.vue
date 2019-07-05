@@ -6,8 +6,8 @@
             <gameBanner></gameBanner>
         </div>
         <div class="IsProfile">Profile</div>
-        <div id="ProfileBannerPosition" v-for="P in 10" :key="P" v-bind:class="'p' + P">
-            <followBanner></followBanner>
+        <div id="ProfileBannerPosition">
+            <normalBanner></normalBanner>
         </div>
     </div>
 </template>
@@ -16,19 +16,19 @@
   import navi from "../components/NavigationBar.vue";
   import followBanner from "../components/FollowBanner.vue";
   import gameBanner from "../components/GameBanner.vue";
-  //import normalBanner from "../components/NormalBanner.vue";
 
   export default {
       name:"follow",
+
       components:{
           navi,
           followBanner,
-          gameBanner
+          gameBanner,
       }
   }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 
     #Follow{
         overflow-y: scroll;
@@ -71,7 +71,7 @@
         padding-left: 10px;
 
         height: 45px;
-        width: 100%;
+        width:100%;
 
         background-color: #fff;
     }
@@ -86,13 +86,5 @@
         width:100%;
 
         z-index: 2;
-
-        $i: 1;
-        @while $i<=30 {
-          .p#{$i}{
-            padding-top: $n_banner_height;
-          }
-          $i: $i + 1;
-        }
     }
 </style>
