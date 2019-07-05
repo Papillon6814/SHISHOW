@@ -1,6 +1,6 @@
 <template>
   <div id="searchRoot">
-    <navi></navi>
+    <navi @search="filterUser"></navi>
     <div v-for="N in searchResults.length" :key="N" v-bind:class="'n'+N">
       <normalBanner :user="searchResults[N-1]"></normalBanner>
     </div>
@@ -40,7 +40,6 @@ export default {
         this.users = doc.docs;
         doc.forEach(docs => {
           this.filteredUser.push(docs.data());
-          console.log(docs.data());
         });
         this.filterUser(/*word = */ this.getSearchWordFromStore);
       });
@@ -54,7 +53,7 @@ export default {
 
   methods: {
     filterUser(word) {
-      console.log("search");
+      console.log(word);
       let data = [];
       let results = [];
       let users_i;
@@ -71,6 +70,7 @@ export default {
             });
             index++;
           }
+          console.log(this.searchResults);
           this.$forceUpdate();
         }
       }
