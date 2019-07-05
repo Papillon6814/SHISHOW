@@ -65,28 +65,32 @@ export default {
 
   mounted: function() {
     this.onAuth();
-    const sign_db = db.collection("USER").doc(this.user.email)
+    const sign_db = db.collection("USER")
+                      .doc(this.user.email);
 
-    sign_db.collection("relation").get().then(docs_r=>{
-    db.collection("USER").get().then(docs_p =>{
-      docs_p.forEach(doc=>{
-        if(doc.data().email != this.user.email){
-          this.users.push(doc.data());
-          this.filteredUser.push(doc.data());
+    sign_db.collection("relation")
+    .get()
+    .then(docs_r=>{
+    db.collection("USER")
+      .get()
+      .then(docs_p =>{
+        docs_p.forEach(doc=>{
+          if(doc.data().email != this.user.email){
+            this.users.push(doc.data());
+            this.filteredUser.push(doc.data());
 
-          if(docs_r.docs){
-            let i;
-            for(i=0;i<docs_r.docs.length && doc.data().email != docs_r.docs[i].id;i++);
-            if(i==docs_r.docs.length){
-              this.relation.push(0)
+            if(docs_r.docs){
+              let i;
+              for(i=0;i<docs_r.docs.length && doc.data().email != docs_r.docs[i].id;i++);
+              if(i==docs_r.docs.length){
+                this.relation.push(0)
+              }else{
+                this.relation.push(docs_r.docs[i].data().relation);
+              }
             }else{
-              this.relation.push(docs_r.docs[i].data().relation);
+              this.relation.push(0)
             }
-          }else{
-            this.relation.push(0)
           }
-          }
-
         })
         this.placeFooter();
       })

@@ -1,5 +1,5 @@
 <template>
-  <div class="outgoing" v-bind:class="{ 'banner': isA, 'extend': isB }">
+  <div class="outgoing">
     <span class="iconPicPosition">
       <div class="iconPic">
         <img id="image" :src="user.image" />
@@ -40,66 +40,67 @@
 </template>
 
 <script>
-import store from "../store"
 import firebase from '../plugin/firestore'
 import 'firebase/firestore'
 import '@firebase/auth'
 
-
-
-
-
-
 const db = firebase.firestore();
-const currentUser = firebase.auth().currentUser;
 
 export default {
   name: 'outgoing',
-  props:["user","signuser"],
-  created:function(){
-  },
-  data: function() {
-    return{
-      isA: true,
-      isB: false,
-    }
-  },
+
+  props:[
+    "user",
+    "signuser"
+  ],
+
   methods: {
     doExtend: function() {
-      this.isA = !this.isA;
-      this.isB = !this.isB;
 
       const sign_db = db.collection("USER").doc(this.signuser.email);
       const user_db = db.collection("USER").doc(this.user.email)
-      
-      user_db.collection("incoming").doc(this.signuser.email).delete()
+
+      user_db.collection("incoming")
+             .doc(this.signuser.email)
+             .delete()
       .catch(e=>{console.log(e)});
-    
-      sign_db.collection("outgoing").doc(this.user.email).delete().then(()=>{
-        sign_db.collection("outgoing").get().then(doc=>{
-          this.$parent.outgo = doc.docs;
-        }).catch(()=>{
-          this.$parent.outgo = "";
-       })
-      }).catch(e=>{console.log(e)});
+
+      sign_db.collection("outgoing")
+             .doc(this.user.email)
+             .delete()
+             .then(()=>{
+               sign_db.collection("outgoing")
+                      .get()
+                      .then(doc=>{
+                        this.$parent.outgo = doc.docs;
+                      })
+                      .catch(()=>{
+                        this.$parent.outgo = "";
+                      })
+             })
+             .catch(e => {
+               console.log(e)
+             });
 
       db.collection("USER")
-      .doc(this.user.email)
-      .collection("relation")
-      .doc(this.signuser.email).delete()
-      .catch(e =>{
-        console.log(e)
-      })
+        .doc(this.user.email)
+        .collection("relation")
+        .doc(this.signuser.email).delete()
+        .catch(e =>{
+          console.log(e)
+        })
 
       db.collection("USER")
-      .doc(this.signuser.email)
-      .collection("relation")
-      .doc(this.user.email).delete()
-      .catch(e =>{
-        console.log(e)
-      })
+        .doc(this.signuser.email)
+        .collection("relation")
+        .doc(this.user.email).delete()
+        .catch(e =>{
+          console.log(e)
+        })
 
-      user_db.collection("notice").doc(this.signuser.email).delete();
+      user_db.collection("notice")
+             .doc(this.signuser.email)
+             .delete();
     },
   }
 }
@@ -120,10 +121,10 @@ export default {
     z-index: 2;
 
     margin: 0px auto;
-    
+
     transition: 0.3s;
     //children
-    
+
 
     .iconPic {
       width: $n_icon_width;
