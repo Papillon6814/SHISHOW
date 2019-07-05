@@ -153,8 +153,6 @@ export default {
       let key = this.searchWord;
       let data = [];
       let results = [];
-      //console.log(this.users[3].data().username);
-      //console.log(Object.keys(this.users).length);
       let i;
       //オブジェクトに変換
       for (i in this.users) {

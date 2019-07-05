@@ -15,7 +15,7 @@
     <div class="usernamePosition">
       <div class="fieldForUserName">
         <div class="username">
-          {{loginedUser}}
+          {{ loginedUser }}
           <!--
             // FIXME: 弟子要素を付けると領域デカすぎてボタン押せなくなる問題
              <div class="deshiPosition">
