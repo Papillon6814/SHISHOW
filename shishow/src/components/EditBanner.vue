@@ -24,6 +24,13 @@ export default {
             username: ""
         }
     },
+
+
+
+
+
+
+
     computed: {
         user() {
             return this.$store.getters.user;

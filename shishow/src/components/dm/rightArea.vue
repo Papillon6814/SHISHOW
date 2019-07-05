@@ -58,6 +58,11 @@ export default {
 
     isHis: function(msg) {
       return (msg.sender != currentUserEmail);
+    },
+
+    chatScroll: function() {
+      let scrollArea = document.getElementsByClassName('rightArea');
+      scrollArea[0].scrollBy(0, 300);
     }
   },
 
@@ -162,7 +167,7 @@ export default {
   font-size: 16px;
   background: #FFF;
 
-  text-align: right;
+  text-align: left;
   font-family: 'Noto Sans JP', sans-serif;
 }
 

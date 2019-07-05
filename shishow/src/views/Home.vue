@@ -9,7 +9,7 @@
           <myBanner
             @extendMyBanner="extendOther"
             v-if="userStatus"
-            :loginedUser="getCurrentUserName"
+            :loginedUser="this.$store.getters.user.displayName"
           ></myBanner>
           <BlurBanner v-else></BlurBanner>
         </div>
@@ -142,6 +142,8 @@ export default {
       return this.$store.getters.isSignedIn;
     },
     getCurrentUserName: function() {
+
+      console.log("displaynameは"+this.$store.getters.user.displayName);
       return this.$store.getters.user.displayName;
     },
 
@@ -153,8 +155,6 @@ export default {
       let key = this.searchWord;
       let data = [];
       let results = [];
-      //console.log(this.users[3].data().username);
-      //console.log(Object.keys(this.users).length);
       let i;
       //オブジェクトに変換
       for (i in this.users) {
