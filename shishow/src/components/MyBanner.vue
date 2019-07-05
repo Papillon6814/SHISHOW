@@ -109,10 +109,8 @@ export default {
     console.log("gazouが"+email);
     db.collection("USER").doc(email).get()
     .then(doc => {
-      console.log(doc.data()["image"]);
       root.icon = doc.data()["image"];
       root.bio = doc.data()["bio"];
-      console.log(root.icon);
     });
 
   },

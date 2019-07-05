@@ -9,7 +9,7 @@
           <myBanner
             @extendMyBanner="extendOther"
             v-if="userStatus"
-            :loginedUser="getCurrentUserName"
+            :loginedUser="this.$store.getters.user.displayName"
           ></myBanner>
           <BlurBanner v-else></BlurBanner>
         </div>
@@ -137,6 +137,8 @@ export default {
       return this.$store.getters.isSignedIn;
     },
     getCurrentUserName: function() {
+
+      console.log("displaynameは"+this.$store.getters.user.displayName);
       return this.$store.getters.user.displayName;
     },
 
