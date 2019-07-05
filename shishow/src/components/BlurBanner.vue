@@ -27,7 +27,7 @@ export default {
   name: 'myBanner',
   data: function(){
     return{
-        isBlurred:true,
+        isBlurred: true,
         signupMessage: "Create Account?",
         orMessage: "or",
         signinMessage: "Sign in?"

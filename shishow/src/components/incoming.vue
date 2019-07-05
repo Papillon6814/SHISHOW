@@ -73,7 +73,7 @@ export default {
                email1: this.signuser.email,
                email2: this.user.email
              })
-             .then(querySnapshot => {
+             .then(doc1 => {
 
                      sign_db.collection("incoming")
                      .doc(this.user.email)
@@ -81,50 +81,53 @@ export default {
                      .then(()=>{
 
                       sign_db.collection("friends")
-                      .doc(this.user.email)
-                      .set({
-                          username:this.user.username,
-                          email:this.user.email
-                        });
+                             .doc(this.user.email)
+                             .set({
+                               username: this.user.username,
+                               email: this.user.email,
+                               chatID: doc1.id
+                             });
 
                       sign_db.collection("incoming")
-                      .get()
-                      .then(doc =>{
-                        this.$parent.income = doc.docs;
-                      }).catch(()=>{
-                        this.$parent.income ="";
-                      })
+                             .get()
+                             .then(doc2 =>{
+                               this.$parent.income = doc2.docs;
+                             }).catch(()=>{
+                               this.$parent.income ="";
+                             })
                       }).catch(e=>{console.log(e)});
 
                   user_db.collection("outgoing")
-                  .doc(this.signuser.email)
-                  .delete()
-                  .then(()=>{
+                         .doc(this.signuser.email)
+                         .delete()
+                         .then(()=>{
 
-                      user_db.collection("friends")
-                      .doc(this.signuser.email)
-                      .set({
-                        username:this.signuser.username,
-                        email:this.signuser.email
-                      })
-                  }).catch(e=>{console.log(e)});
+                           user_db.collection("friends")
+                                  .doc(this.signuser.email)
+                                  .set({
+                                    username: this.signuser.username,
+                                    email: this.signuser.email,
+                                    chatID: doc1.id
+                                  })
+                         }).catch(e=>{console.log(e)});
 
                   user_db.collection("notice")
-                  .doc(this.signuser.email)
-                  .set({
-                    msg:this.signuser.username+"とフレンドになりました。",
-                    date:Date()
-                  })
+                         .doc(this.signuser.email)
+                         .set({
+                           msg:this.signuser.username+"とフレンドになりました。",
+                           date:Date()
+                         })
 
                   sign_db.collection("notice")
-                  .doc(this.user.email)
-                  .get()
-                  .then(doc=>{
-                    if(doc.exists){
-                      sign_db.collection("notice").doc(this.user.email).delete();
-                    }
-                  })
-                      }).catch(e=>{console.log(e)});
+                         .doc(this.user.email)
+                         .get()
+                         .then(doc=>{
+                           if(doc.exists){
+                             sign_db.collection("notice").doc(this.user.email).delete();
+                           }
+                         })
+
+              }).catch(e=>{console.log(e)});
     }
   }
 }
@@ -144,16 +147,8 @@ export default {
     z-index: 2;
 
     margin: 0px auto;
-    
+
     transition: 0.3s;
-    
-    //children
-    
-
-
-    //children
-
-
 
    .iconPic {
       width: $n_icon_width;

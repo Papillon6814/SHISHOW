@@ -24,6 +24,7 @@ export default {
             username: ""
         }
     },
+
     computed: {
         user() {
             return this.$store.getters.user;
@@ -39,11 +40,12 @@ export default {
             return this.$store.getters.user.uid;
         }
     },
+
     created:function(){
         console.log()
         var User = this.user;
         var email;
-        
+
         email = User.email;
         console.log(email);
 
@@ -60,10 +62,11 @@ export default {
 
         })
     },
+
     methods:{
         txtchange(){
-            var User = firebase.auth().currentUser;
-            var email;
+            let User = firebase.auth().currentUser;
+            let email;
 
             email = User.email;
             var root = this;
@@ -125,4 +128,3 @@ export default {
         left: 0%;
     }
 </style>
-
