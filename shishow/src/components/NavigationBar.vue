@@ -23,7 +23,6 @@
       </div>
     </div>
     <div class="logoSentence">SHISHOW</div>
-
     <div id="menuButtons">
       <div class="buttons">
         <router-link to="/GlobalChat">
@@ -32,7 +31,9 @@
         <router-link to="/directMessage">
           <i class="fas fa-envelope fa-3x dm"></i>
         </router-link>
-        <i class="fas fa-gamepad fa-3x game"></i>
+        <router-link to="/follow">
+          <i class="fas fa-gamepad fa-3x game"></i>
+        </router-link>
         <router-link to="/notification">
           <i class="fas fa-bell fa-3x bell"></i>
         </router-link>
@@ -54,7 +55,9 @@
             <router-link to="/directMessage">
               <i class="fas fa-envelope fa-3x dm"></i>
             </router-link>
-            <i class="fas fa-gamepad fa-3x game"></i>
+            <router-link to="/follow">
+              <i class="fas fa-gamepad fa-3x game"></i>
+            </router-link>
             <router-link to="/notification">
               <i class="fas fa-bell fa-3x bell"></i>
             </router-link>
@@ -98,10 +101,11 @@ export default {
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css?family=Pangolin&display=swap");
 
+
 #header {
   position: absolute;
 
-  top: 0;
+  top: $header_height;
   left: 0;
 
   width: 100%;
@@ -232,23 +236,6 @@ export default {
     left: 10px;
   }
 
-  .logoSentence {
-    position: absolute;
-
-    font-family: "Pangolin", cursive;
-    top: 20px;
-    font-size: 60px;
-
-    left: 50%;
-    transform: translate(-50%, 0);
-    -webkit-transform: translate(-50%, 0);
-
-    color: $logo_sentence_color;
-
-    text-shadow: 2px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
-      -1px 1px 0 #000, 1px 1px 0 #000;
-  }
-
   ::selection {
     background: rgba($secondary-color, 0.3);
     transition: 0.3s ease;
@@ -348,12 +335,35 @@ export default {
   .buttons {
     display: none;
   }
+  .logoSentence {
+    position: absolute;
+
+    font-family: "Pangolin", cursive;
+    bottom: 110px;
+    font-size: 60px;
+
+    left: 50%;
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+
+    color: $logo_sentence_color;
+
+    text-shadow: 2px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
+      -1px 1px 0 #000, 1px 1px 0 #000;
+  }
 }
-@media (max-width: 1360px) {
-  　//ナビゲーションバーのレスポンシブ表示
-  /*.logoSentence{
-    top: 100px;
-  }*/
+
+@media screen and (min-width: 1300px){
+  #header{
+    top: 0px;
+  }
+  .logoSentence{
+    top: 10px;
+  }
+}
+
+
+@media screen and (max-width: 1050px){
   #nav-drawer {
     position: relative;
   }
@@ -386,34 +396,6 @@ export default {
     display: block;
     content: "";
     cursor: pointer;
-    /*.menu-trigger,
-    .menu-trigger span {
-      display: inline-block;
-      transition: all .4s;
-      box-sizing: border-box;
-    }
-    .menu-trigger {
-      position: relative;
-      width: 50px;
-      height: 44px;
-    }
-    .menu-trigger span {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background-color: #fff;
-      border-radius: 4px;
-    }
-    .menu-trigger span:nth-of-type(1) {
-      top: 0;
-    }
-    .menu-trigger span:nth-of-type(2) {
-      top: 20px;
-    }
-    .menu-trigger span:nth-of-type(3) {
-      bottom: 0;
-    }*/
   }
   #nav-open span:before {
     top: -22px; //ハンバーガーボタンの一番上の線
@@ -510,72 +492,17 @@ export default {
     transform: translateY(100px);
     box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
   }
-
-  /*#nav-input:checked ~ #nav-open {
-    .menu-trigger.active span:nth-of-type(1) {
-      -webkit-transform: translateY(20px) rotate(-45deg);
-      transform: translateY(20px) rotate(-45deg);
-    }
-    .menu-trigger.active span:nth-of-type(2) {
-      opacity: 0;
-    }
-    .menu-trigger.active span:nth-of-type(3) {
-      -webkit-transform: translateY(-20px) rotate(45deg);
-      transform: translateY(-20px) rotate(45deg);
-    }
-  }*/
-
-  .header-logo-menu {
-    /*以下コピペにつき，意味が分からない CSSって何なのですか*/
-    display: flex;
-    display: -moz-flex;
-    display: -o-flex;
-    display: -webkit-flex;
-    display: -ms-flex;
-    flex-direction: row;
-    -moz-flex-direction: row;
-    -o-flex-direction: row;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
+  .header-logo-menu{ /*以下コピペにつき，意味が分からない CSSって何なのですか*/
+	  display: flex;
+	  display: -moz-flex;
+	  display: -o-flex;
+	  display: -webkit-flex;
+	  display: -ms-flex;
+	  flex-direction: row;
+	  -moz-flex-direction: row;
+	  -o-flex-direction: row;
+	  -webkit-flex-direction: row;
+	  -ms-flex-direction: row;
   }
-  /*.menu-trigger,
-  .menu-trigger span {
-    display: inline-block;
-    transition: all .4s;
-    box-sizing: border-box;
-  }
-  .menu-trigger {
-    position: relative;
-    width: 50px;
-    height: 44px;
-  }
-  .menu-trigger span {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background-color: #fff;
-    border-radius: 4px;
-  }
-  .menu-trigger span:nth-of-type(1) {
-    top: 0;
-  }
-  .menu-trigger span:nth-of-type(2) {
-    top: 20px;
-  }
-  .menu-trigger span:nth-of-type(3) {
-    bottom: 0;
-  }
-  .menu-trigger.active span:nth-of-type(1) {
-    -webkit-transform: translateY(20px) rotate(-45deg);
-    transform: translateY(20px) rotate(-45deg);
-  }
-  .menu-trigger.active span:nth-of-type(2) {
-    opacity: 0;
-  }
-  .menu-trigger.active span:nth-of-type(3) {
-    -webkit-transform: translateY(-20px) rotate(45deg);
-    transform: translateY(-20px) rotate(45deg);
-  }*/
 }
 </style>

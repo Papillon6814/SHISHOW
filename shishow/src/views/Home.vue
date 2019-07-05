@@ -261,12 +261,14 @@ html {
 }
 
 body {
+  position: absolute;
   padding: 0;
   margin: 0;
   width: 100%;
 
   background-color: $dark_color;
 }
+
 
 #myBannerPosition {
   //position: relative;
@@ -281,6 +283,7 @@ body {
 
   /*top: 45px;
     left: 10%;*/
+  
 }
 
 #moving {
@@ -412,6 +415,10 @@ footer {
 
 .v2-leave-active {
   transition: all 0.5s 0s ease;
+}
+
+@media screen and (min-width: 1300px){
+
 }
 
 </style>
