@@ -353,7 +353,7 @@ export default {
   }
 }
 
-@media screen and (min-width: 1300px){
+@media (min-width: 1300px){
   #header{
     top: 0px;
   }
@@ -363,7 +363,7 @@ export default {
 }
 
 
-@media screen and (max-width: 1050px){
+@media (max-width: 1050px){
   #nav-drawer {
     position: relative;
   }
