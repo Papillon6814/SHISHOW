@@ -65,6 +65,7 @@
         </div>
       </div>
     </div>
+    <div class="logoSentence">SHISHOW</div>
   </div>
 </template>
 
@@ -508,7 +509,6 @@ export default {
     box-shadow: 6px 0 25px rgba(0,0,0,.15);
   }
 
-<<<<<<< HEAD
   /*#nav-input:checked ~ #nav-open {
     .menu-trigger.active span:nth-of-type(1) {
       -webkit-transform: translateY(20px) rotate(-45deg);
@@ -570,23 +570,12 @@ export default {
   }
   .menu-trigger.active span:nth-of-type(2) {
     opacity: 0;
-=======
-  .header-logo-menu{ /*以下コピペにつき，意味が分からない CSSって何なのですか*/
-	  display: flex;
-	  display: -moz-flex;
-	  display: -o-flex;
-	  display: -webkit-flex;
-	  display: -ms-flex;
-	  flex-direction: row;
-	  -moz-flex-direction: row;
-	  -o-flex-direction: row;
-	  -webkit-flex-direction: row;
-	  -ms-flex-direction: row;
->>>>>>> parent of 00e81005... Merge branch 'master' into Nakataku
   }
   .menu-trigger.active span:nth-of-type(3) {
     -webkit-transform: translateY(-20px) rotate(45deg);
     transform: translateY(-20px) rotate(45deg);
   }*/
 }
+
+
 </style>
