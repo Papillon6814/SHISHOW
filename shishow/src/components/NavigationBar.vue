@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-
+    <div class="logoSentence">SHISHOW</div>
     <div id="menuButtons">
       <div class="buttons">
         <router-link to="/GlobalChat">
@@ -68,7 +68,6 @@
         </div>
       </div>
     </div>
-    <div class="logoSentence">SHISHOW</div>
   </div>
 </template>
 
@@ -100,10 +99,11 @@ export default {
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css?family=Pangolin&display=swap");
 
+
 #header {
   position: absolute;
 
-  top: 0;
+  top: $header_height;
   left: 0;
 
   width: 100%;
@@ -338,7 +338,7 @@ export default {
     position: absolute;
 
     font-family: "Pangolin", cursive;
-    top: 20px;
+    bottom: 110px;
     font-size: 60px;
 
     left: 50%;
@@ -352,13 +352,17 @@ export default {
   }
 }
 
-@media (max-width: 1500px){　//ナビゲーションバーのレスポンシブ表示
+@media screen and (min-width: 1300px){
+  #header{
+    top: 0px;
+  }
   .logoSentence{
-    position: relative;
-    top: 100px;
+    top: 10px;
   }
 }
-@media (max-width: 1100px){
+
+
+@media screen and (max-width: 1050px){
   #nav-drawer {
     position: relative;
   }
@@ -499,6 +503,4 @@ export default {
 	  -ms-flex-direction: row;
   }
 }
-
-
 </style>
