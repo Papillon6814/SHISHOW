@@ -8,7 +8,6 @@
     
 </template>
 <script>
-import EditBanner from '../components/EditBanner.vue'
 import MBforEdit from "../components/MBforEdit.vue";
 import navi from "../components/NavigationBar.vue";
 
