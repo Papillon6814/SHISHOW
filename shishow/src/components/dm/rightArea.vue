@@ -62,7 +62,7 @@ export default {
 
     chatScroll: function() {
       let scrollArea = document.getElementsByClassName('rightArea');
-      scrollArea[0].scrollBy(0, 300);
+      scrollArea[0].scrollBy(0, 300000000);
     }
   },
 
