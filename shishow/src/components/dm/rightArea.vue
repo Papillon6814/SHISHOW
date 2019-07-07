@@ -58,6 +58,11 @@ export default {
 
     isHis: function(msg) {
       return (msg.sender != currentUserEmail);
+    },
+
+    chatScroll: function() {
+      let scrollArea = document.getElementsByClassName('rightArea');
+      scrollArea[0].scrollBy(0, 300000000);
     }
   },
 
