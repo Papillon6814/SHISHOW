@@ -393,7 +393,7 @@ export default {
   }
 }
 @media (max-width: 1360px) {
-  　//ナビゲーションバーのレスポンシブ表示
+  //ナビゲーションバーのレスポンシブ表示
   /*.logoSentence{
     top: 100px;
   }*/

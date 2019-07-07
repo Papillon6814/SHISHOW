@@ -14,7 +14,6 @@
 
 <script>
   import navi from "../components/NavigationBar.vue";
-  import followBanner from "../components/FollowBanner.vue";
   import gameBanner from "../components/GameBanner.vue";
 
   export default {
@@ -22,7 +21,6 @@
 
       components:{
           navi,
-          followBanner,
           gameBanner,
       }
   }

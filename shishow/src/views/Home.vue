@@ -194,8 +194,8 @@ export default {
       footer[0].style.top = (parseInt(footerStyle.top) + 280) + 'px';
 
       move.style.top = "340px";
-      this.active = !this.active;
-      if (this.active === false) {
+      active = !active;
+      if (active === false) {
         footer[0].style.top = (parseInt(footerStyle.top) - 280) + 'px';
 
         move.style.top = "60px";
@@ -213,8 +213,7 @@ export default {
     moveDown: function(N) {
       let move, style;
       let footer, footerStyle;
-      let i, j;
-
+      let i;
       if(this.normalBannerActiveArray.indexOf(N) == -1) {
         // normalBannerActiveArrayの中にNが格納されていない時
         this.normalBannerActiveArray.push(N);

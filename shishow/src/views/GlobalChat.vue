@@ -4,12 +4,12 @@
     <!-- とりあえずクエリしたデータを表示したい -->
     <div class="msg-position">
       <select v-model="Game" @change="changeGame()">
-        <option v-for="element in elements" :value="element">
+        <option v-for="element in elements" :key="element" :value="element">
           {{element}}
         </option>
       </select>
       <ul style="text-align:left">
-        <li v-for="message in msgs">{{message}}</li>
+        <li v-for="message in msgs" v-bind:key="message">{{ message }}</li>
       </ul>
     </div>
     <div class="textarea-position">
@@ -27,8 +27,6 @@ import navi from "../components/NavigationBar.vue";
 import firebase from "../plugin/firestore";
 import "@firebase/auth";
 import "firebase/firestore";
-import router from "../router";
-import store from "../store";
 
 const db = firebase.firestore();
 export default {
@@ -50,7 +48,6 @@ export default {
 
   //チャットのデータベースからデータを取得
   created: function(){
-    var root = this;
     db
     .collection("GlobalChat")
     .get()
@@ -112,7 +109,6 @@ export default {
     submittxt(){
 
       if(this.msgs){
-        var root = this;
         let now = new Date();
         db.collection("GlobalChat").doc(this.Game).collection("Chat").add({
           msg: this.submit,

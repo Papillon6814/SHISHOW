@@ -1,9 +1,6 @@
 <template>
     <div>
         <navi></navi>
-        <!-- <div id="Editposition">
-            <EditBanner></EditBanner>
-        </div> -->
         <div id="myBannerposition"> 
           <MBforEdit></MBforEdit>
         </div>
@@ -18,7 +15,6 @@ import navi from "../components/NavigationBar.vue";
 export default {
     name: "Edit",
     components: {
-        EditBanner,
         MBforEdit,
         navi
     }
