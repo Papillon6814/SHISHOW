@@ -3,8 +3,7 @@
     <navi @search="filterUser"></navi>
     <div class="searchBannerPosition">
       <div v-for="N in searchResults.length" :key="N" v-bind:class="'n'+N">
-        <normalBanner :user="searchResults[N-1]">
-        </normalBanner>
+        <normalBanner :user="searchResults[N-1]"></normalBanner>
       </div>
     </div>
   </div>
@@ -43,7 +42,6 @@ export default {
         this.users = doc.docs;
         doc.forEach(docs => {
           this.filteredUser.push(docs.data());
-          console.log(docs.data());
         });
         this.filterUser(/*word = */ this.getSearchWordFromStore);
       });
@@ -103,7 +101,6 @@ html {
 
   list-style: none;
   @while $i <= 30 {
-
     $temporary_top: (200px * $i) !global;
 
     .n#{$i} {
