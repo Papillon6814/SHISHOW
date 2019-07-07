@@ -55,6 +55,7 @@ export default {
         db.collection("USER").doc(docu.id).get().then(doc=>{
           this.users.push(doc.data());
         })
+        db.collection("USER").doc(this.user.email).collection("notice").doc(docu.id).delete();
       })
     })
 
