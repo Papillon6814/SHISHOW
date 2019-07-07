@@ -10,11 +10,10 @@
 </template>
 
 <script>
-import firebase, { functions } from "firebase";
+import firebase from "firebase";
 import navi from "../components/NavigationBar.vue";
 import normalBanner from "../components/NormalBanner";
-import store from "../store";
-import inputArea from "../components/dm/InputArea";
+
 
 const db = firebase.firestore();
 
@@ -24,7 +23,6 @@ export default {
   components: {
     navi,
     normalBanner,
-    inputArea
   },
 
   data: function() {
@@ -55,8 +53,7 @@ export default {
 
   methods: {
     filterUser(word) {
-      let data = [];
-      let results = [];
+
       let users_i;
       let index = 0;
       if (word) {

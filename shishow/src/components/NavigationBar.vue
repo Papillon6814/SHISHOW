@@ -651,16 +651,16 @@ export default {
   }
 
   .header-logo-menu{ //以下コピペにつき，意味が分からない CSSって何なのですか
-	  display: flex;
-	  display: -moz-flex;
-	  display: -o-flex;
-	  display: -webkit-flex;
-	  display: -ms-flex;
-	  flex-direction: row;
-	  -moz-flex-direction: row;
-	  -o-flex-direction: row;
-	  -webkit-flex-direction: row;
-	  -ms-flex-direction: row;
+    display: flex;
+    display: -moz-flex;
+    display: -o-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    flex-direction: row;
+    -moz-flex-direction: row;
+    -o-flex-direction: row;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
   }
   .menu-trigger.active span:nth-of-type(1) {
     -webkit-transform: translateY(20px) rotate(-45deg);

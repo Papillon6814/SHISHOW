@@ -21,7 +21,6 @@
 <script>
 import navi from '../components/NavigationBar.vue'
 import notificationBanner from '../components/NotificationBanner.vue'
-import store from "../store";
 import firebase from '../plugin/firestore'
 import 'firebase/firestore'
 

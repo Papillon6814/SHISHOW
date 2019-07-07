@@ -48,9 +48,7 @@
 import navi from "../components/NavigationBar.vue";
 import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
-import signinBanner from "../components/SigninBanner";
 import BlurBanner from "../components/BlurBanner.vue";
-import ourFooter from "../components/Footer.vue";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
@@ -58,7 +56,6 @@ import "@firebase/auth";
 import store from "../store";
 
 const db = firebase.firestore();
-let currentUser;
 
 export default {
   name: "home",
@@ -125,14 +122,6 @@ export default {
     };
   },
 
-  components: {
-    navi,
-    myBanner,
-    normalBanner,
-    BlurBanner,
-    ourFooter
-  },
-
   computed: {
     user() {
       return this.$store.getters.user;
@@ -149,25 +138,6 @@ export default {
       return this.$store.getters.user.uid;
     },
 
-    filterUser: function() {
-      let key = this.searchWord;
-      let data = [];
-      let results = [];
-      //console.log(this.users[3].data().username);
-      //console.log(Object.keys(this.users).length);
-      let i;
-      //オブジェクトに変換
-      for (i in this.users) {
-        data[i] = this.users[i].data();
-      }
-      //console.log(data);
-      if (key) {
-        if (data.username.indexOf(key) !== -1) {
-          results.push(data);
-        }
-      }
-      console.log(results);
-    },
 
   },
 
@@ -194,8 +164,8 @@ export default {
       footer[0].style.top = (parseInt(footerStyle.top) + 280) + 'px';
 
       move.style.top = "340px";
-      this.active = !this.active;
-      if (this.active === false) {
+      active = !active;
+      if (active === false) {
         footer[0].style.top = (parseInt(footerStyle.top) - 280) + 'px';
 
         move.style.top = "60px";
@@ -213,8 +183,7 @@ export default {
     moveDown: function(N) {
       let move, style;
       let footer, footerStyle;
-      let i, j;
-
+      let i;
       if(this.normalBannerActiveArray.indexOf(N) == -1) {
         // normalBannerActiveArrayの中にNが格納されていない時
         this.normalBannerActiveArray.push(N);

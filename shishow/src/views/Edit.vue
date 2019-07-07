@@ -1,9 +1,6 @@
 <template>
     <div>
         <navi></navi>
-        <!-- <div id="Editposition">
-            <EditBanner></EditBanner>
-        </div> -->
         <div id="myBannerposition"> 
           <MBforEdit></MBforEdit>
         </div>
@@ -11,14 +8,12 @@
     
 </template>
 <script>
-import EditBanner from '../components/EditBanner.vue'
 import MBforEdit from "../components/MBforEdit.vue";
 import navi from "../components/NavigationBar.vue";
 
 export default {
     name: "Edit",
     components: {
-        EditBanner,
         MBforEdit,
         navi
     }

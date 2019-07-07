@@ -15,7 +15,6 @@
 import firebase from "../../plugin/firestore";
 import "firebase/firestore";
 import "@firebase/auth";
-import store from "../../store";
 
 let db = firebase.firestore();
 let currentUser;
