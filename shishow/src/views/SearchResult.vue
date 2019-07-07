@@ -69,7 +69,6 @@ export default {
               email: this.users[users_i].data().email,
               image: this.users[users_i].data().image
             });
-            console.log(this.searchResults[index].data());
             index++;
           }
           this.$forceUpdate();
