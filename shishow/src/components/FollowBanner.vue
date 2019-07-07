@@ -64,11 +64,6 @@ export default {
     },
 
     sendFriendReq: function() {
-      /*
-      this.isA = !this.isA;
-      this.isB = !this.isB;
-      this.isC = !this.isC,
-      */
       this.$emit("extendNormalBanner");
       this.$emit("extendNbanner");
 

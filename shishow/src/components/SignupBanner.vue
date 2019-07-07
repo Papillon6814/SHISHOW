@@ -67,9 +67,6 @@
   </div>
 </template>
 
-
-
-
 <script>
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
@@ -99,7 +96,7 @@ export default {
     signUp: function() {
       let url;
 
-      if(!this.uploadedImage){
+      if(!this.roundimg){
         db.collection("Image")
         .doc("SampleImage")
         .get()
@@ -129,27 +126,41 @@ export default {
                 //変数に情報を格納
                 email = User.email;
                 alert("Create account: " + email);
-                if (!this.uploadedImage) this.uploadedImage = url;
-                console.log(this.roundimg);
+                console.log("urlは"+url);
+                console.log(!this.roundimg);
+                if (!this.roundimg) {
+                  
+                  console.log("urlは"+url);
+                  this.roundimg = url;
+                  console.log("変更したよ"+this.roundimg);
+
+                }else{
+                  console.log("エラーだよ"+this.roundimg);
+                }
+                
                 this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
                 router.push("/")
               });
             })
             .catch(error => {
               alert(error.message);
+
             });
           }
       }
     },
 
-      addToDatabase(email, username,image) {
+      addToDatabase(email, username, image) {
 
-        db.collection("USER").doc(""+email).set({
+        db.collection("USER")
+        .doc(""+email)
+        .set({
             email: email,
             username: username,
             image: image,
             bio: 'No bio'
         })
+
     },
 
     onFileChange(event) {

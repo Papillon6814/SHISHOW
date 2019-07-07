@@ -48,9 +48,7 @@
 import navi from "../components/NavigationBar.vue";
 import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
-import signinBanner from "../components/SigninBanner";
 import BlurBanner from "../components/BlurBanner.vue";
-import ourFooter from "../components/Footer.vue";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
@@ -58,34 +56,38 @@ import "@firebase/auth";
 import store from "../store";
 
 const db = firebase.firestore();
-let currentUser;
 
 export default {
   name: "home",
 
   mounted: function() {
     this.onAuth();
-    const sign_db = db.collection("USER").doc(this.user.email);
+    const sign_db = db.collection("USER")
+                      .doc(this.user.email);
 
-    sign_db.collection("relation").get().then(docs_r=>{
-    db.collection("USER").get().then(docs_p =>{
-      docs_p.forEach(doc=>{
-        if(doc.data().email != this.user.email){
-          this.users.push(doc.data());
-          this.filteredUser.push(doc.data());
-          if(docs_r.docs){
-            let i;
-            for(i=0;i<docs_r.docs.length && doc.data().email != docs_r.docs[i].id;i++);
-            if(i==docs_r.docs.length){
-              this.relation.push(0)
+    sign_db.collection("relation")
+    .get()
+    .then(docs_r=>{
+    db.collection("USER")
+      .get()
+      .then(docs_p =>{
+        docs_p.forEach(doc=>{
+          if(doc.data().email != this.user.email){
+            this.users.push(doc.data());
+            this.filteredUser.push(doc.data());
+
+            if(docs_r.docs){
+              let i;
+              for(i=0;i<docs_r.docs.length && doc.data().email != docs_r.docs[i].id;i++);
+              if(i==docs_r.docs.length){
+                this.relation.push(0)
+              }else{
+                this.relation.push(docs_r.docs[i].data().relation);
+              }
             }else{
-              this.relation.push(docs_r.docs[i].data().relation);
+              this.relation.push(0)
             }
-          }else{
-            this.relation.push(0)
           }
-          }
-
         })
         this.placeFooter();
       })
@@ -120,14 +122,6 @@ export default {
     };
   },
 
-  components: {
-    navi,
-    myBanner,
-    normalBanner,
-    BlurBanner,
-    ourFooter
-  },
-
   computed: {
     user() {
       return this.$store.getters.user;
@@ -144,25 +138,6 @@ export default {
       return this.$store.getters.user.uid;
     },
 
-    filterUser: function() {
-      let key = this.searchWord;
-      let data = [];
-      let results = [];
-      //console.log(this.users[3].data().username);
-      //console.log(Object.keys(this.users).length);
-      let i;
-      //オブジェクトに変換
-      for (i in this.users) {
-        data[i] = this.users[i].data();
-      }
-      //console.log(data);
-      if (key) {
-        if (data.username.indexOf(key) !== -1) {
-          results.push(data);
-        }
-      }
-      console.log(results);
-    },
 
   },
 
@@ -189,8 +164,8 @@ export default {
       footer[0].style.top = (parseInt(footerStyle.top) + 280) + 'px';
 
       move.style.top = "340px";
-      this.active = !this.active;
-      if (this.active === false) {
+      active = !active;
+      if (active === false) {
         footer[0].style.top = (parseInt(footerStyle.top) - 280) + 'px';
 
         move.style.top = "60px";
@@ -208,8 +183,7 @@ export default {
     moveDown: function(N) {
       let move, style;
       let footer, footerStyle;
-      let i, j;
-
+      let i;
       if(this.normalBannerActiveArray.indexOf(N) == -1) {
         // normalBannerActiveArrayの中にNが格納されていない時
         this.normalBannerActiveArray.push(N);
@@ -245,6 +219,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style lang="scss">
@@ -260,6 +235,10 @@ body {
   width: 100%;
 
   background-color: $dark_color;
+}
+
+#root{
+  padding-top: 100px;
 }
 
 #myBannerPosition {
@@ -283,7 +262,7 @@ body {
   .normalBannerPosition {
     position: absolute;
 
-    top: 0;
+    top: 173px;
     left: 0;
 
     width: 100%;
@@ -319,13 +298,15 @@ body {
 footer {
   position: absolute;
 
-  top: 0;
+  top: 110%;
   left: 0;
 
   width: 100%;
   height: $footer_height;
 
   transition: .3s;
+
+  padding-top: 100px;
 }
 
 #myBannerPosition {
@@ -408,4 +389,12 @@ footer {
   transition: all 0.5s 0s ease;
 }
 
+@media (min-width: 1300px){
+  #root{
+    padding-top: 0px;
+  }
+  footer{
+    padding-top: 0px;
+  }
+}
 </style>
