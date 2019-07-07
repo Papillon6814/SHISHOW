@@ -83,6 +83,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+
 html {
   overflow-x: hidden;
   overflow-y: scroll;
@@ -122,4 +123,5 @@ html {
     $i: $i + 1;
   }
 }
+
 </style>
