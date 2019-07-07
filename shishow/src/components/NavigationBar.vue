@@ -443,6 +443,14 @@ export default {
     text-shadow: 2px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
       -1px 1px 0 #000, 1px 1px 0 #000;
   }
+
+  
+}
+
+@media(min-width:1050px){
+  #nav-open .notification{
+    display: none;
+  }
 }
 
 @media (max-width: 1050px) {

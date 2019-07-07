@@ -77,8 +77,13 @@ export default {
           friendsSnapshot.forEach(doc1 => {
             // doc1にはフレンドのメールアドレスが格納されている
 
-            this.usernames.push(doc1.data().username)
-            console.log(usernames)
+            db.collection("USER")
+              .doc(doc1.data().email)
+              .get()
+              .then(doc2 => {
+                this.usernames.push(doc2.data().username);
+              });
+
 
             db.collection("PrivateChat")
               .doc(currentUserEmail + doc1.id)
