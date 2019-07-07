@@ -1,5 +1,9 @@
 <template>
   <div id="header">
+    <div id="header2">
+    </div>
+    <div class="logoBack">
+    </div>
     <div>
       <img class="logo" src="../assets/logoShishow.png" />
     </div>
@@ -23,7 +27,6 @@
       </div>
     </div>
     <div class="logoSentence">SHISHOW</div>
-
     <div id="menuButtons">
       <div class="buttons">
         <router-link to="/GlobalChat">
@@ -65,7 +68,7 @@
         </div>
       </div>
     </div>
-    <div class="logoSentence">SHISHOW</div>
+    <div class="logoSentence2">SHISHOW</div>
   </div>
 </template>
 
@@ -100,7 +103,7 @@ export default {
 #header {
   position: absolute;
 
-  top: 0;
+  top: $header_height;
   left: 0;
 
   width: 100%;
@@ -109,6 +112,19 @@ export default {
   background-color: $header_color;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
   z-index: 10;
+
+  #header2 {
+    position: absolute;
+
+    top: -$header_height;
+    left: 0;
+
+    width: 100%;
+    height: $header_height;
+
+    background-color: $footer_color;
+    z-index: -1;
+  }
 
   .centered {
     position: absolute;
@@ -230,23 +246,15 @@ export default {
 
     top: 10px;
     left: 10px;
+
+    z-index: 10;
   }
 
-  .logoSentence {
-    position: absolute;
+  .logoBack{
+    height: 100%;
+    width: $button_width;
 
-    font-family: "Pangolin", cursive;
-    top: 20px;
-    font-size: 60px;
-
-    left: 50%;
-    transform: translate(-50%, 0);
-    -webkit-transform: translate(-50%, 0);
-
-    color: $logo_sentence_color;
-
-    text-shadow: 2px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
-      -1px 1px 0 #000, 1px 1px 0 #000;
+    background-color: $header_color;
   }
 
   ::selection {
@@ -352,7 +360,7 @@ export default {
     position: absolute;
 
     font-family: "Pangolin", cursive;
-    bottom: 110px;
+    top: -85px;
     font-size: 60px;
 
     left: 50%;
@@ -363,6 +371,12 @@ export default {
 
     text-shadow: 2px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
       -1px 1px 0 #000, 1px 1px 0 #000;
+    z-index: 999;
+  }
+  .logoSentence2 {
+    position: absolute;
+    top: 20px;
+    z-index: -1;
   }
 }
 
@@ -370,8 +384,22 @@ export default {
   #header{
     top: 0px;
   }
-  .logoSentence{
+  .logoSentence2{
+    position: absolute;
+
+    font-family: "Pangolin", cursive;
+    font-size: 60px;
+
     top: 10px;
+
+    left: 50%;
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+
+    color: white;
+
+    text-shadow: 2px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
+      -1px 1px 0 #000, 1px 1px 0 #000;
   }
 }
 
@@ -527,8 +555,8 @@ export default {
   }
 
   #nav-input:checked ~ #nav-content {
-    -webkit-transform: translateY(100px); //メニューバーの表示
-    transform: translateY(100px);
+    -webkit-transform: translateY(200px); //メニューバーの表示
+    transform: translateY(200px);
     box-shadow: 6px 0 25px rgba(0,0,0,.15);
   }
 
@@ -546,8 +574,8 @@ export default {
     }
   }*/
 
-  .header-logo-menu {
-    /*以下コピペにつき，意味が分からない CSSって何なのですか*/
+  /*.header-logo-menu {
+    //以下コピペにつき，意味が分からない CSSって何なのですか
     display: flex;
     display: -moz-flex;
     display: -o-flex;
@@ -558,7 +586,7 @@ export default {
     -o-flex-direction: row;
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
-  }
+  }*/
   /*.menu-trigger,
   .menu-trigger span {
     display: inline-block;

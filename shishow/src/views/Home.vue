@@ -268,6 +268,10 @@ body {
   background-color: $dark_color;
 }
 
+#root{
+  padding-top: 100px;
+}
+
 #myBannerPosition {
   //position: relative;
   //temporary top
@@ -332,6 +336,8 @@ footer {
   height: $footer_height;
 
   transition: .3s;
+
+  padding-top: 100px;
 }
 
 #myBannerPosition {
@@ -414,4 +420,12 @@ footer {
   transition: all 0.5s 0s ease;
 }
 
+@media (min-width: 1300px){
+  #root{
+    padding-top: 0px;
+  }
+  footer{
+    padding-top: 0px;
+  }
+}
 </style>
