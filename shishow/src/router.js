@@ -10,7 +10,7 @@ import DirectMessage from './views/DirectMessage.vue'
 import Follow from './views/Follow.vue'
 import Friend from './views/friend.vue'
 import GlobalChat from "./views/GlobalChat.vue"
-
+import GameRequest from './views/GameRequest.vue'
 
 
 
@@ -75,7 +75,12 @@ let router = new Router({
       path: "/GlobalChat",
       name: 'GlobalChat',
       component: GlobalChat
-    }
+    },
+    {
+      path: '/GameRequest',
+      name: 'GameRequest',
+      component: GameRequest
+    },
   ]
 })
 
