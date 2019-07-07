@@ -64,11 +64,12 @@ export default {
           //ユーザーネームの走査
           if (this.users[users_i].data().username.indexOf(word) !== -1) {
             this.$set(this.searchResults, index, {
-              username: this.users[index].data().username,
-              bio: this.users[index].data().bio,
-              email: this.users[index].data().email,
-              image: this.users[index].data().image
+              username: this.users[users_i].data().username,
+              bio: this.users[users_i].data().bio,
+              email: this.users[users_i].data().email,
+              image: this.users[users_i].data().image
             });
+            console.log(this.searchResults[index].data());
             index++;
           }
           this.$forceUpdate();
