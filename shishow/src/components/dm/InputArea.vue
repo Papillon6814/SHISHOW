@@ -39,9 +39,6 @@ export default {
   },
 
   methods: {
-    doFilterUser() {
-      //this.$emit("")
-    },
     //メッセージを送る
     sendMsg() {
       // 文字が入力されているときにのみ送信
@@ -66,7 +63,10 @@ export default {
             msg: this.msg,
             date: now,
             sender: currentUser.email
-          });
+          })
+          .then(() => {
+            this.$emit('scrollRightArea');
+          })
 
         this.msg = "";
       }
