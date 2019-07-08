@@ -65,6 +65,14 @@ export default {
             sender: currentUser.email
           })
           .then(() => {
+            db.collection("USER")
+              .doc(currentUser.email)
+              .collection("friends")
+              .doc(this.friendDocID)
+              .update({
+                lastChatDate: now
+              })
+
             this.$emit('scrollRightArea');
           })
 

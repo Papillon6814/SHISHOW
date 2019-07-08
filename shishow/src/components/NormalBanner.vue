@@ -22,7 +22,7 @@
     <div class="userInfoPosition">
       <div class="userInfo">userinfo</div>
     </div>
-    <div v-if="relation==0" @click="sendFriendReq" class="n_btn-circle-3d">江崎にフレ申請</div>
+    <div v-if="relation==0" @click="sendFriendReq" class="n_btn-circle-3d">申請</div>
     <div v-else-if="relation==1" @click="add_db" class="n_btn-circle-3d">承認</div>
     <div v-else-if="relation==2" @click="delete_db" class="n_btn-circle-3d">削除</div>
     <div v-else-if="relation==3"  class="n_btn-circle-3d">友達</div>
@@ -169,6 +169,8 @@ export default {
       const user_db = db.collection("USER")
                         .doc(this.user.email);
 
+      let now = new Date();
+
       db.collection("PrivateChat")
         .add({
           email1: this.signuser.email,
@@ -186,7 +188,8 @@ export default {
                  .set({
                    username: this.user.username,
                    email: this.user.email,
-                   chatID: doc1.id
+                   chatID: doc1.id,
+                   lastChatDate: now
                  });
                })
                .catch(e => {
@@ -202,7 +205,8 @@ export default {
                         .set({
                           username: this.signuser.username,
                           email: this.signuser.email,
-                          chatID: doc1.id
+                          chatID: doc1.id,
+                          lastChatDate: now
                         })
                })
                .catch(e => {

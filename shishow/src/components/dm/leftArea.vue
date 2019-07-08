@@ -71,6 +71,7 @@ export default {
       db.collection("USER")
         .doc(currentUserEmail)
         .collection('friends')
+        .orderBy('lastChatDate', 'desc')
         .get()
         .then(friendsSnapshot => {
 
@@ -83,7 +84,6 @@ export default {
               .then(doc2 => {
                 this.usernames.push(doc2.data().username);
               });
-
 
             db.collection("PrivateChat")
               .doc(currentUserEmail + doc1.id)

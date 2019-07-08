@@ -71,6 +71,7 @@ export default {
       db.collection("USER")
         .doc(currentUser.email)
         .collection("friends")
+        .orderBy("lastChatDate", "desc")
         .get()
         .then(friendsSnapshot => {
           friendsSnapshot.forEach(doc1 => {

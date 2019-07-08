@@ -106,15 +106,26 @@ export default {
                 this.income = doc.docs;
             })
 
-            db.collection("USER").doc(this.user.email).collection("outgoing").get().then(doc =>{
+            db.collection("USER")
+              .doc(this.user.email)
+              .collection("outgoing")
+              .get()
+              .then(doc =>{
                 this.outgo = doc.docs;
             })
 
-            db.collection("USER").doc(this.user.email).collection("friends").get().then(doc=>{
+            db.collection("USER")
+              .doc(this.user.email)
+              .collection("friends")
+              .get()
+              .then(doc=>{
               this.fri = doc.docs;
             })
 
-            db.collection("USER").doc(this.user.email).get().then(doc =>{
+            db.collection("USER")
+              .doc(this.user.email)
+              .get()
+              .then(doc =>{
                 this.signuser = doc.data();
             })
     }
@@ -135,8 +146,8 @@ export default {
   $i: 1;
   @while $i <= 30{
     .n#{$i}{
-      padding-top: 5px;/* + (200px * $i);*/     
-      padding-bottom: 5px; 
+      padding-top: 5px;/* + (200px * $i);*/
+      padding-bottom: 5px;
     }
     $i: $i + 1;
   }
@@ -159,13 +170,13 @@ export default {
   #fri{
     background-color:#000000;
   }
-  
+
   .mainobject{
     width:80%;
     max-height: 600px;
-    margin:0 auto; 
+    margin:0 auto;
     overflow-x: hidden;
-    overflow-y: scroll;  
+    overflow-y: scroll;
   }
 
 </style>
