@@ -48,14 +48,6 @@ export default {
     dmBanner
   },
 
-  created: function() {
-    this.onAuth();
-    console.log("leftarea created")
-    currentUserEmail = firebase.auth().currentUser.email;
-    this.loadLastMsgAndDate();
-    // lastMsg = msg, lastMsgDate = date;
-  },
-
   methods: {
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
@@ -105,11 +97,14 @@ export default {
       this.$parent.idFromLeftArea = friend;
       console.log("click");
     },
+  },
 
-    toggleColor: function() {
-      console.log("toggleColor")
-    }
-  }
+  created: function() {
+    this.onAuth();
+    console.log("leftarea created")
+    currentUserEmail = firebase.auth().currentUser.email;
+    this.loadLastMsgAndDate();
+  },
 }
 
 </script>
