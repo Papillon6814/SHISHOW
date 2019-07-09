@@ -137,8 +137,6 @@ export default {
                   this.roundimg = url;
                   console.log("変更したよ"+this.roundimg);
 
-                }else{
-                  console.log("エラーだよ"+this.roundimg);
                 }
                 
                 this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
@@ -171,8 +169,6 @@ export default {
       let files = event.target.files || event.dataTransfer.files;
       if (files[0].type.match(/image/)) {
         this.showImage(files[0]);
-      } else {
-        console.log("This is not image");
       }
     },
 

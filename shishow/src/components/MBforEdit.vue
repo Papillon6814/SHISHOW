@@ -183,8 +183,6 @@ export default {
       if (files[0].type.match(/image/)) {
         
         this.showImage(files[0]);
-      } else {
-        console.log("This is not image");
       }
     },
 
