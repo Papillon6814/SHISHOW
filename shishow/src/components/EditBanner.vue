@@ -40,12 +40,12 @@ export default {
         }
     },
     created:function(){
-        console.log()
+
         var User = this.user;
         var email;
         
         email = User.email;
-        console.log(email);
+
 
         db.collection("USER").doc(email).get()
         .then(doc =>{
@@ -71,7 +71,7 @@ export default {
                 bio: root.bio,
                 username: root.username
             });
-            console.log(this.bio+this.username);
+
 
         }
     }

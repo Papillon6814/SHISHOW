@@ -75,7 +75,7 @@ export default {
         .then(friendsSnapshot => {
           friendsSnapshot.forEach(doc1 => {
             friendsDocID.push(doc1.id)
-            console.log("ID: " + friendsDocID)
+
           })
       })
     }

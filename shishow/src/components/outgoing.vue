@@ -63,7 +63,7 @@ export default {
       user_db.collection("incoming")
              .doc(this.signuser.email)
              .delete()
-      .catch(e=>{console.log(e)});
+      .catch(e=>{});
 
       sign_db.collection("outgoing")
              .doc(this.user.email)
@@ -79,7 +79,7 @@ export default {
                       })
              })
              .catch(e => {
-               console.log(e)
+               
              });
 
       db.collection("USER")
@@ -87,7 +87,7 @@ export default {
         .collection("relation")
         .doc(this.signuser.email).delete()
         .catch(e =>{
-          console.log(e)
+          
         })
 
       db.collection("USER")
@@ -95,7 +95,7 @@ export default {
         .collection("relation")
         .doc(this.user.email).delete()
         .catch(e =>{
-          console.log(e)
+          
         })
 
       user_db.collection("notice")

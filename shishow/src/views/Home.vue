@@ -177,7 +177,7 @@ export default {
       footer[0].style.top = (200 * (1 + this.filteredUser.length) + 300) + 'px';
 
       this.$forceUpdate();
-      console.log(this.filteredUser.length);
+
     },
 
     moveDown: function(N) {

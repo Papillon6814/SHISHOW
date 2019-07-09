@@ -62,8 +62,8 @@ export default {
       const sign_db = db.collection("USER").doc(this.signuser.email);
       const user_db = db.collection("USER").doc(this.user.email)
       
-      user_db.collection("friends").doc(this.signuser.email).delete().then(()=>{console.log("aaa")})
-      .catch(e=>{console.log(e)});
+      user_db.collection("friends").doc(this.signuser.email).delete().then(()=>{c})
+      .catch(e=>{});
     
       sign_db.collection("friends").doc(this.user.email).delete().then(()=>{
         sign_db.collection("friends").get().then(doc=>{
@@ -71,14 +71,14 @@ export default {
         }).catch(()=>{
           this.$parent.fri = "";
        })
-      }).catch(e=>{console.log(e)});
+      }).catch(e=>{});
 
       db.collection("USER")
       .doc(this.user.email)
       .collection("relation")
       .doc(this.signuser.email).delete()
       .catch(e =>{
-        console.log(e)
+        
       })
       
       db.collection("USER")
@@ -86,7 +86,7 @@ export default {
       .collection("relation")
       .doc(this.user.email).delete()
       .catch(e =>{
-        console.log(e)
+        
       })
 
       user_db.collection("notice").doc(this.signuser.email).delete();
