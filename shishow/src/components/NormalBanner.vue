@@ -41,7 +41,6 @@ import "firebase/firestore";
 import "@firebase/auth";
 
 const db = firebase.firestore();
-const currentUser = firebase.auth().currentUser;
 
 export default {
   name: 'normalBanner',

@@ -14,10 +14,8 @@
 </template>
 
 <script>
-import firebase from '../plugin/firestore'
-import 'firebase/firestore'
 
-const db = firebase.firestore();
+
 
 export default {
   name: 'notBanner',

@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import store from "../store"
 import firebase from '../plugin/firestore'
 import 'firebase/firestore'
 import '@firebase/auth'
@@ -51,7 +50,6 @@ import '@firebase/auth'
 
 
 const db = firebase.firestore();
-const currentUser = firebase.auth().currentUser;
 
 export default {
   name: 'friends',

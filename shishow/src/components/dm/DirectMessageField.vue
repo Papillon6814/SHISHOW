@@ -27,7 +27,7 @@ import firebase from "../../plugin/firestore";
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
-import { functions } from 'firebase';
+
 
 let db = firebase.firestore();
 

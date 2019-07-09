@@ -25,9 +25,8 @@ import store from '../../store'
 let db = firebase.firestore();
 
 let currentUserEmail;
-let lastMsg = [];
 let lastMsgDate = [];
-let usernames = [];
+
 
 export default {
   name: 'LeftArea',

@@ -74,7 +74,6 @@ import Cropper from "cropperjs";
 import router from "../router"
 
 const db = firebase.firestore();
-let files;
 
 //使用するオリジナルの関数を定義
 export default {
@@ -88,8 +87,12 @@ export default {
       password: "",
       p_confirm: "",
       uploadedImage: "",
-      roundimg:""
+      roundimg:"",
+      modal: "",
     };
+  },
+  mounted:function(){
+    this.modal = document.getElementById("modal");
   },
 
   methods: {
@@ -117,7 +120,7 @@ export default {
           firebase
             .auth()
             .createUserWithEmailAndPassword(this.email, this.password)
-            .then(user => {
+            .then(() => {
               var User = firebase.auth().currentUser;
               var email;
               User.updateProfile({
@@ -185,8 +188,8 @@ export default {
         window.setTimeout(place.crop, 1);
       };
       //読み込み開始
-      console.log(typeof modal);
-      modal.style.display = "block";
+      console.log(typeof this.modal);
+      this.modal.style.display = "block";
       reader.readAsDataURL(file);
     },
 
@@ -215,12 +218,12 @@ export default {
           croppable = true;
         }
       });
-      close.onclick = function() {
-        modal.style.display = "none";
+      close.onclick = ()=> {
+        this.modal.style.display = "none";
         cropper.destroy();
         this.uploadedImage = "";
       };
-      button.onclick = function() {
+      button.onclick = ()=> {
         var croppedCanvas;
         var roundedImage;
 
@@ -274,7 +277,7 @@ export default {
           del.parentNode.removeChild(del);
         }
         cropper.destroy();
-        modal.style.display = "none";
+        this.modal.style.display = "none";
         root.uploadedImage = "";
         result.appendChild(roundedImage);
       };

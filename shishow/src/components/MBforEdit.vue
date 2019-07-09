@@ -1,7 +1,7 @@
 
 <template>
   <div class="extend ">
-    <div id="modal" class="modal">
+    <div id="modal" class="modal" style="display: none;">
       <div class="modal-content">
         <div class="modal-body">
           <img id="image" v-show="uploadedImage" :src="uploadedImage">
@@ -58,8 +58,11 @@ import "@firebase/auth";
 import "firebase/firestore";
 import router from "../router";
 import store from "../store";
+import Cropper from "cropperjs";
 
 const db = firebase.firestore();
+
+
 
 
 
@@ -78,8 +81,8 @@ export default {
       bio: "",
       username: "",
       uploadedImage: "",
-      roundimg:""
-
+      roundimg:"",
+      modal: "",
     };
   },
 
@@ -96,13 +99,12 @@ export default {
     },
     getCurrentUserId: function() {
       return this.$store.getters.user.uid;
-    }
+    },
   },
   created:function(){
+    
     console.log("created");
     this.onAuth();
-    var root = this;
-
 
     var User = this.user;
     var email;
@@ -118,6 +120,12 @@ export default {
       this.bio = doc.data()["bio"];
       this.username = doc.data()["username"];
     });
+
+  },
+  mounted:function(){
+
+    this.modal =document.getElementById("modal");
+    
 
   },
   watch: {
@@ -161,7 +169,7 @@ export default {
       }).then(function() {
         alert("Update successful.") ;
         router.push("/");
-      }).catch(function(error) {
+      }).catch(function() {
         alert("// An error happened.") ;
       });
       console.log("bioは"+this.bio+"名前は"+this.username);
@@ -169,9 +177,11 @@ export default {
     },
 
     onFileChange(event) {
+      console.log("this.modalは"+this.modal);
       //file変数定義
       let files = event.target.files || event.dataTransfer.files;
       if (files[0].type.match(/image/)) {
+        
         this.showImage(files[0]);
       } else {
         console.log("This is not image");
@@ -179,6 +189,8 @@ export default {
     },
 
     showImage(file) {
+
+
       //FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
       let reader = new FileReader();
       //ファイルが読み込まれたとき、eventを引数とするアロー関数作動
@@ -189,8 +201,7 @@ export default {
         window.setTimeout(place.crop, 1);
       };
       //読み込み開始
-      console.log(typeof modal);
-      modal.style.display = "block";
+      this.modal.style.display = "block";
       reader.readAsDataURL(file);
     },
 
@@ -211,12 +222,12 @@ export default {
           croppable = true;
         }
       });
-      close.onclick = function() {
-        modal.style.display = "none";
+      close.onclick = ()=> {
+        this.modal.style.display = "none";
         cropper.destroy();
         this.uploadedImage = "";
       };
-      button.onclick = function() {
+      button.onclick = ()=> {
         var croppedCanvas;
         var roundedImage;
 
@@ -270,7 +281,7 @@ export default {
           del.parentNode.removeChild(del);
         }
         cropper.destroy();
-        modal.style.display = "none";
+        this.modal.style.display = "none";
         root.uploadedImage = "";
         result.appendChild(roundedImage);
       };
