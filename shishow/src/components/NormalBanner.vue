@@ -89,7 +89,7 @@ export default {
             username: this.user["username"],
             email: this.user["email"]
           })
-          .catch(e => {
+          .catch(() => {
 
           });
 
@@ -102,7 +102,7 @@ export default {
             username: this.signuser["username"],
             email: this.signuser["email"]
           })
-          .catch(e => {
+          .catch(() => {
 
           });
 
@@ -111,7 +111,7 @@ export default {
         .doc(this.signuser.email).set({
           relation:1,
         })
-        .catch(e =>{
+        .catch(() =>{
 
         })
 
@@ -119,7 +119,7 @@ export default {
         .collection("relation")
         .doc(this.user.email).set({
           relation:2,
-        }).catch(e =>{
+        }).catch(() =>{
 
         })
 
@@ -142,17 +142,17 @@ export default {
       const user_db = db.collection("USER").doc(this.user.email)
 
       user_db.collection("incoming").doc(this.signuser.email).delete()
-      .catch(e=>{});
+      .catch(() =>{});
 
       sign_db.collection("outgoing").doc(this.user.email).delete()
-      .catch(e=>{});
+      .catch(() =>{});
 
       db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).delete()
-      .catch(e =>{
+      .catch(() =>{
         
       })
       db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).delete()
-      .catch(e =>{
+      .catch(() =>{
         
       })
 
@@ -187,7 +187,7 @@ export default {
                    chatID: doc1.id
                  });
                })
-               .catch(e => {
+               .catch(() => {
                  
                });
 
@@ -203,7 +203,7 @@ export default {
                           chatID: doc1.id
                         })
                })
-               .catch(e => {
+               .catch(() => {
                  
                });
 
@@ -214,7 +214,7 @@ export default {
           .set({
             relation:3,
           })
-          .catch(e =>{
+          .catch(() =>{
             
           })
 
@@ -225,7 +225,7 @@ export default {
           .set({
             relation:3,
           })
-          .catch(e =>{
+          .catch(() =>{
             
           })
 

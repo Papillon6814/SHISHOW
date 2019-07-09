@@ -142,7 +142,7 @@ export default {
           alert("Signed out.");
           router.push("/");
         })
-        .catch(function(e) {
+        .catch(() => {
         });
     }
   }

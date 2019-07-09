@@ -66,7 +66,7 @@ export default {
           alert("Signed in.");
           router.push("/");
         })
-        .catch(function(e) {
+        .catch(()=> {
           alert('Could not signed in.');
           
         });
