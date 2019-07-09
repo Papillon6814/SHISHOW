@@ -68,7 +68,7 @@ export default {
         })
         .catch(function(e) {
           alert('Could not signed in.');
-          console.log(e);
+          
         });
     },
     onAuth: function() {

@@ -103,7 +103,7 @@ export default {
   },
   created:function(){
     
-    console.log("created");
+
     this.onAuth();
 
     var User = this.user;
@@ -113,7 +113,7 @@ export default {
       email = User.email;
     }
 
-    console.log("gazouが"+email);
+
     db.collection("USER").doc(email).get()
     .then( doc => {
       this.icon = doc.data()["image"];
@@ -130,7 +130,7 @@ export default {
   },
   watch: {
     loginedUser: function() {
-      console.log(this.loginedUser);
+
       this.$forceUpdate();
     }
   },
@@ -172,17 +172,19 @@ export default {
       }).catch(function() {
         alert("// An error happened.") ;
       });
-      console.log("bioは"+this.bio+"名前は"+this.username);
+
       
     },
 
     onFileChange(event) {
-      console.log("this.modalは"+this.modal);
+
       //file変数定義
       let files = event.target.files || event.dataTransfer.files;
       if (files[0].type.match(/image/)) {
         
         this.showImage(files[0]);
+      } else {
+
       }
     },
 

@@ -129,13 +129,12 @@ export default {
                 //変数に情報を格納
                 email = User.email;
                 alert("Create account: " + email);
-                console.log("urlは"+url);
-                console.log(!this.roundimg);
+  
                 if (!this.roundimg) {
                   
-                  console.log("urlは"+url);
+       
                   this.roundimg = url;
-                  console.log("変更したよ"+this.roundimg);
+     
 
                 }
                 
@@ -184,14 +183,14 @@ export default {
         window.setTimeout(place.crop, 1);
       };
       //読み込み開始
-      console.log(typeof this.modal);
+
       this.modal.style.display = "block";
       reader.readAsDataURL(file);
     },
 
     errorIndication() {
       if (!this.email) {
-        if (!this.email) console.log("there is not email");
+    
         return true;
       }
       return false;
