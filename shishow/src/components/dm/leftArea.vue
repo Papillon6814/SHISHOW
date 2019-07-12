@@ -47,14 +47,6 @@ export default {
     dmBanner
   },
 
-  created: function() {
-    this.onAuth();
-
-    currentUserEmail = firebase.auth().currentUser.email;
-    this.loadLastMsgAndDate();
-    // lastMsg = msg, lastMsgDate = date;
-  },
-
   methods: {
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
@@ -70,6 +62,7 @@ export default {
       db.collection("USER")
         .doc(currentUserEmail)
         .collection('friends')
+        .orderBy('lastChatDate', 'desc')
         .get()
         .then(friendsSnapshot => {
 
@@ -82,7 +75,6 @@ export default {
               .then(doc2 => {
                 this.usernames.push(doc2.data().username);
               });
-
 
             db.collection("PrivateChat")
               .doc(currentUserEmail + doc1.id)
@@ -104,11 +96,14 @@ export default {
       this.$parent.idFromLeftArea = friend;
 
     },
+  },
 
-    toggleColor: function() {
-
-    }
-  }
+  created: function() {
+    this.onAuth();
+    console.log("leftarea created")
+    currentUserEmail = firebase.auth().currentUser.email;
+    this.loadLastMsgAndDate();
+  },
 }
 
 </script>
