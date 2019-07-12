@@ -100,8 +100,8 @@ export default {
                                      }).catch(()=>{
                                        this.$parent.fri = "";
                                      })
-                            }).catch(e => {
-                              console.log(e)
+                            }).catch(() => {
+                              
                             });
 
                   user_db.collection("outgoing")
@@ -117,8 +117,8 @@ export default {
                                     chatID: doc1.id
                                   })
                          })
-                         .catch(e => {
-                           console.log(e)
+                         .catch(() => {
+                           
                          });
 
                   db.collection("USER")
@@ -128,8 +128,8 @@ export default {
                     .set({
                       relation:3,
                     })
-                    .catch(e =>{
-                      console.log(e)
+                    .catch(() =>{
+                      
                     })
 
                   db.collection("USER")
@@ -138,20 +138,20 @@ export default {
                     .doc(this.user.email)
                     .set({
                       relation:3,
-                    }).catch(e =>{
-                      console.log(e)
+                    }).catch(() =>{
+                      
                     })
 
                   db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).set({
                     relation:3,
                   })
-                  .catch(e =>{
-                    console.log(e)
+                  .catch(() =>{
+                    
                   })
                   db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).set({
                     relation:3,
-                  }).catch(e =>{
-                    console.log(e)
+                  }).catch(() =>{
+                    
                   })
 
                   user_db.collection("notice")
@@ -172,8 +172,8 @@ export default {
                             }
                           })
               })
-              .catch(e => {
-                console.log(e)
+              .catch(() => {
+                
               });
     }
   }

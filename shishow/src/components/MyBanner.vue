@@ -93,7 +93,7 @@ export default {
     }
   },
   created:function(){
-    console.log("created");
+
     this.onAuth();
     var root = this;
 
@@ -104,7 +104,6 @@ export default {
     if (User != null){
       email = User.email;
     }
-    console.log("gazouが"+email);
     db.collection("USER").doc(email).get()
     .then( doc => {
       root.icon = doc.data()["image"];
@@ -115,7 +114,6 @@ export default {
 
   watch: {
     loginedUser: function() {
-      console.log(this.loginedUser);
       this.$forceUpdate();
     }
   },
@@ -144,8 +142,7 @@ export default {
           alert("Signed out.");
           router.push("/");
         })
-        .catch(function(e) {
-          console.log(e);
+        .catch(() => {
         });
     }
   }

@@ -89,10 +89,10 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth) {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        console.log('user is signed in.')
+  
         next()
       } else {
-        console.log('user is not signed in.')
+
         next({
           path: '/signin',
           query: {

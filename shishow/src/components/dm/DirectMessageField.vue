@@ -4,10 +4,12 @@
     :friendsDocID="leftAreaData"
     ></leftArea>
     <rightArea
+    ref="rightArea"
     :friendDocID="idFromLeftArea">
     </rightArea>
     <div class="inputArea">
       <inputArea
+      @scrollRightArea="callScroll()"
       :friendDocID="idFromLeftArea">
       </inputArea>
     </div>
@@ -25,7 +27,7 @@ import firebase from "../../plugin/firestore";
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
-import { functions } from 'firebase';
+
 
 let db = firebase.firestore();
 
@@ -59,6 +61,10 @@ export default {
       })
     },
 
+    callScroll: function() {
+      this.$refs.rightArea.chatScroll();
+    },
+
     loadFriendID: function() {
       friendsDocID = [];
 
@@ -69,7 +75,7 @@ export default {
         .then(friendsSnapshot => {
           friendsSnapshot.forEach(doc1 => {
             friendsDocID.push(doc1.id)
-            console.log("ID: " + friendsDocID)
+
           })
       })
     }

@@ -68,7 +68,7 @@ export default {
       this.$emit("extendNbanner");
 
       if (store.state.status) {
-        console.log(this.signuser["email"]);
+
         db.collection("USER")
           .doc(this.signuser.email)
           .collection("outgoing")
@@ -78,10 +78,9 @@ export default {
             email: this.user["email"]
           })
           .catch(e => {
-            console.log(e);
+
           });
-        console.log(this.user.email);
-        console.log(this.signuser.username);
+
 
         db.collection("USER")
           .doc(this.user.email)
@@ -92,7 +91,7 @@ export default {
             email: this.signuser["email"]
           })
           .catch(e => {
-            console.log(e);
+
           });
       }
     }

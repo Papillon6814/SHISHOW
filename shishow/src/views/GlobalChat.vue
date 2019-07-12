@@ -70,17 +70,17 @@ export default {
           });
         });
       });
-      console.log(this.elements);
+    
 
       this.Game = this.elements[0];
-      console.log("gameは"+this.Game);
+  
 
 
 
       
 
       
-      console.log(this.msgs);
+
     });
 
     
@@ -101,10 +101,10 @@ export default {
           this.msgs.push(docs.data()["msg"]);
         });
       });
-      console.log(this.msgs);
+    
     },
     kakunin(){
-      console.log(this.msgs);
+
     },
     submittxt(){
 

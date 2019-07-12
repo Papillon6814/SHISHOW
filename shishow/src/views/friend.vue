@@ -80,7 +80,7 @@ export default {
         },
         O(){
             this.IOF=1;
-            console.log(this.outgo.length);
+
         },
         F(){
           this.IOF=2

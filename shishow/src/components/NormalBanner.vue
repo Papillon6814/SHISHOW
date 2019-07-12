@@ -41,7 +41,6 @@ import "firebase/firestore";
 import "@firebase/auth";
 
 const db = firebase.firestore();
-const currentUser = firebase.auth().currentUser;
 
 export default {
   name: 'normalBanner',
@@ -70,7 +69,7 @@ export default {
     },
 
     callNormalExtend: function() {
-      console.log("extend");
+
 
       this.isA = !this.isA;
       this.isB = !this.isB;
@@ -81,7 +80,7 @@ export default {
     sendFriendReq: function() {
 
       if (store.state.status) {
-        console.log(this.signuser["email"]);
+
         db.collection("USER")
           .doc(this.signuser.email)
           .collection("outgoing")
@@ -90,11 +89,10 @@ export default {
             username: this.user["username"],
             email: this.user["email"]
           })
-          .catch(e => {
-            console.log(e);
+          .catch(() => {
+
           });
-        console.log(this.user.email);
-        console.log(this.signuser.username);
+
 
         db.collection("USER")
           .doc(this.user.email)
@@ -104,8 +102,8 @@ export default {
             username: this.signuser["username"],
             email: this.signuser["email"]
           })
-          .catch(e => {
-            console.log(e);
+          .catch(() => {
+
           });
 
         db.collection("USER").doc(this.user.email)
@@ -113,16 +111,16 @@ export default {
         .doc(this.signuser.email).set({
           relation:1,
         })
-        .catch(e =>{
-          console.log(e)
+        .catch(() =>{
+
         })
 
         db.collection("USER").doc(this.signuser.email)
         .collection("relation")
         .doc(this.user.email).set({
           relation:2,
-        }).catch(e =>{
-          console.log(e)
+        }).catch(() =>{
+
         })
 
         db.collection("USER").doc(this.user.email)
@@ -144,18 +142,18 @@ export default {
       const user_db = db.collection("USER").doc(this.user.email)
 
       user_db.collection("incoming").doc(this.signuser.email).delete()
-      .catch(e=>{console.log(e)});
+      .catch(() =>{});
 
       sign_db.collection("outgoing").doc(this.user.email).delete()
-      .catch(e=>{console.log(e)});
+      .catch(() =>{});
 
       db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).delete()
-      .catch(e =>{
-        console.log(e)
+      .catch(() =>{
+        
       })
       db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).delete()
-      .catch(e =>{
-        console.log(e)
+      .catch(() =>{
+        
       })
 
       user_db.collection("notice").doc(this.signuser.email).delete();
@@ -189,8 +187,8 @@ export default {
                    chatID: doc1.id
                  });
                })
-               .catch(e => {
-                 console.log(e)
+               .catch(() => {
+                 
                });
 
         user_db.collection("outgoing")
@@ -205,8 +203,8 @@ export default {
                           chatID: doc1.id
                         })
                })
-               .catch(e => {
-                 console.log(e)
+               .catch(() => {
+                 
                });
 
         db.collection("USER")
@@ -216,8 +214,8 @@ export default {
           .set({
             relation:3,
           })
-          .catch(e =>{
-            console.log(e)
+          .catch(() =>{
+            
           })
 
         db.collection("USER")
@@ -227,8 +225,8 @@ export default {
           .set({
             relation:3,
           })
-          .catch(e =>{
-            console.log(e)
+          .catch(() =>{
+            
           })
 
         user_db.collection("notice")

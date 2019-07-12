@@ -25,9 +25,8 @@ import store from '../../store'
 let db = firebase.firestore();
 
 let currentUserEmail;
-let lastMsg = [];
 let lastMsgDate = [];
-let usernames = [];
+
 
 export default {
   name: 'LeftArea',
@@ -50,7 +49,7 @@ export default {
 
   created: function() {
     this.onAuth();
-    console.log("leftarea created")
+
     currentUserEmail = firebase.auth().currentUser.email;
     this.loadLastMsgAndDate();
     // lastMsg = msg, lastMsgDate = date;
@@ -103,11 +102,11 @@ export default {
 
     click: function(friend) {
       this.$parent.idFromLeftArea = friend;
-      console.log("click");
+
     },
 
     toggleColor: function() {
-      console.log("toggleColor")
+
     }
   }
 }
