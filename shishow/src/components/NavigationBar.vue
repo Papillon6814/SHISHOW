@@ -37,19 +37,24 @@
         </router-link>
         <i class="fas fa-gamepad fa-3x game"></i>
         <router-link to="/notification">
-          <i class="fas fa-bell fa-3x bell"></i>
+        <i class="fas fa-bell fa-3x bell"></i>
         </router-link>
         <router-link to="/">
           <i class="fas fa-home fa-3x home"></i>
         </router-link>
       </div>
       <div class="header-logo-menu">
+
         <div id="nav-drawer">
+
           <input id="nav-input" type="checkbox" class="nav-unshown">
           <label id="nav-open" for="nav-input">
             <span></span>
+            <div class="notification" v-if="notice.length">{{notice.length}}</div>
           </label>
+
           <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+
           <div id="nav-content">
             <router-link to="/GlobalChat">
               <i class="fas fa-comment fa-3x grobal"></i>
@@ -59,7 +64,10 @@
             </router-link>
             <i class="fas fa-gamepad fa-3x game"></i>
             <router-link to="/notification">
-              <i class="fas fa-bell fa-3x bell"></i>
+            <div class="bell">
+              <span class="notification" v-if="notice.length">{{notice.length}}</span>
+              <i class="fas fa-bell fa-3x"></i>
+            </div>
             </router-link>
             <router-link to="/">
               <i class="fas fa-home fa-3x home"></i>
@@ -74,14 +82,24 @@
 
 <script>
 import store from "../store";
+import firebase from '../plugin/firestore'
+import 'firebase/firestore'
+
+const db = firebase.firestore();
 
 export default {
   name: "navi",
 
   data() {
     return {
-      word: ""
+      word: "",
+      notice:[]
     };
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
   },
 
   methods: {
@@ -92,7 +110,16 @@ export default {
     commitChange(newValue) {
       //this.$emit("input", newValue);
       store.commit("onSearchWordInput", newValue);
-    }
+    },
+
+  },
+
+  created:function(){
+    db.collection("USER").doc(this.user.email).collection("notice").get().then(doc=>{
+        this.notice = doc.docs
+    }).catch(()=>{
+      this.notice = [];
+    })
   }
 };
 </script>
@@ -306,6 +333,18 @@ export default {
       color: #fff;
     }
 
+    .notification{
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      right:20px;
+
+      color:white;
+      border-radius: 20%;
+      background-color: red;
+      z-index: 10;
+    }
+
     .home {
         position: absolute;
 
@@ -339,6 +378,10 @@ export default {
     }
 
     .bell:hover {
+      opacity: 0.5;
+    }
+
+    .notification:hover .bell{
       opacity: 0.5;
     }
 
