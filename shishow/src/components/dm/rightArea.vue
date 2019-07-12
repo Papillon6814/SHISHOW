@@ -111,7 +111,7 @@ export default {
   top: 0;
   right: 0;
 
-  width: 55%;
+  width: 60%;
   height: calc(100% - 50px);
 
   background-color: #fff;

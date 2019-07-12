@@ -28,7 +28,7 @@
     <div id="menuButtons">
       <div class="buttons">
         <router-link to="/GlobalChat">
-          <i class="fas fa-comment fa-3x grobal"></i>
+          <i class="fas fa-comment fa-3x global"></i>
         </router-link>
         <router-link to="/directMessage">
           <i class="fas fa-envelope fa-3x dm"></i>
@@ -53,7 +53,7 @@
 
           <div id="nav-content">
             <router-link to="/GlobalChat">
-              <i class="fas fa-comment fa-3x grobal"></i>
+              <i class="fas fa-comment fa-3x global"></i>
             </router-link>
             <router-link to="/directMessage">
               <i class="fas fa-envelope fa-3x dm"></i>
@@ -357,7 +357,7 @@ export default {
       color: #fff;
     }
 
-    .grobal {
+    .global {
       position: absolute;
 
       width: $button_width;
@@ -389,7 +389,7 @@ export default {
       opacity: 0.5;
     }
 
-    .grobal:hover {
+    .global:hover {
       opacity: 0.5;
     }
   }
@@ -422,7 +422,8 @@ export default {
     z-index: -1;
   }
 }
-@media (min-width: 1300px) {
+
+@media (min-width: 1050px) {
   #header {
     top: 0px;
   }
@@ -444,14 +445,16 @@ export default {
       -1px 1px 0 #000, 1px 1px 0 #000;
   }
 
-  
+
 }
 
-@media(min-width:1050px){
+/*
+@media(min-width: 1050px){
   #nav-open .notification{
     display: none;
   }
 }
+*/
 
 @media (max-width: 1050px) {
   #nav-drawer {
@@ -589,7 +592,7 @@ export default {
       top: 10px;
       color: #fff;
     }
-    .grobal {
+    .global {
       position: absolute;
       width: $button_width;
       height: $button_height;

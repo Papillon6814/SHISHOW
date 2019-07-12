@@ -24,7 +24,7 @@
     </div>
 
     <div class="globalDM">
-      
+
     </div>
 
 
@@ -136,11 +136,9 @@ export default {
     left: 0;
 
     height: 100%;
-    width: 45%;
+    width: 40%;
 
     background-color: $theme_color_dm;
-
-    z-index: 3;
 
     .switchTab {
       .private {
@@ -173,14 +171,24 @@ export default {
     .privateDM {
       position: absolute;
 
-      top: 160px;
-      left: 6%;
+      top: 90px;
 
       width: 100%;
       height: auto;
 
+      background-color: #b2ebf2;
+
       .dmbannerPosition{
+        position: absolute;
+
         $i: 1;
+
+        top: 70px;
+        left: 6%;
+
+        width: 100%;
+
+        background-color: #b2ebf2;
 
         @while $i <= 30{
           .b#{$i}{
