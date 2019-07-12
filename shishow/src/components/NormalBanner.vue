@@ -2,8 +2,9 @@
   <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'normalExtend': isB }">
     <span class="iconPicPosition">
       <img class="icon" :src="user['image']" />
+      <div class="iconCircle"></div>
     </span>
-    <div class="achievementPosition1">
+    <!-- <div class="achievementPosition1">
       <div class="achievement"></div>
     </div>
     <div class="achievementPosition2">
@@ -11,26 +12,20 @@
     </div>
     <div class="achievementPosition3">
       <div class="achievement"></div>
-    </div>
+    </div> -->
     <div class="usernamePosition">
-      <div class="username">{{ user.username }}</div>
+      <div class="username" align="left">{{ user.username }}</div>
     </div>
-    <div class="profilePosition">
-
+    <!-- <div class="profilePosition">
       <div class="profile">{{ user.bio }}</div>
     </div>
     <div class="userInfoPosition">
       <div class="userInfo">userinfo</div>
-    </div>
-    <div v-if="relation==0" @click="sendFriendReq" class="n_btn-circle-3d">江崎にフレ申請</div>
-    <div v-else-if="relation==1" @click="add_db" class="n_btn-circle-3d">承認</div>
-    <div v-else-if="relation==2" @click="delete_db" class="n_btn-circle-3d">削除</div>
-    <div v-else-if="relation==3"  class="n_btn-circle-3d">友達</div>
-    <div class="pullDownProperties"
-         @click="callNormalExtend"
-         v-bind:class="{ reverse:arrowUp }">
-      <i class="fas fa-caret-down"></i>
-    </div>
+    </div> -->
+    <div v-if="relation==0" @click="sendFriendReq" class="friendRequest_button">江崎にフレ申請</div>
+    <div v-else-if="relation==1" @click="add_db" class="friendRequest_button">承認</div>
+    <div v-else-if="relation==2" @click="delete_db" class="friendRequest_button">削除</div>
+    <div v-else-if="relation==3"  class="friendRequest_button">友達</div>
   </div>
 </template>
 
@@ -265,7 +260,7 @@ export default {
   width: $n_banner_width;
   height: $n_banner_height;
 
-  background-color: $n_banner_color;
+  background-color: white;
 
   border-radius: 3px;
 
@@ -297,7 +292,27 @@ export default {
   position: absolute;
 
   top: 15px;
-  left: 34.1611111px;
+  left: 20px;
+
+  .iconCircle{
+    position: relative;
+
+    top: 0px;
+    left: 6px;
+
+    width: $n_icon_width;
+    height: $n_icon_height;
+
+    display: inline-block;
+
+    background-color: #ccc;
+    color: #ccc;
+
+    line-height: 63px;
+    border-radius: 50%;
+
+    z-index: -1;
+  }
 }
 
 .achievement {
@@ -375,13 +390,16 @@ export default {
   height: $n_user_height;
 
   background-color: #fff;
+
+  font: "メイリオ";
+  font-size: 22px;
 }
 
 .usernamePosition {
   position: absolute;
 
-  top: 18px;
-  left: 172px;
+  top: 30px;
+  left: 140px;
   right: 0px;
 }
 
@@ -420,39 +438,29 @@ export default {
   right: 25px;
 }
 
-.n_btn-circle-3d {
-  position: relative;
+.friendRequest_button {
+  position: absolute;
 
-  top: 15px;
-  left: 39%;
-
-  width: 100px;
-  height: 60px;
+  top: 25px;
+  right: 5%;
 
   display: inline-block;
+  padding: 0.3em 1em;
   text-decoration: none;
-
-  background-color: #ffc107;
-  color: #fff;
-
-  line-height: 63px;
-  border-radius: 50%;
-  text-align: center;
-  font-weight: bold;
-  overflow: hidden;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-  border-bottom: solid 3px #ffb300;
-  transition: 0.4s;
+  color: #9aa5ef;
+  border: solid 2px #9aa5ef;
+  border-radius: 3px;
+  transition: .4s;
 
   cursor: pointer;
 }
 
-.n_btn-circle-3d:active {
-  -webkit-transform: translateY(2px);
-  transform: translateY(2px);
+.friendRequest_button:hover{
+  background: #9aa5ef;
+  color: white;
+}
 
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-  border-bottom: none;
+.friendRequest_button:active {
 }
 
 .reverse {
