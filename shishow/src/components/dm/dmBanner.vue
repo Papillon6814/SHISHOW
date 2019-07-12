@@ -29,23 +29,18 @@ export default {
 .dmBanner {
   display: block;
 
-  width: 100%;
+  width: 88%;
   height: 120px;
 
   background-color: $dm_banner_color;
-
-  border-bottom: solid;
-  border-width: 1px;
-  border-color: #444;
-    
 
   cursor: pointer;
 
   .dmBannerIcon {
     position: relative;
 
-      top: 15px;
-      left: 20px;
+    top: 15px;
+    left: 20px;
 
     width: $dm_icon_width;
     height: $dm_icon_width;

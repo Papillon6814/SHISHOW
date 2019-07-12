@@ -1,15 +1,33 @@
 <template>
   <div id="leftArea">
-    <div class="dmbannerPosition">
-      <div v-for="(friend, N) in friendsDocID" :key="N" v-bind:class="'b' + N">
-        <div @click="click(friend)">
-          <dmBanner
-            :dmBannerUsername="usernames[N]"
-            :dmMsg="lastMsg[N]">
-          </dmBanner>
+
+    <div class="switchTab">
+      <div class="private">
+        Private
+      </div>
+      <div class="global">
+        Global
+      </div>
+    </div>
+
+    <div class="privateDM">
+      <div class="dmbannerPosition">
+        <div v-for="(friend, N) in friendsDocID" :key="N" v-bind:class="'b' + N">
+          <div @click="click(friend)">
+            <dmBanner
+              :dmBannerUsername="usernames[N]"
+              :dmMsg="lastMsg[N]">
+            </dmBanner>
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="globalDM">
+      
+    </div>
+
+
   </div>
 </template>
 
@@ -27,7 +45,6 @@ let db = firebase.firestore();
 let currentUserEmail;
 let lastMsgDate = [];
 
-
 export default {
   name: 'LeftArea',
 
@@ -35,7 +52,8 @@ export default {
     return {
       friends: '',
       lastMsg: [],
-      usernames: []
+      usernames: [],
+      isPrivate: true
     }
   },
 
@@ -122,19 +140,60 @@ export default {
 
     background-color: $theme_color_dm;
 
-    border-right: solid;
-    border-width: 5px;
-    border-color: #666;
-
     z-index: 3;
 
-    .dmbannerPosition{
-      $i: 1;
-      @while $i <= 30{
-        .b#{$i}{
-        }
-        $i: $i + 1;
+    .switchTab {
+      .private {
+        position: absolute;
+
+        // TODO: note in a SCSS file
+        background: #b2ebf2;
+
+        width: 50%;
+        height: 90px;
+
+        cursor: pointer;
       }
+
+      .global {
+        position: absolute;
+
+        // TODO: color
+        background: #fff;
+
+        width: 50%;
+        height: 90px;
+
+        right: 0;
+
+        cursor: pointer;
+      }
+    }
+
+    .privateDM {
+      position: absolute;
+
+      top: 160px;
+      left: 6%;
+
+      width: 100%;
+      height: auto;
+
+      .dmbannerPosition{
+        $i: 1;
+
+        @while $i <= 30{
+          .b#{$i}{
+            position: absolute;
+
+            top: 140px * $i;
+
+            width: 100%;
+          }
+          $i: $i + 1;
+        }
+      }
+
     }
   }
 

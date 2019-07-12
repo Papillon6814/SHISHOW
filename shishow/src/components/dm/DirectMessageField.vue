@@ -105,11 +105,11 @@ export default {
   #directMessageField {
     position: absolute;
 
-    width: 90%;
-    height: 80%;
+    width: 100%;
+    height: calc(100% - 100px);
 
-    left: 5%;
-    bottom: 2vh;
+    top: 100px;
+
 
     overflow-y: hidden;
 
