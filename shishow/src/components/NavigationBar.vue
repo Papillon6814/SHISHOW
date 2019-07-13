@@ -2,11 +2,9 @@
   <div id="header">
     <div id="header2"></div>
     <div class="logoBack"></div>
-
     <div>
       <img class="logo" src="../assets/logoShishow.png" />
     </div>
-
     <div class="centered">
       <div class="group">
         <div id="get_data">
@@ -26,7 +24,6 @@
         </div>
       </div>
     </div>
-
     <div id="menuButtons">
       <div class="buttons">
         <router-link to="/directMessage">
@@ -40,7 +37,6 @@
           <i class="fas fa-home fa-3x home"></i>
         </router-link>
       </div>
-
       <div class="header-logo-menu">
         <div id="nav-drawer">
           <input id="nav-input" type="checkbox" class="nav-unshown" />
@@ -66,7 +62,6 @@
               <i class="fas fa-home fa-3x home"></i>
             </router-link>
           </div>
-
         </div>
       </div>
     </div>
@@ -293,7 +288,7 @@ export default {
     height: 100%;
     top: 18px;
 
-    right: 0;
+    left: 0;
 
     .dm {
       position: absolute;
@@ -533,6 +528,7 @@ export default {
     -webkit-transform: translateY(-1000px); //最初は上に隠す
     transform: translateY(-1000px);
     box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
+
     .dm {
       position: absolute;
       width: $button_width;
@@ -541,6 +537,7 @@ export default {
       top: 10px;
       color: #fff;
     }
+
     .game {
       position: absolute;
       width: $button_width;
@@ -549,6 +546,7 @@ export default {
       top: 10px;
       color: #fff;
     }
+
     .bell {
       position: absolute;
       width: $button_width;
@@ -557,6 +555,7 @@ export default {
       top: 10px;
       color: #fff;
     }
+
     .home {
       position: absolute;
       width: $button_width;
@@ -565,6 +564,7 @@ export default {
       top: 10px;
       color: #fff;
     }
+
     .global {
       position: absolute;
       width: $button_width;
