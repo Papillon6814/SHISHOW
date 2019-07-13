@@ -62,7 +62,12 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.e_mail, this.password)
-        .then(function() {
+        .then(function(req) {
+          req.user.getIdToken().then(token=>{
+            console.log(token.toString())
+          })
+
+
           alert("Signed in.");
           router.push("/");
         })

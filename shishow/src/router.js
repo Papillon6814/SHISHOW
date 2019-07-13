@@ -10,6 +10,7 @@ import DirectMessage from './views/DirectMessage.vue'
 import Follow from './views/Follow.vue'
 import Friend from './views/friend.vue'
 import GlobalChat from "./views/GlobalChat.vue"
+import Sample from "./test/sample.vue"
 
 import firebase from './plugin/firestore'
 import 'firebase/firestore'
@@ -41,7 +42,10 @@ let router = new Router({
     {
       path: '/notification',
       name: 'notification',
-      component: Notification
+      component: Notification,
+      meta: {
+        requiresAuth: true
+      }
     },
 
     {
@@ -81,6 +85,11 @@ let router = new Router({
       path: "/GlobalChat",
       name: 'GlobalChat',
       component: GlobalChat
+    },
+    {
+      path:"/sample",
+      name: "Sample",
+      component: Sample
     },
   ]
 })
