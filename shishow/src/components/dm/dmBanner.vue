@@ -1,13 +1,19 @@
 <template>
+
   <div class="dmBanner">
+    
     <div class="dmBannerIcon"></div>
     <div class="dmBannerName">
       {{ dmBannerUsername }}
+    </div>
+    <div class="dmTimeArea">
     </div>
     <div class="dmMsgArea">
       {{ dmMsg }}
     </div>
   </div>
+    
+
 </template>
 
 <script>
@@ -18,7 +24,7 @@ export default {
   props: [
     'dmBannerUsername',
     'dmMsg',
-    'iconPic'
+    'iconPic',
   ]
 }
 
@@ -75,14 +81,27 @@ export default {
       // font-family: 'Noto Sans JP', sans-serif;
     }
 
-  .dmMsgArea {
+  .dmTimeArea {
     position: relative;
 
       bottom: 70px;
+      left: 550px;
+
+      width: 25%;
+      height: 60px;
+
+    background-color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  
+  .dmMsgArea {
+    position: relative;
+
+      bottom: 120px;
       left: 150px;
 
       width: 50%;
-      height: 60px;
+      height: 50px;
 
     background-color: #fff;
     font-family: 'Noto Sans JP', sans-serif;
@@ -91,7 +110,6 @@ export default {
 
 .dmBanner:hover {
   background-color: $dm_banner_color_hover;
-
 }
 
 .dmBanner:hover > .dmBannerName{
@@ -102,6 +120,8 @@ export default {
   background-color: $dm_banner_color_hover;
 }
 
-
+.dmBanner:hover > .dmTimeArea{
+  background-color: $dm_banner_color_hover;
+}
 
 </style>

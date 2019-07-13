@@ -1,13 +1,14 @@
 <template>
   <div id="leftArea">
     <div class="dmbannerPosition">
-      <div v-for="(friend, N) in friendsDocID" :key="N" v-bind:class="'b' + N">
-        <div @click="click(friend)">
-          <dmBanner
-            :dmBannerUsername="usernames[N]"
-            :dmMsg="lastMsg[N]">
-          </dmBanner>
-        </div>
+      <div v-for="(friend, N) in friendsDocID" :key="N" v-bind:class="'b' + N" >
+        
+          <div @click="click(friend)" class="app" id="dm">
+            <dmBanner
+              :dmBannerUsername="usernames[N]"
+              :dmMsg="lastMsg[N]">
+            </dmBanner>
+          </div>
       </div>
     </div>
   </div>
@@ -21,6 +22,8 @@ import firebase from '../../plugin/firestore';
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
+  
+import draggable from 'vuedraggable';
 
 let db = firebase.firestore();
 
@@ -29,7 +32,9 @@ let lastMsg = [];
 let lastMsgDate = [];
 let usernames = [];
 
+  
 export default {
+  
   name: 'LeftArea',
 
   data() {
@@ -99,12 +104,14 @@ export default {
     click: function(friend) {
       this.$parent.idFromLeftArea = friend;
       console.log("click");
+      document.getElementById('dm').style.backgroundColor = 'skyblue';
     },
 
     toggleColor: function() {
       console.log("toggleColor")
     }
   }
+  
 }
 
 </script>

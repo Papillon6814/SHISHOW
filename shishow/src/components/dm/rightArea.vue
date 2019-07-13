@@ -23,8 +23,10 @@ import { types } from 'util';
 const db = firebase.firestore();
 let currentUserEmail;
 let chatID;
-
+/*var time = N.date.toDate().toLocaleString();*/
+  
 export default {
+  
   name: 'rightArea',
 
   data() {
