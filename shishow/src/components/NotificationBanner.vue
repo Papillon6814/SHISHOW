@@ -1,13 +1,13 @@
 <template>
   <div id = "notificationBanner">
     <div class="userinfo">
-      <i class = "fas fa-user human"></i>
+      <!-- <i class = "fas fa-user human"></i> -->
       <img class = "iconPic" :src="user.image">
       <span class="name">{{user.username}}</span>
     </div>
 
     <div class = "messageInfo">
-      <div class="message"> {{notice.msg}} </div>
+      <div class="message" align="left"> {{notice.msg}} </div>
       <div class="date"> {{notice.date.toDate().toLocaleString()}}</div>
     </div>
   </div>
@@ -33,7 +33,7 @@ export default {
     width: $not_banner_width;
     height: $not_banner_height;
 
-    background-color: #fff;
+    background-color: #ddd;
 
     border-bottom: solid;
     border-width: 1.2px;
@@ -43,25 +43,25 @@ export default {
     width: 100%;
   }
 
-  .human{
+  /*.human{
       position: absolute;
 
       top: 15px;
       left: 15px;
 
       font-size: 35px;
-  }
+  }*/
 
   .iconPic {
     position: absolute;
 
-    top: 10px;
-    left: 60px;
+    top: 20px;
+    left: 10px;
 
-    width: 50px;
-    height: 50px;
+    width: 90px;
+    height: 90px;
 
-    background-color: #fff;
+    background-color: #ddd;
   }
 
   .name{
@@ -70,18 +70,18 @@ export default {
     top: 23px;
     left: 120px;
 
-    font-size: 33px
+    font-size: 28px
   }
 
   .messageInfo{
     position: absolute;
 
-    width:90%;
+    width:85%;
     height:40%;
 
-    left:90px;
+    left:110px;
     bottom:10px;
-    background-color: #fff;
+    background-color: #ddd;
   }
 
   .message{
