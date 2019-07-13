@@ -3,6 +3,13 @@
     <leftArea
     :friendsDocID="leftAreaData"
     ></leftArea>
+    <div class="nameTagArea">
+      <div class="nameTag">
+        {{ this.usernameFromLeftArea }}
+      </div>
+      <div class="nameBorder">
+      </div>
+    </div>
     <rightArea
     ref="rightArea"
     :friendDocID="idFromLeftArea">
@@ -28,7 +35,6 @@ import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
 
-
 let db = firebase.firestore();
 
 let currentUser;
@@ -43,6 +49,7 @@ export default {
       leftAreaData: [],
       inputAreaData: '',
       idFromLeftArea: '',
+      usernameFromLeftArea: ''
     }
   },
 
@@ -50,6 +57,26 @@ export default {
     leftArea,
     rightArea,
     inputArea,
+  },
+
+  watch: {
+    idFromLeftArea: function(newval) {
+      db.collection("USER")
+        .doc(currentUser.email)
+        .collection("friends")
+        .doc(newval)
+        .get()
+        .then(doc1 => {
+
+          db.collection("USER")
+            .doc(doc1.data().email)
+            .get()
+            .then(doc2 => {
+              this.usernameFromLeftArea = doc2.data().username;
+            })
+
+        })
+    }
   },
 
   methods: {
@@ -76,7 +103,6 @@ export default {
         .then(friendsSnapshot => {
           friendsSnapshot.forEach(doc1 => {
             friendsDocID.push(doc1.id)
-
           })
       })
     }
@@ -110,18 +136,61 @@ export default {
 
     top: 100px;
 
-
     overflow-y: hidden;
 
-    //下部に表示する
+    // rightAreaの上の方に表示
+    .nameTagArea {
+      position: fixed;
+
+      top: 100px;
+      right: 17px;
+
+      width: calc(60% - 17px);
+      height: 160px;
+
+      background: linear-gradient(to top,
+                  rgba(255,255,255,0.1), #fff, #fff);
+
+      z-index: 3;
+
+      .nameTag {
+        position: absolute;
+
+        top: 30px;
+        left: 10%;
+
+        width: 50%;
+        height: 35px;
+
+        background-color: rgba(0, 0, 0, 0);
+
+        font-size: 20px;
+        text-align: left;
+      }
+
+      .nameBorder {
+        position: absolute;
+
+        top: 75px;
+        left: 10%;
+
+        width: 85%;
+        height: 0;
+
+        border-bottom: solid;
+        border-color: #eee;
+      }
+    }
+
+    // 下部に表示する
     .inputArea {
       position: fixed;
 
-      width: calc(49.5% - 5px);
+      width: 60%;
       height: 50px;
 
-      left: calc(45.5% + 5px);
-      bottom: 2vh;
+      right: 0;
+      bottom: 45px;
 
       z-index: 3;
     }

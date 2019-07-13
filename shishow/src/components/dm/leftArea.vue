@@ -12,7 +12,8 @@
 
     <div class="privateDM">
       <div class="dmbannerPosition">
-        <div v-for="(friend, N) in friendsDocID" :key="N" v-bind:class="'b' + N">
+        <div v-for="(friend, N) in friendsDocID"
+             :key="N" v-bind:class="'b' + N">
           <div @click="click(friend)">
             <dmBanner
               :dmBannerUsername="usernames[N]"
@@ -26,8 +27,6 @@
     <div class="globalDM">
 
     </div>
-
-
   </div>
 </template>
 
@@ -97,7 +96,7 @@ export default {
             db.collection("PrivateChat")
               .doc(currentUserEmail + doc1.id)
               .collection('contents')
-              .orderBy('date', 'desc')
+              .orderBy('date')
               .limit(1)
               .get()
               .then(contentsSnapshot => {
@@ -112,13 +111,12 @@ export default {
 
     click: function(friend) {
       this.$parent.idFromLeftArea = friend;
-
     },
   },
 
   created: function() {
     this.onAuth();
-    console.log("leftarea created")
+    console.log("leftarea created");
     currentUserEmail = firebase.auth().currentUser.email;
     this.loadLastMsgAndDate();
   },
@@ -138,7 +136,7 @@ export default {
     height: 100%;
     width: 40%;
 
-    background-color: $theme_color_dm;
+    background-color: #b2ebf2;
 
     .switchTab {
       .private {
@@ -149,6 +147,8 @@ export default {
 
         width: 50%;
         height: 90px;
+
+        font-size: 40px;
 
         cursor: pointer;
       }
@@ -172,11 +172,10 @@ export default {
       position: absolute;
 
       top: 90px;
+      left: 0;
 
       width: 100%;
       height: auto;
-
-      background-color: #b2ebf2;
 
       .dmbannerPosition{
         position: absolute;
@@ -187,8 +186,6 @@ export default {
         left: 6%;
 
         width: 100%;
-
-        background-color: #b2ebf2;
 
         @while $i <= 30{
           .b#{$i}{
@@ -201,7 +198,10 @@ export default {
           $i: $i + 1;
         }
       }
+    }
 
+    .globalDM {
+      display: none;
     }
   }
 
