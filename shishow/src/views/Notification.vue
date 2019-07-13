@@ -24,7 +24,6 @@
 <script>
 import navi from '../components/NavigationBar.vue'
 import notificationBanner from '../components/NotificationBanner.vue'
-import store from "../store";
 import firebase from '../plugin/firestore'
 import 'firebase/firestore'
 
@@ -58,6 +57,7 @@ export default {
         db.collection("USER").doc(docu.id).get().then(doc=>{
           this.users.push(doc.data());
         })
+        db.collection("USER").doc(this.user.email).collection("notice").doc(docu.id).delete();
       })
     })
 

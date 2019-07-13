@@ -3,19 +3,17 @@
     <navi @search="filterUser"></navi>
     <div class="searchBannerPosition">
       <div v-for="N in searchResults.length" :key="N" v-bind:class="'n'+N">
-        <normalBanner :user="searchResults[N-1]">
-        </normalBanner>
+        <normalBanner :user="searchResults[N-1]"></normalBanner>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import firebase, { functions } from "firebase";
+import firebase from "firebase";
 import navi from "../components/NavigationBar.vue";
 import normalBanner from "../components/NormalBanner";
-import store from "../store";
-import inputArea from "../components/dm/InputArea";
+
 
 const db = firebase.firestore();
 
@@ -25,7 +23,6 @@ export default {
   components: {
     navi,
     normalBanner,
-    inputArea
   },
 
   data: function() {
@@ -43,7 +40,6 @@ export default {
         this.users = doc.docs;
         doc.forEach(docs => {
           this.filteredUser.push(docs.data());
-          console.log(docs.data());
         });
         this.filterUser(/*word = */ this.getSearchWordFromStore);
       });
@@ -57,8 +53,7 @@ export default {
 
   methods: {
     filterUser(word) {
-      let data = [];
-      let results = [];
+
       let users_i;
       let index = 0;
       if (word) {
@@ -66,10 +61,10 @@ export default {
           //ユーザーネームの走査
           if (this.users[users_i].data().username.indexOf(word) !== -1) {
             this.$set(this.searchResults, index, {
-              username: this.users[index].data().username,
-              bio: this.users[index].data().bio,
-              email: this.users[index].data().email,
-              image: this.users[index].data().image
+              username: this.users[users_i].data().username,
+              bio: this.users[users_i].data().bio,
+              email: this.users[users_i].data().email,
+              image: this.users[users_i].data().image
             });
             index++;
           }
@@ -82,6 +77,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+
 html {
   overflow-x: hidden;
   overflow-y: scroll;
@@ -103,7 +99,6 @@ html {
 
   list-style: none;
   @while $i <= 30 {
-
     $temporary_top: (200px * $i) !global;
 
     .n#{$i} {
@@ -121,4 +116,5 @@ html {
     $i: $i + 1;
   }
 }
+
 </style>

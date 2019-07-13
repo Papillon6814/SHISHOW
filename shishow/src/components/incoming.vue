@@ -33,7 +33,7 @@
         テニス、スキー、スノーボード、ゴルフ、
       </div>
     </div>
-    <div class="n_btn-circle-3d" @click="doExtend">許可</div>
+    <div class="n_btn-circle-3d" @click="accept">許可</div>
     <span  id="pullDownProperties">
      <i class="fas fa-caret-down"></i>
     </span>
@@ -56,7 +56,7 @@ export default {
   ],
 
   methods: {
-    doExtend: function() {
+    accept: function() {
 
       // 自分のドキュメント
       const sign_db = db.collection("USER")
@@ -64,6 +64,8 @@ export default {
       // 相手のドキュメント
       const user_db = db.collection("USER")
                         .doc(this.user.email);
+
+      let now = new Date();
 
       db.collection("PrivateChat")
              .add({
@@ -82,7 +84,8 @@ export default {
                                      .set({
                                        username: this.user.username,
                                        email: this.user.email,
-                                       chatID: doc1.id
+                                       chatID: doc1.id,
+                                       lastChatDate: now
                                      });
 
                               sign_db.collection("incoming")
@@ -100,8 +103,8 @@ export default {
                                      }).catch(()=>{
                                        this.$parent.fri = "";
                                      })
-                            }).catch(e => {
-                              console.log(e)
+                            }).catch(() => {
+                              
                             });
 
                   user_db.collection("outgoing")
@@ -114,11 +117,12 @@ export default {
                                   .set({
                                     username: this.signuser.username,
                                     email: this.signuser.email,
-                                    chatID: doc1.id
+                                    chatID: doc1.id,
+                                    lastChatDate: now
                                   })
                          })
-                         .catch(e => {
-                           console.log(e)
+                         .catch(() => {
+                           
                          });
 
                   db.collection("USER")
@@ -128,8 +132,8 @@ export default {
                     .set({
                       relation:3,
                     })
-                    .catch(e =>{
-                      console.log(e)
+                    .catch(() =>{
+                      
                     })
 
                   db.collection("USER")
@@ -138,20 +142,20 @@ export default {
                     .doc(this.user.email)
                     .set({
                       relation:3,
-                    }).catch(e =>{
-                      console.log(e)
+                    }).catch(() =>{
+                      
                     })
 
                   db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).set({
                     relation:3,
                   })
-                  .catch(e =>{
-                    console.log(e)
+                  .catch(() =>{
+                    
                   })
                   db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).set({
                     relation:3,
-                  }).catch(e =>{
-                    console.log(e)
+                  }).catch(() =>{
+                    
                   })
 
                   user_db.collection("notice")
@@ -172,8 +176,8 @@ export default {
                             }
                           })
               })
-              .catch(e => {
-                console.log(e)
+              .catch(() => {
+                
               });
     }
   }
