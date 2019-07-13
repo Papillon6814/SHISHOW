@@ -74,7 +74,6 @@ import Cropper from "cropperjs";
 import router from "../router"
 
 const db = firebase.firestore();
-let files;
 
 //使用するオリジナルの関数を定義
 export default {
@@ -88,15 +87,19 @@ export default {
       password: "",
       p_confirm: "",
       uploadedImage: "",
-      roundimg:""
+      roundimg:"",
+      modal: "",
     };
+  },
+  mounted:function(){
+    this.modal = document.getElementById("modal");
   },
 
   methods: {
     signUp: function() {
       let url;
 
-      if(!this.uploadedImage){
+      if(!this.roundimg){
         db.collection("Image")
         .doc("SampleImage")
         .get()
@@ -117,7 +120,7 @@ export default {
           firebase
             .auth()
             .createUserWithEmailAndPassword(this.email, this.password)
-            .then(user => {
+            .then(() => {
               var User = firebase.auth().currentUser;
               var email;
               User.updateProfile({
@@ -126,13 +129,22 @@ export default {
                 //変数に情報を格納
                 email = User.email;
                 alert("Create account: " + email);
-                if (!this.roundimg) this.roungimg = url;
+  
+                if (!this.roundimg) {
+                  
+       
+                  this.roundimg = url;
+     
+
+                }
+                
                 this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
                 router.push("/")
               });
             })
             .catch(error => {
               alert(error.message);
+
             });
           }
       }
@@ -149,15 +161,6 @@ export default {
             bio: 'No bio'
         })
 
-        doc.collection("USER")
-           .doc(""+email)
-           .collection('notification')
-           .add({
-             kind: '',
-             who: '',
-             date: '',
-             icon: ''
-           })
     },
 
     onFileChange(event) {
@@ -165,8 +168,6 @@ export default {
       let files = event.target.files || event.dataTransfer.files;
       if (files[0].type.match(/image/)) {
         this.showImage(files[0]);
-      } else {
-        console.log("This is not image");
       }
     },
 
@@ -182,14 +183,14 @@ export default {
         window.setTimeout(place.crop, 1);
       };
       //読み込み開始
-      console.log(typeof modal);
-      modal.style.display = "block";
+
+      this.modal.style.display = "block";
       reader.readAsDataURL(file);
     },
 
     errorIndication() {
       if (!this.email) {
-        if (!this.email) console.log("there is not email");
+    
         return true;
       }
       return false;
@@ -212,12 +213,12 @@ export default {
           croppable = true;
         }
       });
-      close.onclick = function() {
-        modal.style.display = "none";
+      close.onclick = ()=> {
+        this.modal.style.display = "none";
         cropper.destroy();
         this.uploadedImage = "";
       };
-      button.onclick = function() {
+      button.onclick = ()=> {
         var croppedCanvas;
         var roundedImage;
 
@@ -271,7 +272,7 @@ export default {
           del.parentNode.removeChild(del);
         }
         cropper.destroy();
-        modal.style.display = "none";
+        this.modal.style.display = "none";
         root.uploadedImage = "";
         result.appendChild(roundedImage);
       };

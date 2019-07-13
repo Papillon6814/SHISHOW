@@ -2,10 +2,16 @@
   <div class="rightArea">
     {{ friendDocID }}
     <div v-for="N in msgList" v-bind:key="N">
-      <div class="chatBalloon">
+      <div v-show="isMine(N)" class="myChatBalloon">
         {{ N.msg }}
       </div>
-      <div class="datePosition">
+      <div v-show="isHis(N)" class="hisChatBalloon">
+        {{ N.msg }}
+      </div>
+      <div v-show="isMine(N)" class="myDatePosition">
+        {{ N.date.toDate().toLocaleString() }}
+      </div>
+      <div v-show="isHis(N)" class="hisDatePosition">
         {{ N.date.toDate().toLocaleString() }}
       </div>
     </div>
@@ -17,8 +23,6 @@ import firebase from "../../plugin/firestore";
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
-import { type } from 'os';
-import { types } from 'util';
 
 const db = firebase.firestore();
 let currentUserEmail;
@@ -31,7 +35,7 @@ export default {
 
   data() {
     return {
-      msgList: []
+      msgList: [],
     }
   },
 
@@ -46,6 +50,20 @@ export default {
         store.commit('onAuthStateChanged', user);
         store.commit('onUserStatusChanged', user.uid ? true : false);
       })
+    },
+
+    isMine: function(msg) {
+
+      return (msg.sender == currentUserEmail);
+    },
+
+    isHis: function(msg) {
+      return (msg.sender != currentUserEmail);
+    },
+
+    chatScroll: function() {
+      let scrollArea = document.getElementsByClassName('rightArea');
+      scrollArea[0].scrollBy(0, 300000000);
     }
   },
 
@@ -61,7 +79,7 @@ export default {
         .get()
         .then(doc1 => {
           chatID = doc1.data()['chatID'];
-          console.log('chatID: '+chatID);
+
 
           db.collection("PrivateChat")
             .doc(chatID)
@@ -73,8 +91,6 @@ export default {
               querySnapshot.forEach(doc2 => {
                 this.msgList.push(doc2.data());
               })
-
-              window.scrollBy(0, 1000);
             })
         })
     }
@@ -82,11 +98,12 @@ export default {
 
   created: function() {
     this.onAuth();
-    console.log("rightArea created");
+
 
     currentUserEmail = firebase.auth().currentUser.email;
   }
 };
+
 </script>
 
 <style lang='scss' scoped>
@@ -105,7 +122,7 @@ export default {
   overflow-x: hidden;
 }
 
-.chatBalloon {
+.myChatBalloon {
   position: relative;
   display: inline-block;
 
@@ -130,10 +147,42 @@ export default {
   font-family: 'Noto Sans JP', sans-serif;
 }
 
-.datePosition {
+.hisChatBalloon {
+  position: relative;
+  display: inline-block;
+
+  border-radius: 20px;
+
+  border: solid 1px #bbb;/*線*/
+  border-radius: 20px;/*角の丸み*/
+
+  right: 38%;
+
+  margin: 1.5em 15px 1.5em 0;
+  padding: 7px 10px;
+
+  min-width: 125px;
+  max-width: 100%;
+
+  color: $main_text_color;
+  font-size: 16px;
+  background: #FFF;
+
+  text-align: right;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.myDatePosition {
   position: relative;
 
   left: 40%;
+  font-size: 13px;
+}
+
+.hisDatePosition {
+  position: relative;
+
+  right: 40%;
   font-size: 13px;
 }
 

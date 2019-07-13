@@ -2,7 +2,7 @@
   <div id="leftArea">
     <div class="dmbannerPosition">
       <div v-for="(friend, N) in friendsDocID" :key="N" v-bind:class="'b' + N" >
-        
+
           <div @click="click(friend)" class="app" id="dm">
             <dmBanner
               :dmBannerUsername="usernames[N]"
@@ -22,19 +22,18 @@ import firebase from '../../plugin/firestore';
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
-  
+
 import draggable from 'vuedraggable';
 
 let db = firebase.firestore();
 
 let currentUserEmail;
-let lastMsg = [];
 let lastMsgDate = [];
-let usernames = [];
 
-  
+
+
 export default {
-  
+
   name: 'LeftArea',
 
   data() {
@@ -53,14 +52,6 @@ export default {
     dmBanner
   },
 
-  created: function() {
-    this.onAuth();
-    console.log("leftarea created")
-    currentUserEmail = firebase.auth().currentUser.email;
-    this.loadLastMsgAndDate();
-    // lastMsg = msg, lastMsgDate = date;
-  },
-
   methods: {
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
@@ -76,14 +67,19 @@ export default {
       db.collection("USER")
         .doc(currentUserEmail)
         .collection('friends')
+        .orderBy('lastChatDate', 'desc')
         .get()
         .then(friendsSnapshot => {
 
           friendsSnapshot.forEach(doc1 => {
             // doc1にはフレンドのメールアドレスが格納されている
 
-            this.usernames.push(doc1.data().username)
-            console.log(usernames)
+            db.collection("USER")
+              .doc(doc1.data().email)
+              .get()
+              .then(doc2 => {
+                this.usernames.push(doc2.data().username);
+              });
 
             db.collection("PrivateChat")
               .doc(currentUserEmail + doc1.id)
@@ -103,15 +99,16 @@ export default {
 
     click: function(friend) {
       this.$parent.idFromLeftArea = friend;
-      console.log("click");
-      document.getElementById('dm').style.backgroundColor = 'skyblue';
-    },
 
-    toggleColor: function() {
-      console.log("toggleColor")
-    }
-  }
-  
+    },
+  },
+
+  created: function() {
+    this.onAuth();
+    console.log("leftarea created")
+    currentUserEmail = firebase.auth().currentUser.email;
+    this.loadLastMsgAndDate();
+  },
 }
 
 </script>
