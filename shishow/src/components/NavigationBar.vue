@@ -24,12 +24,8 @@
         </div>
       </div>
     </div>
-    <div class="logoSentence">SHISHOW</div>
     <div id="menuButtons">
       <div class="buttons">
-        <router-link to="/GlobalChat">
-          <i class="fas fa-comment fa-3x grobal"></i>
-        </router-link>
         <router-link to="/directMessage">
           <i class="fas fa-envelope fa-3x dm"></i>
         </router-link>
@@ -52,9 +48,6 @@
           <label class="nav-unshown" id="nav-close" for="nav-input"></label>
 
           <div id="nav-content">
-            <router-link to="/GlobalChat">
-              <i class="fas fa-comment fa-3x grobal"></i>
-            </router-link>
             <router-link to="/directMessage">
               <i class="fas fa-envelope fa-3x dm"></i>
             </router-link>
@@ -72,7 +65,6 @@
         </div>
       </div>
     </div>
-    <div class="logoSentence2">SHISHOW</div>
   </div>
 </template>
 
@@ -158,7 +150,7 @@ export default {
     position: absolute;
 
     top: 13px;
-    left: 100px;
+    right: 100px;
 
     .group {
       position: relative;
@@ -272,8 +264,9 @@ export default {
     height: $button_height;
 
     top: 10px;
-    left: 10px;
+    left: 50%;
 
+    transform: translate(-50%, 0);
     z-index: 10;
   }
 
@@ -295,7 +288,7 @@ export default {
     height: 100%;
     top: 18px;
 
-    right: 0;
+    left: 0;
 
     .dm {
       position: absolute;
@@ -303,7 +296,7 @@ export default {
       width: $button_width;
       height: $button_height;
 
-      right: 50px;
+      left: 50px;
       top: 10px;
 
       color: #fff;
@@ -315,7 +308,7 @@ export default {
       width: $button_width;
       height: $button_height;
 
-      right: 150px;
+      left: 150px;
       top: 10px;
 
       color: #fff;
@@ -327,7 +320,7 @@ export default {
       width: $button_width;
       height: $button_height;
 
-      right: 250px;
+      left: 250px;
       top: 10px;
 
       color: #fff;
@@ -337,9 +330,10 @@ export default {
       position: absolute;
       height: 20px;
       width: 20px;
-      right: 20px;
+      left: 20px;
 
       color: white;
+
       border-radius: 20%;
       background-color: red;
       z-index: 10;
@@ -351,23 +345,12 @@ export default {
       width: $button_width;
       height: $button_height;
 
-      right: 450px;
+      left: 350px;
       top: 10px;
 
       color: #fff;
     }
 
-    .grobal {
-      position: absolute;
-
-      width: $button_width;
-      height: $button_height;
-
-      right: 350px;
-      top: 10px;
-
-      color: #fff;
-    }
 
     .dm:hover {
       opacity: 0.5;
@@ -389,40 +372,28 @@ export default {
       opacity: 0.5;
     }
 
-    .grobal:hover {
+    .global:hover {
       opacity: 0.5;
     }
   }
+
   .nav-unshown {
     display: none;
   }
+
   .buttons {
     display: none;
   }
-  .logoSentence {
-    position: absolute;
 
-    font-family: "Pangolin", cursive;
-    top: -85px;
-    font-size: 60px;
-
-    left: 50%;
-    transform: translate(-50%, 0);
-    -webkit-transform: translate(-50%, 0);
-
-    color: $logo_sentence_color;
-
-    text-shadow: 2px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
-      -1px 1px 0 #000, 1px 1px 0 #000;
-    z-index: 999;
-  }
   .logoSentence2 {
     position: absolute;
     top: 20px;
     z-index: -1;
   }
 }
-@media (min-width: 1300px) {
+
+// デバッグのために一時的に変えてます
+@media (min-width: 1050px) {
   #header {
     top: 0px;
   }
@@ -444,14 +415,16 @@ export default {
       -1px 1px 0 #000, 1px 1px 0 #000;
   }
 
-  
+
 }
 
-@media(min-width:1050px){
+/*
+@media(min-width: 1050px){
   #nav-open .notification{
     display: none;
   }
 }
+*/
 
 @media (max-width: 1050px) {
   #nav-drawer {
@@ -557,6 +530,7 @@ export default {
     -webkit-transform: translateY(-1000px); //最初は上に隠す
     transform: translateY(-1000px);
     box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
+
     .dm {
       position: absolute;
       width: $button_width;
@@ -565,6 +539,7 @@ export default {
       top: 10px;
       color: #fff;
     }
+
     .game {
       position: absolute;
       width: $button_width;
@@ -573,6 +548,7 @@ export default {
       top: 10px;
       color: #fff;
     }
+
     .bell {
       position: absolute;
       width: $button_width;
@@ -581,6 +557,7 @@ export default {
       top: 10px;
       color: #fff;
     }
+
     .home {
       position: absolute;
       width: $button_width;
@@ -589,7 +566,8 @@ export default {
       top: 10px;
       color: #fff;
     }
-    .grobal {
+
+    .global {
       position: absolute;
       width: $button_width;
       height: $button_height;
@@ -610,68 +588,5 @@ export default {
     transform: translateY(200px);
     box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
   }
-
-  /*#nav-input:checked ~ #nav-open {
-    .menu-trigger.active span:nth-of-type(1) {
-      -webkit-transform: translateY(20px) rotate(-45deg);
-      transform: translateY(20px) rotate(-45deg);
-    }
-    .menu-trigger.active span:nth-of-type(2) {
-      opacity: 0;
-    }
-    .menu-trigger.active span:nth-of-type(3) {
-      -webkit-transform: translateY(-20px) rotate(45deg);
-      transform: translateY(-20px) rotate(45deg);
-    }
-  }*/
-
-  /*.header-logo-menu {
-    //以下コピペにつき，意味が分からない CSSって何なのですか
-    display: flex;
-    display: -moz-flex;
-    display: -o-flex;
-    display: -webkit-flex;
-    display: -ms-flex;
-    flex-direction: row;
-    -moz-flex-direction: row;
-    -o-flex-direction: row;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-  }*/
-  /*.menu-trigger,
-  .menu-trigger span {
-    display: inline-block;
-    transition: all .4s;
-    box-sizing: border-box;
-  }
-  .menu-trigger {
-    position: relative;
-    width: 50px;
-    height: 44px;
-  }
-
-  .header-logo-menu{ //以下コピペにつき，意味が分からない CSSって何なのですか
-    display: flex;
-    display: -moz-flex;
-    display: -o-flex;
-    display: -webkit-flex;
-    display: -ms-flex;
-    flex-direction: row;
-    -moz-flex-direction: row;
-    -o-flex-direction: row;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-  }
-  .menu-trigger.active span:nth-of-type(1) {
-    -webkit-transform: translateY(20px) rotate(-45deg);
-    transform: translateY(20px) rotate(-45deg);
-  }
-  .menu-trigger.active span:nth-of-type(2) {
-    opacity: 0;
-  }
-  .menu-trigger.active span:nth-of-type(3) {
-    -webkit-transform: translateY(-20px) rotate(45deg);
-    transform: translateY(-20px) rotate(45deg);
-  }*/
 }
 </style>

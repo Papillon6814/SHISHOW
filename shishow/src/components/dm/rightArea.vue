@@ -1,5 +1,6 @@
 <template>
   <div class="rightArea">
+    <div class="nameSpace"></div>
     {{ friendDocID }}
     <div v-for="N in msgList" v-bind:key="N">
       <div v-show="isMine(N)" class="myChatBalloon">
@@ -15,6 +16,7 @@
         {{ N.date.toDate().toLocaleString() }}
       </div>
     </div>
+    <div class="scrollSpace"></div>
   </div>
 </template>
 
@@ -111,8 +113,8 @@ export default {
   top: 0;
   right: 0;
 
-  width: 55%;
-  height: calc(100% - 50px);
+  width: 60%;
+  height: 100%;
 
   background-color: #fff;
 
@@ -184,6 +186,18 @@ export default {
   font-size: 13px;
 }
 
+.scrollSpace {
+  position: relative;
 
+  height: 120px;
+  width: 100%;
+}
+
+.nameSpace {
+  position: relative;
+
+  height: 160px;
+  width: 100%;
+}
 
 </style>

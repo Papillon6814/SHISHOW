@@ -1,9 +1,5 @@
 <template>
   <div id="inputBar">
-    <div class="border"></div>
-    <div class="smileEmojiPlace">
-      <i class="fas fa-smile"></i>
-    </div>
     <input v-model="msg" type="text" class="inputText" @keydown.enter="sendMsg" />
     <div class="checkEmojiPlace">
       <i class="fas fa-check" @click="sendMsg"></i>
@@ -65,6 +61,14 @@ export default {
             sender: currentUser.email
           })
           .then(() => {
+            db.collection("USER")
+              .doc(currentUser.email)
+              .collection("friends")
+              .doc(this.friendDocID)
+              .update({
+                lastChatDate: now
+              })
+
             this.$emit('scrollRightArea');
           })
 
@@ -80,44 +84,30 @@ export default {
   width: 100%;
   height: 100%;
 
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0);
 
-  .smileEmojiPlace {
-    position: absolute;
-
-    left: 3%;
-    top: 3px;
-
-    font-size: 40px;
-  }
 
   .inputText {
     position: absolute;
 
-    left: calc(3% + 40px + 3%);
+    left: 6%;
     top: 7px;
 
-    width: calc(88% - 80px);
-    height: 30px;
+    width: calc(84% - 40px);
+    height: 50px;
+
+    font-size: 30px;
   }
 
   .checkEmojiPlace {
     position: absolute;
 
-    right: 3%;
+    right: 5%;
     top: 3px;
 
-    font-size: 40px;
-  }
-}
+    font-size: 50px;
 
-.border {
-  position: relative;
-  bottom: 1px;
-  border-top: solid 1px;
-  border-radius: 3px;
-  color: #aaa;
-  width: 100%;
-  margin: 0px auto;
+    cursor: pointer;
+  }
 }
 </style>

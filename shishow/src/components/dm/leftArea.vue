@@ -1,14 +1,31 @@
 <template>
   <div id="leftArea">
-    <div class="dmbannerPosition">
-      <div v-for="(friend, N) in friendsDocID" :key="N" v-bind:class="'b' + N">
-        <div @click="click(friend)">
-          <dmBanner
-            :dmBannerUsername="usernames[N]"
-            :dmMsg="lastMsg[N]">
-          </dmBanner>
+
+    <div class="switchTab">
+      <div class="private">
+        Private
+      </div>
+      <div class="global">
+        Global
+      </div>
+    </div>
+
+    <div class="privateDM">
+      <div class="dmbannerPosition">
+        <div v-for="(friend, N) in friendsDocID"
+             :key="N" v-bind:class="'b' + N">
+          <div @click="click(friend)">
+            <dmBanner
+              :dmBannerUsername="usernames[N]"
+              :dmMsg="lastMsg[N]">
+            </dmBanner>
+          </div>
         </div>
       </div>
+    </div>
+
+    <div class="globalDM">
+
     </div>
   </div>
 </template>
@@ -27,7 +44,6 @@ let db = firebase.firestore();
 let currentUserEmail;
 let lastMsgDate = [];
 
-
 export default {
   name: 'LeftArea',
 
@@ -35,7 +51,8 @@ export default {
     return {
       friends: '',
       lastMsg: [],
-      usernames: []
+      usernames: [],
+      isPrivate: true
     }
   },
 
@@ -45,14 +62,6 @@ export default {
 
   components: {
     dmBanner
-  },
-
-  created: function() {
-    this.onAuth();
-
-    currentUserEmail = firebase.auth().currentUser.email;
-    this.loadLastMsgAndDate();
-    // lastMsg = msg, lastMsgDate = date;
   },
 
   methods: {
@@ -70,6 +79,7 @@ export default {
       db.collection("USER")
         .doc(currentUserEmail)
         .collection('friends')
+        .orderBy('lastChatDate', 'desc')
         .get()
         .then(friendsSnapshot => {
 
@@ -83,11 +93,10 @@ export default {
                 this.usernames.push(doc2.data().username);
               });
 
-
             db.collection("PrivateChat")
               .doc(currentUserEmail + doc1.id)
               .collection('contents')
-              .orderBy('date', 'desc')
+              .orderBy('date')
               .limit(1)
               .get()
               .then(contentsSnapshot => {
@@ -102,13 +111,15 @@ export default {
 
     click: function(friend) {
       this.$parent.idFromLeftArea = friend;
-
     },
+  },
 
-    toggleColor: function() {
-
-    }
-  }
+  created: function() {
+    this.onAuth();
+    console.log("leftarea created");
+    currentUserEmail = firebase.auth().currentUser.email;
+    this.loadLastMsgAndDate();
+  },
 }
 
 </script>
@@ -123,23 +134,74 @@ export default {
     left: 0;
 
     height: 100%;
-    width: 45%;
+    width: 40%;
 
-    background-color: $theme_color_dm;
+    background-color: #b2ebf2;
 
-    border-right: solid;
-    border-width: 5px;
-    border-color: #666;
+    .switchTab {
+      .private {
+        position: absolute;
 
-    z-index: 3;
+        // TODO: note in a SCSS file
+        background: #b2ebf2;
 
-    .dmbannerPosition{
-      $i: 1;
-      @while $i <= 30{
-        .b#{$i}{
-        }
-        $i: $i + 1;
+        width: 50%;
+        height: 90px;
+
+        font-size: 40px;
+
+        cursor: pointer;
       }
+
+      .global {
+        position: absolute;
+
+        // TODO: color
+        background: #fff;
+
+        width: 50%;
+        height: 90px;
+
+        right: 0;
+
+        cursor: pointer;
+      }
+    }
+
+    .privateDM {
+      position: absolute;
+
+      top: 90px;
+      left: 0;
+
+      width: 100%;
+      height: auto;
+
+      .dmbannerPosition{
+        position: absolute;
+
+        $i: 1;
+
+        top: 70px;
+        left: 6%;
+
+        width: 100%;
+
+        @while $i <= 30{
+          .b#{$i}{
+            position: absolute;
+
+            top: 140px * $i;
+
+            width: 100%;
+          }
+          $i: $i + 1;
+        }
+      }
+    }
+
+    .globalDM {
+      display: none;
     }
   }
 

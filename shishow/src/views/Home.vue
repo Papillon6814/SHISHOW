@@ -9,13 +9,14 @@
           <myBanner
             @extendMyBanner="extendOther"
             v-if="userStatus"
-            :loginedUser="getCurrentUserName"
-          ></myBanner>
+            :loginedUser="getCurrentUserName">
+          </myBanner>
           <BlurBanner v-else></BlurBanner>
         </div>
       </transition>
       <div id="moving">
         <transition appear name="v2">
+        <div class="normalBannerField">
           <div class="normalBannerPosition">
             <div v-for="N in filteredUser.length"
               :key="N" v-bind:class="'n'+N">
@@ -27,6 +28,7 @@
               </normalBanner>
             </div>
           </div>
+        </div>
         </transition>
       </div>
     </main>
@@ -237,9 +239,7 @@ body {
   background-color: $dark_color;
 }
 
-#root{
-  padding-top: 100px;
-}
+
 
 #myBannerPosition {
   //position: relative;
@@ -263,7 +263,7 @@ body {
     position: absolute;
 
     top: 173px;
-    left: 0;
+    left: 14%;
 
     width: 100%;
     height: 100%;
@@ -294,6 +294,7 @@ body {
     }
   }
 }
+
 
 footer {
   position: absolute;
@@ -387,14 +388,5 @@ footer {
 
 .v2-leave-active {
   transition: all 0.5s 0s ease;
-}
-
-@media (min-width: 1300px){
-  #root{
-    padding-top: 0px;
-  }
-  footer{
-    padding-top: 0px;
-  }
 }
 </style>

@@ -129,15 +129,15 @@ export default {
                 //変数に情報を格納
                 email = User.email;
                 alert("Create account: " + email);
-  
+
                 if (!this.roundimg) {
-                  
-       
+
+
                   this.roundimg = url;
-     
+
 
                 }
-                
+
                 this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
                 router.push("/")
               });
@@ -173,16 +173,16 @@ export default {
 
     // 画像表示の関数
     showImage(file) {
-      //FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
+      // FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
       let reader = new FileReader();
-      //ファイルが読み込まれたとき、eventを引数とするアロー関数作動
+      // ファイルが読み込まれたとき、eventを引数とするアロー関数作動
       let place = this;
       reader.onload = event => {
-        //htmlにファイルを反映
+        // htmlにファイルを反映
         this.uploadedImage = event.target.result;
         window.setTimeout(place.crop, 1);
       };
-      //読み込み開始
+      // 読み込み開始
 
       this.modal.style.display = "block";
       reader.readAsDataURL(file);
@@ -190,7 +190,7 @@ export default {
 
     errorIndication() {
       if (!this.email) {
-    
+
         return true;
       }
       return false;
