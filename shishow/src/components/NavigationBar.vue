@@ -340,6 +340,7 @@ export default {
       right: 20px;
 
       color: white;
+
       border-radius: 20%;
       background-color: red;
       z-index: 10;
@@ -422,6 +423,7 @@ export default {
     z-index: -1;
   }
 }
+
 @media (min-width: 1300px) {
   #header {
     top: 0px;

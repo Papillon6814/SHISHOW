@@ -71,12 +71,11 @@ $su_pass_height: 30px;
 /* --- */
 /* around normalBanner */
 
-$n_banner_width: 65%;
-$n_banner_height: 192.5px;
-
 $n_icon_width: 89.375px;
 $n_icon_height: $n_icon_width;
 
+$n_banner_width: 55%;
+$n_banner_height: $n_icon_height + 70px;
 
 $n_achievement_width: 32.3125px;
 $n_achievement_height: 15.8125px;
@@ -110,7 +109,7 @@ $n_profile_height: 83.75px;
  $not_banner_color: #d5d5d5;
  $not_banner_flane: #222;
 
- $not_banner_width: 100%;
+ $not_banner_width: 90%;
  $not_banner_height: 140px;
 
  /* --- */
@@ -126,7 +125,7 @@ $n_profile_height: 83.75px;
   $main_text_color: rgba(0, 0, 0, 0.87);
   $sub_text_color: rgba(0, 0, 0, 0.54);
   $invisible_text_color: rgba(0, 0, 0, 0.38);
- 
+
 /* --- */
 
 /* scrollbar */

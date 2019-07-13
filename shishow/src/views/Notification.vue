@@ -1,15 +1,18 @@
 <template>
   <div id="root">
     <navi></navi>
+    <div id="notificationTitle" align="left">
+      <div class="notificationText">Notification</div>
+    </div>
     <div id="notificationField">
       <span v-if="!notice.length" class="no_notification">no notification</span>
       <div v-if="notice.length">
-      <div v-for="N in notice.length" 
-      :key="N" 
+      <div v-for="N in notice.length"
+      :key="N"
       v-bind:class="'not'+N">
-      
-        <notificationBanner 
-        :user="users[N-1]" 
+
+        <notificationBanner
+        :user="users[N-1]"
         :notice="notice[N-1]">
         </notificationBanner>
       </div>
@@ -74,14 +77,33 @@ export default {
     background-color: $dark_color;
   }
 
+  #notificationTitle{
+    position: absolute;
+
+    top: $header_height;
+    left: 15%;
+    width: 70%;
+    height: $header_height;
+
+    background-color: #00b7ce;
+
+    .notificationText{
+      font-size: 70px;
+      color: white;
+
+      padding-top: 15px;
+      padding-left: 20px;
+    }
+  }
+
   #notificationField {
     position: absolute;
 
-    top: 150px;
-    left: 5%;
+    top: $header_height*2;
+    left: 15%;
 
-    width: 90%;
-    height: 80%;
+    width: 70%;
+    height: 100%;
 
     background-color: #fff;
     box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
@@ -89,10 +111,17 @@ export default {
     overflow-y: scroll;
     overflow-x: hidden;
 
+    .not1{
+      position: relative;
+      padding-top: 30px;
+      left: 5%;
+    }
     $i: 2;
     @while $i<=30 {
       .not#{$i}{
-        padding-top: $not_banner_height + 1.2px;
+        position: relative;
+        left: 5%;
+        padding-top: $not_banner_height + 20px;
       }
       $i: $i + 1;
     }
