@@ -11,7 +11,6 @@
 // @ is an alias to /sonBar.vue'
 import navi from '../components/NavigationBar.vue'
 import signupBanner from '../components/SignupBanner.vue'
-import trimmingButton from '../components/trimmingButton.vue'
 
 export default {
   name: 'signup',
@@ -25,29 +24,22 @@ export default {
 
 <style lang="scss">
 
-  body {
-    padding: 0;
-    margin: 0;
-    width:100%;
+body {
+  padding: 0;
+  margin: 0;
+  width:100%;
 
-    height: 2000px;
+  height: 2000px;
 
-    background-color: $dark_color;
-  }
+  background-color: $dark_color;
+}
 
-  #signupBannerPosition {
-    position: absolute;
-    width: 100%;
-    //temporary top
-    top: 150px;
-    left: 10%;
-  }
-
-  .trimmingButtonPosition {
-    position: absolute;
-
-    top: 450px;
-    left: 45%;
-  }
+#signupBannerPosition {
+  position: absolute;
+  width: 100%;
+  //temporary top
+  top: 150px;
+  left: 10%;
+}
 
 </style>

@@ -1,34 +1,45 @@
 <template>
   <div id="root">
-    <navi @input="getSearchWord"></navi>
-    <transition appear name="v">
-      <div id="myBannerPosition">
-        <myBanner @extendMyBanner="extendOther" v-if="userStatus"></myBanner>
-        <BlurBanner v-else></BlurBanner>
-      </div>
-    </transition>
-    <div id="moving">
-      <transition appear name="v2">
-        <div class="normalBannerPosition">
-          <div v-for="N in users.length" :key="N" v-bind:class="'n'+N">
-            <normalBanner :user="users[N-1].data()" :searchWord="searchWord"></normalBanner>
-          </div>
-          <!-- <li class="n2">
-              <normalBanner></normalBanner>
-            </li>
-            <li class="n3">
-              <normalBanner></normalBanner>
-            </li>
-            <li class="n4">
-              <normalBanner></normalBanner>
-          </li>-->
+    <header>
+      <navi @input="getSearchWord"></navi>
+    </header>
+    <main>
+      <transition appear name="v">
+        <div id="myBannerPosition">
+          <myBanner
+            @extendMyBanner="extendOther"
+            v-if="userStatus"
+            :loginedUser="getCurrentUserName"
+          ></myBanner>
+          <BlurBanner v-else></BlurBanner>
         </div>
       </transition>
+      <div id="moving">
+        <transition appear name="v2">
+          <div class="normalBannerPosition">
+            <div v-for="N in filteredUser.length"
+              :key="N" v-bind:class="'n'+N">
+              <normalBanner
+              :user="filteredUser[N-1]"
+              :signuser="signuser"
+              :relations="relation[N-1]"
+              @extendNormalBanner="moveDown(N)">
+              </normalBanner>
+            </div>
+          </div>
+        </transition>
+      </div>
+    </main>
       <!--
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
-      </div>-->
-    </div>
+      </div>
+      -->
+      <footer>
+        <div class="footerPosition">
+          <ourFooter></ourFooter>
+        </div>
+      </footer>
   </div>
 </template>
 
@@ -37,72 +48,105 @@
 import navi from "../components/NavigationBar.vue";
 import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
-import BlurBanner from "../components/BlurBanner.vue"
+import BlurBanner from "../components/BlurBanner.vue";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
 import "@firebase/auth";
 import store from "../store";
 
-const db = firebase.firestore()
-let currentUser;
+const db = firebase.firestore();
 
 export default {
   name: "home",
-  created: function() {
+
+  mounted: function() {
     this.onAuth();
-    currentUser = firebase.auth().currentUser;
+    const sign_db = db.collection("USER")
+                      .doc(this.user.email);
+
+    sign_db.collection("relation")
+    .get()
+    .then(docs_r=>{
     db.collection("USER")
+      .get()
+      .then(docs_p =>{
+        docs_p.forEach(doc=>{
+          if(doc.data().email != this.user.email){
+            this.users.push(doc.data());
+            this.filteredUser.push(doc.data());
+
+            if(docs_r.docs){
+              let i;
+              for(i=0;i<docs_r.docs.length && doc.data().email != docs_r.docs[i].id;i++);
+              if(i==docs_r.docs.length){
+                this.relation.push(0)
+              }else{
+                this.relation.push(docs_r.docs[i].data().relation);
+              }
+            }else{
+              this.relation.push(0)
+            }
+          }
+        })
+        this.placeFooter();
+      })
+
+    });
+
+    db.collection("USER")
+    .doc(this.user.email)
     .get()
     .then(doc =>{
-      this.users = doc.docs;
-    })
+      this.signuser = doc.data();
+    });
   },
+
   components: {
     navi,
     myBanner,
     normalBanner,
     BlurBanner
   },
+
+
   data: function() {
     return {
       users: [],
-      searchWord: ""
+      searchWord: "",
+      filteredUser: [],
+      currentUser: "",
+      signuser: [],
+      normalBannerActiveArray: [],
+      relation:[],
     };
   },
+
   computed: {
     user() {
       return this.$store.getters.user;
     },
+
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
-    filterUser: function() {
-      let key = this.searchWord;
-      let data = [];
-      let results = [];
-      //console.log(this.users[3].data().username);
-      //console.log(Object.keys(this.users).length);
-      let i;
-      //オブジェクトに変換
-      for (i in this.users) {
-        data[i] = this.users[i].data();
-      }
-      //console.log(data);
-      if (key) {
-        if (data.username.indexOf(key) !== -1) {
-          results.push(data);
-        }
-      }
-      console.log(results);
-    }
+    getCurrentUserName: function() {
+      return this.$store.getters.user.displayName;
+    },
+
+    getCurrentUserId: function() {
+      return this.$store.getters.user.uid;
+    },
+
+
   },
 
-
   methods: {
+
     getSearchWord(word) {
       this.searchWord = word;
     },
+
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};
@@ -110,74 +154,75 @@ export default {
         store.commit("onUserStatusChanged", user.uid ? true : false);
       });
     },
-    extendOther: function() {
-      var active = true;
-      var move=document.getElementById('moving');
-      move.style.top = "340px";
-      this.active = !this.active;
-      if(this.active === false){
-        move.style.top = "60px"
-      }
-    }/*,
-    extendNother:function(){
-      var active = true;
-      var move=document.getElementById('moven')
 
-      move.style.top = "350px";
-      this.active = !this.active;
-      if(this.active === false){
-        move.style.top = "45px"
+    extendOther: function() {
+      let active = true;
+      let move = document.getElementById("moving");
+      let footer = document.getElementsByTagName('footer');
+
+      let footerStyle = getComputedStyle(footer[0]);
+      footer[0].style.top = (parseInt(footerStyle.top) + 280) + 'px';
+
+      move.style.top = "340px";
+      active = !active;
+      if (active === false) {
+        footer[0].style.top = (parseInt(footerStyle.top) - 280) + 'px';
+
+        move.style.top = "60px";
       }
-    }*/
+    },
+
+    placeFooter: function() {
+      let footer = document.getElementsByTagName('footer');
+      footer[0].style.top = (200 * (1 + this.filteredUser.length) + 300) + 'px';
+
+      this.$forceUpdate();
+
+    },
+
+    moveDown: function(N) {
+      let move, style;
+      let footer, footerStyle;
+      let i;
+      if(this.normalBannerActiveArray.indexOf(N) == -1) {
+        // normalBannerActiveArrayの中にNが格納されていない時
+        this.normalBannerActiveArray.push(N);
+
+        for(i=N+1;i<=this.filteredUser.length;i++){
+          move = document.getElementsByClassName('n'+i);
+          style = window.getComputedStyle(move[0]);
+          move[0].style.top = (parseInt(style.top)+200)+"px";
+        }
+
+        footer = document.getElementsByTagName('footer')
+        footerStyle = getComputedStyle(footer[0]);
+
+        footer[0].style.top = (parseInt(footerStyle.top) + 200) + 'px';
+      } else {
+        // Nが配列の中にある時は、削除を行う
+        this.normalBannerActiveArray.splice(
+          this.normalBannerActiveArray.indexOf(N), 1
+        );
+
+        for(i = N+1; i <= this.filteredUser.length; i++) {
+          move = document.getElementsByClassName('n'+i);
+          style = window.getComputedStyle(move[0]);
+
+          move[0].style.top = (parseInt(style.top) - 200) + "px";
+        }
+        footer = document.getElementsByTagName('footer')
+        footerStyle = getComputedStyle(footer[0]);
+
+        footer[0].style.top = (parseInt(footerStyle.top) - 200) + 'px';
+      }
+      this.$forceUpdate();
+    }
   }
 };
+
 </script>
 
 <style lang="scss">
-
-.v-enter {
-  transform: translate(700px, 0);
-  opacity: 0;
-}
-.v-enter-to {
-  opacity: 1;
-}
-.v-enter-active {
-  transition: all 1s 0s ease;
-}
-.v-leave {
-  transform: translate(0, 0);
-  opacity: 1;
-}
-.v-leave-to {
-  transform: translate(-300px, 0);
-  opacity: 0;
-}
-.v-leave-active {
-  transition: all .5s 0s ease;
-}
-
-.v2-enter {
-  transform: translate(1000px, 0);
-  opacity: 0;
-}
-.v2-enter-to {
-  opacity: 1;
-}
-.v2-enter-active {
-  transition: all 1.4s 1s ease;
-}
-.v2-leave {
-  transform: translate(0, 0);
-  opacity: 1;
-}
-.v2-leave-to {
-  transform: translate(-400px, 0);
-  opacity: 0;
-}
-.v2-leave-active {
-  transition: all .5s 0s ease;
-}
 
 html {
   overflow-y: scroll;
@@ -191,35 +236,78 @@ body {
 
   background-color: $dark_color;
 }
-  #myBannerPosition {
-    //position: relative;
-    //temporary top
-    padding-top: 70px;
-    margin-left: 10%;
-    margin-right: 10%;
-    width:100%;
-    position:absolute;
-    z-index: 1;
-    /*top: 45px;
+
+#root{
+  padding-top: 100px;
+}
+
+#myBannerPosition {
+  //position: relative;
+  //temporary top
+
+  padding-top: 70px;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+
+  /*top: 45px;
     left: 10%;*/
-  }
+}
+
+#moving {
+  width: 100%;
 
   .normalBannerPosition {
-    margin-left: 10%;
-    width:100%;
     position: absolute;
-    padding-top:165px;
+
+    top: 173px;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    padding-top: 165px;
+    margin-left: 10%;
+
     $i: 1;
-    @while $i <= 30{
-      .n#{$i}{
-        padding-top: 210px;/* + (200px * $i);*/
+
+    list-style: none;
+    @while $i <= 30 {
+
+      $temporary_top: (200px * $i) !global;
+
+      .n#{$i} {
+        position: absolute;
+
+        top: $temporary_top;
+        left: 0;
+
+        width: 100%;
+        height: $n_banner_height;
+
+        transition: 0.3s;
       }
+
       $i: $i + 1;
     }
-    list-style: none;
-
-    // z-index: -1
   }
+}
+
+footer {
+  position: absolute;
+
+  top: 110%;
+  left: 0;
+
+  width: 100%;
+  height: $footer_height;
+
+  transition: .3s;
+
+  padding-top: 100px;
+}
 
 #myBannerPosition {
   //position: relative;
@@ -232,23 +320,6 @@ body {
   z-index: 1;
   /*top: 45px;
     left: 10%;*/
-  z-index: 1;
-}
-
-.normalBannerPosition {
-  margin-left: 10%;
-  width: 100%;
-  position: absolute;
-  padding-top: 200px;
-  $i: 1;
-  @while $i <= 30 {
-    .n#{$i} {
-      padding-top: 210px; /* + (200px * $i);*/
-      left: 10%;
-    }
-    $i: $i + 1;
-  }
-  list-style: none;
 }
 
 .gameBannerPosition {
@@ -264,10 +335,66 @@ body {
   transition: 0.3s;
 }
 
- /*#moven{
-    position: absolute;
-    width: 100%;
-    transition: .3s;
+.v-enter {
+  transform: translate(700px, 0);
+  opacity: 0;
+}
 
-  }*/
+.v-enter-to {
+  opacity: 1;
+}
+
+.v-enter-active {
+  transition: all 1s 0s ease;
+}
+
+.v-leave {
+  transform: translate(0, 0);
+  opacity: 1;
+}
+
+.v-leave-to {
+  transform: translate(-300px, 0);
+  opacity: 0;
+}
+
+.v-leave-active {
+  transition: all 0.5s 0s ease;
+}
+
+.v2-enter {
+  transform: translate(1000px, 0);
+  opacity: 0;
+}
+
+.v2-enter-to {
+  opacity: 1;
+}
+
+.v2-enter-active {
+  transition: all 1.4s 1s ease;
+}
+
+.v2-leave {
+  transform: translate(0, 0);
+  opacity: 1;
+}
+
+.v2-leave-to {
+  transform: translate(-400px, 0);
+  opacity: 0;
+}
+
+.v2-leave-active {
+  transition: all 0.5s 0s ease;
+}
+
+@media (min-width: 1300px){
+  #root{
+    padding-top: 0px;
+  }
+  footer{
+    padding-top: 0px;
+  }
+}
 </style>

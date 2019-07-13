@@ -1,14 +1,24 @@
 <template>
   <div id="directMessageField">
-    <leftArea></leftArea>
-    <rightArea></rightArea>
+    <leftArea
+    :friendsDocID="leftAreaData"
+    ></leftArea>
+    <rightArea
+    ref="rightArea"
+    :friendDocID="idFromLeftArea">
+    </rightArea>
     <div class="inputArea">
-      <inputArea></inputArea>
+      <inputArea
+      @scrollRightArea="callScroll()"
+      :friendDocID="idFromLeftArea">
+      </inputArea>
     </div>
   </div>
 </template>
 
 <script>
+// ほとんどのDMコンポーネントの親
+// IDをfirebaseから取得してそれぞれのコンポーネントへ送信する
 import leftArea from './leftArea.vue'
 import rightArea from './rightArea.vue'
 import inputArea from './InputArea.vue'
@@ -18,40 +28,75 @@ import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
 
+
 let db = firebase.firestore();
+
 let currentUser;
-// 現在ログイン中のユーザー
+let friendsDocID = [];
 
 export default {
   name: 'directMessageField',
 
   data() {
-    return {
-      myFriends: '',
-      myMsg: ''
+    return{
+      rightAreaData: '',
+      leftAreaData: [],
+      inputAreaData: '',
+      idFromLeftArea: '',
     }
-  },
-
-  created: function () {
-    this.onAuth();
-    currentUser = firebase.auth().currentUser;
   },
 
   components: {
     leftArea,
     rightArea,
-    inputArea
+    inputArea,
   },
 
   methods: {
-    onAuth: function () {
+    onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};
         store.commit('onAuthStateChanged', user);
         store.commit('onUserStatusChanged', user.uid ? true : false);
       })
+    },
+
+    callScroll: function() {
+      this.$refs.rightArea.chatScroll();
+    },
+
+    loadFriendID: function() {
+      friendsDocID = [];
+
+      db.collection("USER")
+        .doc(currentUser.email)
+        .collection("friends")
+        .orderBy("lastChatDate", "desc")
+        .get()
+        .then(friendsSnapshot => {
+          friendsSnapshot.forEach(doc1 => {
+            friendsDocID.push(doc1.id)
+
+          })
+      })
     }
-  }
+  },
+
+  created: function() {
+    this.onAuth();
+    currentUser = firebase.auth().currentUser;
+    this.loadFriendID();
+    this.leftAreaData = friendsDocID;
+
+    db.collection("USER")
+      .doc(currentUser.email)
+      .collection('friends')
+      .limit(1)
+      .get()
+      .then(friendsSnapshot => {
+        this.idFromLeftArea = friendsSnapshot.id;
+      })
+  },
 }
 
 </script>
@@ -65,6 +110,8 @@ export default {
 
     left: 5%;
     bottom: 2vh;
+
+    overflow-y: hidden;
 
     //下部に表示する
     .inputArea {

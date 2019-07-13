@@ -1,3 +1,7 @@
+@charset "UTF-8";
+/* font settings */
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap");
+/* --- */
 /* basic color */
 /* --- */
 /* around myBanner */
@@ -8,5 +12,28 @@
 /* --- */
 /* around direct message page */
 /* --- */
-/* aruond notification page */
+/* around notification page */
+/* --- */
+/*around nav */
+/* --- */
+/* text color */
+/* --- */
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/*スクロールバーの軌道*/
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+/*スクロールバーの動く部分*/
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
 /* --- */

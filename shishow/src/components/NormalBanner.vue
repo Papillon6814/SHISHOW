@@ -1,7 +1,7 @@
 <template>
-  <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'nextend': isB }">
+  <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'normalExtend': isB }">
     <span class="iconPicPosition">
-      <img id="icon" :src="user['image']">
+      <img class="icon" :src="user['image']" />
     </span>
     <div class="achievementPosition1">
       <div class="achievement"></div>
@@ -13,21 +13,24 @@
       <div class="achievement"></div>
     </div>
     <div class="usernamePosition">
-      <div class="username">{{user["username"]}}</div>
+      <div class="username">{{ user.username }}</div>
     </div>
     <div class="profilePosition">
-      <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、
-      </div>
+
+      <div class="profile">{{ user.bio }}</div>
     </div>
     <div class="userInfoPosition">
-        <div class="userInfo">仲野巧ですから</div>
+      <div class="userInfo">userinfo</div>
     </div>
-    <div class="n_btn-circle-3d">江崎にフレ申請</div>
-    <span v-bind:class="{nreverse:isC}" @click="doExtend" id="pullDownProperties">
+    <div v-if="relation==0" @click="sendFriendReq" class="n_btn-circle-3d">申請</div>
+    <div v-else-if="relation==1" @click="add_db" class="n_btn-circle-3d">承認</div>
+    <div v-else-if="relation==2" @click="delete_db" class="n_btn-circle-3d">削除</div>
+    <div v-else-if="relation==3"  class="n_btn-circle-3d">友達</div>
+    <div class="pullDownProperties"
+         @click="callNormalExtend"
+         v-bind:class="{ reverse:arrowUp }">
       <i class="fas fa-caret-down"></i>
-    </span>
+    </div>
   </div>
 </template>
 
@@ -38,319 +41,447 @@ import "firebase/firestore";
 import "@firebase/auth";
 
 const db = firebase.firestore();
-const currentUser = firebase.auth().currentUser;
 
 export default {
-  name: "normalBanner",
-  props: ["user", "searchWord"],
-  created: function() {
-    db.collection("USER")
-      .doc(store.state["user"].email)
-      .get()
-      .then(doc => {
-        this.signuser = doc.data();
-      })
-      .catch(e => {
-        console.log(e);
-      });
+  name: 'normalBanner',
+  props:["user","signuser","relations"],
+  created:function(){
+    this.onAuth();
+    this.relation = this.relations;
   },
+
   data: function() {
     return {
       isA: true,
       isB: false,
-      isC: false,
-      signuser: ""
+      arrowUp: false,
+      relation: 0,
     };
   },
+
   methods: {
-    doExtend: function() {
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit("onAuthStateChanged", user);
+        store.commit("onUserStatusChanged", user.uid ? true : false);
+      });
+    },
+
+    callNormalExtend: function() {
+
+
       this.isA = !this.isA;
       this.isB = !this.isB;
-      this.isC = !this.isC,
-      this.$emit('extendNormalBanner')
-      this.$emit('extendNbanner')
+      this.arrowUp = !this.arrowUp;
+      this.$emit("extendNormalBanner");
+    },
 
-      if (store.state["status"]) {
-        console.log(this.user["email"]);
+    sendFriendReq: function() {
 
-        const currentUser = firebase.auth().currentUser;
+      if (store.state.status) {
 
         db.collection("USER")
-          .doc(store.state["user"].email)
+          .doc(this.signuser.email)
           .collection("outgoing")
-          .add({
+          .doc(this.user.email)
+          .set({
             username: this.user["username"],
             email: this.user["email"]
           })
-          .catch(e => {
-            console.log("error1");
+          .catch(() => {
+
           });
 
+
         db.collection("USER")
-          .doc(this.user["email"])
+          .doc(this.user.email)
           .collection("incoming")
-          .add({
+          .doc(this.signuser.email)
+          .set({
             username: this.signuser["username"],
             email: this.signuser["email"]
           })
-          .catch(e => {
-            console.log("error2");
-          });
-      }
+          .catch(() => {
 
+          });
+
+        db.collection("USER").doc(this.user.email)
+        .collection("relation")
+        .doc(this.signuser.email).set({
+          relation:1,
+        })
+        .catch(() =>{
+
+        })
+
+        db.collection("USER").doc(this.signuser.email)
+        .collection("relation")
+        .doc(this.user.email).set({
+          relation:2,
+        }).catch(() =>{
+
+        })
+
+        db.collection("USER").doc(this.user.email)
+        .collection("notice")
+        .doc(this.signuser.email)
+        .set({
+          msg:this.signuser.username+"からフレンド申請が来ました。",
+          date: new Date()
+        })
+
+
+
+      this.relation = 2;
+      }
+    },
+
+    delete_db:function(){
+      const sign_db = db.collection("USER").doc(this.signuser.email);
+      const user_db = db.collection("USER").doc(this.user.email)
+
+      user_db.collection("incoming").doc(this.signuser.email).delete()
+      .catch(() =>{});
+
+      sign_db.collection("outgoing").doc(this.user.email).delete()
+      .catch(() =>{});
+
+      db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).delete()
+      .catch(() =>{
+        
+      })
+      db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).delete()
+      .catch(() =>{
+        
+      })
+
+      user_db.collection("notice").doc(this.signuser.email).delete();
+
+      this.relation = 0
+    },
+
+    add_db:function(){
+      const sign_db = db.collection("USER")
+                        .doc(this.signuser.email);
+      const user_db = db.collection("USER")
+                        .doc(this.user.email);
+
+      let now = new Date();
+
+      db.collection("PrivateChat")
+        .add({
+          email1: this.signuser.email,
+          email2: this.user.email
+        })
+        .then(doc1 => {
+
+        sign_db.collection("incoming")
+               .doc(this.user.email)
+               .delete()
+               .then(()=>{
+
+                 sign_db.collection("friends")
+                 .doc(this.user.email)
+                 .set({
+                   username: this.user.username,
+                   email: this.user.email,
+                   chatID: doc1.id,
+                   lastChatDate: now
+                 });
+               })
+               .catch(() => {
+                 
+               });
+
+        user_db.collection("outgoing")
+               .doc(this.signuser.email)
+               .delete()
+               .then(() => {
+                 user_db.collection("friends")
+                        .doc(this.signuser.email)
+                        .set({
+                          username: this.signuser.username,
+                          email: this.signuser.email,
+                          chatID: doc1.id,
+                          lastChatDate: now
+                        })
+               })
+               .catch(() => {
+                 
+               });
+
+        db.collection("USER")
+          .doc(this.user.email)
+          .collection("relation")
+          .doc(this.signuser.email)
+          .set({
+            relation:3,
+          })
+          .catch(() =>{
+            
+          })
+
+        db.collection("USER")
+          .doc(this.signuser.email)
+          .collection("relation")
+          .doc(this.user.email)
+          .set({
+            relation:3,
+          })
+          .catch(() =>{
+            
+          })
+
+        user_db.collection("notice")
+               .doc(this.signuser.email)
+               .set({
+                 msg: this.signuser.usernam+"とフレンドになりました。",
+                 date: new Date()
+               })
+
+        sign_db.collection("notice")
+               .doc(this.user.email)
+               .get()
+               .then(doc => {
+                 if(doc.exists){
+                   sign_db.collection("notice")
+                          .doc(this.user.email)
+                          .delete();
+                 }
+               })
+        this.relation = 3
+      })
     }
-  }
-}
+  },
+
+};
 </script>
 
 <style lang="scss" scoped>
-  .normalBanner {
+.normalBanner {
   position: absolute;
 
   overflow-y: hidden;
 
   width: $n_banner_width;
-  //temporary height
   height: $n_banner_height;
 
   background-color: $n_banner_color;
 
-    border-radius: 3px;
+  border-radius: 3px;
 
-    z-index: 2;
+  z-index: 2;
 
-    box-shadow: 0px 0px 3px  rgba(0, 0, 0, 0.3);
-    transition: 0.3s;
-    //children
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+  transition: 0.3s;
+}
 
-    /*.editBioButton{
+.normalBanner:hover {
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+}
 
-    }*/
-  }
+.normalExtend {
+  position: absolute;
 
-  .normalBanner:hover{
-    box-shadow: 3px 3px 3px  rgba(0, 0, 0, 0.3);
-  }
+  width: $n_banner_width;
+  height: $n_banner_height * 2;
 
-  .extend {
-    position: absolute;
+  background-color: $n_banner_color;
 
-    width: $n_banner_width;
-    //temporary height
-    height: $n_banner_height*2;
+  z-index: 2;
 
-    background-color: $n_banner_color;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+  transition: 0.3s;
+}
 
-    z-index: 2;
+.iconPicPosition {
+  position: absolute;
 
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-    transition: 0.3s;
-    //children
+  top: 15px;
+  left: 34.1611111px;
+}
 
-    /*.editBioButton{
+.achievement {
+  position: relative;
 
-    }*/
-  }
+  width: $n_achievement_width;
+  height: $n_achievement_height; //√3
 
-  .iconPicPosition {
-    position: absolute;
+  background-color: #ffffff;
+  margin: $n_root_twelve 0;
+}
 
-    top: 15px;
-    left: 34.1611111px;
-  }
+.achievement:before,
+.achievement:after {
+  content: "";
+  position: absolute;
 
-  .achievement {
-    position: relative;
-    width: $n_achievement_width;
-    height: $n_achievement_height; //√3
-    background-color: #ffffff;
-    margin: $n_root_twelve 0;
-  }
+  left: 0;
 
-  .achievement:before,
-  .achievement:after {
-    content: "";
-    position: absolute;
+  width: 0;
 
-    left: 0;
+  border-left: $n_a_half_width solid transparent;
+  border-right: $n_a_half_width dashed transparent;
+}
 
-    width: 0;
-    border-left: $n_a_half_width solid transparent;
-    border-right: $n_a_half_width dashed transparent;
-  }
+.achievement:before {
+  bottom: 100%;
+  border-bottom: $n_root_twelve solid #fff;
+}
 
-  .achievement:before {
-    bottom: 100%;
-    border-bottom: $n_root_twelve solid #fff;
-  }
+.achievement:after {
+  top: 100%;
 
-  .achievement:after {
-    top: 100%;
-    width: 0;
-    border-top: $n_root_twelve solid #fff;
-  }
+  width: 0;
+  border-top: $n_root_twelve solid #fff;
+}
 
-  .achievementPosition1 {
-    position: absolute;
+.achievementPosition1 {
+  position: absolute;
 
-    //top: -1.3vh;
-    //left: -1.8vh;
-    top: 100.6875px;
-    left: 23.11076388px;
-  }
+  top: 100.6875px;
+  left: 23.11076388px;
+}
 
-  .achievementPosition2 {
-    position: absolute;
+.achievementPosition2 {
+  position: absolute;
 
-    //top: -4.4vh;
-    //left: 5.9vh;
-    top: 115px;
-    left: 65.392px;
-  }
+  top: 115px;
+  left: 65.392px;
+}
 
-  .achievementPosition3 {
-    position: absolute;
+.achievementPosition3 {
+  position: absolute;
 
-    //top: -12.46vh;
-    //left: 14vh;
-    top: 100.6875px;
-    left: 106.673px;
-  }
+  top: 100.6875px;
+  left: 106.673px;
+}
 
-  #pullDownProperties {
-    position: absolute;
+.pullDownProperties {
+  position: absolute;
 
-    bottom: -5px;
-    left: 10.3px;
+  bottom: -5px;
+  left: 10.3px;
 
-    font-size: 39.875px;
-    z-index: 4;
-  }
+  font-size: 39.875px;
+  z-index: 4;
+}
 
-  #pullDownProperties:hover {
-    color: $pulldown_color;
-  }
+.pullDownProperties:hover {
+  color: $pulldown_color;
+}
 
-  .username{
-    width: $user_width;
-    height: $n_user_height;
+.username {
+  width: $user_width;
+  height: $n_user_height;
 
-    background-color: #fff;
+  background-color: #fff;
+}
 
-    border: solid;
-    border-width: 3px;
-    border-color: $n_window_flame;
-  }
+.usernamePosition {
+  position: absolute;
 
-  .usernamePosition{
-    position: absolute;
+  top: 18px;
+  left: 172px;
+  right: 0px;
+}
 
-    top: 18px;
-    left: 172px;
-    right: 0px;
-  }
-  
-  .idPosition{
+.profilePosition {
+  position: absolute;
 
-  }
+  top: 88px;
+  left: 172px;
+  right: 25px;
+}
 
-  .profilePosition {
-    position: absolute;
+.profile {
+  width: $profile_width;
+  height: $n_profile_height;
 
-    top: 88px;
-    left: 172px;
-    right: 25px;
-  }
+  background-color: #fff;
+}
 
-  .profile{
-    width: $profile_width;
-    height: $n_profile_height;
-    background-color: #fff;
-    }
-  .userInfo {
-    width: 100%;
-    height: 160px;
+.userInfo {
+  width: 100%;
+  height: 160px;
 
-      // temporary color
-    background-color: #fff;
+  background-color: #fff;
 
-    border-radius: 5%;
-    border: dashed;
-    border-width: 2px;
-    border-color: $window_flame;
-  }
+  border-radius: 5%;
+  border: dashed;
+  border-width: 2px;
+  border-color: $window_flame;
+}
 
-  .userInfoPosition {
-    position: absolute;
+.userInfoPosition {
+  position: absolute;
 
-    top: 200px;
-    left: 75px;
-    right: 25px;
-  }
+  top: 200px;
+  left: 75px;
+  right: 25px;
+}
 
-  .n_btn-circle-3d {
-    position: relative;
-    top: 15px;
-    left:39%;
-    display: inline-block;
-    text-decoration: none;
-    background: #FFC107;
-    color: #fff;
-    width: 100px;
-    height: 60px;
-    line-height: 63px;
-    border-radius: 50%;
-    text-align: center;
-    font-weight: bold;
-    overflow: hidden;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-    border-bottom: solid 3px #FFB300;
-    transition: .4s;
+.n_btn-circle-3d {
+  position: relative;
 
-    cursor: pointer;
-  }
+  top: 15px;
+  left: 39%;
 
-  .n_btn-circle-3d:active {
-    -webkit-transform: translateY(2px);
-    transform: translateY(2px);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-    border-bottom: none;
-  }
+  width: 100px;
+  height: 60px;
 
-  .reverse{
-    transform: rotateX(180deg);
-  }
+  display: inline-block;
+  text-decoration: none;
 
-  .nextend{
-    position: absolute;
+  background-color: #ffc107;
+  color: #fff;
 
-    width: $n_banner_width;
-    //temporary height
-    height: $n_banner_height*2;
+  line-height: 63px;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+  overflow: hidden;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+  border-bottom: solid 3px #ffb300;
+  transition: 0.4s;
 
-    background-color: $n_banner_color;
+  cursor: pointer;
+}
 
-    transition:0.3s;
+.n_btn-circle-3d:active {
+  -webkit-transform: translateY(2px);
+  transform: translateY(2px);
 
-  }
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+  border-bottom: none;
+}
 
-  .nreverse{
-    transform: rotateX(180deg);
-    transition: .3s;
-  }
+.reverse {
+  transform: rotateX(180deg);
+}
 
-  #icon{
-    position: absolute;
+.nextend {
+  position: absolute;
 
-    width: $n_icon_width;
-    height: $n_icon_height;
-    left: 7%;
-  }
+  width: $n_banner_width;
+  height: $n_banner_height * 2;
 
+  background-color: $n_banner_color;
 
-  /*.editBioButton{
+  transition: 0.3s;
+}
 
-    }*
+.nreverse {
+  transform: rotateX(180deg);
+}
 
-}*/
+.icon {
+  position: absolute;
+
+  width: $n_icon_width;
+  height: $n_icon_height;
+  left: 7%;
+}
+
 </style>

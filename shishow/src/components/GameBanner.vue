@@ -16,9 +16,6 @@
         最近では、予想外の趣味に没頭中！
       </div>
     </div>
-    <span id="pullDownProperties">
-     <i class="fas fa-caret-down"></i>
-    </span>
   </div>
 </template>
 
@@ -35,17 +32,17 @@ export default {
     position: absolute;
 
     width: $banner_width;
-    //temporary height
     height: $banner_height;
 
     background-color: $g_banner_color;
 
-    border: solid;
-    border-width: 5px;
-    border-color: $g_banner_flame;
-    z-index: 2;
+    transition: 0.3s;
 
-    //children
+    border-radius: 3px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+
+
+    z-index: 2;
 
     .iconPic {
       width: $icon_width;
@@ -55,9 +52,6 @@ export default {
       background-color: #fff;
 
       border-radius: 15%;
-      border: solid;
-      border-width: 2px;
-      border-color: $g_window_flame;
     }
 
     .iconPicPosition {
@@ -149,9 +143,6 @@ export default {
 
       background-color: #fff;
 
-      border: solid;
-      border-width: 3px;
-      border-color: $g_window_flame;
     }
 
     .gamenamePosition{
@@ -167,23 +158,19 @@ export default {
       height: $profile_height;
 
       background-color: #fff;
-
-      border: solid;
-      border-width: 3px;
-      border-color: $g_window_flame;
     }
 
     .profilePosition{
       position: absolute;
 
-      top: 150px;
+      top: 120px;
       left: 202px;
       right: 25px;
     }
+  }
 
-    /*.editBioButton{
-
-    }*/
+  .gamebanner:hover{
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
   }
 
 </style>

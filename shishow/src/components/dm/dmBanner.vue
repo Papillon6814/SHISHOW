@@ -26,69 +26,82 @@ export default {
 
 <style lang="scss" scoped>
 
-  .dmBanner {
-    display: block;
+.dmBanner {
+  display: block;
 
-    width: 100%;
-    height: 120px;
+  width: 100%;
+  height: 120px;
 
-    background-color: $dm_banner_color;
+  background-color: $dm_banner_color;
 
-    border-bottom: solid;
-    border-width: 3px;
-    border-color: #555;
+  border-bottom: solid;
+  border-width: 1px;
+  border-color: #444;
+    
 
-    transition: .15s;
-    cursor: pointer;
+  cursor: pointer;
 
-    .dmBannerIcon {
-      position: relative;
+  .dmBannerIcon {
+    position: relative;
 
-      top: 10px;
-      left: 15px;
+      top: 15px;
+      left: 20px;
 
-      width: $dm_icon_width;
-      height: $dm_icon_width;
+    width: $dm_icon_width;
+    height: $dm_icon_width;
 
-      // temporary color
-      background-color: #fff;
+    // temporary color
+    background-color: #fff;
 
-      border-radius: 50%;
-      border: solid;
-      border-width: 1px;
-      border-color: $window_flame;
-    }
+    border-radius: 50%;
+    border: solid;
+    border-width: 1px;
+    border-color: $window_flame;
+  }
 
-    .dmBannerName {
-      position: relative;
+  .dmBannerName {
+    position: relative;
 
       bottom: 80px;
-      left: 130px;
+      left: 110px;
 
-      width: 60%;
+      width: 30%;
       height: 35px;
 
-      // temporary color
-      background-color: #fff;
+    // temporary color
+    background-color: #fff;
 
-      font-size: 35px;
+      font-size: 25px;
+      // font-family: 'Noto Sans JP', sans-serif;
     }
 
-    .dmMsgArea {
-      position: relative;
+  .dmMsgArea {
+    position: relative;
 
       bottom: 70px;
-      left: 130px;
+      left: 150px;
 
-      width: 70%;
+      width: 50%;
       height: 60px;
 
-      background-color: #fff;
-    }
+    background-color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
   }
+}
 
-  .dmBanner:hover {
-    background-color: $dm_banner_color_hover;
-  }
+.dmBanner:hover {
+  background-color: $dm_banner_color_hover;
+
+}
+
+.dmBanner:hover > .dmBannerName{
+  background-color: $dm_banner_color_hover;
+}
+
+.dmBanner:hover > .dmMsgArea{
+  background-color: $dm_banner_color_hover;
+}
+
+
 
 </style>
