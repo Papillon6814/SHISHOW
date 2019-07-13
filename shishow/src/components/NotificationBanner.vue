@@ -76,10 +76,10 @@ export default {
   .messageInfo{
     position: absolute;
 
-    width:85%;
+    width:80%;
     height:40%;
 
-    left:110px;
+    right: 5px;
     bottom:10px;
     background-color: #ddd;
   }
