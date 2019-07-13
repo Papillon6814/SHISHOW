@@ -29,7 +29,9 @@
         <router-link to="/directMessage">
           <i class="fas fa-envelope fa-3x dm"></i>
         </router-link>
-        <i class="fas fa-gamepad fa-3x game"></i>
+        <router-link to="/friend">
+          <i class="fas fa-gamepad fa-3x game"></i>
+        </router-link>
         <router-link to="/notification">
           <i class="fas fa-bell fa-3x bell"></i>
         </router-link>
@@ -51,7 +53,9 @@
             <router-link to="/directMessage">
               <i class="fas fa-envelope fa-3x dm"></i>
             </router-link>
-            <i class="fas fa-gamepad fa-3x game"></i>
+            <router-link to="/friend">
+              <i class="fas fa-gamepad fa-3x game"></i>
+            </router-link>
             <router-link to="/notification">
               <div class="bell">
                 <span class="notification" v-if="notice.length">{{notice.length}}</span>
