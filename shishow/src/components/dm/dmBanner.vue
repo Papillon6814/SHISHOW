@@ -29,23 +29,18 @@ export default {
 .dmBanner {
   display: block;
 
-  width: 100%;
+  width: 88%;
   height: 120px;
 
   background-color: $dm_banner_color;
-
-  border-bottom: solid;
-  border-width: 1px;
-  border-color: #444;
-    
 
   cursor: pointer;
 
   .dmBannerIcon {
     position: relative;
 
-      top: 15px;
-      left: 20px;
+    top: 15px;
+    left: 20px;
 
     width: $dm_icon_width;
     height: $dm_icon_width;
@@ -62,29 +57,31 @@ export default {
   .dmBannerName {
     position: relative;
 
-      bottom: 80px;
-      left: 110px;
+    bottom: 80px;
+    left: 130px;
 
-      width: 30%;
-      height: 35px;
+    width: 60%;
+    height: 35px;
 
-    // temporary color
-    background-color: #fff;
+    // DEBUG: temporary color
+    background-color: #ccc;
 
-      font-size: 25px;
-      // font-family: 'Noto Sans JP', sans-serif;
+    font-size: 25px;
+    // font-family: 'Noto Sans JP', sans-serif;
+
+    text-align: left;
     }
 
   .dmMsgArea {
     position: relative;
 
       bottom: 70px;
-      left: 150px;
+      left: 130px;
 
       width: 50%;
       height: 60px;
 
-    background-color: #fff;
+    background-color: #acc;
     font-family: 'Noto Sans JP', sans-serif;
   }
 }
