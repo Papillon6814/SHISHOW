@@ -51,8 +51,7 @@ export default {
     },
 
     isMine: function(msg) {
-      console.log(msg.sender);
-      console.log(currentUserEmail);
+
       return (msg.sender == currentUserEmail);
     },
 
@@ -78,7 +77,7 @@ export default {
         .get()
         .then(doc1 => {
           chatID = doc1.data()['chatID'];
-          console.log('chatID: '+chatID);
+
 
           db.collection("PrivateChat")
             .doc(chatID)
@@ -97,7 +96,7 @@ export default {
 
   created: function() {
     this.onAuth();
-    console.log("rightArea created");
+
 
     currentUserEmail = firebase.auth().currentUser.email;
   }

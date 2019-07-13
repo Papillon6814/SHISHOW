@@ -15,7 +15,6 @@
 import firebase from "../../plugin/firestore";
 import "firebase/firestore";
 import "@firebase/auth";
-import store from "../../store";
 
 let db = firebase.firestore();
 let currentUser;
@@ -40,9 +39,6 @@ export default {
   },
 
   methods: {
-    doFilterUser() {
-      //this.$emit("")
-    },
     //メッセージを送る
     sendMsg() {
       // 文字が入力されているときにのみ送信
@@ -67,7 +63,18 @@ export default {
             msg: this.msg,
             date: now,
             sender: currentUser.email
-          });
+          })
+          .then(() => {
+            db.collection("USER")
+              .doc(currentUser.email)
+              .collection("friends")
+              .doc(this.friendDocID)
+              .update({
+                lastChatDate: now
+              })
+
+            this.$emit('scrollRightArea');
+          })
 
         this.msg = "";
       }

@@ -1,9 +1,7 @@
 <template>
   <div id="header">
-    <div id="header2">
-    </div>
-    <div class="logoBack">
-    </div>
+    <div id="header2"></div>
+    <div class="logoBack"></div>
     <div>
       <img class="logo" src="../assets/logoShishow.png" />
     </div>
@@ -37,17 +35,15 @@
         </router-link>
         <i class="fas fa-gamepad fa-3x game"></i>
         <router-link to="/notification">
-        <i class="fas fa-bell fa-3x bell"></i>
+          <i class="fas fa-bell fa-3x bell"></i>
         </router-link>
         <router-link to="/">
           <i class="fas fa-home fa-3x home"></i>
         </router-link>
       </div>
       <div class="header-logo-menu">
-
         <div id="nav-drawer">
-
-          <input id="nav-input" type="checkbox" class="nav-unshown">
+          <input id="nav-input" type="checkbox" class="nav-unshown" />
           <label id="nav-open" for="nav-input">
             <span></span>
             <div class="notification" v-if="notice.length">{{notice.length}}</div>
@@ -64,10 +60,10 @@
             </router-link>
             <i class="fas fa-gamepad fa-3x game"></i>
             <router-link to="/notification">
-            <div class="bell">
-              <span class="notification" v-if="notice.length">{{notice.length}}</span>
-              <i class="fas fa-bell fa-3x"></i>
-            </div>
+              <div class="bell">
+                <span class="notification" v-if="notice.length">{{notice.length}}</span>
+                <i class="fas fa-bell fa-3x"></i>
+              </div>
             </router-link>
             <router-link to="/">
               <i class="fas fa-home fa-3x home"></i>
@@ -82,8 +78,8 @@
 
 <script>
 import store from "../store";
-import firebase from '../plugin/firestore'
-import 'firebase/firestore'
+import firebase from "../plugin/firestore";
+import "firebase/firestore";
 
 const db = firebase.firestore();
 
@@ -93,13 +89,13 @@ export default {
   data() {
     return {
       word: "",
-      notice:[]
+      notice: []
     };
   },
   computed: {
     user() {
       return this.$store.getters.user;
-    },
+    }
   },
 
   methods: {
@@ -109,17 +105,22 @@ export default {
 
     commitChange(newValue) {
       //this.$emit("input", newValue);
+      this.$emit("search", newValue);
       store.commit("onSearchWordInput", newValue);
-    },
-
+    }
   },
 
-  created:function(){
-    db.collection("USER").doc(this.user.email).collection("notice").get().then(doc=>{
-        this.notice = doc.docs
-    }).catch(()=>{
-      this.notice = [];
-    })
+  created: function() {
+    db.collection("USER")
+      .doc(this.user.email)
+      .collection("notice")
+      .get()
+      .then(doc => {
+        this.notice = doc.docs;
+      })
+      .catch(() => {
+        this.notice = [];
+      });
   }
 };
 </script>
@@ -262,7 +263,6 @@ export default {
         color: $secondary-color;
       }
     }
-
   }
 
   .logo {
@@ -277,7 +277,7 @@ export default {
     z-index: 10;
   }
 
-  .logoBack{
+  .logoBack {
     height: 100%;
     width: $button_width;
 
@@ -333,40 +333,41 @@ export default {
       color: #fff;
     }
 
-    .notification{
+    .notification {
       position: absolute;
       height: 20px;
       width: 20px;
-      right:20px;
+      right: 20px;
 
-      color:white;
+      color: white;
+
       border-radius: 20%;
       background-color: red;
       z-index: 10;
     }
 
     .home {
-        position: absolute;
+      position: absolute;
 
-        width: $button_width;
-        height: $button_height;
+      width: $button_width;
+      height: $button_height;
 
-        right: 450px;
-        top: 10px;
+      right: 450px;
+      top: 10px;
 
-        color: #fff;
+      color: #fff;
     }
 
-    .grobal{
-        position: absolute;
+    .grobal {
+      position: absolute;
 
-        width: $button_width;
-        height: $button_height;
+      width: $button_width;
+      height: $button_height;
 
-        right: 350px;
-        top: 10px;
+      right: 350px;
+      top: 10px;
 
-        color: #fff;
+      color: #fff;
     }
 
     .dm:hover {
@@ -381,7 +382,7 @@ export default {
       opacity: 0.5;
     }
 
-    .notification:hover .bell{
+    .notification:hover .bell {
       opacity: 0.5;
     }
 
@@ -389,14 +390,14 @@ export default {
       opacity: 0.5;
     }
 
-    .grobal:hover{
+    .grobal:hover {
       opacity: 0.5;
     }
   }
   .nav-unshown {
-    display:none;
+    display: none;
   }
-  .buttons{
+  .buttons {
     display: none;
   }
   .logoSentence {
@@ -423,11 +424,11 @@ export default {
   }
 }
 
-@media (min-width: 1300px){
-  #header{
+@media (min-width: 1300px) {
+  #header {
     top: 0px;
   }
-  .logoSentence2{
+  .logoSentence2 {
     position: absolute;
 
     font-family: "Pangolin", cursive;
@@ -444,23 +445,30 @@ export default {
     text-shadow: 2px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
       -1px 1px 0 #000, 1px 1px 0 #000;
   }
+
+  
 }
 
+@media(min-width:1050px){
+  #nav-open .notification{
+    display: none;
+  }
+}
 
-@media (max-width: 1050px){
+@media (max-width: 1050px) {
   #nav-drawer {
     position: relative;
   }
 
   /*チェックボックス等を非表示*/
   .nav-unshown {
-    display:none;
+    display: none;
   }
 
   /*アイコンのスペース（クリック可能な領域）*/
   #nav-open {
     display: inline-block;
-    right:10px;
+    right: 10px;
     width: 90px;
     height: 90px;
     vertical-align: middle;
@@ -468,15 +476,17 @@ export default {
   }
 
   /*ハンバーガーボタンの形*/
-  #nav-open span, #nav-open span:before, #nav-open span:after {
+  #nav-open span,
+  #nav-open span:before,
+  #nav-open span:after {
     position: absolute;
-    bottom:55px;//topで指定するとなぜか崩れるのでbottomで指定
-    height: 6px;//線の太さ
-    width: 60px;//長さ
-    border-radius:100px;//線の丸み
-    background: #fff;//線の色
+    bottom: 55px; //topで指定するとなぜか崩れるのでbottomで指定
+    height: 6px; //線の太さ
+    width: 60px; //長さ
+    border-radius: 100px; //線の丸み
+    background: #fff; //線の色
     display: block;
-    content: '';
+    content: "";
     cursor: pointer;
     /*.menu-trigger,
     .menu-trigger span {
@@ -508,10 +518,10 @@ export default {
     }*/
   }
   #nav-open span:before {
-    top: -22px;//ハンバーガーボタンの一番上の線
+    top: -22px; //ハンバーガーボタンの一番上の線
   }
   #nav-open span:after {
-    bottom: -22px;//ハンバーガーボタンの一番下の線
+    bottom: -22px; //ハンバーガーボタンの一番下の線
   }
   #nav-open:hover {
     opacity: 0.5;
@@ -528,7 +538,7 @@ export default {
     height: 100%;
     background: black;
     opacity: 0;
-    transition: .3s ease-in-out;
+    transition: 0.3s ease-in-out;
   }
 
   /*メニューの中身*/
@@ -537,18 +547,18 @@ export default {
     position: fixed;
     top: 0px;
     right: 20px;
-    z-index: 9999;//最前
+    z-index: 9999; //最前
     width: 90%;
-    max-width: 450px;//メニューバーの幅
-    height: 90px;//高さ
-    background: $dark_color;//メニューバーの色
+    max-width: 450px; //メニューバーの幅
+    height: 90px; //高さ
+    background: $dark_color; //メニューバーの色
     border: solid;
     border-radius: 3px;
     border-color: #fff;
-    transition: .3s ease-in-out;
+    transition: 0.3s ease-in-out;
     -webkit-transform: translateY(-1000px); //最初は上に隠す
     transform: translateY(-1000px);
-    box-shadow: 6px 0 25px rgba(0,0,0,.15);
+    box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
     .dm {
       position: absolute;
       width: $button_width;
@@ -581,7 +591,7 @@ export default {
       top: 10px;
       color: #fff;
     }
-    .grobal{
+    .grobal {
       position: absolute;
       width: $button_width;
       height: $button_height;
@@ -594,13 +604,13 @@ export default {
   /*チェックがついたら表示させる*/
   #nav-input:checked ~ #nav-close {
     display: block; //薄黒部分の表示
-    opacity: .5;
+    opacity: 0.5;
   }
 
   #nav-input:checked ~ #nav-content {
     -webkit-transform: translateY(200px); //メニューバーの表示
     transform: translateY(200px);
-    box-shadow: 6px 0 25px rgba(0,0,0,.15);
+    box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
   }
 
   /*#nav-input:checked ~ #nav-open {
@@ -643,16 +653,16 @@ export default {
   }
 
   .header-logo-menu{ //以下コピペにつき，意味が分からない CSSって何なのですか
-	  display: flex;
-	  display: -moz-flex;
-	  display: -o-flex;
-	  display: -webkit-flex;
-	  display: -ms-flex;
-	  flex-direction: row;
-	  -moz-flex-direction: row;
-	  -o-flex-direction: row;
-	  -webkit-flex-direction: row;
-	  -ms-flex-direction: row;
+    display: flex;
+    display: -moz-flex;
+    display: -o-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    flex-direction: row;
+    -moz-flex-direction: row;
+    -o-flex-direction: row;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
   }
   .menu-trigger.active span:nth-of-type(1) {
     -webkit-transform: translateY(20px) rotate(-45deg);
@@ -666,6 +676,4 @@ export default {
     transform: translateY(-20px) rotate(45deg);
   }*/
 }
-
-
 </style>
