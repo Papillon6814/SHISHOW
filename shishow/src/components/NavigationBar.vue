@@ -121,7 +121,7 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Pangolin&display=swap");
 
 #header {
-  position: absolute;
+  position: fixed;
 
   top: $header_height;
   left: 0;

@@ -9,6 +9,7 @@
         </div>
       </div>
     </div>
+
       <span class="iconCirclePosition">
         <label>
           <div class="iconCircle">
@@ -287,7 +288,7 @@ export default {
   position: absolute;
 
   width: $banner_width;
-  height: $banner_height;
+  // height: $banner_height;
 
   background-color: $su_banner_color;
 

@@ -41,8 +41,8 @@ $logo_sentence_color: #e0ffff;
 /* --- */
 /* around myBanner */
 
-$banner_width: 80%;
-$banner_height: 280px;
+$banner_width: 100%;
+// $banner_height: calc(100% - 100px);
 
 $icon_width: 130px;
 $icon_height: $icon_width;

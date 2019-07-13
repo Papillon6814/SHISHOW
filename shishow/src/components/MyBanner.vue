@@ -158,7 +158,7 @@ export default {
   position: absolute;
 
   width: $banner_width;
-  height: $banner_height;
+  height: 100%;
 
   background-color: $banner_color;
 
@@ -181,7 +181,7 @@ export default {
 
   width: $banner_width;
   //temporary height
-  height: $banner_height * 2;
+  // height: $banner_height * 2;
 
   z-index: 2;
 

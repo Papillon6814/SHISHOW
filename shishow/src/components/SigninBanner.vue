@@ -68,7 +68,7 @@ export default {
         })
         .catch(()=> {
           alert('Could not signed in.');
-          
+
         });
     },
     onAuth: function() {
@@ -87,7 +87,7 @@ export default {
   position: absolute;
 
   width: $banner_width;
-  height: $banner_height;
+  // height: $banner_height;
 
   background-color: $si_banner_color;
 
