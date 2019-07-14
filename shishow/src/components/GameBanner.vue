@@ -32,7 +32,7 @@ export default {
     position: absolute;
 
     width: $banner_width;
-    height: $banner_height;
+    // height: $banner_height;
 
     background-color: $g_banner_color;
 

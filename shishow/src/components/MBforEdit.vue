@@ -102,7 +102,7 @@ export default {
     },
   },
   created:function(){
-    
+
 
     this.onAuth();
 
@@ -125,7 +125,7 @@ export default {
   mounted:function(){
 
     this.modal =document.getElementById("modal");
-    
+
 
   },
   watch: {
@@ -173,7 +173,7 @@ export default {
         alert("// An error happened.") ;
       });
 
-      
+
     },
 
     onFileChange(event) {
@@ -181,9 +181,9 @@ export default {
       //file変数定義
       let files = event.target.files || event.dataTransfer.files;
       if (files[0].type.match(/image/)) {
-        
+
         this.showImage(files[0]);
-      } 
+      }
     },
 
     showImage(file) {
@@ -305,7 +305,7 @@ export default {
 
   width: $banner_width;
   //temporary height
-  height: $banner_height * 2.8;
+  //height: $banner_height * 2.8;
 
   z-index: 2;
 
@@ -336,7 +336,7 @@ export default {
 
 .achievement {
   position: relative;
-  width: 100px; 
+  width: 100px;
   height: 57.74px;
   background-color: #fff;
   margin: 28.87px 0;

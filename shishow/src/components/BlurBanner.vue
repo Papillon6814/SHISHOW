@@ -44,7 +44,7 @@ export default {
   position: relative;
 
   width: $banner_width;
-  height: $banner_height;
+  // height: 100%;
 
   .whyDontYouCreate {
     position: absolute;

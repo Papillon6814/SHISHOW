@@ -1,8 +1,7 @@
 <template>
 
   <div class="dmBanner">
-    
-    <div class="dmBannerIcon"></div>
+    <img :src="iconPic" class="dmBannerIconPosition" />
     <div class="dmBannerName">
       {{ dmBannerUsername }}
     </div>
@@ -12,7 +11,7 @@
       {{ dmMsg }}
     </div>
   </div>
-    
+
 
 </template>
 
@@ -35,23 +34,18 @@ export default {
 .dmBanner {
   display: block;
 
-  width: 100%;
+  width: 88%;
   height: 120px;
 
   background-color: $dm_banner_color;
 
-  border-bottom: solid;
-  border-width: 1px;
-  border-color: #444;
-    
-
   cursor: pointer;
 
-  .dmBannerIcon {
-    position: relative;
+  .dmBannerIconPosition {
+    position: absolute;
 
-      top: 15px;
-      left: 20px;
+    top: 15px;
+    left: 20px;
 
     width: $dm_icon_width;
     height: $dm_icon_width;
@@ -66,44 +60,33 @@ export default {
   }
 
   .dmBannerName {
-    position: relative;
+    position: absolute;
 
-      bottom: 80px;
-      left: 110px;
+    top: 8px;
+    left: 130px;
 
-      width: 30%;
-      height: 35px;
+    width: 60%;
+    height: 35px;
 
-    // temporary color
-    background-color: #fff;
+    // DEBUG: temporary color
+    background-color: #ccc;
 
-      font-size: 25px;
-      // font-family: 'Noto Sans JP', sans-serif;
+    font-size: 25px;
+    // font-family: 'Noto Sans JP', sans-serif;
+
+    text-align: left;
     }
 
-  .dmTimeArea {
-    position: relative;
-
-      bottom: 70px;
-      left: 550px;
-
-      width: 25%;
-      height: 60px;
-
-    background-color: #fff;
-    font-family: 'Noto Sans JP', sans-serif;
-  }
-  
   .dmMsgArea {
-    position: relative;
+    position: absolute;
 
-      bottom: 120px;
-      left: 150px;
+      bottom: 8px;
+      left: 130px;
 
       width: 50%;
       height: 50px;
 
-    background-color: #fff;
+    background-color: #acc;
     font-family: 'Noto Sans JP', sans-serif;
   }
 }
