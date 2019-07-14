@@ -2,10 +2,10 @@
   <div id="leftArea">
 
     <div class="switchTab">
-      <div class="private">
+      <div class="private" @click="switchPrivate()">
         Private
       </div>
-      <div class="global">
+      <div class="global" @click="switchGlobal()">
         Global
       </div>
     </div>
@@ -44,6 +44,8 @@ let db = firebase.firestore();
 
 let currentUserEmail;
 let lastMsgDate = [];
+
+let privateDM, globalDM, leftArea;
 
 export default {
   name: 'LeftArea',
@@ -115,6 +117,20 @@ export default {
     click: function(friend) {
       this.$parent.idFromLeftArea = friend;
     },
+
+    switchPrivate: function() {
+      privateDM[0].style.display = "block";
+      globalDM[0].style.display = "none";
+
+      leftArea.style.background = "#b2ebf2";
+    },
+
+    switchGlobal: function() {
+      privateDM[0].style.display = "none";
+      globalDM[0].style.display = "block";
+
+      leftArea.style.background = "#fff";
+    }
   },
 
   created: function() {
@@ -123,6 +139,12 @@ export default {
     currentUserEmail = firebase.auth().currentUser.email;
     this.loadLastMsgAndDate();
   },
+
+  mounted: function() {
+    privateDM = document.getElementsByClassName("privateDM");
+    globalDM = document.getElementsByClassName("globalDM");
+    leftArea = document.getElementById("leftArea");
+  }
 }
 
 </script>
@@ -143,13 +165,14 @@ export default {
       .private {
         position: absolute;
 
-        // TODO: note in a SCSS file
         background: #b2ebf2;
 
+        // TODO: note in a SCSS file
         width: 50%;
         height: 90px;
 
         font-size: 40px;
+        line-height: 90px;
 
         cursor: pointer;
       }
@@ -164,6 +187,9 @@ export default {
         height: 90px;
 
         right: 0;
+
+        font-size: 40px;
+        line-height: 90px;
 
         cursor: pointer;
       }
