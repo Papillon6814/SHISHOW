@@ -1,6 +1,6 @@
 <template>
   <div class="dmBanner">
-    <div class="dmBannerIcon"></div>
+    <img :src="iconPic" class="dmBannerIconPosition" />
     <div class="dmBannerName">
       {{ dmBannerUsername }}
     </div>
@@ -36,8 +36,8 @@ export default {
 
   cursor: pointer;
 
-  .dmBannerIcon {
-    position: relative;
+  .dmBannerIconPosition {
+    position: absolute;
 
     top: 15px;
     left: 20px;
@@ -55,9 +55,9 @@ export default {
   }
 
   .dmBannerName {
-    position: relative;
+    position: absolute;
 
-    bottom: 80px;
+    top: 8px;
     left: 130px;
 
     width: 60%;
@@ -73,9 +73,9 @@ export default {
     }
 
   .dmMsgArea {
-    position: relative;
+    position: absolute;
 
-      bottom: 70px;
+      bottom: 8px;
       left: 130px;
 
       width: 50%;

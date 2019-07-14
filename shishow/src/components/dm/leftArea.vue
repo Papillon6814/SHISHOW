@@ -17,7 +17,8 @@
           <div @click="click(friend)">
             <dmBanner
               :dmBannerUsername="usernames[N]"
-              :dmMsg="lastMsg[N]">
+              :dmMsg="lastMsg[N]"
+              :iconPic="dmImages[N]">
             </dmBanner>
           </div>
         </div>
@@ -52,6 +53,7 @@ export default {
       friends: '',
       lastMsg: [],
       usernames: [],
+      dmImages: [],
       isPrivate: true
     }
   },
@@ -91,6 +93,7 @@ export default {
               .get()
               .then(doc2 => {
                 this.usernames.push(doc2.data().username);
+                this.dmImages.push(doc2.data().image)
               });
 
             db.collection("PrivateChat")
@@ -126,8 +129,6 @@ export default {
 
 <style lang='scss' scoped>
   #leftArea {
-    overflow-y: scroll;
-    overflow-x: hidden;
 
     position: absolute;
     top: 0;
@@ -169,13 +170,16 @@ export default {
     }
 
     .privateDM {
+      overflow-y: scroll;
+      overflow-x: hidden;
+
       position: absolute;
 
       top: 90px;
       left: 0;
 
       width: 100%;
-      height: auto;
+      height: calc(100% - 90px);
 
       .dmbannerPosition{
         position: absolute;

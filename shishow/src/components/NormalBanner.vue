@@ -102,21 +102,22 @@ export default {
           });
 
         db.collection("USER").doc(this.user.email)
-        .collection("relation")
-        .doc(this.signuser.email).set({
-          relation:1,
-        })
-        .catch(() =>{
+          .collection("relation")
+          .doc(this.signuser.email).set({
+            relation:1,
+          })
+          .catch(() =>{
 
-        })
+          })
 
-        db.collection("USER").doc(this.signuser.email)
-        .collection("relation")
-        .doc(this.user.email).set({
-          relation:2,
-        }).catch(() =>{
+        db.collection("USER")
+          .doc(this.signuser.email)
+          .collection("relation")
+          .doc(this.user.email).set({
+            relation:2,
+          }).catch(() =>{
 
-        })
+          })
 
         db.collection("USER").doc(this.user.email)
         .collection("notice")
@@ -144,11 +145,11 @@ export default {
 
       db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).delete()
       .catch(() =>{
-        
+
       })
       db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).delete()
       .catch(() =>{
-        
+
       })
 
       user_db.collection("notice").doc(this.signuser.email).delete();
@@ -186,7 +187,7 @@ export default {
                  });
                })
                .catch(() => {
-                 
+
                });
 
         user_db.collection("outgoing")
@@ -203,7 +204,7 @@ export default {
                         })
                })
                .catch(() => {
-                 
+
                });
 
         db.collection("USER")
@@ -214,7 +215,7 @@ export default {
             relation:3,
           })
           .catch(() =>{
-            
+
           })
 
         db.collection("USER")
@@ -225,7 +226,7 @@ export default {
             relation:3,
           })
           .catch(() =>{
-            
+
           })
 
         user_db.collection("notice")
