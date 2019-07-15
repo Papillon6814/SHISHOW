@@ -8,6 +8,7 @@
       <div class="global" @click="switchGlobal()">
         Global
       </div>
+      <div class="RegisterGame"></div>
     </div>
 
     <div class="privateDM">
@@ -244,6 +245,8 @@ export default {
 
       height: 40px;
       width: 40px;
+
+      background-color: #212121;
     }
   }
 
