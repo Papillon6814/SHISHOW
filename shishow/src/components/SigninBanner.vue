@@ -2,7 +2,7 @@
   <div class="signinBanner">
     <div class="LoginTitle"></div>
 
-    <div class="drawSpace">
+    <div class="drawnSpace">
     </div>
 
     <div class="usernamePosition">
@@ -114,7 +114,7 @@ export default {
     text-align: center;
   }
 
-  .drawSpace {
+  .drawnSpace {
     position: absolute;
 
     top: 60px;
@@ -139,8 +139,6 @@ export default {
     .username {
       width:  100%; //$user_width
       height: 35px; //$user_height
-
-      background-color: #fff;
     }
   }
 
@@ -157,8 +155,6 @@ export default {
     .password {
       width: 100%; //$id_width
       height: 35px; //$id_height
-
-      background-color: #fff;
     }
   }
   .signin_button {
@@ -166,6 +162,10 @@ export default {
 
     top: 350px;
     left: 50%;
+
+    background: #fff;
+
+    width: 30%;
 
     -webkit-transform: translate(-50%, 0);
     -moz-transform: translate(-50%, 0);
