@@ -76,7 +76,7 @@ export default{
   position: absolute;
 
   width: $banner_width;
-  height: $banner_height;
+  height: 100%;
 
   background-color: $su_banner_color;
 
