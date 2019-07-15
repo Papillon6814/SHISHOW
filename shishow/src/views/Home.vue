@@ -6,7 +6,6 @@
       <transition appear name="v">
         <div id="myBannerPosition">
           <myBanner
-            @extendMyBanner="extendOther"
             v-if="userStatus"
             :loginedUser="getCurrentUserName">
           </myBanner>
@@ -21,8 +20,7 @@
             <normalBanner
               :user="filteredUser[N-1]"
               :signuser="signuser"
-              :relations="relation[N-1]"
-              @extendNormalBanner="moveDown(N)">
+              :relations="relation[N-1]">
             </normalBanner>
           </div>
         </div>
@@ -152,68 +150,12 @@ export default {
         store.commit("onUserStatusChanged", user.uid ? true : false);
       });
     },
-
-    extendOther: function() {
-      let active = true;
-      let move = document.getElementById("moving");
-      let footer = document.getElementsByTagName('footer');
-
-      let footerStyle = getComputedStyle(footer[0]);
-      footer[0].style.top = (parseInt(footerStyle.top) + 280) + 'px';
-
-      move.style.top = "340px";
-      active = !active;
-      if (active === false) {
-        footer[0].style.top = (parseInt(footerStyle.top) - 280) + 'px';
-
-        move.style.top = "60px";
-      }
-    },
-
     placeFooter: function() {
       let footer = document.getElementsByTagName('footer');
       footer[0].style.top = (200 * (1 + this.filteredUser.length) + 300) + 'px';
 
       this.$forceUpdate();
     },
-
-    moveDown: function(N) {
-      let move, style;
-      let footer, footerStyle;
-      let i;
-      if(this.normalBannerActiveArray.indexOf(N) == -1) {
-        // normalBannerActiveArrayの中にNが格納されていない時
-        this.normalBannerActiveArray.push(N);
-
-        for(i=N+1;i<=this.filteredUser.length;i++){
-          move = document.getElementsByClassName('n'+i);
-          style = window.getComputedStyle(move[0]);
-          move[0].style.top = (parseInt(style.top)+200)+"px";
-        }
-
-        footer = document.getElementsByTagName('footer')
-        footerStyle = getComputedStyle(footer[0]);
-
-        footer[0].style.top = (parseInt(footerStyle.top) + 200) + 'px';
-      } else {
-        // Nが配列の中にある時は、削除を行う
-        this.normalBannerActiveArray.splice(
-          this.normalBannerActiveArray.indexOf(N), 1
-        );
-
-        for(i = N+1; i <= this.filteredUser.length; i++) {
-          move = document.getElementsByClassName('n'+i);
-          style = window.getComputedStyle(move[0]);
-
-          move[0].style.top = (parseInt(style.top) - 200) + "px";
-        }
-        footer = document.getElementsByTagName('footer')
-        footerStyle = getComputedStyle(footer[0]);
-
-        footer[0].style.top = (parseInt(footerStyle.top) - 200) + 'px';
-      }
-      this.$forceUpdate();
-    }
   }
 };
 
