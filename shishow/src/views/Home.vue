@@ -164,8 +164,8 @@ export default {
 <style lang="scss">
 
 html {
-  overflow-y: scroll;
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 body {

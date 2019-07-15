@@ -12,8 +12,6 @@ import Friend from './views/friend.vue'
 import GlobalChat from "./views/GlobalChat.vue"
 import GameRequest from './views/GameRequest.vue'
 
-
-
 import firebase from 'firebase'
 
 Vue.use(Router)
