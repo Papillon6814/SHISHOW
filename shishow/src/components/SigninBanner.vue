@@ -22,15 +22,11 @@
     </div>
 
     <router-link to="/signup">
-      <div class="">Sign up</div>
+      <div class="signupArea">Sign up</div>
     </router-link>
 
     <div class="signin_button" @click="login">
       Sign in
-    </div>
-
-    <div class="signupArea">
-      Sign up
     </div>
   </div>
 </template>

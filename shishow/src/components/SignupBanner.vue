@@ -92,6 +92,7 @@ export default {
       modal: "",
     };
   },
+
   mounted:function(){
     this.modal = document.getElementById("modal");
   },
@@ -135,7 +136,6 @@ export default {
 
 
                   this.roundimg = url;
-
 
                 }
 

@@ -154,7 +154,7 @@ export default {
     position: absolute;
 
     top: 13px;
-    right: 100px;
+    right: 50px;
 
     .group {
       position: relative;
