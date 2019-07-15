@@ -71,8 +71,6 @@ export default {
     padding: 0;
     margin: 0;
     width: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
 
     background-color: $dark_color;
   }
@@ -103,7 +101,7 @@ export default {
     left: 15%;
 
     width: 70%;
-    height: 100%;
+    height: calc(100% - 200px);
 
     background-color: #fff;
     box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
