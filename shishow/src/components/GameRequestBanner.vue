@@ -74,9 +74,10 @@ export default{
 .GameRequestBanner {
   position: absolute;
 
-  width: $banner_width;
-  height: 100%;
+  width: 48%;
+  height: 480px;
 
+  left: 17%;
   background-color: $su_banner_color;
 
   z-index: 2;
