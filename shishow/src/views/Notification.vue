@@ -124,11 +124,11 @@ export default {
       $i: $i + 1;
     }
   }
-  #notificationField::webkit-scrollbar{
+  #notificationField::webkit-scrollbar {
     display: none;
   }
 
-  .no_notification{
+  .no_notification {
     position: relative;
     top:250px;
     font-size: 130px;
