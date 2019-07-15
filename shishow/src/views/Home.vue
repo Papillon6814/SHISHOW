@@ -17,13 +17,13 @@
           <div class="normalBannerPosition">
             <div v-for="N in filteredUser.length"
               :key="N" v-bind:class="'n'+N">
-            <normalBanner
-              :user="filteredUser[N-1]"
-              :signuser="signuser"
-              :relations="relation[N-1]">
-            </normalBanner>
+              <normalBanner
+                :user="filteredUser[N-1]"
+                :signuser="signuser"
+                :relations="relation[N-1]">
+              </normalBanner>
+            </div>
           </div>
-        </div>
         </transition>
       </div>
       <!--

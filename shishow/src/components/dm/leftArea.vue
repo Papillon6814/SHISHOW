@@ -233,6 +233,18 @@ export default {
     .globalDM {
       display: none;
     }
+
+    .RegisterGame {
+      z-index: 4;
+
+      position: absolute;
+
+      top: 0;
+      right: 0;
+
+      height: 40px;
+      width: 40px;
+    }
   }
 
 </style>
