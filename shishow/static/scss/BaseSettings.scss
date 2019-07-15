@@ -14,6 +14,15 @@ $window_flame: #002858;
 // TODO: must be deleted successfully.
 $pulldown_color: #97fff1;
 
+$dark_primary_color: #0097A7;
+$light_primary_color: #b2ebf2;
+$primary_color: #00bcd4;
+$text_icons: #fff;
+$accent_color: #ff4081;
+$primary_text: #212121;
+$secondary_text: #757575;
+$divider_color: #bdbdbd;
+
 $n_banner_color: #abbffb;
 $n_banner_flame: #202f5a;
 $n_window_flame: #3f4c7c;
@@ -41,8 +50,8 @@ $logo_sentence_color: #e0ffff;
 /* --- */
 /* around myBanner */
 
-$banner_width: 80%;
-$banner_height: 280px;
+$banner_width: 100%;
+// $banner_height: calc(100% - 100px);
 
 $icon_width: 130px;
 $icon_height: $icon_width;
@@ -72,11 +81,11 @@ $su_pass_height: 30px;
 /* --- */
 /* around normalBanner */
 
-$n_icon_width: 89.375px;
+$n_icon_width: 100px;
 $n_icon_height: $n_icon_width;
 
 $n_banner_width: 55%;
-$n_banner_height: $n_icon_height + 70px;
+$n_banner_height: 180px;
 
 $n_achievement_width: 32.3125px;
 $n_achievement_height: 15.8125px;
@@ -126,6 +135,13 @@ $n_profile_height: 83.75px;
   $main_text_color: rgba(0, 0, 0, 0.87);
   $sub_text_color: rgba(0, 0, 0, 0.54);
   $invisible_text_color: rgba(0, 0, 0, 0.38);
+
+/* --- */
+
+/* friend banner */
+
+$f_banner_width: 86%;
+$f_banner_height: 130px;
 
 /* --- */
 

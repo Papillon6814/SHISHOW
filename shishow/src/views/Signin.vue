@@ -41,8 +41,8 @@ body {
   width: 100%;
 
   //temporary top
-  top: 150px;
-  left: 10%;
+  top: 180px;
+  left: 26%;
 }
 
 </style>

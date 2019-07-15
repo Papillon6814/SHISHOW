@@ -40,7 +40,10 @@ let router = new Router({
     {
       path: '/notification',
       name: 'notification',
-      component: Notification
+      component: Notification,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/directMessage',
@@ -53,13 +56,18 @@ let router = new Router({
     {
       path: '/friend',
       name: 'friend',
-      component: Friend
+      component: Friend,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/follow',
       name: 'follow',
       component: Follow,
-      component: Friend
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/search',
@@ -89,7 +97,7 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth) {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-  
+
         next()
       } else {
 

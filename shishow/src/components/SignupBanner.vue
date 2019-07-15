@@ -9,6 +9,7 @@
         </div>
       </div>
     </div>
+
       <span class="iconCirclePosition">
         <label>
           <div class="iconCircle">
@@ -91,6 +92,7 @@ export default {
       modal: "",
     };
   },
+
   mounted:function(){
     this.modal = document.getElementById("modal");
   },
@@ -134,7 +136,6 @@ export default {
 
 
                   this.roundimg = url;
-
 
                 }
 
@@ -287,7 +288,7 @@ export default {
   position: absolute;
 
   width: $banner_width;
-  height: $banner_height;
+  // height: $banner_height;
 
   background-color: $su_banner_color;
 

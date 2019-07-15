@@ -3,7 +3,6 @@
     <header>
       <navi @input="getSearchWord"></navi>
     </header>
-    <main>
       <transition appear name="v">
         <div id="myBannerPosition">
           <myBanner
@@ -16,22 +15,19 @@
       </transition>
       <div id="moving">
         <transition appear name="v2">
-        <div class="normalBannerField">
           <div class="normalBannerPosition">
             <div v-for="N in filteredUser.length"
               :key="N" v-bind:class="'n'+N">
-              <normalBanner
+            <normalBanner
               :user="filteredUser[N-1]"
               :signuser="signuser"
               :relations="relation[N-1]"
               @extendNormalBanner="moveDown(N)">
-              </normalBanner>
-            </div>
+            </normalBanner>
           </div>
         </div>
         </transition>
       </div>
-    </main>
       <!--
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
@@ -179,7 +175,6 @@ export default {
       footer[0].style.top = (200 * (1 + this.filteredUser.length) + 300) + 'px';
 
       this.$forceUpdate();
-
     },
 
     moveDown: function(N) {
@@ -239,21 +234,15 @@ body {
   background-color: $dark_color;
 }
 
-
-
 #myBannerPosition {
-  //position: relative;
-  //temporary top
+  position: fixed;
+  top: 100px;
+  left: 0;
 
-  padding-top: 70px;
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 100%;
-  position: absolute;
+  width: 23%;
+  height: calc(100% - 100px);
+
   z-index: 1;
-
-  /*top: 45px;
-    left: 10%;*/
 }
 
 #moving {
@@ -262,14 +251,12 @@ body {
   .normalBannerPosition {
     position: absolute;
 
-    top: 173px;
-    left: 14%;
-
+    top: -30px;
     width: 100%;
     height: 100%;
 
     padding-top: 165px;
-    margin-left: 10%;
+    margin-left: 27%;
 
     $i: 1;
 
@@ -310,30 +297,11 @@ footer {
   padding-top: 100px;
 }
 
-#myBannerPosition {
-  //position: relative;
-  //temporary top
-  padding-top: 70px;
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 100%;
-  position: absolute;
-  z-index: 1;
-  /*top: 45px;
-    left: 10%;*/
-}
-
 .gameBannerPosition {
   position: absolute;
   //temporary top
   top: 45px;
   left: 10%;
-}
-
-#moving {
-  position: absolute;
-  width: 100%;
-  transition: 0.3s;
 }
 
 .v-enter {

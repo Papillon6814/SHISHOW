@@ -2,10 +2,10 @@
   <div id="leftArea">
 
     <div class="switchTab">
-      <div class="private">
+      <div class="private" @click="switchPrivate()">
         Private
       </div>
-      <div class="global">
+      <div class="global" @click="switchGlobal()">
         Global
       </div>
     </div>
@@ -17,7 +17,8 @@
           <div @click="click(friend)">
             <dmBanner
               :dmBannerUsername="usernames[N]"
-              :dmMsg="lastMsg[N]">
+              :dmMsg="lastMsg[N]"
+              :iconPic="dmImages[N]">
             </dmBanner>
           </div>
         </div>
@@ -44,6 +45,8 @@ let db = firebase.firestore();
 let currentUserEmail;
 let lastMsgDate = [];
 
+let privateDM, globalDM, leftArea;
+
 export default {
   name: 'LeftArea',
 
@@ -52,6 +55,7 @@ export default {
       friends: '',
       lastMsg: [],
       usernames: [],
+      dmImages: [],
       isPrivate: true
     }
   },
@@ -91,6 +95,7 @@ export default {
               .get()
               .then(doc2 => {
                 this.usernames.push(doc2.data().username);
+                this.dmImages.push(doc2.data().image)
               });
 
             db.collection("PrivateChat")
@@ -112,6 +117,20 @@ export default {
     click: function(friend) {
       this.$parent.idFromLeftArea = friend;
     },
+
+    switchPrivate: function() {
+      privateDM[0].style.display = "block";
+      globalDM[0].style.display = "none";
+
+      leftArea.style.background = "#b2ebf2";
+    },
+
+    switchGlobal: function() {
+      privateDM[0].style.display = "none";
+      globalDM[0].style.display = "block";
+
+      leftArea.style.background = "#fff";
+    }
   },
 
   created: function() {
@@ -120,14 +139,18 @@ export default {
     currentUserEmail = firebase.auth().currentUser.email;
     this.loadLastMsgAndDate();
   },
+
+  mounted: function() {
+    privateDM = document.getElementsByClassName("privateDM");
+    globalDM = document.getElementsByClassName("globalDM");
+    leftArea = document.getElementById("leftArea");
+  }
 }
 
 </script>
 
 <style lang='scss' scoped>
   #leftArea {
-    overflow-y: scroll;
-    overflow-x: hidden;
 
     position: absolute;
     top: 0;
@@ -142,13 +165,14 @@ export default {
       .private {
         position: absolute;
 
-        // TODO: note in a SCSS file
         background: #b2ebf2;
 
+        // TODO: note in a SCSS file
         width: 50%;
         height: 90px;
 
         font-size: 40px;
+        line-height: 90px;
 
         cursor: pointer;
       }
@@ -164,18 +188,24 @@ export default {
 
         right: 0;
 
+        font-size: 40px;
+        line-height: 90px;
+
         cursor: pointer;
       }
     }
 
     .privateDM {
+      overflow-y: scroll;
+      overflow-x: hidden;
+
       position: absolute;
 
       top: 90px;
       left: 0;
 
       width: 100%;
-      height: auto;
+      height: calc(100% - 90px);
 
       .dmbannerPosition{
         position: absolute;

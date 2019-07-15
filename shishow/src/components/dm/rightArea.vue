@@ -136,8 +136,8 @@ export default {
   margin: 1.5em 15px 1.5em 0;
   padding: 7px 10px;
 
-  min-width: 125px;
-  max-width: 100%;
+  min-width: 25px;
+  max-width: 200px;
 
   color: $main_text_color;
   font-size: 16px;
@@ -161,14 +161,14 @@ export default {
   margin: 1.5em 15px 1.5em 0;
   padding: 7px 10px;
 
-  min-width: 125px;
-  max-width: 100%;
+  min-width: 25px;
+  max-width: 200px;
 
   color: $main_text_color;
   font-size: 16px;
   background: #FFF;
 
-  text-align: right;
+  text-align: left;
   font-family: 'Noto Sans JP', sans-serif;
 }
 
