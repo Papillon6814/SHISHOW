@@ -1,11 +1,15 @@
 <template>
   <div class="signinBanner">
-    <div class="LoginTitle">
-      <div class="LoginCenter">Login</div>
+    <div class="LoginTitle"></div>
+
+    <div class="drawSpace">
     </div>
+
     <div class="usernamePosition">
       <input class="username" type="text" placeholder="E-mail" v-model="e_mail" />
     </div>
+
+    <div class="divideLine"></div>
 
     <div class="passwordPosition">
       <input
@@ -18,10 +22,16 @@
     </div>
 
     <router-link to="/signup">
-      <div class="btn-circle-3d">Sign up</div>
+      <div class="">Sign up</div>
     </router-link>
 
-    <div class="btn-circle-3d-ver2" @click="login">Sign in</div>
+    <div class="signin_button" @click="login">
+      Sign in
+    </div>
+
+    <div class="signupArea">
+      Sign up
+    </div>
   </div>
 </template>
 
@@ -86,10 +96,10 @@ export default {
 .signinBanner {
   position: absolute;
 
-  width: $banner_width;
-  // height: $banner_height;
+  width: 48%;
+  height: 480px;
 
-  background-color: $si_banner_color;
+  background-color: #fff;
 
   border-radius: 3px;
 
@@ -101,125 +111,114 @@ export default {
     padding: auto;
 
     color: #fff;
-    background-color: #333;
+    background-color: $light_primary_color;
 
-    height: 30px;
+    height: 60px;
 
     text-align: center;
-
-    .LoginCenter {
-      position: absolute;
-
-      left: 50%;
-      top: 5px;
-    }
   }
 
-  .username {
-    width:  100%; //$user_width
-    height: 30px; //$user_height
+  .drawSpace {
+    position: absolute;
 
-    background-color: #fff;
+    top: 60px;
+    left: 0;
+
+    width: 100%;
+    height: 140px;
+
+    background-color: #fafafa;
   }
 
   .usernamePosition {
     position: absolute;
 
-    top: 50px;
+    top: 210px;
     left: 50%;
-    width: 75%;
+    width: 65%;
     -webkit-transform: translate(-50%, 0);
     -moz-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
-  }
 
-  .password {
-    width: 100%; //$id_width
-    height: 30px; //$id_height
+    .username {
+      width:  100%; //$user_width
+      height: 35px; //$user_height
 
-    background-color: #fff;
+      background-color: #fff;
+    }
   }
 
   .passwordPosition {
     position: absolute;
 
-    top: 120px;
+    top: 290px;
     left: 50%;
-    width: 75%;
+    width: 65%;
     -webkit-transform: translate(-50%, 0);
     -moz-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
+
+    .password {
+      width: 100%; //$id_width
+      height: 35px; //$id_height
+
+      background-color: #fff;
+    }
   }
-
-  .btn-circle-3d {
+  .signin_button {
     position: absolute;
+
+    top: 350px;
+    left: 50%;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+
     display: inline-block;
-
-    bottom: 8%;
-    left: 30%;
-
+    padding: 0.3em 1em;
     text-decoration: none;
-    text-align: center;
-
-    background-color: #ffc107;
-    color: #fff;
-
-    width: 130px;
-    height: 80px;
-
-    line-height: 79px;
-
-    border-radius: 50%;
-    font-weight: bold;
-    overflow: hidden;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-    border-bottom: solid 3px #ffb300;
-    transition: 0.4s;
+    color: $primary_text;
+    border: solid 2px $light_primary_color;
+    border-radius: 3px;
+    transition: .4s;
 
     cursor: pointer;
   }
 
-  .btn-circle-3d:active {
-    -webkit-transform: translateY(2px);
-    transform: translateY(2px);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-    border-bottom: none;
+  .signin_button:hover{
+    background: $light_primary_color;
+    color: #fff;
   }
-}
 
-.btn-circle-3d-ver2 {
-  position: absolute;
+  .divideLine {
+    position: absolute;
 
-  bottom: 8%;
-  right: 30%;
+    top: 268px;
+    left: 10%;
 
-  display: inline-block;
-  text-decoration: none;
-  text-align: center;
+    width: 80%;
+    height: 4px;
 
-  background-color: #ffc107;
-  color: #fff;
+    background-color: #fafafa;
+  }
 
-  width: 130px;
-  height: 80px;
+  .signupArea {
+    position: absolute;
 
-  line-height: 79px;
-  border-radius: 50%;
-  font-weight: bold;
-  overflow: hidden;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-  border-bottom: solid 3px #ffb300;
-  transition: 0.4s;
+    bottom: 0;
+    left: 0;
 
-  cursor: pointer;
-}
+    width: 100%;
+    height: 60px;
 
-.btn-circle-3d-ver2:active {
-  -webkit-transform: translateY(2px);
-  transform: translateY(2px);
+    background-color: #fafafa;
+    color: $primary_text;
 
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-  border-bottom: none;
+    line-height: 55px;
+
+    cursor: pointer;
+  }
 }
 
 .signinBanner:hover {

@@ -22,7 +22,7 @@
     <div class="userInfoPosition">
       <div class="userInfo">userinfo</div>
     </div> -->
-    <div v-if="relation==0" @click="sendFriendReq" class="friendRequest_button">江崎にフレ申請</div>
+    <div v-if="relation==0" @click="sendFriendReq" class="friendRequest_button">申請</div>
     <div v-else-if="relation==1" @click="add_db" class="friendRequest_button">承認</div>
     <div v-else-if="relation==2" @click="delete_db" class="friendRequest_button">削除</div>
     <div v-else-if="relation==3"  class="friendRequest_button">友達</div>
