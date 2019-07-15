@@ -10,10 +10,11 @@ import DirectMessage from './views/DirectMessage.vue'
 import Follow from './views/Follow.vue'
 import Friend from './views/friend.vue'
 import GlobalChat from "./views/GlobalChat.vue"
+import GameRequest from './views/GameRequest.vue'
 
-import firebase from './plugin/firestore'
-import 'firebase/firestore'
-import '@firebase/auth'
+
+
+import firebase from 'firebase'
 
 Vue.use(Router)
 
@@ -31,13 +32,11 @@ let router = new Router({
       name: 'signup',
       component: Signup
     },
-
     {
       path: '/signin',
       name: 'signin',
       component: Signin
     },
-
     {
       path: '/notification',
       name: 'notification',
@@ -46,7 +45,6 @@ let router = new Router({
         requiresAuth: true
       }
     },
-
     {
       path: '/directMessage',
       name: 'directMessage',
@@ -55,7 +53,6 @@ let router = new Router({
         requiresAuth: true
       }
     },
-
     {
       path: '/friend',
       name: 'friend',
@@ -64,7 +61,6 @@ let router = new Router({
         requiresAuth: true
       }
     },
-
     {
       path: '/follow',
       name: 'follow',
@@ -73,24 +69,26 @@ let router = new Router({
         requiresAuth: true
       }
     },
-
     {
       path: '/search',
       name: 'search',
       component: SearchResult
     },
-
     {
       path: '/edit',
       name: 'edit',
       component: Edit
     },
-
     {
       path: "/GlobalChat",
       name: 'GlobalChat',
       component: GlobalChat
     },
+    {
+     path: '/GameRequest',
+     name: 'GameRequest',
+     component: GameRequest
+   },
   ]
 })
 
@@ -115,6 +113,5 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-
 
 export default router
