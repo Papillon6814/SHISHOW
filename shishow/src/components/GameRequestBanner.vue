@@ -23,6 +23,7 @@
     <input class="Gamename" type="text" placeholder="Display Gamename"
     v-model="Gamename" required>
   </div>
+  <button @click="gameCollection">Add Game Collection</button>
 </div>
 </template>
 
@@ -32,13 +33,39 @@ import "firebase/firestore";
 import Cropper from "cropperjs";
 import router from "../router"
 
+const db = firebase.firestore();
+
 export default{
   name:"GameRequestBanner",
   data(){
     return{
       Gamename:"",
       uploadImage:"",
-    };
+      roundimg:"",
+    }
+  },
+
+ methods:{
+   gameCollection: function(){
+     if(this.Gamename == ""){
+       alert('Fill in your Display Gamename!');
+    }else{
+      this.addToDatabase(this.Gamename, this.roundimg);
+      router.push("/")
+    }
+   },
+
+   addToDatabase(Gamename, image){
+
+    db.collection("GameCollection")
+      .doc()
+      .set({
+        Gamename: Gamename,
+        image: image,
+     })
+
+     },
+
   },
 };
 </script>
@@ -48,7 +75,7 @@ export default{
   position: absolute;
 
   width: $banner_width;
-  height: $banner_height;
+  height: 100%;
 
   background-color: $su_banner_color;
 
