@@ -21,6 +21,14 @@
       </inputArea>
     </div>
   </div>
+
+  <div class="gamePopup">
+    <div class="gamePopup-inner">
+      <div class="closeButton">X</div>
+      <GameRequestBanner></GameRequestBanner>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -29,6 +37,7 @@
 import leftArea from './leftArea.vue'
 import rightArea from './rightArea.vue'
 import inputArea from './InputArea.vue'
+import GameRequestBanner from '../GameRequestBanner.vue'
 
 import firebase from "../../plugin/firestore";
 import 'firebase/firestore'
@@ -57,6 +66,7 @@ export default {
     leftArea,
     rightArea,
     inputArea,
+    GameRequestBanner
   },
 
   watch: {
@@ -195,4 +205,29 @@ export default {
       z-index: 3;
     }
   }
+
+  .gamePopup {
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 10000;
+    opacity: 0;
+
+    visibility: hidden;
+    transition: .3s;
+
+    .is_shown {
+      opacity: 1;
+      visibility: visible;
+
+      .gamePopup-inner {
+        position: absolute;
+        // 続き
+      }
+  }
+
 </style>

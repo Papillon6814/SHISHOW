@@ -116,6 +116,10 @@ export default{
 
       cursor: pointer;
 
+      #result {
+        z-index: 7;
+      }
+
       .iconDashedCircle {
         position: absolute;
 
@@ -135,17 +139,8 @@ export default{
         border-color: #000;
 
         cursor: pointer;
-
-        .plusPosition {
-          position: absolute;
-
-          left: 49.5%;
-          top: 50%;
-          -webkit-transform: translate(-50%, -50%);
-          -moz-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-        }
       }
+
       .iconFile {
         height: 100%;
         width: 100%;
@@ -154,88 +149,84 @@ export default{
       }
     }
   }
-}
 
-.GamenamePosition {
-  position: absolute;
+  .GamenamePosition {
+    position: absolute;
 
-  top: 170px;
-  left: 50%;
+    top: 170px;
+    left: 50%;
 
-  -webkit-transform: translate(-50%, 0);
-  -moz-transform: translate(-50%, 0);
-  transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
 
-  width: 65%;
+    width: 65%;
 
-  .Gamename {
-    width: 100%;
-    height: $su_user_height;
+    .Gamename {
+      width: 100%;
+      height: $su_user_height;
+    }
   }
-}
 
-.TypenamePosition {
-  position: absolute;
+  .TypenamePosition {
+    position: absolute;
 
-  top: 250px;
-  left: 50%;
+    top: 250px;
+    left: 50%;
 
-  -webkit-transform: translate(-50%, 0);
-  -moz-transform: translate(-50%, 0);
-  transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
 
-  width: 65%;
+    width: 65%;
 
-  .Typename {
-    width: 100%;
-    height: $su_user_height;
+    .Typename {
+      width: 100%;
+      height: $su_user_height;
+    }
   }
-}
 
-.create_button {
-  position: absolute;
+  .create_button {
+    position: absolute;
 
-  top: 330px;
-  left: 50%;
+    top: 330px;
+    left: 50%;
 
-  background: #fff;
+    background: #fff;
 
-  width: 30%;
+    width: 30%;
 
-  -webkit-transform: translate(-50%, 0);
-  -moz-transform: translate(-50%, 0);
-  transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
 
-  display: inline-block;
-  padding: 0.3em 1em;
-  text-decoration: none;
-  color: $primary_text;
-  border: solid 2px $light_primary_color;
-  border-radius: 3px;
-  transition: .4s;
+    display: inline-block;
+    padding: 0.3em 1em;
+    text-decoration: none;
+    color: $primary_text;
+    border: solid 2px $light_primary_color;
+    border-radius: 3px;
+    transition: .4s;
 
-  cursor: pointer;
-}
+    cursor: pointer;
+  }
 
-.create_button:hover{
-  background: $light_primary_color;
-  color: #fff;
-}
+  .create_button:hover{
+    background: $light_primary_color;
+    color: #fff;
+  }
 
-.drawnSpace {
-  position: absolute;
+  .drawnSpace {
+    position: absolute;
 
-  bottom: 0;
-  left: 0;
+    bottom: 0;
+    left: 0;
 
-  width: 100%;
-  height: 60px;
+    width: 100%;
+    height: 60px;
 
-  background-color: #fafafa;
-}
-
-#result {
-  z-index: 7;
+    background-color: #fafafa;
+  }
 }
 
 .modal {
