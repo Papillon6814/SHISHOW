@@ -5,7 +5,7 @@
     ></leftArea>
     <div class="nameTagArea">
       <div class="nameTag">
-        {{ this.usernameFromLeftArea }}
+        {{ usernameFromLeftArea }}
       </div>
       <div class="nameBorder">
       </div>
