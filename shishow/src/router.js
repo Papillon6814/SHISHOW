@@ -83,8 +83,8 @@ let router = new Router({
       component: GlobalChat
     },
     {
-     path: '/GameRequest',
-     name: 'GameRequest',
+     path: '/gamerequest',
+     name: 'gamerequest',
      component: GameRequest
    },
   ]

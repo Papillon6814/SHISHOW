@@ -8,7 +8,9 @@
       <div class="global" @click="switchGlobal()">
         Global
       </div>
-      <div class="RegisterGame"></div>
+      <router-link to="/gamerequest">
+        <div class="RegisterGame"></div>
+      </router-link>
     </div>
 
     <div class="privateDM">

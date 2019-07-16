@@ -115,7 +115,7 @@ export default {
       left: 5%;
     }
     $i: 2;
-    @while $i<=30 {
+    @while $i<=20 {
       .not#{$i}{
         position: relative;
         left: 5%;

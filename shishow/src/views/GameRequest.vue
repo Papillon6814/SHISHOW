@@ -35,10 +35,15 @@ body {
 
 #GameRequestBannerPosition {
   position: absolute;
-  width: 100%;
+
+  width: 48%;
 
   top: 150px;
-  left: 10%;
+  left: 50%;
+
+  -webkit-transform: translate(-50%, 0);
+  -moz-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
 }
 
 </style>

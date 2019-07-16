@@ -131,7 +131,9 @@ export default {
 
     top: 210px;
     left: 50%;
+
     width: 65%;
+
     -webkit-transform: translate(-50%, 0);
     -moz-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
@@ -157,6 +159,7 @@ export default {
       height: 35px; //$id_height
     }
   }
+  
   .signin_button {
     position: absolute;
 

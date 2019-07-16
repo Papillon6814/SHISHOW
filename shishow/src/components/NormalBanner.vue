@@ -1,5 +1,5 @@
 <template>
-  <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'normalExtend': isB }">
+  <div class="normalBanner">
     <span class="iconPicPosition">
       <img class="icon" :src="user['image']" />
       <div class="iconCircle"></div>
@@ -61,15 +61,6 @@ export default {
         store.commit("onAuthStateChanged", user);
         store.commit("onUserStatusChanged", user.uid ? true : false);
       });
-    },
-
-    callNormalExtend: function() {
-
-
-      this.isA = !this.isA;
-      this.isB = !this.isB;
-      this.arrowUp = !this.arrowUp;
-      this.$emit("extendNormalBanner");
     },
 
     sendFriendReq: function() {
@@ -275,20 +266,6 @@ export default {
 
 .normalBanner:hover {
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-}
-
-.normalExtend {
-  position: absolute;
-
-  width: $n_banner_width;
-  height: $n_banner_height * 2;
-
-  background-color: $n_banner_color;
-
-  z-index: 2;
-
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-  transition: 0.3s;
 }
 
 .iconPicPosition {

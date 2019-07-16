@@ -23,6 +23,7 @@
                 :relations="relation[N-1]">
               </normalBanner>
             </div>
+            <div class="alphaSpace"></div>
           </div>
         </transition>
       </div>
@@ -150,6 +151,7 @@ export default {
         store.commit("onUserStatusChanged", user.uid ? true : false);
       });
     },
+
     placeFooter: function() {
       let footer = document.getElementsByTagName('footer');
       footer[0].style.top = (200 * (1 + this.filteredUser.length) + 300) + 'px';
@@ -162,11 +164,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-html {
-  overflow-x: hidden;
-  overflow-y: scroll;
-}
 
 body {
   padding: 0;
@@ -200,6 +197,8 @@ body {
     padding-top: 165px;
     margin-left: 27%;
 
+    overflow-y: scroll;
+
     $i: 1;
 
     list-style: none;
@@ -220,6 +219,18 @@ body {
       }
 
       $i: $i + 1;
+    }
+
+    .alphaSpace {
+      position: absolute;
+
+      left: 0;
+      top: 180px * 20;
+
+      height: 140px;
+      width: 100%;
+
+      background-color: rgba(0, 0, 0, 0);
     }
   }
 }
