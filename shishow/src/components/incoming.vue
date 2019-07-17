@@ -5,38 +5,22 @@
         <img id="image" :src="user['image']" />
       </div>
     </span>
-    <div class="achievementPosition1">
-      <div class="achievement">
-      </div>
-    </div>
-    <div class="achievementPosition2">
-      <div class="achievement">
-      </div>
-    </div>
-    <div class="achievementPosition3">
-      <div class="achievement">
-      </div>
-    </div>
+
     <div class="usernamePosition">
       <div class="username">
         {{user["username"]}}
       </div>
     </div>
-    <div class="idPosition">
-      <div class="id">
-        qawsedrftgyhujkolp
-      </div>
-    </div>
+
+
     <div class="profilePosition">
       <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、
+        prof
       </div>
     </div>
-    <div class="n_btn-circle-3d" @click="accept">許可</div>
-    <span  id="pullDownProperties">
-     <i class="fas fa-caret-down"></i>
-    </span>
+    <div class="n_btn-circle-3d" @click="accept">
+      許可
+    </div>
   </div>
 </template>
 
@@ -85,7 +69,8 @@ export default {
                                        username: this.user.username,
                                        email: this.user.email,
                                        chatID: doc1.id,
-                                       lastChatDate: now
+                                       lastChatDate: now,
+                                       isSHISHOW: false
                                      });
 
                               sign_db.collection("incoming")
@@ -104,7 +89,7 @@ export default {
                                        this.$parent.fri = "";
                                      })
                             }).catch(() => {
-                              
+
                             });
 
                   user_db.collection("outgoing")
@@ -118,12 +103,10 @@ export default {
                                     username: this.signuser.username,
                                     email: this.signuser.email,
                                     chatID: doc1.id,
-                                    lastChatDate: now
+                                    lastChatDate: now,
+                                    isSHISHOW: true
                                   })
                          })
-                         .catch(() => {
-                           
-                         });
 
                   db.collection("USER")
                     .doc(this.user.email)
@@ -132,8 +115,21 @@ export default {
                     .set({
                       relation:3,
                     })
-                    .catch(() =>{
-                      
+
+                  db.collection("USER")
+                    .doc(this.signuser.email)
+                    .collection("relation")
+                    .doc(this.user.email)
+                    .set({
+                      relation:3,
+                    })
+
+                  db.collection("USER")
+                    .doc(this.user.email)
+                    .collection("relation")
+                    .doc(this.signuser.email)
+                    .set({
+                      relation:3,
                     })
 
                   db.collection("USER")
@@ -142,26 +138,12 @@ export default {
                     .doc(this.user.email)
                     .set({
                       relation:3,
-                    }).catch(() =>{
-                      
                     })
-
-                  db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).set({
-                    relation:3,
-                  })
-                  .catch(() =>{
-                    
-                  })
-                  db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).set({
-                    relation:3,
-                  }).catch(() =>{
-                    
-                  })
 
                   user_db.collection("notice")
                          .doc(this.signuser.email)
                          .set({
-                           msg:this.signuser.username+"とフレンドになりました。",
+                           msg:this.signuser.username + "とフレンドになりました。",
                            date:new Date()
                          })
 
@@ -177,7 +159,7 @@ export default {
                           })
               })
               .catch(() => {
-                
+
               });
     }
   }

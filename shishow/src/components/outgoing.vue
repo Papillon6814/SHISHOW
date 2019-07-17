@@ -47,13 +47,14 @@ export default {
   methods: {
     doExtend: function() {
 
-      const sign_db = db.collection("USER").doc(this.signuser.email);
-      const user_db = db.collection("USER").doc(this.user.email)
+      const sign_db = db.collection("USER")
+                        .doc(this.signuser.email);
+      const user_db = db.collection("USER")
+                        .doc(this.user.email)
 
       user_db.collection("incoming")
              .doc(this.signuser.email)
              .delete()
-      .catch(()=>{});
 
       sign_db.collection("outgoing")
              .doc(this.user.email)
@@ -68,25 +69,18 @@ export default {
                         this.$parent.outgo = "";
                       })
              })
-             .catch(() => {
-
-             });
 
       db.collection("USER")
         .doc(this.user.email)
         .collection("relation")
-        .doc(this.signuser.email).delete()
-        .catch(() =>{
-
-        })
+        .doc(this.signuser.email)
+        .delete()
 
       db.collection("USER")
         .doc(this.signuser.email)
         .collection("relation")
-        .doc(this.user.email).delete()
-        .catch(() =>{
-
-        })
+        .doc(this.user.email)
+        .delete()
 
       user_db.collection("notice")
              .doc(this.signuser.email)

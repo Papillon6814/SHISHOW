@@ -13,12 +13,15 @@
 
 <script>
 import firebase from "firebase";
+import "firebase/firestore";
+import "@firebase/auth";
+
 import navi from "../components/NavigationBar.vue";
 import normalBanner from "../components/NormalBanner";
-
 import store from "../store"
 
 const db = firebase.firestore();
+let currentUser;
 
 export default {
   name: "search",
@@ -46,6 +49,8 @@ export default {
         });
         this.filterUser(/*word = */ this.getSearchWordFromStore);
       });
+
+    currentUser = firebase.auth().currentUser;
   },
 
   computed: {
