@@ -13,13 +13,13 @@
             type="text"
             id="search"
             required="required"
-            @keydown.enter="onChangeInput"
+            @keydown.enter="onChangeInput()"
           />
           <label for="search">Search...</label>
           <div class="bar"></div>
           <!-- <img class="sch" src="../assets/search-button.png" @click="onChangeInput"> -->
           <router-link to="search">
-            <i class="fas fa-search fa-2x sch" @click="onChangeInput"></i>
+            <i class="fas fa-search fa-2x sch" @click="onChangeInput()"></i>
           </router-link>
         </div>
       </div>

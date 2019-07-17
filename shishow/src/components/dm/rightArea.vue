@@ -153,8 +153,10 @@ export default {
 
   border-radius: 20px;
 
-  border: solid 1px #bbb;/*線*/
-  border-radius: 20px;/*角の丸み*/
+  border: solid 1px #bbb;
+  /* 線 */
+  border-radius: 20px;
+  /* 角の丸み */
 
   right: 38%;
 

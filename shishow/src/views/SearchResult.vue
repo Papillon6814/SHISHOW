@@ -2,8 +2,10 @@
   <div id="searchRoot">
     <navi @search="filterUser"></navi>
     <div class="searchBannerPosition">
-      <div v-for="N in searchResults.length" :key="N" v-bind:class="'n'+N">
-        <normalBanner :user="searchResults[N-1]"></normalBanner>
+      <div v-for="N in searchResults.length"
+           :key="N" v-bind:class="'n'+N">
+        <normalBanner :user="searchResults[N-1]">
+        </normalBanner>
       </div>
     </div>
   </div>
@@ -14,6 +16,7 @@ import firebase from "firebase";
 import navi from "../components/NavigationBar.vue";
 import normalBanner from "../components/NormalBanner";
 
+import store from "../store"
 
 const db = firebase.firestore();
 

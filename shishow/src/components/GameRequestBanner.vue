@@ -1,5 +1,6 @@
 <template>
   <div class="GameRequestBanner">
+
     <div id="modal" class="modal">
       <div class="modal-content">
         <div class="modal-body">
@@ -9,22 +10,38 @@
         </div>
       </div>
     </div>
+
     <span class="iconCirclePosition">
       <label>
         <div class="iconCircle">
           <div id="result"></div>
-            <div class="iconDashedCircle" id="delete">
-            </div>
-            <input hidden class="iconFile" type="file" @change="onFileChange">
+          <div class="iconDashedCircle" id="delete">
           </div>
-        </label>
-      </span>
-  <div class="GamenamePosition">
-    <input class="Gamename" type="text" placeholder="Display Gamename"
-    v-model="Gamename" required>
+          <input hidden class="iconFile" type="file" @change="onFileChange">
+        </div>
+      </label>
+    </span>
+
+    <div class="closeBtn" @click="fade()">
+      <i class="fas fa-times"></i>
+    </div>
+
+    <div class="GamenamePosition">
+      <input class="Gamename" type="text" placeholder="Display Gamename"
+        v-model="Gamename" required>
+    </div>
+
+    <div class="TypenamePosition">
+      <input class="Typename" type="text" placeholder="type"
+        v-model="type" required>
+    </div>
+
+    <div @click="gameCollection" class="create_button">
+      Create
+    </div>
+
+    <div class="drawnSpace"></div>
   </div>
-  <button @click="gameCollection">Add Game Collection</button>
-</div>
 </template>
 
 <script>
@@ -45,7 +62,7 @@ export default{
     }
   },
 
- methods:{
+ methods: {
    gameCollection: function(){
      if(this.Gamename == ""){
        alert('Fill in your Display Gamename!');
@@ -63,9 +80,11 @@ export default{
         Gamename: Gamename,
         image: image,
      })
+   },
 
-     },
-
+   fade: function() {
+     this.$emit("callFade");
+   }
   },
 };
 </script>
@@ -74,11 +93,10 @@ export default{
 .GameRequestBanner {
   position: absolute;
 
-  width: 48%;
-  height: 480px;
+  width: 100%;
+  height: 450px;
 
-  left: 17%;
-  background-color: $su_banner_color;
+  background-color: #fff;
 
   z-index: 2;
 
@@ -87,7 +105,7 @@ export default{
   .iconCirclePosition {
     position: absolute;
     left: 50px;
-    top: 50px;
+    top: 150px;
     width: $icon_width;
     height: $icon_height;
 
@@ -103,6 +121,10 @@ export default{
       border-color: $su_window_flame;
 
       cursor: pointer;
+
+      #result {
+        z-index: 7;
+      }
 
       .iconDashedCircle {
         position: absolute;
@@ -123,17 +145,8 @@ export default{
         border-color: #000;
 
         cursor: pointer;
-
-        .plusPosition {
-          position: absolute;
-
-          left: 49.5%;
-          top: 50%;
-          -webkit-transform: translate(-50%, -50%);
-          -moz-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-        }
       }
+
       .iconFile {
         height: 100%;
         width: 100%;
@@ -142,27 +155,100 @@ export default{
       }
     }
   }
-}
 
-.GamenamePosition{
-  position: absolute;
+  .closeBtn {
+    position: absolute;
 
-  top: 100px;
-  left: 210px;
+    right: 10px;
+    top: 10px;
 
-  right: 100px;
+    width: 30px;
+    height: 30px;
 
-  .Gamename{
-    width: 100%;
-    height: $su_user_height;
+    font-size: 30px;
 
-    background-color: #fff;
+    z-index: 5;
+
+    cursor: pointer;
   }
-}
 
+  .GamenamePosition {
+    position: absolute;
 
-#result{
-  z-index: 7;
+    top: 170px;
+    left: 50%;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+
+    width: 65%;
+
+    .Gamename {
+      width: 100%;
+      height: $su_user_height;
+    }
+  }
+
+  .TypenamePosition {
+    position: absolute;
+
+    top: 250px;
+    left: 50%;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+
+    width: 65%;
+
+    .Typename {
+      width: 100%;
+      height: $su_user_height;
+    }
+  }
+
+  .create_button {
+    position: absolute;
+
+    top: 330px;
+    left: 50%;
+
+    background: #fff;
+
+    width: 30%;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+
+    display: inline-block;
+    padding: 0.3em 1em;
+    text-decoration: none;
+    color: $primary_text;
+    border: solid 2px $light_primary_color;
+    border-radius: 3px;
+    transition: .4s;
+
+    cursor: pointer;
+  }
+
+  .create_button:hover{
+    background: $light_primary_color;
+    color: #fff;
+  }
+
+  .drawnSpace {
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 60px;
+
+    background-color: #fafafa;
+  }
 }
 
 .modal {

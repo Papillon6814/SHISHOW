@@ -77,9 +77,6 @@ export default {
             username: this.user["username"],
             email: this.user["email"]
           })
-          .catch(e => {
-
-          });
 
 
         db.collection("USER")
@@ -90,10 +87,6 @@ export default {
             username: this.signuser["username"],
             email: this.signuser["email"]
           })
-          .catch(e => {
-
-          });
-      }
     }
   }
 };

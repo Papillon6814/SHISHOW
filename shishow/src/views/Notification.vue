@@ -115,7 +115,7 @@ export default {
       left: 5%;
     }
     $i: 2;
-    @while $i<=30 {
+    @while $i<=20 {
       .not#{$i}{
         position: relative;
         left: 5%;
@@ -124,11 +124,11 @@ export default {
       $i: $i + 1;
     }
   }
-  #notificationField::webkit-scrollbar{
+  #notificationField::webkit-scrollbar {
     display: none;
   }
 
-  .no_notification{
+  .no_notification {
     position: relative;
     top:250px;
     font-size: 130px;

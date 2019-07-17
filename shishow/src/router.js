@@ -12,8 +12,6 @@ import Friend from './views/friend.vue'
 import GlobalChat from "./views/GlobalChat.vue"
 import GameRequest from './views/GameRequest.vue'
 
-
-
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -85,8 +83,8 @@ let router = new Router({
       component: GlobalChat
     },
     {
-     path: '/GameRequest',
-     name: 'GameRequest',
+     path: '/gamerequest',
+     name: 'gamerequest',
      component: GameRequest
    },
   ]
