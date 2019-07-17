@@ -67,18 +67,12 @@ export default {
         .collection("relation")
         .doc(this.signuser.email)
         .delete()
-        .catch(() =>{
-
-        })
 
       db.collection("USER")
         .doc(this.signuser.email)
         .collection("relation")
         .doc(this.user.email)
         .delete()
-        .catch(() =>{
-
-        })
 
       user_db.collection("notice")
              .doc(this.signuser.email)
