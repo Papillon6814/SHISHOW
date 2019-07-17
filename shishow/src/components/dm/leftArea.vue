@@ -8,9 +8,9 @@
       <div class="global" @click="switchGlobal()">
         Global
       </div>
-      <router-link to="/gamerequest">
-        <div class="RegisterGame"></div>
-      </router-link>
+      <div class="RegisterGame"
+           @click="showPopup()">
+      </div>
     </div>
 
     <div class="privateDM">
@@ -133,6 +133,10 @@ export default {
       globalDM[0].style.display = "block";
 
       leftArea.style.background = "#fff";
+    },
+
+    showPopup: function() {
+      this.$emit("showPopup");
     }
   },
 

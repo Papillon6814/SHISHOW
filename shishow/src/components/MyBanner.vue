@@ -13,7 +13,7 @@
       <div class="achievement"></div>
     </div>
     <div class="usernamePosition">
-      
+
     </div>
     <router-link to="/edit">
 
@@ -26,9 +26,6 @@
     <div class="logoutButton">
       <div @click="logout" class="btn-circle-3d">ログアウト</div>
     </div>
-    <span v-bind:class="{ reverse:isC }" @click="doExtend" id="pullDownProperties">
-      <i class="fas fa-caret-down"></i>
-    </span>
   </div>
 </template>
 
@@ -108,13 +105,6 @@ export default {
         store.commit("onAuthStateChanged", user);
         store.commit("onUserStatusChanged", user.uid ? true : false);
       });
-    },
-
-    doExtend: function() {
-      (this.isA = !this.isA),
-      (this.isB = !this.isB),
-      (this.isC = !this.isC),
-      this.$emit("extendMyBanner");
     },
 
     logout: function() {
@@ -407,7 +397,4 @@ export default {
   border-bottom: none;
 }
 
-.reverse {
-  transform: rotateX(180deg);
-}
 </style>

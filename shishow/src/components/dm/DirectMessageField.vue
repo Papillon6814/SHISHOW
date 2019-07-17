@@ -1,32 +1,36 @@
 <template>
-  <div id="directMessageField">
-    <leftArea
-    :friendsDocID="leftAreaData"
-    ></leftArea>
-    <div class="nameTagArea">
-      <div class="nameTag">
-        {{ usernameFromLeftArea }}
-      </div>
-      <div class="nameBorder">
-      </div>
-    </div>
-    <rightArea
-    ref="rightArea"
-    :friendDocID="idFromLeftArea">
-    </rightArea>
-    <div class="inputArea">
-      <inputArea
-      @scrollRightArea="callScroll()"
-      :friendDocID="idFromLeftArea">
-      </inputArea>
-    </div>
-  </div>
+  <div id="r">
 
-  <div class="gamePopup">
-    <div class="gamePopup-inner">
-      <div class="closeButton">X</div>
-      <GameRequestBanner></GameRequestBanner>
+    <div id="directMessageField">
+      <leftArea
+      :friendsDocID="leftAreaData"
+      @showPopup="popup">
+      </leftArea>
+      <div class="nameTagArea">
+        <div class="nameTag">
+          {{ usernameFromLeftArea }}
+        </div>
+        <div class="nameBorder">
+        </div>
+      </div>
+      <rightArea
+      ref="rightArea"
+      :friendDocID="idFromLeftArea">
+      </rightArea>
+      <div class="inputArea">
+        <inputArea
+        @scrollRightArea="callScroll()"
+        :friendDocID="idFromLeftArea">
+        </inputArea>
+      </div>
     </div>
+
+    <div class="entireBox" @click="fadeOut()">
+      <div class="GameRequestBannerPosition">
+        <GameRequestBanner></GameRequestBanner>
+      </div>
+    </div>
+
   </div>
 
 </template>
@@ -48,6 +52,8 @@ let db = firebase.firestore();
 
 let currentUser;
 let friendsDocID = [];
+
+let entireBox;
 
 export default {
   name: 'directMessageField',
@@ -84,7 +90,6 @@ export default {
             .then(doc2 => {
               this.usernameFromLeftArea = doc2.data().username;
             })
-
         })
     }
   },
@@ -115,6 +120,16 @@ export default {
             friendsDocID.push(doc1.id)
           })
       })
+    },
+
+    popup: function() {
+      entireBox[0].style.display = "block";
+
+      this.$forceUpdate();
+    },
+
+    fadeOut: function() {
+      entireBox[0].style.display = "none";
     }
   },
 
@@ -133,101 +148,112 @@ export default {
         this.idFromLeftArea = friendsSnapshot.id;
       })
   },
+
+  mounted: function() {
+    entireBox = document.getElementsByClassName("entireBox");
+  }
 }
 
 </script>
 
 <style lang='scss' scoped>
-  #directMessageField {
-    position: absolute;
+#directMessageField {
+  position: absolute;
 
-    width: 100%;
-    height: calc(100% - 100px);
+  width: 100%;
+  height: calc(100% - 100px);
+
+  top: 100px;
+
+  overflow-y: hidden;
+
+  // rightAreaの上の方に表示
+  .nameTagArea {
+    position: fixed;
 
     top: 100px;
+    right: 0;
 
-    overflow-y: hidden;
+    width: calc(60%);
+    height: 160px;
 
-    // rightAreaの上の方に表示
-    .nameTagArea {
-      position: fixed;
+    background: linear-gradient(to top,
+                rgba(255,255,255,0.1), #fff, #fff);
 
-      top: 100px;
-      right: 0;
+    z-index: 3;
 
-      width: calc(60%);
-      height: 160px;
+    .nameTag {
+      position: absolute;
 
-      background: linear-gradient(to top,
-                  rgba(255,255,255,0.1), #fff, #fff);
+      top: 30px;
+      left: 10%;
 
-      z-index: 3;
+      width: 50%;
+      height: 35px;
 
-      .nameTag {
-        position: absolute;
+      background-color: rgba(0, 0, 0, 0);
 
-        top: 30px;
-        left: 10%;
-
-        width: 50%;
-        height: 35px;
-
-        background-color: rgba(0, 0, 0, 0);
-
-        font-size: 20px;
-        text-align: left;
-      }
-
-      .nameBorder {
-        position: absolute;
-
-        top: 75px;
-        left: 10%;
-
-        width: 85%;
-        height: 0;
-
-        border-bottom: solid;
-        border-color: #eee;
-      }
+      font-size: 20px;
+      text-align: left;
     }
 
-    // 下部に表示する
-    .inputArea {
-      position: fixed;
+    .nameBorder {
+      position: absolute;
 
-      width: 60%;
-      height: 50px;
+      top: 75px;
+      left: 10%;
 
-      right: 0;
-      bottom: 45px;
+      width: 85%;
+      height: 0;
 
-      z-index: 3;
+      border-bottom: solid;
+      border-color: #eee;
     }
   }
 
-  .gamePopup {
+  // 下部に表示する
+  .inputArea {
     position: fixed;
-    left: 0;
-    top: 0;
 
-    width: 100%;
-    height: 100%;
+    width: 60%;
+    height: 50px;
 
-    z-index: 10000;
-    opacity: 0;
+    right: 0;
+    bottom: 45px;
 
-    visibility: hidden;
-    transition: .3s;
-
-    .is_shown {
-      opacity: 1;
-      visibility: visible;
-
-      .gamePopup-inner {
-        position: absolute;
-        // 続き
-      }
+    z-index: 3;
   }
+}
+
+.entireBox {
+  position: fixed;
+
+  display: none;
+
+  width: 100%;
+  height: 120%;
+
+  top: 0;
+  left: 0;
+
+  z-index: 10000;
+
+  background-color: rgba(0, 0, 0, 0.6);
+
+  transition: 0.3s;
+
+  .GameRequestBannerPosition {
+    position: absolute;
+
+    width: 48%;
+
+    top: 150px;
+    left: 50%;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+  }
+}
 
 </style>
