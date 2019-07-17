@@ -2,7 +2,7 @@
   <div id="searchRoot">
     <navi></navi>
     <div v-for="N in searchResults.length" :key="N" v-bind:class="'n'+N">
-      <normalBanner :user="searchResults[N-1]"></normalBanner>
+      <normalBanner :user="searchResults[N-1]" :relations="relation[N-1]" :signuser="signuser"></normalBanner>
     </div>
   </div>
 </template>
@@ -29,7 +29,9 @@ export default {
     return {
       users: [],
       filteredUser: [],
-      searchResults: []
+      searchResults: [],
+      relation:[],
+      signuser:"",
     };
   },
 
@@ -40,10 +42,11 @@ export default {
         this.users = doc.docs;
         doc.forEach(docs => {
           this.filteredUser.push(docs.data());
-          console.log(docs.data());
         });
         this.filterUser(/*word = */ this.getSearchWordFromStore);
       });
+    this.signuser = {"username":this.$store.getters.user.displayName,
+                     "email":this.$store.getters.user.email}
   },
 
   computed: {
@@ -58,20 +61,39 @@ export default {
       let results = [];
       let users_i;
       let index = 0;
+      let relat;
       if (word) {
+        db.collection("USER").doc(this.$store.getters.user.email).collection("relation").get().then(docs=>{
         for (users_i in this.users) {
           //ユーザーネームの走査
           if (this.users[users_i].data().username.indexOf(word) !== -1) {
             this.$set(this.searchResults, index, {
-              username: this.users[index].data().username,
-              bio: this.users[index].data().bio,
-              email: this.users[index].data().email,
-              image: this.users[index].data().image
+              username: this.users[users_i].data().username,
+              bio: this.users[users_i].data().bio,
+              email: this.users[users_i].data().email,
+              image: this.users[users_i].data().image
             });
+
+
+            if(docs){
+              
+              let i;
+              for(i=0;i<docs.docs.length && doc.data().email != docs.docs[i].id;i++);
+              if(i==docs.docs.length){
+                relat = 0;
+              }else{
+                relat = docs.docs[i].data().relation;
+              }
+            }else{
+              relat = 0;
+            }
+            this.$set(this.relation, index, relat);
+
             index++;
           }
           this.$forceUpdate();
         }
+        })
       }
     }
   }
@@ -83,4 +105,25 @@ html {
   overflow-x: hidden;
   overflow-y: scroll;
 }
+$i: 1;
+
+    
+    @while $i <= 30 {
+
+      $temporary_top: (200px * $i) !global;
+
+      .n#{$i} {
+        position: absolute;
+
+        top: $temporary_top;
+        left: 0;
+
+        width: 100%;
+        height: $n_banner_height;
+
+        transition: 0.3s;
+      }
+
+      $i: $i + 1;
+    }
 </style>
