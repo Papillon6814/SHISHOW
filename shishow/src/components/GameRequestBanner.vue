@@ -22,6 +22,10 @@
       </label>
     </span>
 
+    <div class="closeBtn" @click="fade()">
+      <i class="fas fa-times"></i>
+    </div>
+
     <div class="GamenamePosition">
       <input class="Gamename" type="text" placeholder="Display Gamename"
         v-model="Gamename" required>
@@ -58,7 +62,7 @@ export default{
     }
   },
 
- methods:{
+ methods: {
    gameCollection: function(){
      if(this.Gamename == ""){
        alert('Fill in your Display Gamename!');
@@ -76,9 +80,11 @@ export default{
         Gamename: Gamename,
         image: image,
      })
+   },
 
-     },
-
+   fade: function() {
+     this.$emit("callFade");
+   }
   },
 };
 </script>
@@ -148,6 +154,22 @@ export default{
         cursor: pointer;
       }
     }
+  }
+
+  .closeBtn {
+    position: absolute;
+
+    right: 10px;
+    top: 10px;
+
+    width: 30px;
+    height: 30px;
+
+    font-size: 30px;
+
+    z-index: 5;
+
+    cursor: pointer;
   }
 
   .GamenamePosition {

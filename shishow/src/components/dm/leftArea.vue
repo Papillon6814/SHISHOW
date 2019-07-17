@@ -253,6 +253,8 @@ export default {
       width: 40px;
 
       background-color: #212121;
+
+      cursor: pointer;
     }
   }
 

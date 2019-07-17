@@ -25,9 +25,11 @@
       </div>
     </div>
 
-    <div class="entireBox" @click="fadeOut()">
+    <div class="entireBox">
       <div class="GameRequestBannerPosition">
-        <GameRequestBanner></GameRequestBanner>
+        <GameRequestBanner
+        @callFade="fadeOut()">
+      </GameRequestBanner>
       </div>
     </div>
 
