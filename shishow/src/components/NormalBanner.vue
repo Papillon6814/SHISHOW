@@ -189,7 +189,7 @@ export default {
                           username: this.signuser.username,
                           email: this.signuser.email,
                           chatID: doc1.id,
-                          lastChatDate: now
+                          lastChatDate: now,
                           isSHISHOW: true
                         })
                })
