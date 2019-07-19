@@ -174,9 +174,9 @@ export default {
     position: fixed;
 
     top: 100px;
-    right: 0;
+    right: 17px;
 
-    width: calc(60%);
+    width: calc(60% - 17px);
     height: 160px;
 
     background: linear-gradient(to top,
