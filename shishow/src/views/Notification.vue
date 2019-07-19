@@ -83,6 +83,8 @@ export default {
     width: 70%;
     height: $header_height;
 
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+
     background-color: #00b7ce;
 
     .notificationText{
@@ -104,7 +106,7 @@ export default {
     height: calc(100% - 200px);
 
     background-color: #fff;
-    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 
     overflow-y: scroll;
     overflow-x: hidden;
