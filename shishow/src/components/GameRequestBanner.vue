@@ -67,7 +67,8 @@ export default{
        alert('Fill in your Display Gamename!');
     }else{
       this.addToDatabase(this.Gamename, this.roundimg);
-      router.push("/")
+      alert("Added a game.");
+      this.fade();
     }
    },
 

@@ -124,7 +124,7 @@ export default {
       }
     },
 
-    delete_db:function(){
+    delete_db: function() {
       const sign_db = db.collection("USER")
                         .doc(this.signuser.email);
       const user_db = db.collection("USER")
@@ -157,7 +157,7 @@ export default {
       this.relation = 0
     },
 
-    add_db:function(){
+    add_db: function() {
       const sign_db = db.collection("USER")
                         .doc(this.signuser.email);
       const user_db = db.collection("USER")
