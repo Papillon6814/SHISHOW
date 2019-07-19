@@ -15,8 +15,6 @@
       <label>
         <div class="iconCircle">
           <div id="result"></div>
-          <div class="iconDashedCircle" id="delete">
-          </div>
           <input hidden class="iconFile" type="file" @change="onFileChange">
         </div>
       </label>
@@ -104,21 +102,16 @@ export default{
 
   .iconCirclePosition {
     position: absolute;
-    left: 50px;
-    top: 150px;
-    width: $icon_width;
-    height: $icon_height;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 150px;
 
     .iconCircle {
-      width: $icon_width;
-      height: $icon_height;
+      width: 100%;
+      height: 100%;
 
-      background-color: #fff;
-
-      border-radius: 50%;
-      border: solid;
-      border-width: 2px;
-      border-color: $su_window_flame;
+      background-color: #000;
 
       cursor: pointer;
 
@@ -126,31 +119,11 @@ export default{
         z-index: 7;
       }
 
-      .iconDashedCircle {
-        position: absolute;
-
-        top: 5.72%;
-        left: 5.85%;
-
-        width: 90%;
-        height: 90%;
-
-        font-size: 70px;
-
-        background-color: rgba(0, 0, 0, 0);
-
-        border-radius: 50%;
-        border: dashed;
-        border-width: 1px;
-        border-color: #000;
-
-        cursor: pointer;
-      }
-
       .iconFile {
         height: 100%;
         width: 100%;
         opacity: 0;
+
         cursor: pointer;
       }
     }

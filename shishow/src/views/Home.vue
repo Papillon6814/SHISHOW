@@ -88,7 +88,6 @@ export default {
         })
         this.placeFooter();
       })
-
     });
 
     db.collection("USER")
