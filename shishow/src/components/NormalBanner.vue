@@ -1,33 +1,34 @@
 <template>
-  <div class="normalBanner"
-    @click="click()">
-    <span class="iconPicPosition">
-      <img class="icon" :src="user['image']" />
-      <div class="iconCircle"></div>
-    </span>
-    <!-- <div class="achievementPosition1">
-      <div class="achievement"></div>
+  <div class="normalBanner">
+    <div class="nbField" @click="click()">
+      <span class="iconPicPosition">
+        <img class="icon" :src="user['image']" />
+        <div class="iconCircle"></div>
+      </span>
+      <!-- <div class="achievementPosition1">
+        <div class="achievement"></div>
+      </div>
+      <div class="achievementPosition2">
+        <div class="achievement"></div>
+      </div>
+      <div class="achievementPosition3">
+        <div class="achievement"></div>
+      </div> -->
+      <div class="usernamePosition">
+        <div class="username" align="left">{{ user.username }}</div>
+      </div>
+      <!-- <div class="profilePosition">
+        <div class="profile">{{ user.bio }}</div>
+      </div>
+      <div class="userInfoPosition">
+        <div class="userInfo">userinfo</div>
+      </div> -->
     </div>
-    <div class="achievementPosition2">
-      <div class="achievement"></div>
-    </div>
-    <div class="achievementPosition3">
-      <div class="achievement"></div>
-    </div> -->
-    <div class="usernamePosition">
-      <div class="username" align="left">{{ user.username }}</div>
-    </div>
-    <!-- <div class="profilePosition">
-      <div class="profile">{{ user.bio }}</div>
-    </div>
-    <div class="userInfoPosition">
-      <div class="userInfo">userinfo</div>
-    </div> -->
-    <div v-if="relation==0" @click="sendFriendReq" class="friendRequest_button">申請</div>
-    <div v-else-if="relation==1" @click="add_db" class="friendRequest_button">承認</div>
-    <div v-else-if="relation==2" @click="delete_db" class="friendRequest_button">削除</div>
-    <div v-else-if="relation==3" class="friendRequest_button">師匠</div>
-    <div v-else-if="relation==4" class="friendRequest_button">弟子</div>
+      <div v-if="relation==0" @click="sendFriendReq" class="friendRequest_button">申請</div>
+      <div v-else-if="relation==1" @click="add_db" class="friendRequest_button">承認</div>
+      <div v-else-if="relation==2" @click="delete_db" class="friendRequest_button">削除</div>
+      <div v-else-if="relation==3" class="friendRequest_button">師匠</div>
+      <div v-else-if="relation==4" class="friendRequest_button">弟子</div>
   </div>
 </template>
 
