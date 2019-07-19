@@ -34,7 +34,7 @@
         v-model="type" required>
     </div>
 
-    <div @click="gameCollection" class="create_button">
+    <div @click="gameCollection()" class="create_button">
       Create
     </div>
 
@@ -54,9 +54,10 @@ export default{
   name:"GameRequestBanner",
   data(){
     return{
-      Gamename:"",
-      uploadImage:"",
-      roundimg:"",
+      Gamename: "",
+      type: "",
+      uploadImage: "",
+      roundimg: "",
     }
   },
 
@@ -71,12 +72,11 @@ export default{
    },
 
    addToDatabase(Gamename, image){
-
     db.collection("GameCollection")
       .doc()
       .set({
-        Gamename: Gamename,
-        image: image,
+        gamename: this.Gamename,
+        type: this.type
      })
    },
 
