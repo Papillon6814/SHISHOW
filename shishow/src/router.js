@@ -10,10 +10,9 @@ import DirectMessage from './views/DirectMessage.vue'
 import Follow from './views/Follow.vue'
 import Friend from './views/friend.vue'
 import GlobalChat from "./views/GlobalChat.vue"
+import GameRequest from './views/GameRequest.vue'
 
-import firebase from './plugin/firestore'
-import 'firebase/firestore'
-import '@firebase/auth'
+import firebase from 'firebase'
 
 Vue.use(Router)
 
@@ -31,19 +30,19 @@ let router = new Router({
       name: 'signup',
       component: Signup
     },
-
     {
       path: '/signin',
       name: 'signin',
       component: Signin
     },
-
     {
       path: '/notification',
       name: 'notification',
-      component: Notification
+      component: Notification,
+      meta: {
+        requiresAuth: true
+      }
     },
-
     {
       path: '/directMessage',
       name: 'directMessage',
@@ -52,36 +51,42 @@ let router = new Router({
         requiresAuth: true
       }
     },
-
     {
       path: '/friend',
       name: 'friend',
-      component: Friend
+      component: Friend,
+      meta: {
+        requiresAuth: true
+      }
     },
-
     {
       path: '/follow',
       name: 'follow',
       component: Follow,
+      meta: {
+        requiresAuth: true
+      }
     },
-
     {
       path: '/search',
       name: 'search',
       component: SearchResult
     },
-
     {
       path: '/edit',
       name: 'edit',
       component: Edit
     },
-
     {
       path: "/GlobalChat",
       name: 'GlobalChat',
       component: GlobalChat
     },
+    {
+     path: '/gamerequest',
+     name: 'gamerequest',
+     component: GameRequest
+   },
   ]
 })
 
@@ -90,7 +95,7 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth) {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-  
+
         next()
       } else {
 
@@ -106,6 +111,5 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-
 
 export default router

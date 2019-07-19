@@ -1,5 +1,7 @@
 <template>
   <div class="signupBanner">
+
+    <!-- hidden area -->
     <div id="modal" class="modal">
       <div class="modal-content">
         <div class="modal-body">
@@ -9,6 +11,8 @@
         </div>
       </div>
     </div>
+
+    <!-- hidden area -->
       <span class="iconCirclePosition">
         <label>
           <div class="iconCircle">
@@ -23,20 +27,7 @@
         </label>
       </span>
 
-    <!-- achievements -->
-
-    <div class="achievementPosition1">
-      <div class="achievement"></div>
-    </div>
-
-    <div class="achievementPosition2">
-      <div class="achievement"></div>
-    </div>
-
-    <div class="achievementPosition3">
-      <div class="achievement"></div>
-    </div>
-    <!-- ... -->
+    <div class="SignupTitle"></div>
 
     <div class="usernamePosition">
       <input class="username" type="text" placeholder="Display name"
@@ -61,9 +52,9 @@
       >
     </div>
 
-    <div class="profilePosition"></div>
-
-    <button @click="signUp">Sign up</button>
+    <button @click="signUp" class="signup_button">
+      Sign up
+    </button>
   </div>
 </template>
 
@@ -91,6 +82,7 @@ export default {
       modal: "",
     };
   },
+
   mounted:function(){
     this.modal = document.getElementById("modal");
   },
@@ -129,15 +121,14 @@ export default {
                 //変数に情報を格納
                 email = User.email;
                 alert("Create account: " + email);
-  
+
                 if (!this.roundimg) {
-                  
-       
+
+
                   this.roundimg = url;
-     
 
                 }
-                
+
                 this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
                 router.push("/")
               });
@@ -173,16 +164,16 @@ export default {
 
     // 画像表示の関数
     showImage(file) {
-      //FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
+      // FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
       let reader = new FileReader();
-      //ファイルが読み込まれたとき、eventを引数とするアロー関数作動
+      // ファイルが読み込まれたとき、eventを引数とするアロー関数作動
       let place = this;
       reader.onload = event => {
-        //htmlにファイルを反映
+        // htmlにファイルを反映
         this.uploadedImage = event.target.result;
         window.setTimeout(place.crop, 1);
       };
-      //読み込み開始
+      // 読み込み開始
 
       this.modal.style.display = "block";
       reader.readAsDataURL(file);
@@ -190,7 +181,7 @@ export default {
 
     errorIndication() {
       if (!this.email) {
-    
+
         return true;
       }
       return false;
@@ -286,17 +277,32 @@ export default {
 .signupBanner {
   position: absolute;
 
-  width: $banner_width;
-  height: $banner_height;
+  width: 50%;
+  height: 500px;
 
-  background-color: $su_banner_color;
+  background-color: #fff;
 
   z-index: 2;
 
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
+  .SignupTitle {
+    position: absolute;
+
+    color: #fff;
+    background-color: $light_primary_color;
+
+    width: 100%;
+    height: 60px;
+
+    top: 0;
+    left: 0;
+
+  }
+
   .iconCirclePosition {
     position: absolute;
+    display: none;
 
     width: $icon_width;
     height: $icon_height;
@@ -361,134 +367,105 @@ export default {
     left: 34.1611111px;
   }
 
-  .achievement {
-    position: relative;
-    width: $achievement_width;
-    height: $achievement_height; //√3
-    background-color: #ffffff;
-    margin: $root_twelve 0;
-
-    /* border-left: dashed;
-      border-right: dashed;
-      border-color: #111;
-      border-width: 1.5px; */
-  }
-
-  .achievement:before,
-  .achievement:after {
-    content: "";
-    position: absolute;
-
-    left: 0;
-
-    width: 0;
-    border-left: $a_half_width solid transparent;
-    border-right: $a_half_width dashed transparent;
-  }
-
-  .achievement:before {
-    bottom: 100%;
-    border-bottom: $root_twelve solid #fff;
-  }
-
-  .achievement:after {
-    top: 100%;
-    width: 0;
-    border-top: $root_twelve solid #fff;
-  }
-
-  .achievementPosition1 {
-    position: absolute;
-
-    //top: -1.3vh;
-    //left: -1.8vh;
-    top: 145px;
-    left: 16.1611111px;
-  }
-
-  .achievementPosition2 {
-    position: absolute;
-
-    //top: -4.4vh;
-    //left: 5.9vh;
-    top: 160px;
-    left: 77.6611111px;
-  }
-
-  .achievementPosition3 {
-    position: absolute;
-
-    //top: -12.46vh;
-    //left: 14vh;
-    top: 145px;
-    left: 139.161111px;
-  }
-
   .usernamePosition {
     position: absolute;
 
-    top: 30px;
-    left: 210px;
+    top: 110px;
+    left: 50%;
 
-    right: 100px;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+
+    width: 100%;
 
     .username{
-      width: 100%;
+      width: 65%;
       height: $su_user_height;
-
-      // temporary color
-      background-color: #fff;
     }
   }
 
   .emailPosition {
     position: absolute;
 
-    top: 90px;
-    left: 120px !important;
+    top: 180px;
+    left: 50%;
 
-    right: 0px;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+
+    width: 100%;
 
     .email {
-      width: $su_user_width;
+      width: 65%;
       height: $su_user_height;
      }
   }
 
   .passwordPosition {
     position: absolute;
-    top: 150px;
-    left: 120px;
-    right: 0px;
+    top: 250px;
+    left: 50%;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+
+    width: 100%;
 
     .password {
-      width: $su_pass_width;
+      width: 65%;
       height: $su_pass_height;
-
-      background-color: #fff;
-
-      border: solid;
-      border-width: 3px;
-      border-color: $su_banner_flame;
     }
   }
 
   .passwordConfirmPosition {
     position: absolute;
 
-    top: 200px;
-    left: 120px;
-    right: 0px;
+    top: 320px;
+    left: 50%;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+
+    width: 100%;
 
     .passwordConfirm {
-      width: $su_pass_width;
+      width: 65%;
       height: $su_pass_height;
-      background-color: #fff;
-
-      border: solid;
-      border-width: 3px;
-      border-color: $su_banner_flame;
     }
+  }
+
+  .signup_button {
+    position: absolute;
+
+    top: 410px;
+    left: 50%;
+
+    background: #fff;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+
+    width: 40%;
+
+    display: inline-block;
+    padding: 0.3em 1em;
+    text-decoration: none;
+    color: $primary_text;
+    border: solid 2px $light_primary_color;
+    border-radius: 3px;
+    transition: .4s;
+
+    cursor: pointer;
+  }
+
+  .signup_button:hover{
+    background: $light_primary_color;
+    color: #fff;
   }
 }
 

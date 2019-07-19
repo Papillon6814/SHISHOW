@@ -1,30 +1,17 @@
 <template>
-  <div class="outgoing">
-
+  <div class="outgoing" >
     <span class="iconPicPosition">
       <div class="iconPic">
-        <img id="image" :src="user.image" />
+        <img id="image" :src="user['image']" />
       </div>
     </span>
-
     <div class="usernamePosition">
       <div class="username">
         {{user.username}}
       </div>
     </div>
-    <div class="idPosition">
-      <div class="id">
-        qawsedrftgyhujkolp
-      </div>
-    </div>
-    <div class="profilePosition">
-      <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、
-      </div>
-    </div>
     <div v-if="signuser">
-    <div class="n_btn-circle-3d" @click="doExtend">削除</div>
+      <div class="n_btn-circle-3d" @click="doExtend">削除</div>
     </div>
   </div>
 </template>
@@ -37,7 +24,7 @@ import '@firebase/auth'
 const db = firebase.firestore();
 
 export default {
-  name: 'outgoing',
+  name: 'friends',
 
   props:[
     "user",
@@ -52,23 +39,28 @@ export default {
       const user_db = db.collection("USER")
                         .doc(this.user.email)
 
-      user_db.collection("incoming")
+      user_db.collection("friends")
              .doc(this.signuser.email)
              .delete()
+             .then(() => {
+               //pass
+             })
 
-      sign_db.collection("outgoing")
+      sign_db.collection("friends")
              .doc(this.user.email)
              .delete()
              .then(()=>{
-               sign_db.collection("outgoing")
+               sign_db.collection("friends")
                       .get()
                       .then(doc=>{
-                        this.$parent.outgo = doc.docs;
-                      })
-                      .catch(()=>{
-                        this.$parent.outgo = "";
+                        this.$parent.fri = doc.docs;
+                      }).catch(()=>{
+                        this.$parent.fri = "";
                       })
              })
+             .catch(() => {
+
+             });
 
       db.collection("USER")
         .doc(this.user.email)
@@ -100,15 +92,13 @@ export default {
     //temporary height
     height: $f_banner_height;
 
-    background-color: $n_banner_color;
+    background-color: #dbdbdb;
 
     z-index: 2;
 
     margin: 0px auto;
 
     transition: 0.3s;
-    //children
-
 
     .iconPic {
       width: $n_icon_width;
@@ -130,38 +120,22 @@ export default {
       position: absolute;
 
       top: 15px;
-      left: 34.1611111px;
+      left: 33px;
     }
 
     .username{
       width: $user_width;
       height: $n_user_height;
 
-      background-color: #fff;
-
+      text-align: left;
+      font-size: 25px;
     }
 
     .usernamePosition{
       position: absolute;
 
-      top: 8px;
-      left: 172px;
-      right: 0px;
-    }
-
-    .id{
-      width: $id_width;
-      height: $n_id_height;
-
-      background-color: #fff;
-
-    }
-
-    .idPosition{
-      position: absolute;
-
-      top: 68px;
-      left: 172px;
+      top: 20px;
+      left: 165px;
       right: 0px;
     }
 

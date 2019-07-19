@@ -3,11 +3,9 @@
     <header>
       <navi @input="getSearchWord"></navi>
     </header>
-    <main>
       <transition appear name="v">
         <div id="myBannerPosition">
           <myBanner
-            @extendMyBanner="extendOther"
             v-if="userStatus"
             :loginedUser="getCurrentUserName">
           </myBanner>
@@ -16,22 +14,19 @@
       </transition>
       <div id="moving">
         <transition appear name="v2">
-        <div class="normalBannerField">
           <div class="normalBannerPosition">
             <div v-for="N in filteredUser.length"
               :key="N" v-bind:class="'n'+N">
               <normalBanner
-              :user="filteredUser[N-1]"
-              :signuser="signuser"
-              :relations="relation[N-1]"
-              @extendNormalBanner="moveDown(N)">
+                :user="filteredUser[N-1]"
+                :signuser="signuser"
+                :relations="relation[N-1]">
               </normalBanner>
             </div>
+            <div class="alphaSpace"></div>
           </div>
-        </div>
         </transition>
       </div>
-    </main>
       <!--
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
@@ -157,79 +152,18 @@ export default {
       });
     },
 
-    extendOther: function() {
-      let active = true;
-      let move = document.getElementById("moving");
-      let footer = document.getElementsByTagName('footer');
-
-      let footerStyle = getComputedStyle(footer[0]);
-      footer[0].style.top = (parseInt(footerStyle.top) + 280) + 'px';
-
-      move.style.top = "340px";
-      active = !active;
-      if (active === false) {
-        footer[0].style.top = (parseInt(footerStyle.top) - 280) + 'px';
-
-        move.style.top = "60px";
-      }
-    },
-
     placeFooter: function() {
       let footer = document.getElementsByTagName('footer');
       footer[0].style.top = (200 * (1 + this.filteredUser.length) + 300) + 'px';
 
       this.$forceUpdate();
-
     },
-
-    moveDown: function(N) {
-      let move, style;
-      let footer, footerStyle;
-      let i;
-      if(this.normalBannerActiveArray.indexOf(N) == -1) {
-        // normalBannerActiveArrayの中にNが格納されていない時
-        this.normalBannerActiveArray.push(N);
-
-        for(i=N+1;i<=this.filteredUser.length;i++){
-          move = document.getElementsByClassName('n'+i);
-          style = window.getComputedStyle(move[0]);
-          move[0].style.top = (parseInt(style.top)+200)+"px";
-        }
-
-        footer = document.getElementsByTagName('footer')
-        footerStyle = getComputedStyle(footer[0]);
-
-        footer[0].style.top = (parseInt(footerStyle.top) + 200) + 'px';
-      } else {
-        // Nが配列の中にある時は、削除を行う
-        this.normalBannerActiveArray.splice(
-          this.normalBannerActiveArray.indexOf(N), 1
-        );
-
-        for(i = N+1; i <= this.filteredUser.length; i++) {
-          move = document.getElementsByClassName('n'+i);
-          style = window.getComputedStyle(move[0]);
-
-          move[0].style.top = (parseInt(style.top) - 200) + "px";
-        }
-        footer = document.getElementsByTagName('footer')
-        footerStyle = getComputedStyle(footer[0]);
-
-        footer[0].style.top = (parseInt(footerStyle.top) - 200) + 'px';
-      }
-      this.$forceUpdate();
-    }
   }
 };
 
 </script>
 
 <style lang="scss">
-
-html {
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
 
 body {
   padding: 0;
@@ -239,21 +173,15 @@ body {
   background-color: $dark_color;
 }
 
-
-
 #myBannerPosition {
-  //position: relative;
-  //temporary top
+  position: fixed;
+  top: 100px;
+  left: 0;
 
-  padding-top: 70px;
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 100%;
-  position: absolute;
+  width: 23%;
+  height: calc(100% - 100px);
+
   z-index: 1;
-
-  /*top: 45px;
-    left: 10%;*/
 }
 
 #moving {
@@ -262,14 +190,14 @@ body {
   .normalBannerPosition {
     position: absolute;
 
-    top: 173px;
-    left: 14%;
-
+    top: -30px;
     width: 100%;
     height: 100%;
 
     padding-top: 165px;
-    margin-left: 10%;
+    margin-left: 27%;
+
+    overflow-y: scroll;
 
     $i: 1;
 
@@ -292,6 +220,18 @@ body {
 
       $i: $i + 1;
     }
+
+    .alphaSpace {
+      position: absolute;
+
+      left: 0;
+      top: 180px * 20;
+
+      height: 140px;
+      width: 100%;
+
+      background-color: rgba(0, 0, 0, 0);
+    }
   }
 }
 
@@ -310,30 +250,11 @@ footer {
   padding-top: 100px;
 }
 
-#myBannerPosition {
-  //position: relative;
-  //temporary top
-  padding-top: 70px;
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 100%;
-  position: absolute;
-  z-index: 1;
-  /*top: 45px;
-    left: 10%;*/
-}
-
 .gameBannerPosition {
   position: absolute;
   //temporary top
   top: 45px;
   left: 10%;
-}
-
-#moving {
-  position: absolute;
-  width: 100%;
-  transition: 0.3s;
 }
 
 .v-enter {

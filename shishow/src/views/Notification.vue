@@ -71,8 +71,6 @@ export default {
     padding: 0;
     margin: 0;
     width: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
 
     background-color: $dark_color;
   }
@@ -84,6 +82,8 @@ export default {
     left: 15%;
     width: 70%;
     height: $header_height;
+
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 
     background-color: #00b7ce;
 
@@ -103,10 +103,10 @@ export default {
     left: 15%;
 
     width: 70%;
-    height: 100%;
+    height: calc(100% - 200px);
 
     background-color: #fff;
-    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 
     overflow-y: scroll;
     overflow-x: hidden;
@@ -117,7 +117,7 @@ export default {
       left: 5%;
     }
     $i: 2;
-    @while $i<=30 {
+    @while $i<=20 {
       .not#{$i}{
         position: relative;
         left: 5%;
@@ -126,11 +126,11 @@ export default {
       $i: $i + 1;
     }
   }
-  #notificationField::webkit-scrollbar{
+  #notificationField::webkit-scrollbar {
     display: none;
   }
 
-  .no_notification{
+  .no_notification {
     position: relative;
     top:250px;
     font-size: 130px;

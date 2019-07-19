@@ -1,5 +1,6 @@
 <template>
   <div class="rightArea">
+    <div class="nameSpace"></div>
     {{ friendDocID }}
     <div v-for="N in msgList" v-bind:key="N">
       <div v-show="isMine(N)" class="myChatBalloon">
@@ -15,6 +16,7 @@
         {{ N.date.toDate().toLocaleString() }}
       </div>
     </div>
+    <div class="scrollSpace"></div>
   </div>
 </template>
 
@@ -111,8 +113,8 @@ export default {
   top: 0;
   right: 0;
 
-  width: 55%;
-  height: calc(100% - 50px);
+  width: 60%;
+  height: 100%;
 
   background-color: #fff;
 
@@ -134,8 +136,8 @@ export default {
   margin: 1.5em 15px 1.5em 0;
   padding: 7px 10px;
 
-  min-width: 125px;
-  max-width: 100%;
+  min-width: 25px;
+  max-width: 200px;
 
   color: $main_text_color;
   font-size: 16px;
@@ -151,22 +153,24 @@ export default {
 
   border-radius: 20px;
 
-  border: solid 1px #bbb;/*線*/
-  border-radius: 20px;/*角の丸み*/
+  border: solid 1px #bbb;
+  /* 線 */
+  border-radius: 20px;
+  /* 角の丸み */
 
   right: 38%;
 
   margin: 1.5em 15px 1.5em 0;
   padding: 7px 10px;
 
-  min-width: 125px;
-  max-width: 100%;
+  min-width: 25px;
+  max-width: 200px;
 
   color: $main_text_color;
   font-size: 16px;
   background: #FFF;
 
-  text-align: right;
+  text-align: left;
   font-family: 'Noto Sans JP', sans-serif;
 }
 
@@ -184,6 +188,18 @@ export default {
   font-size: 13px;
 }
 
+.scrollSpace {
+  position: relative;
 
+  height: 120px;
+  width: 100%;
+}
+
+.nameSpace {
+  position: relative;
+
+  height: 160px;
+  width: 100%;
+}
 
 </style>

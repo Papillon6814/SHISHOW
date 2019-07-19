@@ -1,5 +1,5 @@
 <template>
-  <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'normalExtend': isB }">
+  <div class="normalBanner">
     <span class="iconPicPosition">
       <img class="icon" :src="user['image']" />
       <div class="iconCircle"></div>
@@ -22,10 +22,11 @@
     <div class="userInfoPosition">
       <div class="userInfo">userinfo</div>
     </div> -->
-    <div v-if="relation==0" @click="sendFriendReq" class="friendRequest_button">江崎にフレ申請</div>
+    <div v-if="relation==0" @click="sendFriendReq" class="friendRequest_button">申請</div>
     <div v-else-if="relation==1" @click="add_db" class="friendRequest_button">承認</div>
     <div v-else-if="relation==2" @click="delete_db" class="friendRequest_button">削除</div>
-    <div v-else-if="relation==3"  class="friendRequest_button">友達</div>
+    <div v-else-if="relation==3" class="friendRequest_button">師匠</div>
+    <div v-else-if="relation==4" class="friendRequest_button">弟子</div>
   </div>
 </template>
 
@@ -63,15 +64,6 @@ export default {
       });
     },
 
-    callNormalExtend: function() {
-
-
-      this.isA = !this.isA;
-      this.isB = !this.isB;
-      this.arrowUp = !this.arrowUp;
-      this.$emit("extendNormalBanner");
-    },
-
     sendFriendReq: function() {
 
       if (store.state.status) {
@@ -84,9 +76,6 @@ export default {
             username: this.user["username"],
             email: this.user["email"]
           })
-          .catch(() => {
-
-          });
 
 
         db.collection("USER")
@@ -97,61 +86,61 @@ export default {
             username: this.signuser["username"],
             email: this.signuser["email"]
           })
-          .catch(() => {
-
-          });
 
         db.collection("USER").doc(this.user.email)
-        .collection("relation")
-        .doc(this.signuser.email).set({
-          relation:1,
-        })
-        .catch(() =>{
+          .collection("relation")
+          .doc(this.signuser.email).set({
+            relation:1,
+          })
 
-        })
+        db.collection("USER")
+          .doc(this.signuser.email)
+          .collection("relation")
+          .doc(this.user.email).set({
+            relation:2,
+          })
 
-        db.collection("USER").doc(this.signuser.email)
-        .collection("relation")
-        .doc(this.user.email).set({
-          relation:2,
-        }).catch(() =>{
-
-        })
-
-        db.collection("USER").doc(this.user.email)
-        .collection("notice")
-        .doc(this.signuser.email)
-        .set({
-          msg:this.signuser.username+"からフレンド申請が来ました。",
-          date: new Date()
-        })
-
-
-
-      this.relation = 2;
+        db.collection("USER")
+          .doc(this.user.email)
+          .collection("notice")
+          .doc(this.signuser.email)
+          .set({
+            msg:this.signuser.username+"が入門を申し込んできました。",
+            date: new Date()
+          })
+          this.relation = 2;
       }
     },
 
     delete_db:function(){
-      const sign_db = db.collection("USER").doc(this.signuser.email);
-      const user_db = db.collection("USER").doc(this.user.email)
+      const sign_db = db.collection("USER")
+                        .doc(this.signuser.email);
+      const user_db = db.collection("USER")
+                        .doc(this.user.email)
 
-      user_db.collection("incoming").doc(this.signuser.email).delete()
-      .catch(() =>{});
+      user_db.collection("incoming")
+             .doc(this.signuser.email)
+             .delete()
 
-      sign_db.collection("outgoing").doc(this.user.email).delete()
-      .catch(() =>{});
+      sign_db.collection("outgoing")
+             .doc(this.user.email)
+             .delete()
 
-      db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).delete()
-      .catch(() =>{
+      db.collection("USER")
+        .doc(this.user.email)
+        .collection("relation")
+        .doc(this.signuser.email)
+        .delete()
 
-      })
-      db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).delete()
-      .catch(() =>{
+      db.collection("USER")
+        .doc(this.signuser.email)
+        .collection("relation")
+        .doc(this.user.email)
+        .delete()
 
-      })
-
-      user_db.collection("notice").doc(this.signuser.email).delete();
+      user_db.collection("notice")
+             .doc(this.signuser.email)
+             .delete();
 
       this.relation = 0
     },
@@ -182,7 +171,8 @@ export default {
                    username: this.user.username,
                    email: this.user.email,
                    chatID: doc1.id,
-                   lastChatDate: now
+                   lastChatDate: now,
+                   isSHISHOW: false
                  });
                })
                .catch(() => {
@@ -199,22 +189,17 @@ export default {
                           username: this.signuser.username,
                           email: this.signuser.email,
                           chatID: doc1.id,
-                          lastChatDate: now
+                          lastChatDate: now,
+                          isSHISHOW: true
                         })
                })
-               .catch(() => {
-
-               });
 
         db.collection("USER")
           .doc(this.user.email)
           .collection("relation")
           .doc(this.signuser.email)
           .set({
-            relation:3,
-          })
-          .catch(() =>{
-
+            relation: 3,
           })
 
         db.collection("USER")
@@ -222,10 +207,7 @@ export default {
           .collection("relation")
           .doc(this.user.email)
           .set({
-            relation:3,
-          })
-          .catch(() =>{
-
+            relation: 4,
           })
 
         user_db.collection("notice")
@@ -274,20 +256,6 @@ export default {
 
 .normalBanner:hover {
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-}
-
-.normalExtend {
-  position: absolute;
-
-  width: $n_banner_width;
-  height: $n_banner_height * 2;
-
-  background-color: $n_banner_color;
-
-  z-index: 2;
-
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-  transition: 0.3s;
 }
 
 .iconPicPosition {

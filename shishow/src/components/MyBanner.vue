@@ -13,28 +13,11 @@
       <div class="achievement"></div>
     </div>
     <div class="usernamePosition">
-      <div class="fieldForUserName">
-        <div class="username">
-          {{loginedUser}}
-          <!--
-            // FIXME: 弟子要素を付けると領域デカすぎてボタン押せなくなる問題
-             <div class="deshiPosition">
-            <div class="deshi"></div>
-          </div>
-          -->
-        </div>
-      </div>
+
     </div>
     <router-link to="/edit">
-    <div class="profilePosition">
-      <div class="profile">
-        {{bio}}
-      </div>
-    </div>
+
     </router-link>
-    <div class="userInfoPosition">
-      <div class="userInfo">userinfo</div>
-    </div>
     <router-link to="/friend">
       <div class="friendsButton">
         <div class="btn-circle-3d">フレンズ</div>
@@ -43,9 +26,6 @@
     <div class="logoutButton">
       <div @click="logout" class="btn-circle-3d">ログアウト</div>
     </div>
-    <span v-bind:class="{ reverse:isC }" @click="doExtend" id="pullDownProperties">
-      <i class="fas fa-caret-down"></i>
-    </span>
   </div>
 </template>
 
@@ -127,13 +107,6 @@ export default {
       });
     },
 
-    doExtend: function() {
-      (this.isA = !this.isA),
-      (this.isB = !this.isB),
-      (this.isC = !this.isC),
-      this.$emit("extendMyBanner");
-    },
-
     logout: function() {
       firebase
         .auth()
@@ -158,7 +131,7 @@ export default {
   position: absolute;
 
   width: $banner_width;
-  height: $banner_height;
+  height: 100%;
 
   background-color: $banner_color;
 
@@ -181,7 +154,7 @@ export default {
 
   width: $banner_width;
   //temporary height
-  height: $banner_height * 2;
+  // height: $banner_height * 2;
 
   z-index: 2;
 
@@ -424,7 +397,4 @@ export default {
   border-bottom: none;
 }
 
-.reverse {
-  transform: rotateX(180deg);
-}
 </style>

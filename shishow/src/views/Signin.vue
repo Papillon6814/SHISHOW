@@ -29,7 +29,7 @@ body {
   margin: 0;
 
   width: 100%;
-
+  
   overflow: hidden;
 
   background-color: $dark_color;
@@ -41,8 +41,8 @@ body {
   width: 100%;
 
   //temporary top
-  top: 150px;
-  left: 10%;
+  top: 180px;
+  left: 26%;
 }
 
 </style>
