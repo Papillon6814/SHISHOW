@@ -5,15 +5,18 @@
         <img id="image" :src="user['image']" />
       </div>
     </span>
+
     <div class="usernamePosition">
       <div class="username">
         {{user.username}}
       </div>
     </div>
+
     <div v-if="signuser">
-      <div class="n_btn-circle-3d" @click="doExtend">削除</div>
+      <div class="n_btn-circle-3d" @click="deleteFriend">削除</div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -32,7 +35,7 @@ export default {
   ],
 
   methods: {
-    doExtend: function() {
+    deleteFriend: function() {
 
       const sign_db = db.collection("USER")
                         .doc(this.signuser.email);

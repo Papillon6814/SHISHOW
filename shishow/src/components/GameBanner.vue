@@ -8,14 +8,6 @@
       <div class="gamename">
       </div>
     </div>
-    <div class="profilePosition">
-      <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、
-        それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
-        最近では、予想外の趣味に没頭中！
-      </div>
-    </div>
   </div>
 </template>
 

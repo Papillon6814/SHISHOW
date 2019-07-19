@@ -1,5 +1,6 @@
 <template>
-  <div class="normalBanner">
+  <div class="normalBanner"
+    @click="click()">
     <span class="iconPicPosition">
       <img class="icon" :src="user['image']" />
       <div class="iconCircle"></div>
@@ -40,7 +41,13 @@ const db = firebase.firestore();
 
 export default {
   name: 'normalBanner',
-  props:["user","signuser","relations"],
+
+  props: [
+    "user",
+    "signuser",
+    "relations"
+  ],
+
   created:function(){
     this.onAuth();
     this.relation = this.relations;
@@ -62,6 +69,10 @@ export default {
         store.commit("onAuthStateChanged", user);
         store.commit("onUserStatusChanged", user.uid ? true : false);
       });
+    },
+
+    click: function() {
+      this.$emit("clickNB");
     },
 
     sendFriendReq: function() {
@@ -213,7 +224,7 @@ export default {
         user_db.collection("notice")
                .doc(this.signuser.email)
                .set({
-                 msg: this.signuser.usernam+"とフレンドになりました。",
+                 msg: this.signuser.username+"とフレンドになりました。",
                  date: new Date()
                })
 
@@ -339,20 +350,6 @@ export default {
 
   top: 100.6875px;
   left: 106.673px;
-}
-
-.pullDownProperties {
-  position: absolute;
-
-  bottom: -5px;
-  left: 10.3px;
-
-  font-size: 39.875px;
-  z-index: 4;
-}
-
-.pullDownProperties:hover {
-  color: $pulldown_color;
 }
 
 .username {
