@@ -20,7 +20,8 @@
               <normalBanner
                 :user="filteredUser[N-1]"
                 :signuser="signuser"
-                :relations="relation[N-1]">
+                :relations="relation[N-1]"
+                @clickNB="click()">
               </normalBanner>
             </div>
             <div class="alphaSpace"></div>
@@ -32,11 +33,6 @@
           <gameBanner></gameBanner>
       </div>
       -->
-      <footer>
-        <div class="footerPosition">
-          <ourFooter></ourFooter>
-        </div>
-      </footer>
   </div>
 </template>
 
@@ -86,9 +82,7 @@ export default {
             }
           }
         })
-        this.placeFooter();
       })
-
     });
 
     db.collection("USER")
@@ -152,12 +146,9 @@ export default {
       });
     },
 
-    placeFooter: function() {
-      let footer = document.getElementsByTagName('footer');
-      footer[0].style.top = (200 * (1 + this.filteredUser.length) + 300) + 'px';
-
-      this.$forceUpdate();
-    },
+    click: function() {
+      console.log("click");
+    }
   }
 };
 

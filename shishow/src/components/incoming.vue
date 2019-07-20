@@ -12,15 +12,7 @@
       </div>
     </div>
 
-
-    <div class="profilePosition">
-      <div class="profile">
-        prof
-      </div>
-    </div>
-    <div class="n_btn-circle-3d" @click="accept">
-      許可
-    </div>
+    <div class="n_btn-circle-3d" @click="accept">許可</div>
   </div>
 </template>
 
@@ -156,7 +148,7 @@ export default {
     //temporary height
     height: $n_banner_height;
 
-    background-color: $n_banner_color;
+    background-color: #dbdbdb;
 
     z-index: 2;
 
@@ -187,63 +179,6 @@ export default {
       left: 34.1611111px;
     }
 
-    .achievement {
-      position: relative;
-      width: $n_achievement_width;
-      height: $n_achievement_height; //√3
-      background-color: #ffffff;
-      margin: $n_root_twelve 0;
-    }
-
-    .achievement:before,
-    .achievement:after {
-      content: "";
-      position: absolute;
-
-      left: 0;
-
-      width: 0;
-      border-left: $n_a_half_width solid transparent;
-      border-right: $n_a_half_width dashed transparent;
-    }
-
-    .achievement:before {
-      bottom: 100%;
-      border-bottom: $n_root_twelve solid #fff;
-    }
-
-    .achievement:after {
-      top: 100%;
-      width: 0;
-      border-top: $n_root_twelve solid #fff;
-    }
-
-    .achievementPosition1 {
-      position: absolute;
-
-      //top: -1.3vh;
-      //left: -1.8vh;
-      top: 100.6875px;
-      left: 23.11076388px;
-    }
-
-    .achievementPosition2 {
-      position: absolute;
-
-      //top: -4.4vh;
-      //left: 5.9vh;
-      top: 115px;
-      left: 65.392px;
-    }
-
-    .achievementPosition3 {
-      position: absolute;
-
-      //top: -12.46vh;
-      //left: 14vh;
-      top: 100.6875px;
-      left: 106.673px;
-    }
 
     .username{
       width: $user_width;
@@ -251,29 +186,15 @@ export default {
 
       background-color: #fff;
 
+      font-size: 25px;
+      text-align: left;
     }
 
     .usernamePosition{
       position: absolute;
 
-      top: 8px;
-      left: 172px;
-      right: 0px;
-    }
-
-    .id{
-      width: $id_width;
-      height: $n_id_height;
-
-      background-color: #fff;
-
-    }
-
-    .idPosition{
-      position: absolute;
-
-      top: 68px;
-      left: 172px;
+      top: 20px;
+      left: 165px;
       right: 0px;
     }
 

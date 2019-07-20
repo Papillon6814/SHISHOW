@@ -1,32 +1,34 @@
 <template>
   <div class="normalBanner">
-    <span class="iconPicPosition">
-      <img class="icon" :src="user['image']" />
-      <div class="iconCircle"></div>
-    </span>
-    <!-- <div class="achievementPosition1">
-      <div class="achievement"></div>
+    <div class="nbField" @click="click()">
+      <span class="iconPicPosition">
+        <img class="icon" :src="user['image']" />
+        <div class="iconCircle"></div>
+      </span>
+      <!-- <div class="achievementPosition1">
+        <div class="achievement"></div>
+      </div>
+      <div class="achievementPosition2">
+        <div class="achievement"></div>
+      </div>
+      <div class="achievementPosition3">
+        <div class="achievement"></div>
+      </div> -->
+      <div class="usernamePosition">
+        <div class="username" align="left">{{ user.username }}</div>
+      </div>
+      <!-- <div class="profilePosition">
+        <div class="profile">{{ user.bio }}</div>
+      </div>
+      <div class="userInfoPosition">
+        <div class="userInfo">userinfo</div>
+      </div> -->
     </div>
-    <div class="achievementPosition2">
-      <div class="achievement"></div>
-    </div>
-    <div class="achievementPosition3">
-      <div class="achievement"></div>
-    </div> -->
-    <div class="usernamePosition">
-      <div class="username" align="left">{{ user.username }}</div>
-    </div>
-    <!-- <div class="profilePosition">
-      <div class="profile">{{ user.bio }}</div>
-    </div>
-    <div class="userInfoPosition">
-      <div class="userInfo">userinfo</div>
-    </div> -->
-    <div v-if="relation==0" @click="sendFriendReq" class="friendRequest_button">申請</div>
-    <div v-else-if="relation==1" @click="add_db" class="friendRequest_button">承認</div>
-    <div v-else-if="relation==2" @click="delete_db" class="friendRequest_button">削除</div>
-    <div v-else-if="relation==3" class="friendRequest_button">師匠</div>
-    <div v-else-if="relation==4" class="friendRequest_button">弟子</div>
+      <div v-if="relation==0" @click="sendFriendReq" class="friendRequest_button">申請</div>
+      <div v-else-if="relation==1" @click="add_db" class="friendRequest_button">承認</div>
+      <div v-else-if="relation==2" @click="delete_db" class="friendRequest_button">削除</div>
+      <div v-else-if="relation==3" class="friendRequest_button">師匠</div>
+      <div v-else-if="relation==4" class="friendRequest_button">弟子</div>
   </div>
 </template>
 
@@ -40,7 +42,13 @@ const db = firebase.firestore();
 
 export default {
   name: 'normalBanner',
-  props:["user","signuser","relations"],
+
+  props: [
+    "user",
+    "signuser",
+    "relations"
+  ],
+
   created:function(){
     this.onAuth();
     this.relation = this.relations;
@@ -62,6 +70,10 @@ export default {
         store.commit("onAuthStateChanged", user);
         store.commit("onUserStatusChanged", user.uid ? true : false);
       });
+    },
+
+    click: function() {
+      this.$emit("clickNB");
     },
 
     sendFriendReq: function() {
@@ -112,7 +124,7 @@ export default {
       }
     },
 
-    delete_db:function(){
+    delete_db: function() {
       const sign_db = db.collection("USER")
                         .doc(this.signuser.email);
       const user_db = db.collection("USER")
@@ -145,7 +157,7 @@ export default {
       this.relation = 0
     },
 
-    add_db:function(){
+    add_db: function() {
       const sign_db = db.collection("USER")
                         .doc(this.signuser.email);
       const user_db = db.collection("USER")
@@ -213,7 +225,7 @@ export default {
         user_db.collection("notice")
                .doc(this.signuser.email)
                .set({
-                 msg: this.signuser.usernam+"とフレンドになりました。",
+                 msg: this.signuser.username+"とフレンドになりました。",
                  date: new Date()
                })
 
@@ -339,20 +351,6 @@ export default {
 
   top: 100.6875px;
   left: 106.673px;
-}
-
-.pullDownProperties {
-  position: absolute;
-
-  bottom: -5px;
-  left: 10.3px;
-
-  font-size: 39.875px;
-  z-index: 4;
-}
-
-.pullDownProperties:hover {
-  color: $pulldown_color;
 }
 
 .username {
