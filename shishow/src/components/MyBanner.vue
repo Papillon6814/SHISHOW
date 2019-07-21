@@ -1,30 +1,44 @@
 <template>
-  <div class="banner" v-bind:class="{ 'banner': isA, 'extend': isB }">
+  <div class="banner">
     <span class="iconPicPosition">
-      <div class="iconPic"><img id="image" v-show="icon" :src="icon" width="130" height="130"></div>
-    </span>
-    <div class="achievementPosition1">
-      <div class="achievement"></div>
-    </div>
-    <div class="achievementPosition2">
-      <div class="achievement"></div>
-    </div>
-    <div class="achievementPosition3">
-      <div class="achievement"></div>
-    </div>
-    <div class="usernamePosition">
-
-    </div>
-    <router-link to="/edit">
-
-    </router-link>
-    <router-link to="/friend">
-      <div class="friendsButton">
-        <div class="btn-circle-3d">フレンズ</div>
+      <div class="iconPic">
+        <img id="image" v-show="icon" :src="icon" width="130" height="130">
       </div>
-    </router-link>
-    <div class="logoutButton">
-      <div @click="logout" class="btn-circle-3d">ログアウト</div>
+    </span>
+
+    <div class="username">
+      username
+    </div>
+
+    <div class="shishowPosition">
+      <div class="shishowText">
+        SHISHOW
+      </div>
+      <div class="shishowNumber">
+        num
+      </div>
+    </div>
+
+    <div class="deshiPosition">
+      <div class="deshiText">
+        Deshi
+      </div>
+      <div class="deshiNumber">
+        num
+      </div>
+    </div>
+
+    <div class="profilePosition">
+      <div class="profile">
+        no bio
+      </div>
+      <div class="separateLine"></div>
+    </div>
+
+    <div class="editButton">Edit</div>
+
+    <div class="logout">
+      <div @click="logout">Logout</div>
     </div>
   </div>
 </template>
@@ -124,6 +138,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .banner {
   overflow-y: hidden;
   overflow-x: hidden;
@@ -143,258 +158,232 @@ export default {
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
   transition: 0.3s;
-}
 
-.banner:hover {
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-}
 
-.extend {
-  position: absolute;
-
-  width: $banner_width;
-  //temporary height
-  // height: $banner_height * 2;
-
-  z-index: 2;
-
-  border: solid;
-  border-width: 5px;
-  border-color: $banner_flame;
-
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-
-  transition: 0.3s;
-}
-
-.iconPicPosition {
-  position: absolute;
-
-  top: 15px;
-  left: 34.1611111px;
-
-  .iconPic {
-    width: $icon_width;
-    height: $icon_height;
-
-    // temporary color
-    background-color: #fff;
-    border-radius: 50%;
+  /*
+  .banner:hover {
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
   }
-}
+  */
 
-.achievement {
-  position: relative;
-  width: $achievement_width;
-  height: $achievement_height; //√3
-  background-color: #ffffff;
-  margin: $root_twelve 0;
-}
+  .iconPicPosition {
+    position: absolute;
 
-.achievement:before,
-.achievement:after {
-  content: "";
-  position: absolute;
+    width: 100%;
+    height: 100%;
 
-  left: 0;
-
-  width: 0;
-  border-left: $a_half_width solid transparent;
-  border-right: $a_half_width dashed transparent;
-}
-
-.achievement:before {
-  bottom: 100%;
-  border-bottom: $root_twelve solid #fff;
-}
-
-.achievement:after {
-  top: 100%;
-  width: 0;
-  border-top: $root_twelve solid #fff;
-}
-
-.achievementPosition1 {
-  position: absolute;
-
-  //top: -1.3vh;
-  //left: -1.8vh;
-  top: 145px;
-  left: 16.1611111px;
-}
-
-.achievementPosition2 {
-  position: absolute;
-
-  //top: -4.4vh;
-  //left: 5.9vh;
-  top: 160px;
-  left: 77.6611111px;
-}
-
-.achievementPosition3 {
-  position: absolute;
-
-  //top: -12.46vh;
-  //left: 14vh;
-  top: 145px;
-  left: 139.161111px;
-}
-
-#pullDownProperties {
-  position: absolute;
-
-  bottom: -5px;
-  left: 15px;
-
-  font-size: 58px;
-}
-
-#pullDownProperties:hover {
-  color: $pulldown_color;
-}
-
-.username {
-  position: absolute;
-
-  top: 20px;
-  left: 202px;
-
-  width: $user_width;
-  height: $user_height;
-
-  background-color: #fff;
-
-  .deshiPosition {
-    position: relative;
-
-    top: 0px;
+    top: 50px;
     left: 50%;
 
-    height: 100%;
-    z-index: 5;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
 
-    .deshi {
-      width: $deshi_width;
-      height: 100%;
-
-      background-color: $window_flame;
-    }
-
-    .deshi:before {
+    .iconPic {
       position: absolute;
-      content: "";
-      left: 0;
+
+      left: 50%;
       top: 0;
-      width: 0;
-      height: 0;
-      border: none;
-      border-left: solid 40px white;
-      border-bottom: solid 50px transparent;
+
+      -webkit-transform: translate(-50%, 0);
+      -moz-transform: translate(-50%, 0);
+      transform: translate(-50%, 0);
+
+      width: $icon_width;
+      height: $icon_height;
+
+      // temporary color
+      background-color: #fff;
+      border-radius: 50%;
     }
   }
-}
 
-.profilePosition {
-  position: absolute;
+  .username {
+    position: absolute;
 
-  top: 120px;
-  left: 202px;
-  right: 25px;
+    top: 185px;
+    left: 50%;
 
-  .profile {
-    width: $profile_width;
-    height: $profile_height;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
 
-    top: 30px;
-    left: 202px;
-    right: 0px;
+    width: 100%;
+    height: 45px;
+
+    font-size: 35px;
+    text-align: center;
+  }
+
+  .shishowPosition {
+    position: absolute;
+
+    top: 320px;
+    left: 50%;
+
+    width: 80%;
+    height: 50px;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+
+    .shishowText {
+      position: absolute;
+
+      left: 0;
+      bottom: 0;
+
+      font-family: "robot";
+      font-size: 30px;
+    }
+
+    .shishowNumber {
+      position: absolute;
+
+      right: 0;
+      bottom: 0;
+
+      color: $secondary_text;
+      font-family: "robot";
+      font-size: 30px;
+    }
+  }
+
+  .deshiPosition {
+    position: absolute;
+
+    top: 370px;
+    left: 50%;
+
+    width: 80%;
+    height: 50px;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+
+    .deshiText {
+      position: absolute;
+
+      left: 0;
+      bottom: 0;
+
+      font-family: "robot";
+      font-size: 30px;
+    }
+
+    .deshiNumber {
+      position: absolute;
+
+      right: 0;
+      bottom: 0;
+
+      color: $secondary_text;
+      font-family: "robot";
+      font-size: 30px;
+    }
+  }
+
+  .profilePosition {
+    position: absolute;
+
+    width: 88%;
+    height: 240px;
+
+    top: 535px;
+    left: 50%;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+
+    border-radius: 15px;
 
     background-color: #fff;
+
+    .profile {
+      position: absolute;
+
+      width: 90%;
+      height: 170px;
+
+      top: 10px;
+      left: 50%;
+
+      -webkit-transform: translate(-50%, 0);
+      -moz-transform: translate(-50%, 0);
+      transform: translate(-50%, 0);
+
+      text-align: left;
+    }
+
+    .separateLine {
+      position: absolute;
+
+      width: 90%;
+      height: 2px;
+
+      top: 180px;
+      left: 50%;
+
+      -webkit-transform: translate(-50%, 0);
+      -moz-transform: translate(-50%, 0);
+      transform: translate(-50%, 0);
+
+      background-color: #ddd;
+    }
+
+    .games {
+      position: absolute;
+
+      width: 100%;
+      height: 58px;
+
+      top: 182px;
+      left: 0;
+    }
   }
-}
 
-.userInfo {
-  width: 100%;
-  height: 230px;
+  .editButton {
+    position: absolute;
 
-  // temporary color
-  background-color: #fff;
+    top: 805px;
+    left: 50%;
 
-  border-radius: 5%;
-  border: dashed;
-  border-width: 2px;
-  border-color: $window_flame;
-}
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
 
-.userInfoPosition {
-  position: absolute;
+    width: 160px;
+    height: 32px;
 
-  top: 300px;
-  left: 75px;
-  right: 25px;
-}
+    background-color: $accent_color;
 
-.logoutButton {
-  position: absolute;
+    border-radius: 15px;
 
-  right: 19%;
-  top: -10px;
-}
+    text-align: center;
+    font-size: 20px;
+    line-height: 32px;
 
-.friendsButton {
-  position: absolute;
+    cursor: pointer;
+  }
 
-  right: 6%;
-  top: -10px;
-}
+  .logout {
+    position: absolute;
 
-.btn-circle-3d {
-  display: inline-block;
-  text-decoration: none;
-  background: #ffc107;
-  color: #fff;
-  width: 130px;
-  height: 80px;
-  line-height: 79px;
-  border-radius: 50%;
-  text-align: center;
-  font-weight: bold;
-  overflow: hidden;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-  border-bottom: solid 3px #ffb300;
-  transition: 0.4s;
+    width: 350px;
+    height: 18px;
 
-  cursor: pointer;
-}
+    bottom: 18px;
+    right: 4px;
 
-.btn-circle-3d {
-  position: relative;
-  top: 30px;
-  left: 39%;
-  display: inline-block;
-  text-decoration: none;
-  background: #ff8181;
-  color: #fff;
-  width: 130px;
-  height: 80px;
-  line-height: 79px;
-  border-radius: 50%;
-  text-align: center;
-  font-weight: bold;
-  overflow: hidden;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-  border-bottom: solid 3px #bd6565;
-  transition: 0.4s;
+    color: $secondary_text;
+    text-align: right;
+    font-size: 18px;
 
-  cursor: pointer;
-}
-
-.btn-circle-3d:active {
-  -webkit-transform: translateY(2px);
-  transform: translateY(2px);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-  border-bottom: none;
+    cursor: pointer;
+  }
 }
 
 </style>

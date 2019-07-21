@@ -3,6 +3,7 @@
     <header>
       <navi @input="getSearchWord"></navi>
     </header>
+
       <transition appear name="v">
         <div id="myBannerPosition">
           <myBanner
@@ -12,7 +13,16 @@
           <BlurBanner v-else></BlurBanner>
         </div>
       </transition>
+
       <div id="moving">
+
+        <div id="gameBannerPosition">
+          <div v-for="N in games.length"
+            :key="N" v-bind:class="'g'+N">
+            <gameBanner></gameBanner>
+          </div>
+        </div>
+
         <transition appear name="v2">
           <div class="normalBannerPosition">
             <div v-for="N in filteredUser.length"
@@ -21,13 +31,15 @@
                 :user="filteredUser[N-1]"
                 :signuser="signuser"
                 :relations="relation[N-1]"
-                @clickNB="click()">
+                @clickNB="NBclick()">
               </normalBanner>
             </div>
             <div class="alphaSpace"></div>
           </div>
         </transition>
+
       </div>
+
       <!--
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
@@ -41,6 +53,7 @@
 import navi from "../components/NavigationBar.vue";
 import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
+import gameBanner from "../components/GameBanner.vue";
 import BlurBanner from "../components/BlurBanner.vue";
 
 import firebase from "../plugin/firestore";
@@ -49,12 +62,86 @@ import "@firebase/auth";
 import store from "../store";
 
 const db = firebase.firestore();
+let NBPosition;
 
 export default {
   name: "home",
 
+  data: function() {
+    return {
+      users: [],
+      searchWord: "",
+      filteredUser: [],
+      games: [],
+      currentUser: "",
+      signuser: [],
+      relation:[],
+    };
+  },
+
+  components: {
+    navi,
+    myBanner,
+    normalBanner,
+    gameBanner,
+    BlurBanner
+  },
+
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+
+    userStatus() {
+      return this.$store.getters.isSignedIn;
+    },
+    getCurrentUserName: function() {
+      return this.$store.getters.user.displayName;
+    },
+
+    getCurrentUserId: function() {
+      return this.$store.getters.user.uid;
+    },
+  },
+
+  methods: {
+
+    getSearchWord(word) {
+      this.searchWord = word;
+    },
+
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit("onAuthStateChanged", user);
+        store.commit("onUserStatusChanged", user.uid ? true : false);
+      });
+    },
+
+    NBclick: function() {
+      console.log("click");
+    },
+
+    placeNB: function() {
+      NBPosition = document.getElementsByClassName("normalBannerPosition");
+
+      db.collection("GameCollection")
+        .get()
+        .then(query => {
+          query.forEach(doc1 => {
+            this.games.push(doc1.data());
+          })
+
+          NBPosition[0].style.top = (200 * this.games.length) + "px";
+
+          this.$forceUpdate();
+        })
+    }
+  },
+
   mounted: function() {
     this.onAuth();
+    this.placeNB();
     const sign_db = db.collection("USER")
                       .doc(this.user.email);
 
@@ -86,69 +173,11 @@ export default {
     });
 
     db.collection("USER")
-    .doc(this.user.email)
-    .get()
-    .then(doc =>{
-      this.signuser = doc.data();
-    });
-  },
-
-  components: {
-    navi,
-    myBanner,
-    normalBanner,
-    BlurBanner
-  },
-
-
-  data: function() {
-    return {
-      users: [],
-      searchWord: "",
-      filteredUser: [],
-      currentUser: "",
-      signuser: [],
-      normalBannerActiveArray: [],
-      relation:[],
-    };
-  },
-
-  computed: {
-    user() {
-      return this.$store.getters.user;
-    },
-
-    userStatus() {
-      return this.$store.getters.isSignedIn;
-    },
-    getCurrentUserName: function() {
-      return this.$store.getters.user.displayName;
-    },
-
-    getCurrentUserId: function() {
-      return this.$store.getters.user.uid;
-    },
-
-
-  },
-
-  methods: {
-
-    getSearchWord(word) {
-      this.searchWord = word;
-    },
-
-    onAuth: function() {
-      firebase.auth().onAuthStateChanged(user => {
-        user = user ? user : {};
-        store.commit("onAuthStateChanged", user);
-        store.commit("onUserStatusChanged", user.uid ? true : false);
+      .doc(this.user.email)
+      .get()
+      .then(doc =>{
+        this.signuser = doc.data();
       });
-    },
-
-    click: function() {
-      console.log("click");
-    }
   }
 };
 
@@ -176,23 +205,53 @@ body {
 }
 
 #moving {
+  position: absolute;
+
+  top: -30px;
+  left: 27%;
+
   width: 100%;
+  height: 100%;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  #gameBannerPosition {
+    position: absolute;
+
+    width: 100%;
+    height: auto;
+
+    $g: 1;
+
+    @while $g <= 5 {
+      .g#{$g} {
+        position: absolute;
+
+        top: 200px * $g;
+        left: 0;
+
+        width: 100%;
+        height: $n_banner_height;
+
+        transition: 0.1s;
+      }
+
+      $g: $g + 1;
+    }
+  }
 
   .normalBannerPosition {
     position: absolute;
 
-    top: -30px;
+    top: 100%;
+    left: 0;
+
     width: 100%;
     height: 100%;
 
-    padding-top: 165px;
-    margin-left: 27%;
-
-    overflow-y: scroll;
-
     $i: 1;
 
-    list-style: none;
     @while $i <= 30 {
 
       $temporary_top: (200px * $i) !global;
@@ -206,7 +265,7 @@ body {
         width: 100%;
         height: $n_banner_height;
 
-        transition: 0.3s;
+        transition: 0.1s;
       }
 
       $i: $i + 1;
@@ -239,13 +298,6 @@ footer {
   transition: .3s;
 
   padding-top: 100px;
-}
-
-.gameBannerPosition {
-  position: absolute;
-  //temporary top
-  top: 45px;
-  left: 10%;
 }
 
 .v-enter {
