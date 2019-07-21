@@ -3,25 +3,18 @@
     <div class="nameSpace"></div>
     {{ friendDocID }}
     <div v-for="N in msgList" v-bind:key="N">
-
-      <div v-show="isMine(N)" class="myChatBalloonPosition">
-        <div class="myChatBalloon">
-          {{ N.msg }}
-        </div>
-        <div class="myDatePosition">
-          {{ N.date.toDate().toLocaleString() }}
-        </div>
+      <div v-show="isMine(N)" class="myChatBalloon">
+        {{ N.msg }}
       </div>
-
-      <div v-show="isHis(N)" class="hisChatBalloonPosition">
-        <div class="hisChatBalloon">
-          {{ N.msg }}
-        </div>
-        <div class="hisDatePosition">
-          {{ N.date.toDate().toLocaleString() }}
-        </div>
+      <div v-show="isHis(N)" class="hisChatBalloon">
+        {{ N.msg }}
       </div>
-
+      <div v-show="isMine(N)" class="myDatePosition">
+        {{ N.date.toDate().toLocaleString() }}
+      </div>
+      <div v-show="isHis(N)" class="hisDatePosition">
+        {{ N.date.toDate().toLocaleString() }}
+      </div>
     </div>
     <div class="scrollSpace"></div>
   </div>
@@ -129,96 +122,73 @@ export default {
   overflow-x: hidden;
 }
 
-.myChatBalloonPosition {
-  position: relative;
+.myChatBalloon {
+  position: absolute;
+  display: inline-block;
 
-  width: 100%;
-  height: auto;
+  border-radius: 20px;
 
-  overflow-y: visible;
-  overflow-x: hidden;
+  border: solid 1px #bbb;/*線*/
+  border-radius: 20px;/*角の丸み*/
 
-  text-align: right;
+  right: 0%;
 
-  .myChatBalloon {
-    display: inline-block;
+  margin: 0px 15px 100px 10px;
+  padding: 7px 1px;
 
-    position: relative;
+  min-width: 25px;
+  max-width: 200px;
 
-    padding: 5px 6px 5px 6px;
-
-    right: 20px;
-
-    min-width: 10px;
-    max-width: 30%;
-    height: auto;
-
-    border-radius: 20px;
-    border: solid;
-    border-color: $secondary_text;
-
-    word-break: break-all;
-    -ms-word-break: break-all;
-  }
-
-  .myDatePosition {
-    display: block;
-
-    position: relative;
-
-    padding-top: 5px;
-    right: 20px;
-
-    width: auto;
-    height: auto;
-  }
-}
-
-.hisChatBalloonPosition {
-  position: relative;
-
-  padding-top: 20px;
-
-  width: auto;
-  height: auto;
-
-  overflow-y: visible;
-  overflow-x: hidden;
+  color: $main_text_color;
+  font-size: 16px;
+  background: #FFF;
+  word-break: break-all;
 
   text-align: left;
+  font-family: 'Noto Sans JP', sans-serif;
+}
 
-  .hisChatBalloon {
-    display: inline-block;
+.hisChatBalloon {
+  position: absolute;
+  display: inline-block;
 
-    position: relative;
+  border-radius: 20px;
 
-    padding: 5px 6px 5px 6px;
+  border: solid 1px #bbb;/*線*/
+  border-radius: 20px;/*角の丸み*/
 
-    left: 20px;
+  left: 1%;
 
-    min-width: 10px;
-    max-width: 30%;
-    height: auto;
+  margin: 1.5em 15px 1.5em 0;
+  padding: 7px 10px;
 
-    border-radius: 20px;
-    border: solid;
-    border-color: $secondary_text;
+  min-width: 25px;
+  max-width: 200px;
 
-    word-break: break-all;
-    -ms-word-break: break-all;
-  }
+  color: $main_text_color;
+  font-size: 16px;
+  background: #FFF;
+  word-break: break-all;
 
-  .hisDatePosition {
-    display: block;
 
-    padding-top: 5px;
-    left: 20px;
+  text-align: left;
+  font-family: 'Noto Sans JP', sans-serif;
+}
 
-    position: relative;
+.myDatePosition {
+  position: relative;
 
-    width: auto;
-    height: auto;
-  }
+  left: 42%;
+  font-size: 13px;
+  padding: 10px 3px 100px 0px;
+
+}
+
+.hisDatePosition {
+  position: relative;
+
+  right: 42%;
+  font-size: 13px;
 }
 
 .scrollSpace {
