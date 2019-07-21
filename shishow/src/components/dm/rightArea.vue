@@ -2,18 +2,18 @@
   <div class="rightArea">
     <div class="nameSpace"></div>
     {{ friendDocID }}
-    <div v-for="N in msgList" v-bind:key="N">
-      <div v-show="isMine(N)" class="myChatBalloon">
-        {{ N.msg }}
+    <div v-for="N in msgList.length" v-bind:key="N">
+      <div v-show="isMine(msgList[N-1])" class="myChatBalloon">
+        {{ msgList[N-1].msg }}
       </div>
-      <div v-show="isHis(N)" class="hisChatBalloon">
-        {{ N.msg }}
+      <div v-show="isHis(msgList[N-1])" class="hisChatBalloon">
+        {{ msgList[N-1].msg }}
       </div>
-      <div v-show="isMine(N)" class="myDatePosition">
-        {{ N.date.toDate().toLocaleString() }}
+      <div v-show="isMine(msgList[N-1])" class="myDatePosition">
+        {{ msgList[N-1].date.toDate().toLocaleString() }}
       </div>
-      <div v-show="isHis(N)" class="hisDatePosition">
-        {{ N.date.toDate().toLocaleString() }}
+      <div v-show="isHis(msgList[N-1])" class="hisDatePosition">
+        {{ msgList[N-1].date.toDate().toLocaleString() }}
       </div>
     </div>
     <div class="scrollSpace"></div>
