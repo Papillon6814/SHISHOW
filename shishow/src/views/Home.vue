@@ -15,6 +15,7 @@
       </transition>
 
       <div id="moving">
+
         <div id="gameBannerPosition">
           <div v-for="N in games.length"
             :key="N" v-bind:class="'g'+N">
@@ -121,7 +122,19 @@ export default {
 
     placeNB: function() {
       NBPosition = document.getElementsByClassName("normalBannerPosition");
-      NBPosition[0].style.top =
+
+      db.collection("GameCollection")
+        .limit(5)
+        .get()
+        .then(query => {
+          query.forEach(doc1 => {
+            this.games.push(doc1.data());
+          })
+
+          NBPosition[0].style.top = (200 * this.games.length) + "px";
+
+          this.$forceUpdate();
+        })
     }
   },
 
