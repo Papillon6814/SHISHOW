@@ -1,50 +1,56 @@
 <template>
   <div id="root">
-    <header>
-      <navi @input="getSearchWord"></navi>
-    </header>
+    <div id="wrap">
+      <header>
+        <navi @input="getSearchWord"></navi>
+      </header>
 
-      <transition appear name="v">
-        <div id="myBannerPosition">
-          <myBanner
-            v-if="userStatus"
-            :loginedUser="getCurrentUserName">
-          </myBanner>
-          <BlurBanner v-else></BlurBanner>
-        </div>
-      </transition>
-
-      <div id="moving">
-
-        <div id="gameBannerPosition">
-          <div v-for="N in games.length"
-            :key="N" v-bind:class="'g'+N">
-            <gameBanner></gameBanner>
-          </div>
-        </div>
-
-        <transition appear name="v2">
-          <div class="normalBannerPosition">
-            <div v-for="N in filteredUser.length"
-              :key="N" v-bind:class="'n'+N">
-              <normalBanner
-                :user="filteredUser[N-1]"
-                :signuser="signuser"
-                :relations="relation[N-1]"
-                @clickNB="NBclick()">
-              </normalBanner>
-            </div>
-            <div class="alphaSpace"></div>
+        <transition appear name="v">
+          <div id="myBannerPosition">
+            <myBanner
+              v-if="userStatus"
+              :loginedUser="getCurrentUserName">
+            </myBanner>
+            <BlurBanner v-else></BlurBanner>
           </div>
         </transition>
 
-      </div>
+        <div id="moving">
 
-      <!--
-        <div class="gameBannerPosition">
-          <gameBanner></gameBanner>
-      </div>
-      -->
+          <div id="gameBannerPosition">
+            <div v-for="N in games.length"
+              :key="N" v-bind:class="'g'+N">
+              <gameBanner></gameBanner>
+            </div>
+          </div>
+
+          <transition appear name="v2">
+            <div class="normalBannerPosition">
+              <div v-for="N in filteredUser.length"
+                :key="N" v-bind:class="'n'+N">
+                <normalBanner
+                  :user="filteredUser[N-1]"
+                  :signuser="signuser"
+                  :relations="relation[N-1]"
+                  @clickNB="NBclick()">
+                </normalBanner>
+              </div>
+              <div class="alphaSpace"></div>
+            </div>
+          </transition>
+
+        </div>
+
+        <!--
+          <div class="gameBannerPosition">
+            <gameBanner></gameBanner>
+        </div>
+        -->
+    </div>
+
+    <div class="NBModal">
+
+    </div>
   </div>
 </template>
 
@@ -63,6 +69,7 @@ import store from "../store";
 
 const db = firebase.firestore();
 let NBPosition;
+let NBModal;
 
 export default {
   name: "home",
@@ -120,6 +127,7 @@ export default {
 
     NBclick: function() {
       console.log("click");
+      this.showModal();
     },
 
     placeNB: function() {
@@ -136,12 +144,20 @@ export default {
 
           this.$forceUpdate();
         })
+    },
+
+    showModal: function() {
+      NBModal[0].style.display = "block";
+      this.$forceUpdate();
     }
   },
 
   mounted: function() {
     this.onAuth();
     this.placeNB();
+
+    NBModal = document.getElementsByClassName("NBModal");
+
     const sign_db = db.collection("USER")
                       .doc(this.user.email);
 
@@ -352,5 +368,21 @@ footer {
 
 .v2-leave-active {
   transition: all 0.5s 0s ease;
+}
+
+.NBModal {
+  display: none;
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.3);
+
+  z-index: 10000;
 }
 </style>
