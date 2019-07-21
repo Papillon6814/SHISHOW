@@ -123,7 +123,7 @@ export default {
 }
 
 .myChatBalloon {
-  position: absolute;
+  position: relative;
   display: inline-block;
 
   border-radius: 20px;
@@ -131,33 +131,7 @@ export default {
   border: solid 1px #bbb;/*線*/
   border-radius: 20px;/*角の丸み*/
 
-  right: 0%;
-
-  margin: 0px 15px 100px 10px;
-  padding: 7px 1px;
-
-  min-width: 25px;
-  max-width: 200px;
-
-  color: $main_text_color;
-  font-size: 16px;
-  background: #FFF;
-  word-break: break-all;
-
-  text-align: left;
-  font-family: 'Noto Sans JP', sans-serif;
-}
-
-.hisChatBalloon {
-  position: absolute;
-  display: inline-block;
-
-  border-radius: 20px;
-
-  border: solid 1px #bbb;/*線*/
-  border-radius: 20px;/*角の丸み*/
-
-  left: 1%;
+  left: 38%;
 
   margin: 1.5em 15px 1.5em 0;
   padding: 7px 10px;
@@ -168,8 +142,33 @@ export default {
   color: $main_text_color;
   font-size: 16px;
   background: #FFF;
-  word-break: break-all;
 
+  text-align: right;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.hisChatBalloon {
+  position: relative;
+  display: inline-block;
+
+  border-radius: 20px;
+
+  border: solid 1px #bbb;
+  /* 線 */
+  border-radius: 20px;
+  /* 角の丸み */
+
+  right: 38%;
+
+  margin: 1.5em 15px 1.5em 0;
+  padding: 7px 10px;
+
+  min-width: 25px;
+  max-width: 200px;
+
+  color: $main_text_color;
+  font-size: 16px;
+  background: #FFF;
 
   text-align: left;
   font-family: 'Noto Sans JP', sans-serif;
@@ -178,16 +177,14 @@ export default {
 .myDatePosition {
   position: relative;
 
-  left: 42%;
+  left: 40%;
   font-size: 13px;
-  padding: 10px 3px 100px 0px;
-
 }
 
 .hisDatePosition {
   position: relative;
 
-  right: 42%;
+  right: 40%;
   font-size: 13px;
 }
 
