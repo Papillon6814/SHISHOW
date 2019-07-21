@@ -30,7 +30,7 @@
           <i class="fas fa-envelope fa-3x dm"></i>
         </router-link>
         <router-link to="/friend">
-          <i class="fas fa-gamepad fa-3x game"></i>
+          <i class="fas fa-users"></i>
         </router-link>
         <router-link to="/notification">
           <i class="fas fa-bell fa-3x bell"></i>
@@ -54,7 +54,7 @@
               <i class="fas fa-envelope fa-3x dm"></i>
             </router-link>
             <router-link to="/friend">
-              <i class="fas fa-gamepad fa-3x game"></i>
+              <i class="fas fa-user-friends fa-3x game"></i>
             </router-link>
             <router-link to="/notification">
               <div class="bell">
@@ -294,7 +294,7 @@ export default {
 
     left: 0;
 
-    .dm {
+    .home {
       position: absolute;
 
       width: $button_width;
@@ -306,25 +306,13 @@ export default {
       color: #fff;
     }
 
-    .game {
-      position: absolute;
-
-      width: $button_width;
-      height: $button_height;
-
-      left: 150px;
-      top: 10px;
-
-      color: #fff;
-    }
-
     .bell {
       position: absolute;
 
       width: $button_width;
       height: $button_height;
 
-      left: 250px;
+      left: 150px;
       top: 10px;
 
       color: #fff;
@@ -337,13 +325,24 @@ export default {
       left: 20px;
 
       color: white;
-
       border-radius: 20%;
       background-color: red;
       z-index: 10;
     }
 
-    .home {
+    .game {
+      position: absolute;
+
+      width: $button_width;
+      height: $button_height;
+
+      left: 250px;
+      top: 10px;
+
+      color: #fff;
+    }
+
+    .dm {
       position: absolute;
 
       width: $button_width;
@@ -354,7 +353,6 @@ export default {
 
       color: #fff;
     }
-
 
     .dm:hover {
       opacity: 0.5;
@@ -395,9 +393,9 @@ export default {
     z-index: -1;
   }
 }
-
-// デバッグのために一時的に変えてます
-@media (min-width: 1050px) {
+@media (min-width: 1300px) {
+/* デバッグのために一時的に変えてます
+@media (min-width: 1050px) {*/
   #header {
     top: 0px;
   }
