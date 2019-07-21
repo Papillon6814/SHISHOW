@@ -15,7 +15,9 @@
         <div class="achievement"></div>
       </div> -->
       <div class="usernamePosition">
-        <div class="username" align="left">{{ user.username }}</div>
+        <div class="username" align="left">
+          {{ user.username }}
+        </div>
       </div>
       <!-- <div class="profilePosition">
         <div class="profile">{{ user.bio }}</div>

@@ -26,13 +26,13 @@
 
           <transition appear name="v2">
             <div class="normalBannerPosition">
-              <div v-for="N in filteredUser.length"
+              <div v-for="(userinfo, N) in filteredUser"
                 :key="N" v-bind:class="'n'+N">
                 <normalBanner
-                  :user="filteredUser[N-1]"
+                  :user="filteredUser[N]"
                   :signuser="signuser"
-                  :relations="relation[N-1]"
-                  @clickNB="NBclick()">
+                  :relations="relation[N]"
+                  @clickNB="NBclick(userinfo)">
                 </normalBanner>
               </div>
               <div class="alphaSpace"></div>
@@ -50,6 +50,7 @@
     <div class="NBModal">
       <div class="modalPosition">
         <popupNormalBanner
+          :userInfo="popupUser"
           @callFade="fadeOut()"></popupNormalBanner>
       </div>
     </div>
@@ -85,7 +86,8 @@ export default {
       games: [],
       currentUser: "",
       signuser: [],
-      relation:[],
+      relation: [],
+      popupUser: ''
     };
   },
 
@@ -129,9 +131,11 @@ export default {
       });
     },
 
-    NBclick: function() {
+    NBclick: function(userinfo) {
       console.log("click");
       this.showModal();
+
+      this.popupUser = userinfo;
     },
 
     placeNB: function() {
@@ -144,7 +148,7 @@ export default {
             this.games.push(doc1.data());
           })
 
-          NBPosition[0].style.top = (200 * this.games.length) + "px";
+          NBPosition[0].style.top = (200 * (this.games.length + 1)) + "px";
 
           this.$forceUpdate();
         })
