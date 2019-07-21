@@ -40,7 +40,6 @@
           </transition>
 
         </div>
-
         <!--
           <div class="gameBannerPosition">
             <gameBanner></gameBanner>
@@ -49,7 +48,10 @@
     </div>
 
     <div class="NBModal">
-
+      <div class="modalPosition">
+        <popupNormalBanner
+          @callFade="fadeOut()"></popupNormalBanner>
+      </div>
     </div>
   </div>
 </template>
@@ -61,6 +63,7 @@ import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
 import gameBanner from "../components/GameBanner.vue";
 import BlurBanner from "../components/BlurBanner.vue";
+import popupNormalBanner from "../components/PopupNormalBanner.vue";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
@@ -91,7 +94,8 @@ export default {
     myBanner,
     normalBanner,
     gameBanner,
-    BlurBanner
+    BlurBanner,
+    popupNormalBanner
   },
 
   computed: {
@@ -149,6 +153,11 @@ export default {
     showModal: function() {
       NBModal[0].style.display = "block";
       this.$forceUpdate();
+    },
+
+    fadeOut: function() {
+      NBModal[0].style.display = "none";
+      this.$forceUpdate();
     }
   },
 
@@ -162,31 +171,31 @@ export default {
                       .doc(this.user.email);
 
     sign_db.collection("relation")
-    .get()
-    .then(docs_r=>{
-    db.collection("USER")
-      .get()
-      .then(docs_p =>{
-        docs_p.forEach(doc=>{
-          if(doc.data().email != this.user.email){
-            this.users.push(doc.data());
-            this.filteredUser.push(doc.data());
+           .get()
+           .then(docs_r=>{
+           db.collection("USER")
+             .get()
+             .then(docs_p =>{
+               docs_p.forEach(doc=>{
+                 if(doc.data().email != this.user.email){
+                   this.users.push(doc.data());
+                   this.filteredUser.push(doc.data());
 
-            if(docs_r.docs){
-              let i;
-              for(i=0;i<docs_r.docs.length && doc.data().email != docs_r.docs[i].id;i++);
-              if(i==docs_r.docs.length){
-                this.relation.push(0)
-              }else{
-                this.relation.push(docs_r.docs[i].data().relation);
-              }
-            }else{
-              this.relation.push(0)
-            }
-          }
-        })
-      })
-    });
+                   if(docs_r.docs){
+                     let i;
+                     for(i=0;i<docs_r.docs.length && doc.data().email != docs_r.docs[i].id;i++);
+                     if(i==docs_r.docs.length){
+                       this.relation.push(0)
+                     }else{
+                       this.relation.push(docs_r.docs[i].data().relation);
+                     }
+                   }else{
+                     this.relation.push(0)
+                   }
+                  }
+               })
+             })
+           });
 
     db.collection("USER")
       .doc(this.user.email)
@@ -384,5 +393,19 @@ footer {
   background-color: rgba(0, 0, 0, 0.3);
 
   z-index: 10000;
+
+  .modalPosition {
+    position: absolute;
+
+    top: 300px;
+    left: 50%;
+
+    width: 65%;
+    height: 100%;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+  }
 }
 </style>

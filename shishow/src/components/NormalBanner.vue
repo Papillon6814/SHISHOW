@@ -89,7 +89,6 @@ export default {
             email: this.user["email"]
           })
 
-
         db.collection("USER")
           .doc(this.user.email)
           .collection("incoming")
