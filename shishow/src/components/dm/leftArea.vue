@@ -92,14 +92,8 @@ export default {
         .collection('friends')
         .orderBy('lastChatDate', 'desc')
         .get()
-        .then(friendsSnapshot => {
-          let i=0;
-          
+        .then(friendsSnapshot => {  
           friendsSnapshot.forEach(doc1 => {
-            
-            // doc1にはフレンドのメールアドレスが格納されている
-            
-            
 
             db.collection("USER")
               .doc(doc1.data().email)

@@ -21,7 +21,7 @@
       <div class="inputArea">
         <inputArea
         @scrollRightArea="callScroll()"
-        @updateleftArea="aaa()"
+        @updateleftArea="traceData()"
         :friendDocID="idFromLeftArea">
         </inputArea>
       </div>
@@ -135,7 +135,7 @@ export default {
       entireBox[0].style.display = "none";
     },
 
-    aaa:function(){
+    traceData:function(){
       let id = this.leftAreaData.indexOf(this.idFromLeftArea);
       this.leftAreaData.splice(id,1);
       this.leftAreaData.unshift(this.idFromLeftArea);
