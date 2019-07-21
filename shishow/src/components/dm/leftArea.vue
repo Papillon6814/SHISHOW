@@ -59,17 +59,20 @@ export default {
       lastMsg: [],
       usernames: [],
       dmImages: [],
-      isPrivate: true
+      isPrivate: true,
+      DocsId:this.friendsDocID,
     }
   },
 
   props: [
-    'friendsDocID'
+    'friendsDocID',
+    "id"
   ],
 
   components: {
     dmBanner
   },
+
 
   methods: {
     onAuth: function() {
@@ -83,23 +86,28 @@ export default {
     // 最後にメッセージが送信された日時とその内容を取得する
     // TODO: returnできるようにする
     loadLastMsgAndDate: function() {
+      
       db.collection("USER")
         .doc(currentUserEmail)
         .collection('friends')
         .orderBy('lastChatDate', 'desc')
         .get()
         .then(friendsSnapshot => {
-
+          let i=0;
+          
           friendsSnapshot.forEach(doc1 => {
+            
             // doc1にはフレンドのメールアドレスが格納されている
+            
+            
 
             db.collection("USER")
               .doc(doc1.data().email)
               .get()
               .then(doc2 => {
                 this.usernames.push(doc2.data().username);
-                this.dmImages.push(doc2.data().image)
-              });
+                this.dmImages.push(doc2.data().image);
+             });
 
             db.collection("PrivateChat")
               .doc(currentUserEmail + doc1.id)
@@ -137,7 +145,8 @@ export default {
 
     showPopup: function() {
       this.$emit("showPopup");
-    }
+    },
+    
   },
 
   created: function() {
@@ -151,6 +160,20 @@ export default {
     privateDM = document.getElementsByClassName("privateDM");
     globalDM = document.getElementsByClassName("globalDM");
     leftArea = document.getElementById("leftArea");
+  },
+
+  watch:{
+    friendsDocID:function(newVal){
+      if(this.id != 0){
+      let username = this.usernames[this.id];
+      let icon = this.dmImages[this.id];
+      this.usernames.splice(this.id,1);
+      this.dmImages.splice(this.id,1);
+      this.usernames.unshift(username);
+      this.dmImages.unshift(icon);
+      }
+  },
+  
   }
 }
 
