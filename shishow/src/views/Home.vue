@@ -19,6 +19,7 @@
         <div id="gameBannerPosition">
           <div v-for="N in games.length"
             :key="N" v-bind:class="'g'+N">
+            <gameBanner></gameBanner>
           </div>
         </div>
 
@@ -36,6 +37,7 @@
             <div class="alphaSpace"></div>
           </div>
         </transition>
+
       </div>
 
       <!--
@@ -124,7 +126,6 @@ export default {
       NBPosition = document.getElementsByClassName("normalBannerPosition");
 
       db.collection("GameCollection")
-        .limit(5)
         .get()
         .then(query => {
           query.forEach(doc1 => {
@@ -140,6 +141,7 @@ export default {
 
   mounted: function() {
     this.onAuth();
+    this.placeNB();
     const sign_db = db.collection("USER")
                       .doc(this.user.email);
 
@@ -214,10 +216,11 @@ body {
   overflow-x: hidden;
   overflow-y: scroll;
 
-  .gameBannerPosition {
+  #gameBannerPosition {
     position: absolute;
 
     width: 100%;
+    height: auto;
 
     $g: 1;
 
@@ -231,6 +234,8 @@ body {
         width: 100%;
         height: $n_banner_height;
       }
+
+      $g: $g + 1;
     }
   }
 
@@ -291,13 +296,6 @@ footer {
   transition: .3s;
 
   padding-top: 100px;
-}
-
-.gameBannerPosition {
-  position: absolute;
-  //temporary top
-  top: 45px;
-  left: 10%;
 }
 
 .v-enter {
