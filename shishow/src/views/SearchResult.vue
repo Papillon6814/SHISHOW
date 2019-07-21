@@ -78,7 +78,7 @@ export default {
             if(docs){
               
               let i;
-              for(i=0;i<docs.docs.length && doc.data().email != docs.docs[i].id;i++);
+              for(i=0;i<docs.docs.length && this.users[users_i].data().email != docs.docs[i].id;i++);
               if(i==docs.docs.length){
                 relat = 0;
               }else{
