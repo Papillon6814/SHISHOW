@@ -17,11 +17,13 @@
       <div class="dmbannerPosition">
         <div v-for="(friend, N) in friendsDocID"
              :key="N" v-bind:class="'b' + N">
-          <div @click="click(friend)">
+          <div @click="click(friend,N)">
             <dmBanner
               :dmBannerUsername="usernames[N]"
               :dmMsg="lastMsg[N]"
-              :iconPic="dmImages[N]">
+              :iconPic="dmImages[N]"
+              :target="target[N]"
+              :N="N">
             </dmBanner>
           </div>
         </div>
@@ -61,6 +63,7 @@ export default {
       dmImages: [],
       isPrivate: true,
       DocsId:this.friendsDocID,
+      target:[],
     }
   },
 
@@ -94,7 +97,7 @@ export default {
         .get()
         .then(friendsSnapshot => {  
           friendsSnapshot.forEach(doc1 => {
-
+            
             db.collection("USER")
               .doc(doc1.data().email)
               .get()
@@ -115,12 +118,16 @@ export default {
                   lastMsgDate.push(doc2.data().date);
                 })
               })
+
+            
             })
       })
     },
 
-    click: function(friend) {
+    click: function(friend,N) {
       this.$parent.idFromLeftArea = friend;
+      this.target.fill(false);
+      this.$set(this.target,N,true)
     },
 
     switchPrivate: function() {
@@ -148,6 +155,7 @@ export default {
     console.log("leftarea created");
     currentUserEmail = firebase.auth().currentUser.email;
     this.loadLastMsgAndDate();
+    for(let i=0;i<this.friendsDocID.length;i++){this.target.push(false)}
   },
 
   mounted: function() {
