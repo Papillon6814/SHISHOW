@@ -1,21 +1,16 @@
 <template>
   <div class="gamebanner">
+
     <span class="iconPicPosition">
       <div class="iconPic">
       </div>
     </span>
+
     <div class="gamenamePosition">
       <div class="gamename">
       </div>
     </div>
-    <div class="profilePosition">
-      <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、
-        それとドライブ、旅行、ダイビングなどでリフレッシュ(^-^)/
-        最近では、予想外の趣味に没頭中！
-      </div>
-    </div>
+
   </div>
 </template>
 
@@ -31,9 +26,8 @@ export default {
   .gamebanner {
     position: absolute;
 
-    width: $banner_width;
-    // height: $banner_height;
-
+    width: $n_banner_width;
+    height: $n_banner_height;
     background-color: $g_banner_color;
 
     transition: 0.3s;
@@ -124,25 +118,11 @@ export default {
       left: 139.161111px;
     } */
 
-    #pullDownProperties {
-      position: absolute;
-
-      top: 225px;
-      left: 15px;
-
-      font-size: 58px;
-    }
-
-    #pullDownProperties:hover {
-      color: $pulldown_color;
-    }
-
     .gamename{
       width: $user_width;
       height: $user_height;
 
       background-color: #fff;
-
     }
 
     .gamenamePosition{
