@@ -1,15 +1,7 @@
 <template>
   <div class="GameRequestBanner">
 
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-body">
-          <img id="image" v-show="uploadedImage" :src="uploadedImage">
-          <button id ="button" type="button">Confirm</button>
-          <input type="button" id="closeBtn" value="close">
-        </div>
-      </div>
-    </div>
+
 
     <span class="iconCirclePosition">
       <label>
@@ -45,7 +37,7 @@
 <script>
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
-import Cropper from "cropperjs";
+
 import router from "../router"
 
 const db = firebase.firestore();
@@ -56,7 +48,7 @@ export default{
     return{
       Gamename: "",
       type: "",
-      uploadImage: "",
+      uploadedImage: "",
       roundimg: "",
     }
   },
@@ -67,10 +59,13 @@ export default{
 
   methods: {
     onFileChange(event) {
+      
       //file変数定義
       let files = event.target.files || event.dataTransfer.files;
       if (files[0].type.match(/image/)) {
-        this.showImage(files[0]);
+        
+        this.showImage(files[0])
+        
       }
     },
 
@@ -82,87 +77,12 @@ export default{
       reader.onload = event => {
         // htmlにファイルを反映
         this.uploadedImage = event.target.result;
-        window.setTimeout(place.crop, 1);
+        this.$emit('filechange',this.uploadedImage);
       };
       // 読み込み開始
-
-      this.modal.style.display = "block";
       reader.readAsDataURL(file);
     },
 
-    crop: function() {
-      var root = this;
-      var image = document.getElementById("image");
-      var button = document.getElementById("button");
-      var result = document.getElementById("result");
-      var close = document.getElementById("closeBtn");
-
-      var croppable = false;
-
-      var cropper = new Cropper(image, {
-        aspectRatio: 1,
-        viewMode: 1,
-
-        ready: function() {
-          croppable = true;
-        }
-      });
-      close.onclick = ()=> {
-        this.modal.style.display = "none";
-        cropper.destroy();
-        this.uploadedImage = "";
-      };
-      button.onclick = ()=> {
-        var croppedCanvas;
-        var roundedImage;
-
-        if (!croppable) {
-          return;
-        }
-        // Crop
-        croppedCanvas = cropper.getCroppedCanvas();
-
-        // Show
-        roundedImage = document.createElement("img");
-
-        var canvas = document.createElement("canvas");
-        var context = canvas.getContext("2d");
-        var width = croppedCanvas.width;
-        var height = croppedCanvas.height;
-        canvas.width = width;
-        canvas.height = height;
-        context.imageSmoothingEnabled = true;
-        context.drawImage(croppedCanvas, 0, 0, width, height);
-        context.globalCompositeOperation = "destination-in";
-        context.beginPath();
-        context.fill();
-
-        roundedImage.src = canvas.toDataURL();
-        roundedImage.width = 130;
-        roundedImage.height = 130;
-        result.innerHTML = "";
-
-        canvas.toBlob(function(blob){
-          let reader = new FileReader();
-          reader.onload = event => {
-            //htmlにファイルを反映
-            root.roundimg = event.target.result;
-          };
-
-          //読み込み開始
-          reader.readAsDataURL(blob);
-        });
-        var del = document.getElementById("delete");
-        if (del != null) {
-          del.textContent = null;
-          del.parentNode.removeChild(del);
-        }
-        cropper.destroy();
-        this.modal.style.display = "none";
-        root.uploadedImage = "";
-        result.appendChild(roundedImage);
-      };
-    },
 
    gameCollection: function(){
      if(this.Gamename == ""){
@@ -327,21 +247,5 @@ export default{
   }
 }
 
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-}
 
-.modal-content {
-  background-color: white;
-  width: 500px;
-  margin: 40% auto;
-}
 </style>
