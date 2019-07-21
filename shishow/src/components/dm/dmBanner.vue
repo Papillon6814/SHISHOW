@@ -12,11 +12,10 @@
     </div>
   </div>
 
-
 </template>
 
 <script>
-
+  
 export default {
   name: 'dmBanner',
 
@@ -25,12 +24,13 @@ export default {
     'dmMsg',
     'iconPic',
   ]
+
 }
 
 </script>
 
 <style lang="scss" scoped>
-
+  
 .dmBanner {
   display: block;
 
@@ -106,5 +106,5 @@ export default {
 .dmBanner:hover > .dmTimeArea{
   background-color: $dm_banner_color_hover;
 }
-
+  
 </style>

@@ -5,7 +5,7 @@
     ></leftArea>
     <div class="nameTagArea">
       <div class="nameTag">
-        {{ this.usernameFromLeftArea }}
+        {{ usernameFromLeftArea }}
       </div>
       <div class="nameBorder">
       </div>
@@ -21,6 +21,7 @@
       </inputArea>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -41,6 +42,7 @@ let currentUser;
 let friendsDocID = [];
 
 export default {
+
   name: 'directMessageField',
 
   data() {
@@ -49,7 +51,7 @@ export default {
       leftAreaData: [],
       inputAreaData: '',
       idFromLeftArea: '',
-      usernameFromLeftArea: ''
+      usernameFromLeftArea: '',
     }
   },
 
@@ -123,8 +125,9 @@ export default {
         this.idFromLeftArea = friendsSnapshot.id;
       })
   },
+  
 }
-
+  
 </script>
 
 <style lang='scss' scoped>

@@ -1,4 +1,5 @@
 <template>
+
   <div id="leftArea">
 
     <div class="switchTab">
@@ -28,7 +29,9 @@
     <div class="globalDM">
 
     </div>
+
   </div>
+
 </template>
 
 <script>
@@ -48,7 +51,6 @@ let currentUserEmail;
 let lastMsgDate = [];
 
 let privateDM, globalDM, leftArea;
-
 
 export default {
 
