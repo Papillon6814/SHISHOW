@@ -337,7 +337,6 @@ export default {
       left: 20px;
 
       color: white;
-
       border-radius: 20%;
       background-color: red;
       z-index: 10;
@@ -395,9 +394,9 @@ export default {
     z-index: -1;
   }
 }
-
-// デバッグのために一時的に変えてます
-@media (min-width: 1050px) {
+@media (min-width: 1300px) {
+/* デバッグのために一時的に変えてます
+@media (min-width: 1050px) {*/
   #header {
     top: 0px;
   }
