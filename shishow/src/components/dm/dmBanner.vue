@@ -22,8 +22,8 @@ export default {
   props: [
     'dmBannerUsername',
     'dmMsg',
-    'iconPic',
-  ]
+    'iconPic'
+  ],
 
 }
 

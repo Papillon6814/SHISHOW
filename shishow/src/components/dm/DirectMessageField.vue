@@ -1,6 +1,5 @@
 <template>
   <div id="r">
-
     <div id="directMessageField">
       <leftArea
       :friendsDocID="leftAreaData"
@@ -67,7 +66,7 @@ export default {
       leftAreaData: [],
       inputAreaData: '',
       idFromLeftArea: '',
-      usernameFromLeftArea: '',
+      usernameFromLeftArea: ''
     }
   },
 

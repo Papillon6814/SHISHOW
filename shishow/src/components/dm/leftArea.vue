@@ -13,20 +13,21 @@
            @click="showPopup()">
       </div>
     </div>
-
+    
     <div class="privateDM">
       <div class="dmbannerPosition">
         <div v-for="(friend, N) in friendsDocID"
              :key="N" v-bind:class="'b' + N">
           <div @click="click(friend)">
-            <dmBanner
-              :dmBannerUsername="usernames[N]"
-              :dmMsg="lastMsg[N]"
-              :iconPic="dmImages[N]">
-            </dmBanner>
+              <dmBanner
+                :dmBannerUsername="usernames[N]"
+                :dmMsg="lastMsg[N]"
+                :iconPic="dmImages[N]">
+              </dmBanner>
           </div>
         </div>
       </div>
+
     </div>
 
     <div class="globalDM">
@@ -229,6 +230,8 @@ export default {
         left: 6%;
 
         width: 100%;
+        
+        float:left;
 
         @while $i <= 30{
           .b#{$i}{
@@ -240,7 +243,13 @@ export default {
           }
           $i: $i + 1;
         }
+        
+        /*.notion{
+          border:1px solid #000;
+        }*/
+        
       }
+      
     }
 
     .globalDM {

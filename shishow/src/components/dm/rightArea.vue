@@ -29,7 +29,6 @@ import store from '../../store'
 const db = firebase.firestore();
 let currentUserEmail;
 let chatID;
-/*var time = N.date.toDate().toLocaleString();*/
   
 export default {
   
@@ -127,17 +126,17 @@ export default {
 .myChatBalloon {
   position: relative;
   display: inline-block;
-
+  
   border-radius: 20px;
-
+  
   border: solid 1px #bbb;/*線*/
   border-radius: 20px;/*角の丸み*/
-
+  
   left: 38%;
-
+  
   margin: 1.5em 15px 1.5em 0;
   padding: 7px 10px;
-
+  
   min-width: 25px;
   max-width: 200px;
 
@@ -147,6 +146,8 @@ export default {
 
   text-align: right;
   font-family: 'Noto Sans JP', sans-serif;
+  
+  word-break: break-all;
 }
 
 .hisChatBalloon {
@@ -174,6 +175,8 @@ export default {
 
   text-align: left;
   font-family: 'Noto Sans JP', sans-serif;
+  
+  word-break: break-all;
 }
 
 .myDatePosition {
