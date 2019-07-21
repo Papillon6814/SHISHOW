@@ -48,7 +48,8 @@ let db = firebase.firestore();
 let currentUserEmail;
 let lastMsgDate = [];
 
-let privateDM, globalDM, leftArea;
+let privateDM, globalDM;
+let privateTab, globalTab;
 
 export default {
   name: 'LeftArea',
@@ -125,14 +126,16 @@ export default {
       privateDM[0].style.display = "block";
       globalDM[0].style.display = "none";
 
-      leftArea.style.background = "#b2ebf2";
+      privateTab[0].style.background = "#b2ebf2";
+      globalTab[0].style.background = "#fff";
     },
 
     switchGlobal: function() {
       privateDM[0].style.display = "none";
       globalDM[0].style.display = "block";
 
-      leftArea.style.background = "#fff";
+      privateTab[0].style.background = "#fff";
+      globalTab[0].style.background = "#b2ebf2"
     },
 
     showPopup: function() {
@@ -150,7 +153,8 @@ export default {
   mounted: function() {
     privateDM = document.getElementsByClassName("privateDM");
     globalDM = document.getElementsByClassName("globalDM");
-    leftArea = document.getElementById("leftArea");
+    privateTab = document.getElementsByClassName("private");
+    globalTab = document.getElementsByClassName("global");
   }
 }
 
