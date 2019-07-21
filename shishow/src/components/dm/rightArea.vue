@@ -123,7 +123,7 @@ export default {
 }
 
 .myChatBalloon {
-  position: relative;
+  position: absolute;
   display: inline-block;
 
   border-radius: 20px;
@@ -131,10 +131,10 @@ export default {
   border: solid 1px #bbb;/*線*/
   border-radius: 20px;/*角の丸み*/
 
-  left: 38%;
+  right: 0%;
 
-  margin: 1.5em 15px 1.5em 0;
-  padding: 7px 10px;
+  margin: 0px 15px 100px 10px;
+  padding: 7px 1px;
 
   min-width: 25px;
   max-width: 200px;
@@ -142,23 +142,22 @@ export default {
   color: $main_text_color;
   font-size: 16px;
   background: #FFF;
+  word-break: break-all;
 
-  text-align: right;
+  text-align: left;
   font-family: 'Noto Sans JP', sans-serif;
 }
 
 .hisChatBalloon {
-  position: relative;
+  position: absolute;
   display: inline-block;
 
   border-radius: 20px;
 
-  border: solid 1px #bbb;
-  /* 線 */
-  border-radius: 20px;
-  /* 角の丸み */
+  border: solid 1px #bbb;/*線*/
+  border-radius: 20px;/*角の丸み*/
 
-  right: 38%;
+  left: 1%;
 
   margin: 1.5em 15px 1.5em 0;
   padding: 7px 10px;
@@ -169,6 +168,8 @@ export default {
   color: $main_text_color;
   font-size: 16px;
   background: #FFF;
+  word-break: break-all;
+
 
   text-align: left;
   font-family: 'Noto Sans JP', sans-serif;
@@ -177,14 +178,16 @@ export default {
 .myDatePosition {
   position: relative;
 
-  left: 40%;
+  left: 42%;
   font-size: 13px;
+  padding: 10px 3px 100px 0px;
+
 }
 
 .hisDatePosition {
   position: relative;
 
-  right: 40%;
+  right: 42%;
   font-size: 13px;
 }
 
