@@ -31,7 +31,7 @@
                 :user="filteredUser[N-1]"
                 :signuser="signuser"
                 :relations="relation[N-1]"
-                @clickNB="click()">
+                @clickNB="NBclick()">
               </normalBanner>
             </div>
             <div class="alphaSpace"></div>
@@ -118,7 +118,7 @@ export default {
       });
     },
 
-    click: function() {
+    NBclick: function() {
       console.log("click");
     },
 
@@ -173,11 +173,11 @@ export default {
     });
 
     db.collection("USER")
-    .doc(this.user.email)
-    .get()
-    .then(doc =>{
-      this.signuser = doc.data();
-    });
+      .doc(this.user.email)
+      .get()
+      .then(doc =>{
+        this.signuser = doc.data();
+      });
   }
 };
 

@@ -262,6 +262,8 @@ export default {
 
   z-index: 2;
 
+  cursor: pointer;
+
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
   transition: 0.3s;
 }
