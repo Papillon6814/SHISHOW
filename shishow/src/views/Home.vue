@@ -3,6 +3,7 @@
     <header>
       <navi @input="getSearchWord"></navi>
     </header>
+
       <transition appear name="v">
         <div id="myBannerPosition">
           <myBanner
@@ -12,7 +13,14 @@
           <BlurBanner v-else></BlurBanner>
         </div>
       </transition>
+
       <div id="moving">
+        <div id="gameBannerPosition">
+          <div v-for="N in games.length"
+            :key="N" v-bind:class="'g'+N">
+          </div>
+        </div>
+
         <transition appear name="v2">
           <div class="normalBannerPosition">
             <div v-for="N in filteredUser.length"
@@ -28,6 +36,7 @@
           </div>
         </transition>
       </div>
+
       <!--
         <div class="gameBannerPosition">
           <gameBanner></gameBanner>
@@ -41,6 +50,7 @@
 import navi from "../components/NavigationBar.vue";
 import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
+import gameBanner from "../components/GameBanner.vue";
 import BlurBanner from "../components/BlurBanner.vue";
 
 import firebase from "../plugin/firestore";
@@ -49,9 +59,71 @@ import "@firebase/auth";
 import store from "../store";
 
 const db = firebase.firestore();
+let NBPosition;
 
 export default {
   name: "home",
+
+  data: function() {
+    return {
+      users: [],
+      searchWord: "",
+      filteredUser: [],
+      games: [],
+      currentUser: "",
+      signuser: [],
+      relation:[],
+    };
+  },
+
+  components: {
+    navi,
+    myBanner,
+    normalBanner,
+    gameBanner,
+    BlurBanner
+  },
+
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+
+    userStatus() {
+      return this.$store.getters.isSignedIn;
+    },
+    getCurrentUserName: function() {
+      return this.$store.getters.user.displayName;
+    },
+
+    getCurrentUserId: function() {
+      return this.$store.getters.user.uid;
+    },
+  },
+
+  methods: {
+
+    getSearchWord(word) {
+      this.searchWord = word;
+    },
+
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit("onAuthStateChanged", user);
+        store.commit("onUserStatusChanged", user.uid ? true : false);
+      });
+    },
+
+    click: function() {
+      console.log("click");
+    },
+
+    placeNB: function() {
+      NBPosition = document.getElementsByClassName("normalBannerPosition");
+      NBPosition[0].style.top =
+    }
+  },
 
   mounted: function() {
     this.onAuth();
@@ -91,64 +163,6 @@ export default {
     .then(doc =>{
       this.signuser = doc.data();
     });
-  },
-
-  components: {
-    navi,
-    myBanner,
-    normalBanner,
-    BlurBanner
-  },
-
-
-  data: function() {
-    return {
-      users: [],
-      searchWord: "",
-      filteredUser: [],
-      currentUser: "",
-      signuser: [],
-      normalBannerActiveArray: [],
-      relation:[],
-    };
-  },
-
-  computed: {
-    user() {
-      return this.$store.getters.user;
-    },
-
-    userStatus() {
-      return this.$store.getters.isSignedIn;
-    },
-    getCurrentUserName: function() {
-      return this.$store.getters.user.displayName;
-    },
-
-    getCurrentUserId: function() {
-      return this.$store.getters.user.uid;
-    },
-
-
-  },
-
-  methods: {
-
-    getSearchWord(word) {
-      this.searchWord = word;
-    },
-
-    onAuth: function() {
-      firebase.auth().onAuthStateChanged(user => {
-        user = user ? user : {};
-        store.commit("onAuthStateChanged", user);
-        store.commit("onUserStatusChanged", user.uid ? true : false);
-      });
-    },
-
-    click: function() {
-      console.log("click");
-    }
   }
 };
 
@@ -176,23 +190,48 @@ body {
 }
 
 #moving {
+  position: absolute;
+
+  top: -30px;
+  left: 27%;
+
   width: 100%;
+  height: 100%;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  .gameBannerPosition {
+    position: absolute;
+
+    width: 100%;
+
+    $g: 1;
+
+    @while $g <= 5 {
+      .g#{$g} {
+        position: absolute;
+
+        top: 200px * $g;
+        left: 0;
+
+        width: 100%;
+        height: $n_banner_height;
+      }
+    }
+  }
 
   .normalBannerPosition {
     position: absolute;
 
-    top: -30px;
+    top: 0;
+    left: 0;
+
     width: 100%;
     height: 100%;
 
-    padding-top: 165px;
-    margin-left: 27%;
-
-    overflow-y: scroll;
-
     $i: 1;
 
-    list-style: none;
     @while $i <= 30 {
 
       $temporary_top: (200px * $i) !global;
