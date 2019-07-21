@@ -39,7 +39,7 @@ body {
   width: 100%;
   //temporary top
   top: 150px;
-  left: 10%;
+  left: 25%;
 }
 
 </style>

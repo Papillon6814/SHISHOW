@@ -2,8 +2,10 @@
   <div id="searchRoot">
     <navi @search="filterUser"></navi>
     <div class="searchBannerPosition">
-      <div v-for="N in searchResults.length" :key="N" v-bind:class="'n'+N">
-        <normalBanner :user="searchResults[N-1]"></normalBanner>
+      <div v-for="N in searchResults.length"
+           :key="N" v-bind:class="'n'+N">
+        <normalBanner :user="searchResults[N-1]">
+        </normalBanner>
       </div>
     </div>
   </div>
@@ -11,11 +13,14 @@
 
 <script>
 import firebase from "firebase";
+import "firebase/firestore";
+import "@firebase/auth";
+
 import navi from "../components/NavigationBar.vue";
 import normalBanner from "../components/NormalBanner";
 
-
 const db = firebase.firestore();
+let currentUser;
 
 export default {
   name: "search",
@@ -43,6 +48,8 @@ export default {
         });
         this.filterUser(/*word = */ this.getSearchWordFromStore);
       });
+
+    currentUser = firebase.auth().currentUser;
   },
 
   computed: {

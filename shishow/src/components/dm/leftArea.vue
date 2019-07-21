@@ -9,6 +9,9 @@
       <div class="global" @click="switchGlobal()">
         Global
       </div>
+      <div class="RegisterGame"
+           @click="showPopup()">
+      </div>
     </div>
 
     <div class="privateDM">
@@ -136,6 +139,10 @@ export default {
       globalDM[0].style.display = "block";
 
       leftArea.style.background = "#fff";
+    },
+
+    showPopup: function() {
+      this.$emit("showPopup");
     }
   },
 
@@ -238,6 +245,22 @@ export default {
 
     .globalDM {
       display: none;
+    }
+
+    .RegisterGame {
+      z-index: 4;
+
+      position: absolute;
+
+      top: 0;
+      right: 0;
+
+      height: 40px;
+      width: 40px;
+
+      background-color: #212121;
+
+      cursor: pointer;
     }
   }
 

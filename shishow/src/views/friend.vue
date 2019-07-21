@@ -6,29 +6,36 @@
         <div class="tabWrapper">
             <div class="tab1" id="in" @click="I">incoming<span style="color:white;"></span></div>
             <div class="tab2" id="out" @click="O">outgoing</div>
-            <div class="tab3" id="fri" @click="F">friend</div>
+            <div class="tab3" id="fri" @click="S">shishow</div>
+            <div class="tab4" id="fri" @click="D">deshi</div>
             <div class="tabSpace"></div>
 
             <div class="whiteLine"></div>
         </div>
 
-        <div class="mainobject" v-if="IOF==0" style="background-color:white">
+        <div class="mainobject" v-if="IOSD==0" style="background-color:white">
             <div v-for="N in income.length" :key="N" v-bind:class="'n'+N">
                 <incoming :user="income[N-1].data()" :signuser="signuser"></incoming>
             </div>
         </div>
 
-        <div class="mainobject" v-else-if="IOF==1" style="background-color:white">
+        <div class="mainobject" v-else-if="IOSD==1" style="background-color:white">
             <div v-for="N in outgo.length" :key="N" v-bind:class="'n'+N">
                 <outgoing :user="outgo[N-1].data()" :signuser="signuser"></outgoing>
             </div>
         </div>
 
-        <div class="mainobject" v-else-if="IOF==2" style="background-color:white">
-            <div v-for="N in fri.length" :key="N" v-bind:class="'n'+N">
-                <friends :user="fri[N-1].data()" :signuser="signuser"></friends>
+        <div class="mainobject" v-else-if="IOSD==2" style="background-color:white">
+            <div v-for="N in shi.length" :key="N" v-bind:class="'n'+N">
+                <friends :user="shi[N-1]" :signuser="signuser"></friends>
             </div>
         </div>
+
+        <div class="mainobject" v-else-if="IOSD==3" style="background-color:white">
+          <div v-for="N in de.length" :key="N" v-bind:class="'n'+N">
+              <friends :user="de[N-1]" :signuser="signuser"></friends>
+          </div>
+      </div>
 
     </div>
   </div>
@@ -47,21 +54,21 @@ import store from '../store'
 
 const db = firebase.firestore();
 
-// FIXME: ごめん可読性低いから誰か直して
-let tab1, tab2, tab3;
+let tab1, tab2, tab3, tab4;
 let whiteLine;
 
 export default {
     name:"friend",
 
-    data:function(){
-        return{
-            IOF: 0,
-            income: "",
-            outgo: "",
-            signuser: "",
-            fri: "",
-        }
+    data: function(){
+      return{
+          IOSD: 0,
+          income: "",
+          outgo: "",
+          signuser: "",
+          shi: [],
+          de: []
+      }
     },
 
     components: {
@@ -82,11 +89,12 @@ export default {
 
     methods:{
         I() {
-          this.IOF = 0;
+          this.IOSD = 0;
 
           tab1[0].style.color = "#212121";
           tab2[0].style.color = "#757575";
           tab3[0].style.color = "#757575";
+          tab4[0].style.color = "#757575";
 
           whiteLine[0].style.left = "0px";
 
@@ -94,25 +102,40 @@ export default {
         },
 
         O() {
-          this.IOF = 1;
+          this.IOSD = 1;
 
           tab1[0].style.color = "#757575";
           tab2[0].style.color = "#212121";
           tab3[0].style.color = "#757575";
+          tab4[0].style.color = "#757575";
 
           whiteLine[0].style.left = "16%";
 
           this.$forceUpdate();
         },
 
-        F() {
-          this.IOF = 2;
+        S() {
+          this.IOSD = 2;
 
           tab1[0].style.color = "#757575";
           tab2[0].style.color = "#757575";
           tab3[0].style.color = "#212121";
+          tab4[0].style.color = "#757575";
 
           whiteLine[0].style.left = "32%";
+
+          this.$forceUpdate();
+        },
+
+        D() {
+          this.IOSD = 3;
+
+          tab1[0].style.color = "#757575";
+          tab2[0].style.color = "#757575";
+          tab3[0].style.color = "#757575";
+          tab4[0].style.color = "#212121";
+
+          whiteLine[0].style.left = "48%"
 
           this.$forceUpdate();
         },
@@ -142,7 +165,7 @@ export default {
               .doc(this.user.email)
               .collection("outgoing")
               .get()
-              .then(doc =>{
+              .then(doc => {
                 this.outgo = doc.docs;
               })
 
@@ -150,14 +173,30 @@ export default {
               .doc(this.user.email)
               .collection("friends")
               .get()
-              .then(doc=>{
-                this.fri = doc.docs;
+              .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                  if(doc.data().isSHISHOW) {
+                    this.shi.push(doc.data());
+                  }
+                })
+              })
+
+            db.collection("USER")
+              .doc(this.user.email)
+              .collection("friends")
+              .get()
+              .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                  if(!doc.data().isSHISHOW) {
+                    this.de.push(doc.data());
+                  }
+                })
               })
 
             db.collection("USER")
               .doc(this.user.email)
               .get()
-              .then(doc =>{
+              .then(doc => {
                 this.signuser = doc.data();
               })
     },
@@ -166,6 +205,8 @@ export default {
       tab1 = document.getElementsByClassName('tab1');
       tab2 = document.getElementsByClassName('tab2');
       tab3 = document.getElementsByClassName('tab3');
+      tab4 = document.getElementsByClassName('tab4');
+
       whiteLine = document.getElementsByClassName('whiteLine');
     }
 }
@@ -256,13 +297,31 @@ export default {
     cursor: pointer;
   }
 
+  .tab4 {
+    position: absolute;
+
+    left: 48%;
+
+    width: 16%;
+    height: 100%;
+    float: left;
+
+    font-size: 30px;
+    line-height: 90px;
+    color: $secondary_text;
+
+    background-color: $light_primary_color;
+
+    cursor: pointer;
+  }
+
   .tabSpace {
     position: absolute;
 
     right: 0;
     top: 0;
 
-    width: 52%;
+    width: 36%;
     height: 100%;
 
     background-color: $light_primary_color;

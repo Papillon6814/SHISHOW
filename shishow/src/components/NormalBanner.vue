@@ -1,31 +1,34 @@
 <template>
-  <div class="normalBanner" v-bind:class="{ 'normalbanner': isA, 'normalExtend': isB }">
-    <span class="iconPicPosition">
-      <img class="icon" :src="user['image']" />
-      <div class="iconCircle"></div>
-    </span>
-    <!-- <div class="achievementPosition1">
-      <div class="achievement"></div>
+  <div class="normalBanner">
+    <div class="nbField" @click="click()">
+      <span class="iconPicPosition">
+        <img class="icon" :src="user['image']" />
+        <div class="iconCircle"></div>
+      </span>
+      <!-- <div class="achievementPosition1">
+        <div class="achievement"></div>
+      </div>
+      <div class="achievementPosition2">
+        <div class="achievement"></div>
+      </div>
+      <div class="achievementPosition3">
+        <div class="achievement"></div>
+      </div> -->
+      <div class="usernamePosition">
+        <div class="username" align="left">{{ user.username }}</div>
+      </div>
+      <!-- <div class="profilePosition">
+        <div class="profile">{{ user.bio }}</div>
+      </div>
+      <div class="userInfoPosition">
+        <div class="userInfo">userinfo</div>
+      </div> -->
     </div>
-    <div class="achievementPosition2">
-      <div class="achievement"></div>
-    </div>
-    <div class="achievementPosition3">
-      <div class="achievement"></div>
-    </div> -->
-    <div class="usernamePosition">
-      <div class="username" align="left">{{ user.username }}</div>
-    </div>
-    <!-- <div class="profilePosition">
-      <div class="profile">{{ user.bio }}</div>
-    </div>
-    <div class="userInfoPosition">
-      <div class="userInfo">userinfo</div>
-    </div> -->
-    <div v-if="relation==0" @click="sendFriendReq" class="friendRequest_button">江崎にフレ申請</div>
-    <div v-else-if="relation==1" @click="add_db" class="friendRequest_button">承認</div>
-    <div v-else-if="relation==2" @click="delete_db" class="friendRequest_button">削除</div>
-    <div v-else-if="relation==3"  class="friendRequest_button">友達</div>
+      <div v-if="relation==0" @click="sendFriendReq" class="friendRequest_button">申請</div>
+      <div v-else-if="relation==1" @click="add_db" class="friendRequest_button">承認</div>
+      <div v-else-if="relation==2" @click="delete_db" class="friendRequest_button">削除</div>
+      <div v-else-if="relation==3" class="friendRequest_button">師匠</div>
+      <div v-else-if="relation==4" class="friendRequest_button">弟子</div>
   </div>
 </template>
 
@@ -39,7 +42,13 @@ const db = firebase.firestore();
 
 export default {
   name: 'normalBanner',
-  props:["user","signuser","relations"],
+
+  props: [
+    "user",
+    "signuser",
+    "relations"
+  ],
+
   created:function(){
     this.onAuth();
     this.relation = this.relations;
@@ -63,13 +72,8 @@ export default {
       });
     },
 
-    callNormalExtend: function() {
-
-
-      this.isA = !this.isA;
-      this.isB = !this.isB;
-      this.arrowUp = !this.arrowUp;
-      this.$emit("extendNormalBanner");
+    click: function() {
+      this.$emit("clickNB");
     },
 
     sendFriendReq: function() {
@@ -84,9 +88,6 @@ export default {
             username: this.user["username"],
             email: this.user["email"]
           })
-          .catch(() => {
-
-          });
 
 
         db.collection("USER")
@@ -97,17 +98,11 @@ export default {
             username: this.signuser["username"],
             email: this.signuser["email"]
           })
-          .catch(() => {
-
-          });
 
         db.collection("USER").doc(this.user.email)
           .collection("relation")
           .doc(this.signuser.email).set({
             relation:1,
-          })
-          .catch(() =>{
-
           })
 
         db.collection("USER")
@@ -115,49 +110,54 @@ export default {
           .collection("relation")
           .doc(this.user.email).set({
             relation:2,
-          }).catch(() =>{
-
           })
 
-        db.collection("USER").doc(this.user.email)
-        .collection("notice")
-        .doc(this.signuser.email)
-        .set({
-          msg:this.signuser.username+"からフレンド申請が来ました。",
-          date: new Date()
-        })
-
-
-
-      this.relation = 2;
+        db.collection("USER")
+          .doc(this.user.email)
+          .collection("notice")
+          .doc(this.signuser.email)
+          .set({
+            msg:this.signuser.username+"が入門を申し込んできました。",
+            date: new Date()
+          })
+          this.relation = 2;
       }
     },
 
-    delete_db:function(){
-      const sign_db = db.collection("USER").doc(this.signuser.email);
-      const user_db = db.collection("USER").doc(this.user.email)
+    delete_db: function() {
+      const sign_db = db.collection("USER")
+                        .doc(this.signuser.email);
+      const user_db = db.collection("USER")
+                        .doc(this.user.email)
 
-      user_db.collection("incoming").doc(this.signuser.email).delete()
-      .catch(() =>{});
+      user_db.collection("incoming")
+             .doc(this.signuser.email)
+             .delete()
 
-      sign_db.collection("outgoing").doc(this.user.email).delete()
-      .catch(() =>{});
+      sign_db.collection("outgoing")
+             .doc(this.user.email)
+             .delete()
 
-      db.collection("USER").doc(this.user.email).collection("relation").doc(this.signuser.email).delete()
-      .catch(() =>{
+      db.collection("USER")
+        .doc(this.user.email)
+        .collection("relation")
+        .doc(this.signuser.email)
+        .delete()
 
-      })
-      db.collection("USER").doc(this.signuser.email).collection("relation").doc(this.user.email).delete()
-      .catch(() =>{
+      db.collection("USER")
+        .doc(this.signuser.email)
+        .collection("relation")
+        .doc(this.user.email)
+        .delete()
 
-      })
-
-      user_db.collection("notice").doc(this.signuser.email).delete();
+      user_db.collection("notice")
+             .doc(this.signuser.email)
+             .delete();
 
       this.relation = 0
     },
 
-    add_db:function(){
+    add_db: function() {
       const sign_db = db.collection("USER")
                         .doc(this.signuser.email);
       const user_db = db.collection("USER")
@@ -183,7 +183,8 @@ export default {
                    username: this.user.username,
                    email: this.user.email,
                    chatID: doc1.id,
-                   lastChatDate: now
+                   lastChatDate: now,
+                   isSHISHOW: false
                  });
                })
                .catch(() => {
@@ -200,22 +201,17 @@ export default {
                           username: this.signuser.username,
                           email: this.signuser.email,
                           chatID: doc1.id,
-                          lastChatDate: now
+                          lastChatDate: now,
+                          isSHISHOW: true
                         })
                })
-               .catch(() => {
-
-               });
 
         db.collection("USER")
           .doc(this.user.email)
           .collection("relation")
           .doc(this.signuser.email)
           .set({
-            relation:3,
-          })
-          .catch(() =>{
-
+            relation: 3,
           })
 
         db.collection("USER")
@@ -223,16 +219,13 @@ export default {
           .collection("relation")
           .doc(this.user.email)
           .set({
-            relation:3,
-          })
-          .catch(() =>{
-
+            relation: 4,
           })
 
         user_db.collection("notice")
                .doc(this.signuser.email)
                .set({
-                 msg: this.signuser.usernam+"とフレンドになりました。",
+                 msg: this.signuser.username+"とフレンドになりました。",
                  date: new Date()
                })
 
@@ -269,26 +262,14 @@ export default {
 
   z-index: 2;
 
+  cursor: pointer;
+
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
   transition: 0.3s;
 }
 
 .normalBanner:hover {
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-}
-
-.normalExtend {
-  position: absolute;
-
-  width: $n_banner_width;
-  height: $n_banner_height * 2;
-
-  background-color: $n_banner_color;
-
-  z-index: 2;
-
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-  transition: 0.3s;
 }
 
 .iconPicPosition {
@@ -372,20 +353,6 @@ export default {
 
   top: 100.6875px;
   left: 106.673px;
-}
-
-.pullDownProperties {
-  position: absolute;
-
-  bottom: -5px;
-  left: 10.3px;
-
-  font-size: 39.875px;
-  z-index: 4;
-}
-
-.pullDownProperties:hover {
-  color: $pulldown_color;
 }
 
 .username {
