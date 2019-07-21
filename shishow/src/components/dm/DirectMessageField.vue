@@ -247,7 +247,7 @@ export default {
   .GameRequestBannerPosition {
     position: absolute;
 
-    width: 48%;
+    width: 600px;
 
     top: 150px;
     left: 50%;
