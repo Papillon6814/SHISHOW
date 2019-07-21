@@ -70,6 +70,7 @@ export default {
               })
 
             this.$emit('scrollRightArea');
+            this.$emit('updateleftArea');
           })
 
         this.msg = "";

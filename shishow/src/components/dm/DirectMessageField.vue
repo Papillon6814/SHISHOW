@@ -4,6 +4,7 @@
     <div id="directMessageField">
       <leftArea
       :friendsDocID="leftAreaData"
+      :id="id"
       @showPopup="popup">
       </leftArea>
       <div class="nameTagArea">
@@ -20,6 +21,7 @@
       <div class="inputArea">
         <inputArea
         @scrollRightArea="callScroll()"
+        @updateleftArea="traceData()"
         :friendDocID="idFromLeftArea">
         </inputArea>
       </div>
@@ -27,9 +29,7 @@
 
     <div class="entireBox">
       <div class="GameRequestBannerPosition">
-        <GameRequestBanner
-        @callFade="fadeOut()">
-      </GameRequestBanner>
+        
       </div>
     </div>
 
@@ -66,7 +66,8 @@ export default {
       leftAreaData: [],
       inputAreaData: '',
       idFromLeftArea: '',
-      usernameFromLeftArea: ''
+      usernameFromLeftArea: '',
+      id:0,
     }
   },
 
@@ -132,12 +133,19 @@ export default {
 
     fadeOut: function() {
       entireBox[0].style.display = "none";
+    },
+
+    traceData:function(){
+      let id = this.leftAreaData.indexOf(this.idFromLeftArea);
+      this.leftAreaData.splice(id,1);
+      this.leftAreaData.unshift(this.idFromLeftArea);
+      this.id = id
     }
   },
 
   created: function() {
     this.onAuth();
-    currentUser = firebase.auth().currentUser;
+    currentUser = this.$store.getters.user;
     this.loadFriendID();
     this.leftAreaData = friendsDocID;
 
@@ -147,7 +155,7 @@ export default {
       .limit(1)
       .get()
       .then(friendsSnapshot => {
-        this.idFromLeftArea = friendsSnapshot.id;
+        this.idFromLeftArea = friendsSnapshot[0].id;
       })
   },
 
