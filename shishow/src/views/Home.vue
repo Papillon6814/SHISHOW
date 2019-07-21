@@ -233,6 +233,8 @@ body {
 
         width: 100%;
         height: $n_banner_height;
+
+        transition: 0.1s;
       }
 
       $g: $g + 1;
@@ -242,7 +244,7 @@ body {
   .normalBannerPosition {
     position: absolute;
 
-    top: 0;
+    top: 100%;
     left: 0;
 
     width: 100%;
@@ -263,7 +265,7 @@ body {
         width: 100%;
         height: $n_banner_height;
 
-        transition: 0.3s;
+        transition: 0.1s;
       }
 
       $i: $i + 1;
