@@ -17,11 +17,13 @@
       <div class="dmbannerPosition">
         <div v-for="(friend, N) in friendsDocID"
              :key="N" v-bind:class="'b' + N">
-          <div @click="click(friend)">
+          <div @click="click(friend,N)">
             <dmBanner
               :dmBannerUsername="usernames[N]"
               :dmMsg="lastMsg[N]"
-              :iconPic="dmImages[N]">
+              :iconPic="dmImages[N]"
+              :target="target[N]"
+              :N="N">
             </dmBanner>
           </div>
         </div>
@@ -60,7 +62,9 @@ export default {
       lastMsg: [],
       usernames: [],
       dmImages: [],
-      isPrivate: true
+      isPrivate: true,
+      DocsId:this.friendsDocID,
+      target:[],
     }
   },
 
@@ -92,7 +96,6 @@ export default {
         .then(friendsSnapshot => {
 
           friendsSnapshot.forEach(doc1 => {
-            // doc1にはフレンドのメールアドレスが格納されている
 
             db.collection("USER")
               .doc(doc1.data().email)
@@ -114,12 +117,16 @@ export default {
                   lastMsgDate.push(doc2.data().date);
                 })
               })
+
+
             })
       })
     },
 
-    click: function(friend) {
+    click: function(friend,N) {
       this.$parent.idFromLeftArea = friend;
+      this.target.fill(false);
+      this.$set(this.target,N,true)
     },
 
     switchPrivate: function() {
@@ -148,6 +155,7 @@ export default {
     console.log("leftarea created");
     currentUserEmail = firebase.auth().currentUser.email;
     this.loadLastMsgAndDate();
+    for(let i=0;i<this.friendsDocID.length;i++){this.target.push(false)}
   },
 
   mounted: function() {
