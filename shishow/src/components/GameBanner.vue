@@ -8,16 +8,91 @@
 
     <div class="gamenamePosition">
       <div class="gamename">
+        {{ game.data().gamename }}
       </div>
     </div>
 
+    <div v-if="isSubscribed" class="gameButton">登録済み</div>
+    <div v-else class="subscribeButton" @click="subscribe()">登録</div>
   </div>
 </template>
 
 <script>
+import store from "../store";
+import firebase from "../plugin/firestore";
+import "firebase/firestore";
+import "@firebase/auth";
+
+const db = firebase.firestore();
+let subscribeButton;
 
 export default {
-  name: 'myBanner'
+  name: 'myBanner',
+
+  data: function() {
+    return {
+      gamename: "",
+      isSubscribed: false
+    }
+  },
+
+  props: [
+    "game",
+    "signuser"
+  ],
+
+  watch: {
+    signuser: function () {
+      this.checkSubscription();
+    }
+  },
+
+  methods: {
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit("onAuthStateChanged", user);
+        store.commit("onUserStatusChanged", user.uid ? true : false);
+      });
+    },
+
+    subscribe: function() {
+      if (store.state.status) {
+        db.collection("USER")
+          .doc(this.signuser.email)
+          .collection("GAMES")
+          .doc(this.game.id)
+          .set({
+            gamename: this.game.data().gamename
+          })
+
+        this.isSubscribed = true;
+      }
+    },
+
+    checkSubscription: function() {
+      db.collection("USER")
+        .doc(this.signuser.email)
+        .collection("GAMES")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc1 => {
+            if(doc1.id == this.game.id) {
+              this.isSubscribed = true;
+            }
+          })
+          subscribeButton[0].style.display = "inline-block";
+        })
+    }
+  },
+
+  created: function() {
+    this.onAuth();
+  },
+
+  mounted: function() {
+    subscribeButton = document.getElementsByClassName("subscribeButton");
+  }
 }
 
 </script>
@@ -28,7 +103,7 @@ export default {
 
     width: $n_banner_width;
     height: $n_banner_height;
-    background-color: $g_banner_color;
+    background-color: #fff;
 
     transition: 0.3s;
 
@@ -51,78 +126,18 @@ export default {
     .iconPicPosition {
       position: absolute;
 
-      top: 35px;
-      left: 34.1611111px;
-    }
+      width: $n_banner_width;
+      height: $n_banner_width / 7;
 
-    /*.achievement {
-      position: relative;
-      width: $achievement_width;
-      height: $achievement_height; //√3
-      background-color: #ffffff;
-      margin: $root_twelve 0;
+      background-color: #000;
 
-      /* border-left: dashed;
-      border-right: dashed;
-      border-color: #111;
-      border-width: 1.5px;
-    }
-
-    .achievement:before,
-    .achievement:after {
-      content: "";
-      position: absolute;
-
+      top: 0;
       left: 0;
-
-      width: 0;
-      border-left: $a_half_width solid transparent;
-      border-right: $a_half_width dashed transparent;
     }
-
-    .achievement:before {
-      bottom: 100%;
-      border-bottom: $root_twelve solid #fff;
-    }
-
-    .achievement:after {
-      top: 100%;
-      width: 0;
-      border-top: $root_twelve solid #fff;
-    }
-
-    .achievementPosition1 {
-      position: absolute;
-
-      //top: -1.3vh;
-      //left: -1.8vh;
-      top: 145px;
-      left: 16.1611111px;
-    }
-
-    .achievementPosition2 {
-      position: absolute;
-
-      //top: -4.4vh;
-      //left: 5.9vh;
-      top: 160px;
-      left: 77.6611111px;
-    }
-
-    .achievementPosition3 {
-      position: absolute;
-
-      //top: -12.46vh;
-      //left: 14vh;
-      top: 145px;
-      left: 139.161111px;
-    } */
 
     .gamename{
       width: $user_width;
       height: $user_height;
-
-      background-color: #fff;
     }
 
     .gamenamePosition{
@@ -133,19 +148,32 @@ export default {
       right: 0px;
     }
 
-    .profile{
-      width: $profile_width;
-      height: $profile_height;
+    .subscribeButton {
+      display: none;
 
-      background-color: #fff;
-    }
-
-    .profilePosition{
       position: absolute;
 
-      top: 120px;
-      left: 202px;
-      right: 25px;
+      top: 25px;
+      right: 5%;
+
+      padding: 0.3em 1em;
+      text-decoration: none;
+      color: #9aa5ef;
+      border: solid 2px #9aa5ef;
+      border-radius: 3px;
+      transition: .4s;
+
+      cursor: pointer;
+    }
+
+    .subscribeButton:hover{
+      background: #9aa5ef;
+      color: white;
+    }
+
+    .subscribeButton:active {
+      background-color: #9aa5ef;
+      color: white;
     }
   }
 
