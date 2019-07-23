@@ -82,7 +82,7 @@ export default {
       usernameFromLeftArea: '',
       croppedimg:"",
       uploadedImage:'',
-      
+
     }
   },
 
@@ -122,9 +122,6 @@ export default {
 
     },
     crop(){
-
-      
-
       //変数定義
       var root = this;
       var image = document.getElementById("image");
