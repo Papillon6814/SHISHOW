@@ -102,8 +102,8 @@ export default{
     db.collection("GameCollection")
       .doc()
       .set({
-        gamename: this.Gamename,
-        image: image,
+        gamename: Gamename,
+        image:     image,
      })
    },
 
