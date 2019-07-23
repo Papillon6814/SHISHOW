@@ -13,17 +13,19 @@
            @click="showPopup()">
       </div>
     </div>
-    
+
     <div class="privateDM">
       <div class="dmbannerPosition">
         <div v-for="(friend, N) in friendsDocID"
              :key="N" v-bind:class="'b' + N">
-          <div @click="click(friend)">
-              <dmBanner
-                :dmBannerUsername="usernames[N]"
-                :dmMsg="lastMsg[N]"
-                :iconPic="dmImages[N]">
-              </dmBanner>
+          <div @click="click(friend,N)">
+            <dmBanner
+              :dmBannerUsername="usernames[N]"
+              :dmMsg="lastMsg[N]"
+              :iconPic="dmImages[N]"
+              :target="target[N]"
+              :N="N">
+            </dmBanner>
           </div>
         </div>
       </div>
@@ -54,7 +56,8 @@ let db = firebase.firestore();
 let currentUserEmail;
 let lastMsgDate = [];
 
-let privateDM, globalDM, leftArea;
+let privateDM, globalDM;
+let privateTab, globalTab;
 
 export default {
 
@@ -66,7 +69,9 @@ export default {
       lastMsg: [],
       usernames: [],
       dmImages: [],
-      isPrivate: true
+      isPrivate: true,
+      DocsId:this.friendsDocID,
+      target:[],
     }
   },
 
@@ -98,7 +103,6 @@ export default {
         .then(friendsSnapshot => {
 
           friendsSnapshot.forEach(doc1 => {
-            // doc1にはフレンドのメールアドレスが格納されている
 
             db.collection("USER")
               .doc(doc1.data().email)
@@ -120,26 +124,32 @@ export default {
                   lastMsgDate.push(doc2.data().date);
                 })
               })
+
+
             })
       })
     },
 
-    click: function(friend) {
+    click: function(friend,N) {
       this.$parent.idFromLeftArea = friend;
+      this.target.fill(false);
+      this.$set(this.target,N,true)
     },
 
     switchPrivate: function() {
       privateDM[0].style.display = "block";
       globalDM[0].style.display = "none";
 
-      leftArea.style.background = "#b2ebf2";
+      privateTab[0].style.background = "#b2ebf2";
+      globalTab[0].style.background = "#fff";
     },
 
     switchGlobal: function() {
       privateDM[0].style.display = "none";
       globalDM[0].style.display = "block";
 
-      leftArea.style.background = "#fff";
+      privateTab[0].style.background = "#fff";
+      globalTab[0].style.background = "#b2ebf2"
     },
 
     showPopup: function() {
@@ -152,12 +162,14 @@ export default {
     console.log("leftarea created");
     currentUserEmail = firebase.auth().currentUser.email;
     this.loadLastMsgAndDate();
+    for(let i=0;i<this.friendsDocID.length;i++){this.target.push(false)}
   },
 
   mounted: function() {
     privateDM = document.getElementsByClassName("privateDM");
     globalDM = document.getElementsByClassName("globalDM");
-    leftArea = document.getElementById("leftArea");
+    privateTab = document.getElementsByClassName("private");
+    globalTab = document.getElementsByClassName("global");
   }
 }
 
@@ -230,7 +242,7 @@ export default {
         left: 6%;
 
         width: 100%;
-        
+
         float:left;
 
         @while $i <= 30{
@@ -243,13 +255,13 @@ export default {
           }
           $i: $i + 1;
         }
-        
+
         /*.notion{
           border:1px solid #000;
         }*/
-        
+
       }
-      
+
     }
 
     .globalDM {

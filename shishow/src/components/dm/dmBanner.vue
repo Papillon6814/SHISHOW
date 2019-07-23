@@ -15,24 +15,39 @@
 </template>
 
 <script>
-  
+
 export default {
   name: 'dmBanner',
 
   props: [
     'dmBannerUsername',
     'dmMsg',
-    'iconPic'
+    'iconPic',
+    'target',
+    'N',
   ],
 
+  watch:{
+    target:function(newVal){
+      console.log(this.N)
+      let dmBan = document.getElementsByClassName("dmBanner")[this.N]
+      if(newVal){
+        dmBan.style.background = "red"
+      }else{
+        dmBan.style.background = "#FFF"
+      }
+    }
+  }
 }
 
 </script>
 
 <style lang="scss" scoped>
-  
+
 .dmBanner {
   display: block;
+
+
 
   width: 88%;
   height: 120px;
@@ -68,9 +83,6 @@ export default {
     width: 60%;
     height: 35px;
 
-    // DEBUG: temporary color
-    background-color: #ccc;
-
     font-size: 25px;
     // font-family: 'Noto Sans JP', sans-serif;
 
@@ -80,13 +92,12 @@ export default {
   .dmMsgArea {
     position: absolute;
 
-      bottom: 8px;
-      left: 130px;
+    bottom: 8px;
+    left: 130px;
 
-      width: 50%;
-      height: 50px;
+    width: 50%;
+    height: 60px;
 
-    background-color: #acc;
     font-family: 'Noto Sans JP', sans-serif;
   }
 }
@@ -106,5 +117,5 @@ export default {
 .dmBanner:hover > .dmTimeArea{
   background-color: $dm_banner_color_hover;
 }
-  
+
 </style>

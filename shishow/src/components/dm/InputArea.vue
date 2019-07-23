@@ -49,9 +49,9 @@ export default {
         .get()
         .then(doc => {
           this.chatID = doc.data()["chatID"];
-        });
 
-      if (msg) {
+
+        if (msg) {
         db.collection("PrivateChat")
           .doc(this.chatID)
           .collection("contents")
@@ -74,6 +74,9 @@ export default {
 
         this.msg = "";
       }
+        });
+
+      
     }
   }
 };

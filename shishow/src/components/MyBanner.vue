@@ -2,7 +2,8 @@
   <div class="banner">
     <span class="iconPicPosition">
       <div class="iconPic">
-        <img id="image" v-show="icon" :src="icon" width="130" height="130">
+        <img id="image" v-show="icon"
+         :src="icon" width="130" height="130">
       </div>
     </span>
 
@@ -67,43 +68,19 @@ export default {
       sign: "",
       icon: "",
       bio: "",
-
     };
   },
 
-  computed: {
-    user() {
-      return this.$store.getters.user;
-    },
-    userStatus() {
-      return this.$store.getters.isSignedIn;
-    },
-
-    getCurrentUserName: function() {
-      return this.$store.getters.user.displayName;
-    },
-    getCurrentUserId: function() {
-      return this.$store.getters.user.uid;
-    }
-  },
   created:function(){
-
     this.onAuth();
-    var root = this;
 
-
-    var User = this.user;
-    var email;
-
-    if (User != null){
-      email = User.email;
-    }
-    db.collection("USER").doc(email).get()
-    .then( doc => {
-      root.icon = doc.data()["image"];
-      root.bio = doc.data()["bio"];
-    });
-
+    db.collection("USER")
+      .doc(email)
+      .get()
+      .then(doc => {
+        this.icon = doc.data()["image"];
+        this.bio = doc.data()["bio"];
+      });
   },
 
   watch: {
