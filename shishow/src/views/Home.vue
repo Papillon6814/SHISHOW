@@ -35,7 +35,8 @@
                   :user="filteredUser[N]"
                   :signuser="signuser"
                   :relations="relation[N]"
-                  @clickNB="NBclick(userinfo)">
+                  @clickNB="NBclick(userinfo)"
+                  @clickReqButton="RBclick(userinfo)">
                 </normalBanner>
               </div>
               <div class="alphaSpace"></div>
@@ -49,14 +50,21 @@
       <div class="modalPosition">
         <popupNormalBanner
           :userInfo="popupUser"
-          @callFade="fadeOut()"></popupNormalBanner>
+          @callFade="fadeOut()">
+        </popupNormalBanner>
       </div>
     </div>
 
     <div class="selectModal">
-      <div class="modalPosition">
+      <div class="closeBtn"></div>
+        <div v-for="N in hisGames.length" :key="N">
+        <gameBanner
+          :game="hisGames[N-1]"
+          :signuser="signuser">
+        </gamebanner>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -77,6 +85,7 @@ import store from "../store";
 const db = firebase.firestore();
 let NBPosition;
 let NBModal;
+let selectModal;
 
 export default {
   name: "home",
@@ -87,6 +96,7 @@ export default {
       searchWord: "",
       filteredUser: [],
       games: [],
+      hisGames: [],
       currentUser: "",
       signuser: [],
       relation: [],
@@ -121,7 +131,6 @@ export default {
   },
 
   methods: {
-
     getSearchWord(word) {
       this.searchWord = word;
     },
@@ -135,10 +144,25 @@ export default {
     },
 
     NBclick: function(userinfo) {
-      console.log("click");
-      this.showModal();
+      console.log("NBclick");
+      this.showNBModal();
 
       this.popupUser = userinfo;
+    },
+
+    RBclick: function(userinfo) {
+      console.log("RBclick");
+      this.showSelectModal();
+
+      db.collection("USER")
+        .doc(userinfo.email)
+        .collection("GAMES")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc1 => {
+            this.hisGames.push(doc1);
+          })
+        })
     },
 
     placeNB: function() {
@@ -151,19 +175,25 @@ export default {
             this.games.push(doc1);
           })
 
-          NBPosition[0].style.top = (200 * (this.games.length + 1)) + "px";
+          NBPosition[0].style.top = ((55 / 4) * (this.games.length + 1)) + "vw";
 
           this.$forceUpdate();
         })
     },
 
-    showModal: function() {
+    showNBModal: function() {
       NBModal[0].style.display = "block";
+      this.$forceUpdate();
+    },
+
+    showSelectModal: function() {
+      selectModal[0].style.display = "block";
       this.$forceUpdate();
     },
 
     fadeOut: function() {
       NBModal[0].style.display = "none";
+      selectModal[0].style.display = "none";
       this.$forceUpdate();
     }
   },
@@ -173,6 +203,7 @@ export default {
     this.placeNB();
 
     NBModal = document.getElementsByClassName("NBModal");
+    selectModal = document.getElementsByClassName("selectModal");
 
     const sign_db = db.collection("USER")
                       .doc(this.user.email);
@@ -260,7 +291,7 @@ body {
       .g#{$g} {
         position: absolute;
 
-        top: 200px * $g;
+        top: (55vw / 4) * $g;
         left: 0;
 
         width: 100%;
@@ -419,6 +450,8 @@ footer {
 .selectModal {
   display: none;
 
+  position: absolute;
+
   top: 0;
   left: 0;
 
@@ -428,19 +461,5 @@ footer {
   background-color: rgba(0, 0, 0, 0.3);
 
   z-index: 10000;
-
-  .modalPosition {
-    position: absolute;
-
-    top: 300px;
-    left: 50%;
-
-    width: 65%;
-    height: 100%;
-
-    -webkit-transform: translate(-50%, 0);
-    -moz-transform: translate(-50%, 0);
-    transform: translate(-50%, 0);
-  }
 }
 </style>

@@ -17,12 +17,6 @@
       <div class="usernamePosition">
         <div class="username" align="left">{{ user.username }}</div>
       </div>
-      <!-- <div class="profilePosition">
-        <div class="profile">{{ user.bio }}</div>
-      </div>
-      <div class="userInfoPosition">
-        <div class="userInfo">userinfo</div>
-      </div> -->
     </div>
       <div v-if="relation==0" @click="startSending()" class="friendRequest_button">申請</div>
       <div v-else-if="relation==1" @click="add_db" class="friendRequest_button">承認</div>
@@ -77,7 +71,7 @@ export default {
     },
 
     startSending: function() {
-
+      this.$emit("clickReqButton");
     },
 
     sendFriendReq: function() {
