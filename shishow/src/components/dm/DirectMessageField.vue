@@ -135,7 +135,7 @@ export default {
       var croppable = false;
 
       var cropper = new Cropper(image, {
-        aspectRatio: 4,
+        aspectRatio: 4.5,
         viewMode: 1,
 
         ready: function() {
@@ -173,7 +173,7 @@ export default {
         context.fill();
 
         roundedImage.src = canvas.toDataURL();
-        roundedImage.width = 600;
+        roundedImage.width = 150*4.5;
         roundedImage.height = 150;
         result.innerHTML = "";
 
