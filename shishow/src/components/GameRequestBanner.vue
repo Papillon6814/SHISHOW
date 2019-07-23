@@ -52,22 +52,24 @@ export default{
       roundimg: "",
     }
   },
+  
   props: [
     'cropped'
   ],
+
   mounted:function(){
     this.modal = document.getElementById("modal");
   },
 
   methods: {
     onFileChange(event) {
-      
+
       //file変数定義
       let files = event.target.files || event.dataTransfer.files;
       if (files[0].type.match(/image/)) {
-        
+
         this.showImage(files[0])
-        
+
       }
     },
 
