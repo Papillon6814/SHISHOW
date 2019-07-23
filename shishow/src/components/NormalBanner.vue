@@ -431,6 +431,8 @@ export default {
 }
 
 .friendRequest_button:active {
+  background-color: #9aa5ef;
+  color: white;
 }
 
 .reverse {

@@ -20,7 +20,10 @@
           <div id="gameBannerPosition">
             <div v-for="N in games.length"
               :key="N" v-bind:class="'g'+N">
-              <gameBanner></gameBanner>
+              <gameBanner
+                :game="games[N-1]"
+                :signuser="signuser">
+              </gameBanner>
             </div>
           </div>
 
@@ -145,7 +148,7 @@ export default {
         .get()
         .then(query => {
           query.forEach(doc1 => {
-            this.games.push(doc1.data());
+            this.games.push(doc1);
           })
 
           NBPosition[0].style.top = (200 * (this.games.length + 1)) + "px";
@@ -283,7 +286,7 @@ body {
 
     @while $i <= 30 {
 
-      $temporary_top: (200px * $i) !global;
+      $temporary_top: ((55vw / 4) * $i) !global;
 
       .n#{$i} {
         position: absolute;
