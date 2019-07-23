@@ -126,8 +126,13 @@ export default {
     .iconPicPosition {
       position: absolute;
 
-      top: 35px;
-      left: 35px;
+      width: $n_banner_width;
+      height: $n_banner_width / 7;
+
+      background-color: #000;
+
+      top: 0;
+      left: 0;
     }
 
     .gamename{

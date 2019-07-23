@@ -43,11 +43,6 @@
           </transition>
 
         </div>
-        <!--
-          <div class="gameBannerPosition">
-            <gameBanner></gameBanner>
-        </div>
-        -->
     </div>
 
     <div class="NBModal">
@@ -55,6 +50,11 @@
         <popupNormalBanner
           :userInfo="popupUser"
           @callFade="fadeOut()"></popupNormalBanner>
+      </div>
+    </div>
+
+    <div class="selectModal">
+      <div class="modalPosition">
       </div>
     </div>
   </div>
@@ -390,6 +390,34 @@ footer {
   display: none;
 
   position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.3);
+
+  z-index: 10000;
+
+  .modalPosition {
+    position: absolute;
+
+    top: 300px;
+    left: 50%;
+
+    width: 65%;
+    height: 100%;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+  }
+}
+
+.selectModal {
+  display: none;
 
   top: 0;
   left: 0;

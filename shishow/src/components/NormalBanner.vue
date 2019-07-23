@@ -24,7 +24,7 @@
         <div class="userInfo">userinfo</div>
       </div> -->
     </div>
-      <div v-if="relation==0" @click="sendFriendReq" class="friendRequest_button">申請</div>
+      <div v-if="relation==0" @click="startSending()" class="friendRequest_button">申請</div>
       <div v-else-if="relation==1" @click="add_db" class="friendRequest_button">承認</div>
       <div v-else-if="relation==2" @click="delete_db" class="friendRequest_button">削除</div>
       <div v-else-if="relation==3" class="friendRequest_button">師匠</div>
@@ -76,8 +76,11 @@ export default {
       this.$emit("clickNB");
     },
 
-    sendFriendReq: function() {
+    startSending: function() {
 
+    },
+
+    sendFriendReq: function() {
       if (store.state.status) {
 
         db.collection("USER")
@@ -211,7 +214,7 @@ export default {
           .collection("relation")
           .doc(this.signuser.email)
           .set({
-            relation: 3,
+            relation: 4,
           })
 
         db.collection("USER")
@@ -219,7 +222,7 @@ export default {
           .collection("relation")
           .doc(this.user.email)
           .set({
-            relation: 4,
+            relation: 3,
           })
 
         user_db.collection("notice")
