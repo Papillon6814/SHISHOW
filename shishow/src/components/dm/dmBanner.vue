@@ -43,8 +43,6 @@ export default {
 .dmBanner {
   display: block;
 
-  
-
   width: 88%;
   height: 120px;
 
