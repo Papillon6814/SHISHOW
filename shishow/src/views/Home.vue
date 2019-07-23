@@ -1,50 +1,70 @@
 <template>
   <div id="root">
-    <header>
-      <navi @input="getSearchWord"></navi>
-    </header>
+    <div id="wrap">
+      <header>
+        <navi @input="getSearchWord"></navi>
+      </header>
 
-      <transition appear name="v">
-        <div id="myBannerPosition">
-          <myBanner
-            v-if="userStatus"
-            :loginedUser="getCurrentUserName">
-          </myBanner>
-          <BlurBanner v-else></BlurBanner>
-        </div>
-      </transition>
-
-      <div id="moving">
-
-        <div id="gameBannerPosition">
-          <div v-for="N in games.length"
-            :key="N" v-bind:class="'g'+N">
-            <gameBanner></gameBanner>
-          </div>
-        </div>
-
-        <transition appear name="v2">
-          <div class="normalBannerPosition">
-            <div v-for="N in filteredUser.length"
-              :key="N" v-bind:class="'n'+N">
-              <normalBanner
-                :user="filteredUser[N-1]"
-                :signuser="signuser"
-                :relations="relation[N-1]"
-                @clickNB="NBclick()">
-              </normalBanner>
-            </div>
-            <div class="alphaSpace"></div>
+        <transition appear name="v">
+          <div id="myBannerPosition">
+            <myBanner
+              v-if="userStatus"
+              :loginedUser="getCurrentUserName">
+            </myBanner>
+            <BlurBanner v-else></BlurBanner>
           </div>
         </transition>
 
-      </div>
+        <div id="moving">
 
-      <!--
-        <div class="gameBannerPosition">
-          <gameBanner></gameBanner>
+          <div id="gameBannerPosition">
+            <div v-for="N in games.length"
+              :key="N" v-bind:class="'g'+N">
+              <gameBanner
+                :game="games[N-1]"
+                :signuser="signuser">
+              </gameBanner>
+            </div>
+          </div>
+
+          <transition appear name="v2">
+            <div class="normalBannerPosition">
+              <div v-for="(userinfo, N) in filteredUser"
+                :key="N" v-bind:class="'n'+N">
+                <normalBanner
+                  :user="filteredUser[N]"
+                  :signuser="signuser"
+                  :relations="relation[N]"
+                  @clickNB="NBclick(userinfo)"
+                  @clickReqButton="RBclick(userinfo)">
+                </normalBanner>
+              </div>
+              <div class="alphaSpace"></div>
+            </div>
+          </transition>
+
+        </div>
+    </div>
+
+    <div class="NBModal">
+      <div class="modalPosition">
+        <popupNormalBanner
+          :userInfo="popupUser"
+          @callFade="fadeOut()">
+        </popupNormalBanner>
       </div>
-      -->
+    </div>
+
+    <div class="selectModal">
+      <div class="closeBtn"></div>
+        <div v-for="N in hisGames.length" :key="N">
+        <gameBanner
+          :game="hisGames[N-1]"
+          :signuser="signuser">
+        </gamebanner>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -55,6 +75,7 @@ import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
 import gameBanner from "../components/GameBanner.vue";
 import BlurBanner from "../components/BlurBanner.vue";
+import popupNormalBanner from "../components/PopupNormalBanner.vue";
 
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
@@ -63,6 +84,8 @@ import store from "../store";
 
 const db = firebase.firestore();
 let NBPosition;
+let NBModal;
+let selectModal;
 
 export default {
   name: "home",
@@ -73,9 +96,11 @@ export default {
       searchWord: "",
       filteredUser: [],
       games: [],
+      hisGames: [],
       currentUser: "",
       signuser: [],
-      relation:[],
+      relation: [],
+      popupUser: ''
     };
   },
 
@@ -84,7 +109,8 @@ export default {
     myBanner,
     normalBanner,
     gameBanner,
-    BlurBanner
+    BlurBanner,
+    popupNormalBanner
   },
 
   computed: {
@@ -105,7 +131,6 @@ export default {
   },
 
   methods: {
-
     getSearchWord(word) {
       this.searchWord = word;
     },
@@ -118,8 +143,26 @@ export default {
       });
     },
 
-    NBclick: function() {
-      console.log("click");
+    NBclick: function(userinfo) {
+      console.log("NBclick");
+      this.showNBModal();
+
+      this.popupUser = userinfo;
+    },
+
+    RBclick: function(userinfo) {
+      console.log("RBclick");
+      this.showSelectModal();
+
+      db.collection("USER")
+        .doc(userinfo.email)
+        .collection("GAMES")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc1 => {
+            this.hisGames.push(doc1);
+          })
+        })
     },
 
     placeNB: function() {
@@ -129,48 +172,68 @@ export default {
         .get()
         .then(query => {
           query.forEach(doc1 => {
-            this.games.push(doc1.data());
+            this.games.push(doc1);
           })
 
-          NBPosition[0].style.top = (200 * this.games.length) + "px";
+          NBPosition[0].style.top = ((55 / 4) * (this.games.length + 1)) + "vw";
 
           this.$forceUpdate();
         })
+    },
+
+    showNBModal: function() {
+      NBModal[0].style.display = "block";
+      this.$forceUpdate();
+    },
+
+    showSelectModal: function() {
+      selectModal[0].style.display = "block";
+      this.$forceUpdate();
+    },
+
+    fadeOut: function() {
+      NBModal[0].style.display = "none";
+      selectModal[0].style.display = "none";
+      this.$forceUpdate();
     }
   },
 
   mounted: function() {
     this.onAuth();
     this.placeNB();
+
+    NBModal = document.getElementsByClassName("NBModal");
+    selectModal = document.getElementsByClassName("selectModal");
+
     const sign_db = db.collection("USER")
                       .doc(this.user.email);
 
     sign_db.collection("relation")
-    .get()
-    .then(docs_r=>{
-    db.collection("USER")
-      .get()
-      .then(docs_p =>{
-        docs_p.forEach(doc=>{
-          if(doc.data().email != this.user.email){
-            this.users.push(doc.data());
-            this.filteredUser.push(doc.data());
+           .get()
+           .then(docs_r=>{
+           db.collection("USER")
+             .get()
+             .then(docs_p =>{
+               docs_p.forEach(doc=>{
+                 if(doc.data().email != this.user.email){
+                   this.users.push(doc.data());
+                   this.filteredUser.push(doc.data());
 
-            if(docs_r.docs){
-              let i;
-              for(i=0;i<docs_r.docs.length && doc.data().email != docs_r.docs[i].id;i++);
-              if(i==docs_r.docs.length){
-                this.relation.push(0)
-              }else{
-                this.relation.push(docs_r.docs[i].data().relation);
-              }
-            }else{
-              this.relation.push(0)
-            }
-          }
-        })
-      })
-    });
+                   if(docs_r.docs){
+                     let i;
+                     for(i=0;i<docs_r.docs.length && doc.data().email != docs_r.docs[i].id;i++);
+                     if(i==docs_r.docs.length){
+                       this.relation.push(0)
+                     }else{
+                       this.relation.push(docs_r.docs[i].data().relation);
+                     }
+                   }else{
+                     this.relation.push(0)
+                   }
+                  }
+               })
+             })
+           });
 
     db.collection("USER")
       .doc(this.user.email)
@@ -228,7 +291,7 @@ body {
       .g#{$g} {
         position: absolute;
 
-        top: 200px * $g;
+        top: (55vw / 4) * $g;
         left: 0;
 
         width: 100%;
@@ -254,7 +317,7 @@ body {
 
     @while $i <= 30 {
 
-      $temporary_top: (200px * $i) !global;
+      $temporary_top: ((55vw / 4) * $i) !global;
 
       .n#{$i} {
         position: absolute;
@@ -352,5 +415,51 @@ footer {
 
 .v2-leave-active {
   transition: all 0.5s 0s ease;
+}
+
+.NBModal {
+  display: none;
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.3);
+
+  z-index: 10000;
+
+  .modalPosition {
+    position: absolute;
+
+    top: 300px;
+    left: 50%;
+
+    width: 65%;
+    height: 100%;
+
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+  }
+}
+
+.selectModal {
+  display: none;
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.3);
+
+  z-index: 10000;
 }
 </style>
