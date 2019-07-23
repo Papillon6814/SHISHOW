@@ -393,7 +393,7 @@ export default {
     z-index: -1;
   }
 }
-@media (min-width: 1300px) {
+@media (min-width: 1050px) {
 /* デバッグのために一時的に変えてます
 @media (min-width: 1050px) {*/
   #header {

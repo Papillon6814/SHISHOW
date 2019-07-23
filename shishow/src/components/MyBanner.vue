@@ -149,7 +149,7 @@ export default {
     width: 100%;
     height: 100%;
 
-    top: 50px;
+    top: 6.5vh;
     left: 50%;
 
     -webkit-transform: translate(-50%, 0);
@@ -178,7 +178,7 @@ export default {
   .username {
     position: absolute;
 
-    top: 185px;
+    top: 25vh;
     left: 50%;
 
     -webkit-transform: translate(-50%, 0);
@@ -195,7 +195,7 @@ export default {
   .shishowPosition {
     position: absolute;
 
-    top: 320px;
+    top: 41vh;
     left: 50%;
 
     width: 80%;
@@ -230,7 +230,7 @@ export default {
   .deshiPosition {
     position: absolute;
 
-    top: 370px;
+    top: 46vh;
     left: 50%;
 
     width: 80%;
@@ -266,9 +266,9 @@ export default {
     position: absolute;
 
     width: 88%;
-    height: 240px;
+    height: 24vh;
 
-    top: 535px;
+    bottom: 6vh;
     left: 50%;
 
     -webkit-transform: translate(-50%, 0);
@@ -283,7 +283,7 @@ export default {
       position: absolute;
 
       width: 90%;
-      height: 170px;
+      height: calc(70% - 10px);
 
       top: 10px;
       left: 50%;
@@ -301,7 +301,7 @@ export default {
       width: 90%;
       height: 2px;
 
-      top: 180px;
+      top: calc(70% - 10px);
       left: 50%;
 
       -webkit-transform: translate(-50%, 0);
@@ -315,9 +315,9 @@ export default {
       position: absolute;
 
       width: 100%;
-      height: 58px;
+      height: 30%;
 
-      top: 182px;
+      top: calc(70% - 14px);
       left: 0;
     }
   }
