@@ -248,7 +248,6 @@ export default {
 
         root.roundimg = roundedImage.src;
 
-
         var del = document.getElementById("delete");
         if (del != null) {
           del.textContent = null;
