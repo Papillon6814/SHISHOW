@@ -81,9 +81,11 @@ export default {
       idFromLeftArea: '',
       usernameFromLeftArea: '',
       croppedimg:"",
-      uploadedImage:''
+      uploadedImage:'',
+      
     }
   },
+
 
   components: {
     leftArea,
@@ -143,7 +145,7 @@ export default {
       close.onclick = ()=> {
         modal.style.display = "none";
         cropper.destroy();
-        this.croppedimg = "";
+        this.uploadedImage = "";
       };
       button.onclick = ()=> {
         var croppedCanvas;
@@ -179,7 +181,7 @@ export default {
           let reader = new FileReader();
           reader.onload = event => {
             //htmlにファイルを反映
-            root.roundimg = event.target.result;
+            root.croppedimg = event.target.result;
           };
 
           //読み込み開始
@@ -192,7 +194,7 @@ export default {
         }
         cropper.destroy();
         modal.style.display = "none";
-        root.croppedimg = "";
+        root.uploadedImage = "";
         result.appendChild(roundedImage);
       };
     },

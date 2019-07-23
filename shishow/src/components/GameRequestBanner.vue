@@ -52,7 +52,9 @@ export default{
       roundimg: "",
     }
   },
-
+  props: [
+    'cropped'
+  ],
   mounted:function(){
     this.modal = document.getElementById("modal");
   },
@@ -88,7 +90,7 @@ export default{
      if(this.Gamename == ""){
        alert('Fill in your Display Gamename!');
     }else{
-      this.addToDatabase(this.Gamename, this.roundimg);
+      this.addToDatabase(this.Gamename, this.cropped);
       alert("Added a game.");
       this.fade();
     }
@@ -99,7 +101,7 @@ export default{
       .doc()
       .set({
         gamename: this.Gamename,
-        type: this.type
+        image: image,
      })
    },
 
