@@ -2,8 +2,7 @@
   <div class="gamebanner">
 
     <span class="iconPicPosition">
-      <div class="iconPic">
-      </div>
+      <image class="iconPic" :src="game.data().image" />
     </span>
 
     <div class="gamenamePosition">
@@ -129,7 +128,7 @@ export default {
       width: $n_banner_width;
       height: $n_banner_width / 7;
 
-      background-color: #000;
+      background: #000;
 
       top: 0;
       left: 0;
