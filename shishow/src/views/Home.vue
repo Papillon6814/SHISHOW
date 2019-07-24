@@ -158,6 +158,7 @@ export default {
 
     RBclick: function(userinfo) {
       console.log("RBclick");
+      this.hisGames = [];
       this.showSelectModal();
 
       db.collection("USER")

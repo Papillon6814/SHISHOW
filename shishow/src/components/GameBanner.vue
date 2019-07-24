@@ -2,7 +2,7 @@
   <div class="gamebanner">
 
     <span class="iconPicPosition">
-      <image class="iconPic" :src="game.data().image" />
+      <img class="iconPic" :src="game.data().image" />
     </span>
 
     <div class="gamenamePosition">
