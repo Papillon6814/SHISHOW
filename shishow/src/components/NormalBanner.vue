@@ -72,6 +72,9 @@ export default {
 
     startSending: function() {
       this.$emit("clickReqButton");
+
+      // DEBUG: デバッグ用にフレンド申請はできるようにしています
+      this.sendFriendReq();
     },
 
     sendFriendReq: function() {
