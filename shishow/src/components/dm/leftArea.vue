@@ -171,8 +171,10 @@ export default {
       let icon = this.dmImages[this.id];
       this.usernames.splice(this.id,1);
       this.dmImages.splice(this.id,1);
+      this.target.splice(this.id,1);
       this.usernames.unshift(username);
       this.dmImages.unshift(icon);
+      this.target.unshift(true);
       }
   },
   
