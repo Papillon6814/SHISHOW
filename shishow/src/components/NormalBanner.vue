@@ -212,7 +212,7 @@ export default {
           .collection("relation")
           .doc(this.signuser.email)
           .set({
-            relation: 4,
+            relation: 3,
           })
 
         db.collection("USER")
@@ -220,7 +220,7 @@ export default {
           .collection("relation")
           .doc(this.user.email)
           .set({
-            relation: 3,
+            relation: 4,
           })
 
         user_db.collection("notice")
