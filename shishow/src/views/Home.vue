@@ -56,12 +56,18 @@
     </div>
 
     <div class="selectModal">
-      <div class="closeBtn"></div>
+      <div class="closeBtn" @click="fadeOut()">
+        <i class="fas fa-times"></i>
+      </div>
+      <div class="selectedBannerPosition">
         <div v-for="N in hisGames.length" :key="N">
-        <gameBanner
-          :game="hisGames[N-1]"
           :signuser="signuser">
-        </gamebanner>
+          <gameBanner
+            ref="selection"
+            :game="hisGames[N-1]"
+            :signuser="signuser">
+          </gamebanner>
+        </div>
       </div>
     </div>
 
@@ -117,7 +123,6 @@ export default {
     user() {
       return this.$store.getters.user;
     },
-
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
@@ -163,6 +168,10 @@ export default {
             this.hisGames.push(doc1);
           })
         })
+    },
+
+    select: function() {
+      console.log("clickSelection");
     },
 
     placeNB: function() {
@@ -461,5 +470,36 @@ footer {
   background-color: rgba(0, 0, 0, 0.3);
 
   z-index: 10000;
+
+  .closeBtn {
+    position: fixed;
+
+    top: 200px;
+    right: 20vw;
+
+    width: 30px;
+    height: 30px;
+
+    font-size: 30px;
+
+    color: $secondary_text;
+    cursor: pointer;
+  }
+
+  .selectedBannerPosition {
+    position: absolute;
+
+    top: 300px;
+    left: 50%;
+
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+
+    width: $n_banner_width;
+    height: auto;
+
+    z-index: 10002;
+  }
 }
 </style>

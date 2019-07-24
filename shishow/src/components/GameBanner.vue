@@ -109,9 +109,6 @@ export default {
     border-radius: 3px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
-
-    z-index: 2;
-
     .iconPic {
       width: $icon_width;
       height: $icon_height;
