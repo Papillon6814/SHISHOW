@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div v-if="isSubscribed" class="gameButton">登録済み</div>
+    <div v-if="isSubscribed" class="subscribeButton">登録済み</div>
     <div v-else class="subscribeButton" @click="subscribe()">登録</div>
   </div>
 </template>
@@ -42,6 +42,7 @@ export default {
 
   watch: {
     signuser: function () {
+      console.log("dubug")
       this.checkSubscription();
     }
   },
@@ -78,8 +79,10 @@ export default {
           querySnapshot.forEach(doc1 => {
             if(doc1.id == this.game.id) {
               this.isSubscribed = true;
+              console.log(doc1.id);
             }
           })
+          console.log("inline")
           subscribeButton[0].style.display = "inline-block";
         })
     }

@@ -104,7 +104,7 @@ export default {
       games: [],
       hisGames: [],
       currentUser: "",
-      signuser: [],
+      signuser: '',
       relation: [],
       popupUser: ''
     };
