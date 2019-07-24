@@ -12,20 +12,19 @@
       </div>
     </div>
 
-    <!-- hidden area -->
-      <span class="iconCirclePosition">
-        <label>
-          <div class="iconCircle">
-            <div id="result"></div>
-            <div class="iconDashedCircle" id="delete">
-              <div class="plusPosition">
-                <i class="fas fa-plus"></i>
-              </div>
+    <span class="iconCirclePosition">
+      <label>
+        <div class="iconCircle">
+          <div id="result"></div>
+          <div class="iconDashedCircle" id="delete">
+            <div class="plusPosition">
+              <i class="fas fa-plus"></i>
             </div>
-            <input hidden class="iconFile" type="file" @change="onFileChange">
           </div>
-        </label>
-      </span>
+          <input hidden class="iconFile" type="file" @change="onFileChange">
+        </div>
+      </label>
+    </span>
 
     <div class="SignupTitle"></div>
 
@@ -247,16 +246,8 @@ export default {
         roundedImage.height = 130;
         result.innerHTML = "";
 
-        canvas.toBlob(function(blob){
-          let reader = new FileReader();
-          reader.onload = event => {
-            //htmlにファイルを反映
-            root.roundimg = event.target.result;
-          };
+        root.roundimg = roundedImage.src;
 
-          //読み込み開始
-          reader.readAsDataURL(blob);
-        });
         var del = document.getElementById("delete");
         if (del != null) {
           del.textContent = null;
@@ -302,8 +293,6 @@ export default {
 
   .iconCirclePosition {
     position: absolute;
-    display: none;
-
     width: $icon_width;
     height: $icon_height;
 

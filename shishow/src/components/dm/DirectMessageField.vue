@@ -174,16 +174,8 @@ export default {
         roundedImage.height = 150;
         result.innerHTML = "";
 
-        canvas.toBlob(function(blob){
-          let reader = new FileReader();
-          reader.onload = event => {
-            //htmlにファイルを反映
-            root.croppedimg = event.target.result;
-          };
+        root.croppedimg = roundedImage.src;
 
-          //読み込み開始
-          reader.readAsDataURL(blob);
-        });
         var del = document.getElementById("delete");
         if (del != null) {
           del.textContent = null;
