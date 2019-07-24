@@ -96,6 +96,7 @@ export default {
 
   watch: {
     idFromLeftArea: function(newval) {
+      if(newval){
       db.collection("USER")
         .doc(currentUser.email)
         .collection("friends")
@@ -110,7 +111,7 @@ export default {
               this.usernameFromLeftArea = doc2.data().username;
             })
         })
-    }
+    }}
   },
 
   methods: {

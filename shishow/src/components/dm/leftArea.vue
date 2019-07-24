@@ -65,6 +65,7 @@ export default {
       isPrivate: true,
       DocsId:this.friendsDocID,
       target:[],
+      id:0,
     }
   },
 
@@ -127,6 +128,7 @@ export default {
       this.$parent.idFromLeftArea = friend;
       this.target.fill(false);
       this.$set(this.target,N,true)
+      this.id = N;
     },
 
     switchPrivate: function() {
@@ -163,6 +165,21 @@ export default {
     globalDM = document.getElementsByClassName("globalDM");
     privateTab = document.getElementsByClassName("private");
     globalTab = document.getElementsByClassName("global");
+  },
+
+  watch:{
+    friendsDocID:function(){
+      if(this.id != 0){
+      let username = this.usernames[this.id];
+      let icon = this.dmImages[this.id];
+      this.usernames.splice(this.id,1);
+      this.dmImages.splice(this.id,1);
+      this.target.splice(this.id,1);
+      this.usernames.unshift(username);
+      this.dmImages.unshift(icon);
+      this.target.unshift(true);
+      }
+  },
   }
 }
 
