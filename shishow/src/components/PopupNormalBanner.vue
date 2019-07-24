@@ -61,9 +61,9 @@ export default {
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc1 => {
-            this.enumGames += doc1.data().gamename + '/';
+            this.enumGames += doc1.data().gamename + ' / ';
           })
-          this.enumGames = this.enumGames.slice(0, -1)
+          this.enumGames = this.enumGames.slice(0, -2);
         })
     }
   }
@@ -137,7 +137,7 @@ export default {
     top: 25px;
     left: calc(7% + 170px);
 
-    width: 400px;
+    width: calc(86% - 170px);
     height: 85px;
 
     font-size: 60px;
@@ -171,7 +171,9 @@ export default {
 
     text-align: left;
 
-    font-size: 45px;
+    font-size: 30px;
+
+    color: #bdbdbd;
   }
 }
 </style>

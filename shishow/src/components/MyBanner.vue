@@ -36,10 +36,12 @@
       <div class="separateLine"></div>
     </div>
 
-    <div class="editButton">Edit</div>
+    <div class="editButton">
+      Edit
+    </div>
 
-    <div class="logout">
-      <div @click="logout">Logout</div>
+    <div class="logout" @click="logout">
+      Logout
     </div>
   </div>
 </template>
@@ -325,7 +327,7 @@ export default {
   .editButton {
     position: absolute;
 
-    top: 805px;
+    bottom: 1vh;
     left: 50%;
 
     -webkit-transform: translate(-50%, 0);
@@ -349,7 +351,7 @@ export default {
   .logout {
     position: absolute;
 
-    width: 350px;
+    width: 80px;
     height: 18px;
 
     bottom: 18px;
