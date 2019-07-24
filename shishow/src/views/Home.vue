@@ -61,7 +61,6 @@
       </div>
       <div class="selectedBannerPosition">
         <div v-for="N in hisGames.length" :key="N">
-          :signuser="signuser">
           <gameBanner
             ref="selection"
             :game="hisGames[N-1]"
