@@ -114,13 +114,11 @@ export default {
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
 
     .iconPic {
-      width: $icon_width;
-      height: $icon_height;
+      width: 100%;
+      height: 100%;
 
       //temporary color
       background-color: #fff;
-
-      border-radius: 15%;
     }
 
     .iconPicPosition {

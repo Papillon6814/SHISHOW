@@ -31,7 +31,8 @@
     </div>
 
     <div class="globalDM">
-
+      <div class="dmBannerPosition">
+      </div>
     </div>
   </div>
 </template>

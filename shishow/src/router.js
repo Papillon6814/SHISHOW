@@ -85,7 +85,6 @@ let router = new Router({
       component: GlobalChat
     },
     {
-
      path: '/gamerequest',
      name: 'gamerequest',
      component: GameRequest
@@ -95,7 +94,6 @@ let router = new Router({
     name: "Sample",
     component: Sample
   },
-
   ]
 })
 
@@ -104,7 +102,6 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth) {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-
         next()
       } else {
 
