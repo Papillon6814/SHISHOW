@@ -60,11 +60,12 @@
         <i class="fas fa-times"></i>
       </div>
       <div class="selectedBannerPosition">
-        <div v-for="N in hisGames.length" :key="N">
+        <div v-for="N in hisGames.length" :key="N"
+        v-bind:class="'GameLoops'">
           <gameBanner
-            ref="selection"
             :game="hisGames[N-1]"
-            :signuser="signuser">
+            :signuser="signuser"
+            @click="select()">
           </gamebanner>
         </div>
       </div>
@@ -499,6 +500,15 @@ footer {
     height: auto;
 
     z-index: 10002;
+
+    .GameLoops {
+      position: relative;
+
+      width: 100%;
+      height: $n_banner_height;
+
+      margin-top: 1vw;
+    }
   }
 }
 </style>

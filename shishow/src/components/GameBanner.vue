@@ -125,7 +125,7 @@ export default {
       width: $n_banner_width;
       height: $n_banner_width / 7;
 
-      background: #000;
+      background: #ddd;
 
       top: 0;
       left: 0;
