@@ -22,7 +22,8 @@
               :key="N" v-bind:class="'g'+N">
               <gameBanner
                 :game="games[N-1]"
-                :signuser="signuser">
+                :signuser="signuser"
+                :count="N-1">
               </gameBanner>
             </div>
           </div>

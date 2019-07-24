@@ -37,7 +37,8 @@ export default {
 
   props: [
     "game",
-    "signuser"
+    "signuser",
+    "count"
   ],
 
   watch: {
@@ -82,8 +83,8 @@ export default {
               console.log(doc1.id);
             }
           })
-          console.log("inline")
-          subscribeButton[0].style.display = "inline-block";
+          console.log("inline");
+          subscribeButton[this.count].style.display = "inline-block";
         })
     }
   },
