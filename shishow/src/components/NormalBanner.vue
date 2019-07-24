@@ -73,11 +73,10 @@ export default {
     startSending: function() {
       this.$emit("clickReqButton");
 
-      // DEBUG: デバッグ用にフレンド申請はできるようにしています
-      this.sendFriendReq();
+
     },
 
-    sendFriendReq: function() {
+    sendFriendReq: function(gameId) {
       if (store.state.status) {
 
         db.collection("USER")
@@ -86,7 +85,8 @@ export default {
           .doc(this.user.email)
           .set({
             username: this.user["username"],
-            email: this.user["email"]
+            email: this.user["email"],
+            gameId:gameId
           })
 
 
@@ -96,7 +96,8 @@ export default {
           .doc(this.signuser.email)
           .set({
             username: this.signuser["username"],
-            email: this.signuser["email"]
+            email: this.signuser["email"],
+            gameId:gameId
           })
 
         db.collection("USER").doc(this.user.email)

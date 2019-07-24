@@ -37,7 +37,8 @@
                   :signuser="signuser"
                   :relations="relation[N]"
                   @clickNB="NBclick(userinfo)"
-                  @clickReqButton="RBclick(userinfo)">
+                  @clickReqButton="RBclick(userinfo,N)"
+                  ref="normal">
                 </normalBanner>
               </div>
               <div class="alphaSpace"></div>
@@ -63,11 +64,12 @@
       <div class="selectedBannerPosition">
         <div v-for="N in hisGames.length" :key="N"
         v-bind:class="'GameLoops'">
+        <div @click="select(hisGames[N-1])">
           <gameBanner
             :game="hisGames[N-1]"
-            :signuser="signuser"
-            @click="select()">
+            :signuser="signuser">
           </gamebanner>
+        </div>
         </div>
       </div>
     </div>
@@ -107,7 +109,8 @@ export default {
       currentUser: "",
       signuser: '',
       relation: [],
-      popupUser: ''
+      popupUser: '',
+      userId:'',
     };
   },
 
@@ -156,7 +159,7 @@ export default {
       this.popupUser = userinfo;
     },
 
-    RBclick: function(userinfo) {
+    RBclick: function(userinfo,N) {
       console.log("RBclick");
       this.hisGames = [];
       this.showSelectModal();
@@ -170,10 +173,13 @@ export default {
             this.hisGames.push(doc1);
           })
         })
+        this.userId = N;
     },
 
-    select: function() {
-      console.log("clickSelection");
+    select: function(game) {
+      console.log(game.data().gamename);
+      this.$refs.normal[this.userId].sendFriendReq(game.id);
+      this.fadeOut()
     },
 
     placeNB: function() {
