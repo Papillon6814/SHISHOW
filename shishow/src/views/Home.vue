@@ -35,7 +35,6 @@
                   @clickNB="NBclick(userinfo)">
                 </normalBanner>
               </div>
-              <div class="alphaSpace"></div>
             </div>
           </transition>
 
