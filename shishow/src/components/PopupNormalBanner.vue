@@ -16,21 +16,55 @@
     <div class="profilePosition">
     </div>
 
+    <div class="gamesPosition">
+      {{ enumGames }}
+    </div>
+
   </div>
 </template>
 
 <script>
+import firebase from "../plugin/firestore";
+import "firebase/firestore";
+import "@firebase/auth";
+
+const db = firebase.firestore();
 
 export default {
   name: 'popupNormalBanner',
+
+  data: function(){
+    return {
+      enumGames: ''
+    }
+  },
 
   props: [
     "userInfo"
   ],
 
+  watch: {
+    userInfo: function() {
+      this.loadGames();
+    }
+  },
+
   methods: {
     fade: function() {
       this.$emit("callFade");
+    },
+
+    loadGames: function() {
+      db.collection("USER")
+        .doc(this.userInfo.email)
+        .collection("GAMES")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc1 => {
+            this.enumGames += doc1.data().gamename + ' / ';
+          })
+          this.enumGames = this.enumGames.slice(0, -2);
+        })
     }
   }
 }
@@ -103,7 +137,7 @@ export default {
     top: 25px;
     left: calc(7% + 170px);
 
-    width: 400px;
+    width: calc(86% - 170px);
     height: 85px;
 
     font-size: 60px;
@@ -124,6 +158,22 @@ export default {
     border-width: 2px;
     border-color: #bdbdbd;
 
+  }
+
+  .gamesPosition {
+    position: absolute;
+
+    width: calc(76% - 170px);
+    height: 50px;
+
+    left: calc(7% + 170px);
+    bottom: 7px;
+
+    text-align: left;
+
+    font-size: 30px;
+
+    color: #bdbdbd;
   }
 }
 </style>

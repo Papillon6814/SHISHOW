@@ -122,6 +122,7 @@ export default {
       setTimeout(this.crop,1);
 
     },
+
     crop(){
       //変数定義
       var root = this;
