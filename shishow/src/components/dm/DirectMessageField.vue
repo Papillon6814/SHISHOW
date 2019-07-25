@@ -29,8 +29,8 @@
       </rightArea>
       <div class="inputArea">
         <inputArea
-        @scrollRightArea="callScroll()"
-        :friendDocID="idFromLeftArea">
+          @scrollRightArea="callScroll()"
+          :friendDocID="idFromLeftArea">
         </inputArea>
       </div>
     </div>
