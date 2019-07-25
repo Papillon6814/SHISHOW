@@ -17,7 +17,7 @@
       <div class="dmbannerPosition">
         <div v-for="(friend, N) in friendsDocID"
              :key="N" v-bind:class="'b' + N">
-          <div @click="click(friend,N)">
+          <div @click="click(friend, N)">
             <dmBanner
               :dmBannerUsername="usernames[N]"
               :dmMsg="lastMsg[N]"
@@ -32,6 +32,14 @@
 
     <div class="globalDM">
       <div class="dmBannerPosition">
+        <div v-for="(game, N) in games.length"
+          :key="N" v-bind:class="enumGameBanner">
+          <div @click="click(game, N)">
+            <dmGameBanner
+              :gameDocId="game">
+            </dmGameBanner>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -39,7 +47,8 @@
 
 <script>
 // directMessageFieldからフレンドのIDを受け取ってleftareaの内容を表示する
-import dmBanner from'./dmBanner.vue'
+import dmBanner from'./dmBanner.vue';
+import dmGameBanner from "./dmGameBanner.vue";
 
 import firebase from '../../plugin/firestore';
 import 'firebase/firestore'
@@ -64,8 +73,8 @@ export default {
       usernames: [],
       dmImages: [],
       isPrivate: true,
-      DocsId:this.friendsDocID,
       target:[],
+      games: []
     }
   },
 
@@ -74,7 +83,23 @@ export default {
   ],
 
   components: {
-    dmBanner
+    dmBanner,
+    dmGameBanner
+  },
+
+  watch: {
+    friendsDocID: function() {
+      db.collection("USER")
+        .doc(currentUserEmail)
+        .collection("GAMES")
+        .get()
+        .then(querySnapshot => {
+
+          querySnapshot.forEach(doc1 => {
+            this.games.push(doc1.id);
+          })
+        })
+    }
   },
 
   methods: {
@@ -118,8 +143,6 @@ export default {
                   lastMsgDate.push(doc2.data().date);
                 })
               })
-
-
             })
       })
     },
@@ -252,6 +275,33 @@ export default {
 
     .globalDM {
       display: none;
+
+      overflow-y: scroll;
+      overflow-x: hidden;
+
+      position: absolute;
+
+      top: 90px;
+      left: 0;
+
+      width: 100%;
+      height: calc(100% - 90px);
+
+      .dmBannerPosition {
+        position: absolute;
+
+        width: 88%;
+        height: auto;
+
+        left: 6%;
+        top: 70px;
+
+        .enumGameBanner {
+          position: relative;
+
+          top: 20px;
+        }
+      }
     }
 
     .RegisterGame {

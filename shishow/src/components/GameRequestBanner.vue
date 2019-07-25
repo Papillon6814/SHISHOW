@@ -52,14 +52,10 @@ export default{
       roundimg: "",
     }
   },
-  
+
   props: [
     'cropped'
   ],
-
-  mounted:function(){
-    this.modal = document.getElementById("modal");
-  },
 
   methods: {
     onFileChange(event) {
@@ -91,7 +87,7 @@ export default{
    gameCollection: function(){
      if(this.Gamename == ""){
        alert('Fill in your Display Gamename!');
-    }else{
+    } else {
       this.addToDatabase(this.Gamename, this.cropped);
       alert("Added a game.");
       this.fade();
@@ -110,6 +106,10 @@ export default{
    fade: function() {
      this.$emit("callFade");
    }
+  },
+
+  mounted: function(){
+    this.modal = document.getElementById("modal");
   },
 };
 </script>
