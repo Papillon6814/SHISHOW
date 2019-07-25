@@ -90,6 +90,17 @@ export default {
 
   watch: {
     friendsDocID: function() {
+        if(this.id != 0){
+          let username = this.usernames[this.id];
+          let icon = this.dmImages[this.id];
+          this.usernames.splice(this.id,1);
+          this.dmImages.splice(this.id,1);
+          this.target.splice(this.id,1);
+          this.usernames.unshift(username);
+          this.dmImages.unshift(icon);
+          this.target.unshift(true);
+        }
+
       db.collection("USER")
         .doc(currentUserEmail)
         .collection("GAMES")
@@ -189,21 +200,6 @@ export default {
     globalDM = document.getElementsByClassName("globalDM");
     privateTab = document.getElementsByClassName("private");
     globalTab = document.getElementsByClassName("global");
-  },
-
-  watch:{
-    friendsDocID:function(){
-      if(this.id != 0){
-      let username = this.usernames[this.id];
-      let icon = this.dmImages[this.id];
-      this.usernames.splice(this.id,1);
-      this.dmImages.splice(this.id,1);
-      this.target.splice(this.id,1);
-      this.usernames.unshift(username);
-      this.dmImages.unshift(icon);
-      this.target.unshift(true);
-      }
-  },
   }
 }
 
