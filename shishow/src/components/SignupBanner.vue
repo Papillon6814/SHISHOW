@@ -12,21 +12,6 @@
       </div>
     </div>
 
-    <!-- hidden area -->
-      <span class="iconCirclePosition">
-        <label>
-          <div class="iconCircle">
-            <div id="result"></div>
-            <div class="iconDashedCircle" id="delete">
-              <div class="plusPosition">
-                <i class="fas fa-plus"></i>
-              </div>
-            </div>
-            <input hidden class="iconFile" type="file" @change="onFileChange">
-          </div>
-        </label>
-      </span>
-
     <div class="SignupTitle"></div>
 
     <div class="usernamePosition">
@@ -247,16 +232,8 @@ export default {
         roundedImage.height = 130;
         result.innerHTML = "";
 
-        canvas.toBlob(function(blob){
-          let reader = new FileReader();
-          reader.onload = event => {
-            //htmlにファイルを反映
-            root.roundimg = event.target.result;
-          };
+        root.roundimg = roundedImage.src;
 
-          //読み込み開始
-          reader.readAsDataURL(blob);
-        });
         var del = document.getElementById("delete");
         if (del != null) {
           del.textContent = null;
@@ -300,73 +277,6 @@ export default {
 
   }
 
-  .iconCirclePosition {
-    position: absolute;
-    display: none;
-
-    width: $icon_width;
-    height: $icon_height;
-
-    .iconCircle {
-      width: $icon_width;
-      height: $icon_height;
-
-      //temporary color
-      background-color: #fff;
-
-      border-radius: 50%;
-      border: solid;
-      border-width: 2px;
-      border-color: $su_window_flame;
-
-      cursor: pointer;
-
-      .iconDashedCircle {
-        position: absolute;
-
-        top: 5.72%;
-        left: 5.85%;
-
-        width: 90%;
-        height: 90%;
-
-        font-size: 70px;
-
-        background-color: rgba(0, 0, 0, 0);
-
-        border-radius: 50%;
-        border: dashed;
-        border-width: 1px;
-        border-color: #000;
-
-        cursor: pointer;
-
-        .plusPosition {
-          position: absolute;
-
-          left: 49.5%;
-          top: 50%;
-          -webkit-transform: translate(-50%, -50%);
-          -moz-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-        }
-      }
-      .iconFile {
-        height: 100%;
-        width: 100%;
-        opacity: 0;
-        cursor: pointer;
-      }
-    }
-  }
-
-  .iconCirclePosition {
-    position: absolute;
-
-    top: 15px;
-    left: 34.1611111px;
-  }
-
   .usernamePosition {
     position: absolute;
 
@@ -379,7 +289,7 @@ export default {
 
     width: 100%;
 
-    .username{
+    .username {
       width: 65%;
       height: $su_user_height;
     }

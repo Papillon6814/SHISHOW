@@ -1,8 +1,8 @@
 <template>
-  
+
     <div id="root">
-      
-      <div id="wrap">
+
+    <div id="wrap">
         <header>
           <navi @input="getSearchWord"></navi>
         </header>
@@ -19,48 +19,68 @@
 
           <div id="moving">
 
-            <transition appear name="v3">
-              <div id="gameBannerPosition">
-                <div v-for="N in games.length"
-                  :key="N" v-bind:class="'g'+N">
-                  <gameBanner></gameBanner>
-                </div>
-              </div>
-            </transition>
-
-            <transition appear name="v2">
-              <div class="normalBannerPosition">
-                <div v-for="(userinfo, N) in filteredUser"
-                  :key="N" v-bind:class="'n'+N">
-                  <normalBanner
-                    :user="filteredUser[N]"
-                    :signuser="signuser"
-                    :relations="relation[N]"
-                    @clickNB="NBclick(userinfo)">
-                  </normalBanner>
-                </div>
-                <div class="alphaSpace"></div>
-              </div>
+          <transition appear name="v">
+          <div id="gameBannerPosition">
+            <div v-for="N in games.length"
+              :key="N" v-bind:class="'g'+N">
+              <gameBanner
+                :game="games[N-1]"
+                :signuser="signuser"
+                :count="N-1">
+              </gameBanner>
+            </div>
+          </div>
             </transition>
 
           </div>
-          <!--
-            <div class="gameBannerPosition">
-              <gameBanner></gameBanner>
-          </div>
-          -->
+
+          <transition appear name="v2">
+            <div class="normalBannerPosition">
+              <div v-for="(userinfo, N) in filteredUser"
+                :key="N" v-bind:class="'n'+N">
+                <normalBanner
+                  :user="filteredUser[N]"
+                  :signuser="signuser"
+                  :relations="relation[N]"
+                  @clickNB="NBclick(userinfo)"
+                  @clickReqButton="RBclick(userinfo,N)"
+                  ref="normal">
+                </normalBanner>
+              </div>
+            </div>
+          </transition>
+
+        </div>
+      
+    <div class="NBModal">
+      <div class="modalPosition">
+        <popupNormalBanner
+          :userInfo="popupUser"
+          @callFade="fadeOut()">
+        </popupNormalBanner>
       </div>
+    </div>
 
-      <div class="NBModal">
-        <div class="modalPosition">
-          <popupNormalBanner
-            :userInfo="popupUser"
-            @callFade="fadeOut()"></popupNormalBanner>
+    <div class="selectModal">
+      <div class="closeBtn" @click="fadeOut()">
+        <i class="fas fa-times"></i>
+      </div>
+      <div class="selectedBannerPosition">
+        <div v-for="N in hisGames.length" :key="N"
+        v-bind:class="'GameLoops'">
+        <div @click="select(hisGames[N-1])">
+          <gameBanner
+            :game="hisGames[N-1]"
+            :signuser="signuser">
+          </gameBanner>
+        </div>
         </div>
       </div>
-      
+
     </div>
-  
+
+    </div>
+
 </template>
 
 <script>
@@ -80,11 +100,10 @@ import store from "../store";
 const db = firebase.firestore();
 let NBPosition;
 let NBModal;
-  
-
+let selectModal;
 
 export default {
-  
+
   name: "home",
 
   data: function() {
@@ -93,10 +112,12 @@ export default {
       searchWord: "",
       filteredUser: [],
       games: [],
+      hisGames: [],
       currentUser: "",
-      signuser: [],
+      signuser: '',
       relation: [],
-      popupUser: ''
+      popupUser: '',
+      userId:'',
     };
   },
 
@@ -113,7 +134,6 @@ export default {
     user() {
       return this.$store.getters.user;
     },
-
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
@@ -127,7 +147,6 @@ export default {
   },
 
   methods: {
-    
     getSearchWord(word) {
       this.searchWord = word;
     },
@@ -141,10 +160,33 @@ export default {
     },
 
     NBclick: function(userinfo) {
-      console.log("click");
-      this.showModal();
+      console.log("NBclick");
+      this.showNBModal();
 
       this.popupUser = userinfo;
+    },
+
+    RBclick: function(userinfo,N) {
+      console.log("RBclick");
+      this.hisGames = [];
+      this.showSelectModal();
+
+      db.collection("USER")
+        .doc(userinfo.email)
+        .collection("GAMES")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc1 => {
+            this.hisGames.push(doc1);
+          })
+        })
+        this.userId = N;
+    },
+
+    select: function(game) {
+      console.log(game.data().gamename);
+      this.$refs.normal[this.userId].sendFriendReq(game.id);
+      this.fadeOut()
     },
 
     placeNB: function() {
@@ -154,22 +196,28 @@ export default {
         .get()
         .then(query => {
           query.forEach(doc1 => {
-            this.games.push(doc1.data());
+            this.games.push(doc1);
           })
 
-          NBPosition[0].style.top = (200 * (this.games.length + 1)) + "px";
+          NBPosition[0].style.top = ((55 / 4) * (this.games.length + 1)) + "vw";
 
           this.$forceUpdate();
         })
     },
 
-    showModal: function() {
+    showNBModal: function() {
       NBModal[0].style.display = "block";
+      this.$forceUpdate();
+    },
+
+    showSelectModal: function() {
+      selectModal[0].style.display = "block";
       this.$forceUpdate();
     },
 
     fadeOut: function() {
       NBModal[0].style.display = "none";
+      selectModal[0].style.display = "none";
       this.$forceUpdate();
     }
   },
@@ -179,6 +227,7 @@ export default {
     this.placeNB();
 
     NBModal = document.getElementsByClassName("NBModal");
+    selectModal = document.getElementsByClassName("selectModal");
 
     const sign_db = db.collection("USER")
                       .doc(this.user.email);
@@ -231,18 +280,6 @@ body {
   background-color: $dark_color;
 }
 
-#B{
-	width: 100%;
-	text-align: center;
-	display: block;
-}
-
-#A{
-	width: 100%;
-	text-align: center;
-	display: none;
-}
-  
 #myBannerPosition {
   position: fixed;
   top: 100px;
@@ -278,7 +315,7 @@ body {
       .g#{$g} {
         position: absolute;
 
-        top: 200px * $g;
+        top: (55vw / 4) * $g;
         left: 0;
 
         width: 100%;
@@ -304,7 +341,7 @@ body {
 
     @while $i <= 30 {
 
-      $temporary_top: (200px * $i) !global;
+      $temporary_top: ((55vw / 4) * $i) !global;
 
       .n#{$i} {
         position: absolute;
@@ -375,7 +412,7 @@ footer {
 .v2-enter-active {
   transition: all 1.2s 1.2s ease;
 }
-  
+
 .v3-enter {
   transform: translate(-500px, 0);
   opacity: 0;
@@ -388,7 +425,7 @@ footer {
 .v3-enter-active {
   transition: all 1.2s 1.2s ease;
 }
-  
+
 .NBModal {
   display: none;
 
@@ -416,6 +453,62 @@ footer {
     -webkit-transform: translate(-50%, 0);
     -moz-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
+  }
+}
+
+.selectModal {
+  display: none;
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.3);
+
+  z-index: 10000;
+
+  .closeBtn {
+    position: fixed;
+
+    top: 200px;
+    right: 20vw;
+
+    width: 30px;
+    height: 30px;
+
+    font-size: 30px;
+
+    color: $secondary_text;
+    cursor: pointer;
+  }
+
+  .selectedBannerPosition {
+    position: absolute;
+
+    top: 300px;
+    left: 50%;
+
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+
+    width: $n_banner_width;
+    height: auto;
+
+    z-index: 10002;
+
+    .GameLoops {
+      position: relative;
+
+      width: 100%;
+      height: $n_banner_height;
+
+      margin-top: 1vw;
+    }
   }
 }
 </style>

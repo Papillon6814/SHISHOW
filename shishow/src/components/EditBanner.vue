@@ -18,9 +18,9 @@ const db = firebase.firestore();
 export default {
     name: "Edit",
 
-    data:function(){
+    data: function(){
         return{
-            bio: " 自由に意見を記述してください ",
+            bio: "bio",
             username: ""
         }
     },
@@ -43,7 +43,7 @@ export default {
 
         var User = this.user;
         var email;
-        
+
         email = User.email;
 
 
@@ -125,4 +125,3 @@ export default {
         left: 0%;
     }
 </style>
-

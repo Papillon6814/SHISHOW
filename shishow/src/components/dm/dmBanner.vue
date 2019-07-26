@@ -47,8 +47,6 @@ export default {
 .dmBanner {
   display: block;
 
-
-
   width: 88%;
   height: 120px;
 
@@ -106,16 +104,6 @@ export default {
   background-color: $dm_banner_color_hover;
 }
 
-.dmBanner:hover > .dmBannerName{
-  background-color: $dm_banner_color_hover;
-}
 
-.dmBanner:hover > .dmMsgArea{
-  background-color: $dm_banner_color_hover;
-}
-
-.dmBanner:hover > .dmTimeArea{
-  background-color: $dm_banner_color_hover;
-}
 
 </style>
