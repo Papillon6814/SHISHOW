@@ -70,20 +70,20 @@ export default {
           });
         });
       });
-    
+
 
       this.Game = this.elements[0];
-  
 
 
 
-      
 
-      
+
+
+
 
     });
 
-    
+
 
 
   },
@@ -101,7 +101,7 @@ export default {
           this.msgs.push(docs.data()["msg"]);
         });
       });
-    
+
     },
     kakunin(){
 

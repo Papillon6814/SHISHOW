@@ -29,8 +29,8 @@
       </rightArea>
       <div class="inputArea">
         <inputArea
-        @scrollRightArea="callScroll()"
-        :friendDocID="idFromLeftArea">
+          @scrollRightArea="callScroll()"
+          :friendDocID="idFromLeftArea">
         </inputArea>
       </div>
     </div>
@@ -122,6 +122,7 @@ export default {
       setTimeout(this.crop,1);
 
     },
+
     crop(){
       //変数定義
       var root = this;
