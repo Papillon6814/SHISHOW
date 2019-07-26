@@ -73,6 +73,11 @@
       </div>
     </div>
 
+    <div class="editModal">
+      <div class="editBannerPosition">
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -515,6 +520,36 @@ footer {
       height: $n_banner_height;
 
       margin-top: 1vw;
+    }
+  }
+
+  .editModal {
+    display: none;
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.3);
+
+    z-index: 10000;
+
+    .editBannerPosition {
+      position: absolute;
+
+      top: 200px;
+      left: 50%;
+
+      transform: translate(-50%, 0);
+      -webkit-transform: translate(-50%, 0);
+      -ms-transform: translate(-50%, 0);
+
+      width: 80%;
+      height: calc(90% - 200px);
     }
   }
 }
