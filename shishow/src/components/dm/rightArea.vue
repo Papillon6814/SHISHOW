@@ -38,11 +38,12 @@ let currentUserEmail;
 let chatID;
 
 export default {
+
   name: 'rightArea',
 
   data() {
     return {
-      msgList: [],
+      msgList: []
     }
   },
 

@@ -71,6 +71,7 @@ let friendsDocID = [];
 let entireBox,modal;
 
 export default {
+
   name: 'directMessageField',
 
   data() {

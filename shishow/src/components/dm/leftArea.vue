@@ -1,4 +1,5 @@
 <template>
+
   <div id="leftArea">
 
     <div class="switchTab">
@@ -28,6 +29,7 @@
           </div>
         </div>
       </div>
+
     </div>
 
     <div class="globalDM">
@@ -42,7 +44,9 @@
         </div>
       </div>
     </div>
+
   </div>
+
 </template>
 
 <script>
@@ -55,6 +59,8 @@ import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
 
+import draggable from 'vuedraggable';
+
 let db = firebase.firestore();
 
 let currentUserEmail;
@@ -64,6 +70,7 @@ let privateDM, globalDM;
 let privateTab, globalTab;
 
 export default {
+
   name: 'LeftArea',
 
   data() {
@@ -273,6 +280,8 @@ export default {
 
         width: 100%;
 
+        float:left;
+
         @while $i <= 30{
           .b#{$i}{
             position: absolute;
@@ -283,7 +292,13 @@ export default {
           }
           $i: $i + 1;
         }
+
+        /*.notion{
+          border:1px solid #000;
+        }*/
+
       }
+
     }
 
     .globalDM {

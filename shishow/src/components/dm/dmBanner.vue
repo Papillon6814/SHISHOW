@@ -1,13 +1,17 @@
 <template>
+
   <div class="dmBanner">
     <img :src="iconPic" class="dmBannerIconPosition" />
     <div class="dmBannerName">
       {{ dmBannerUsername }}
     </div>
+    <div class="dmTimeArea">
+    </div>
     <div class="dmMsgArea">
       {{ dmMsg }}
     </div>
   </div>
+
 </template>
 
 <script>
