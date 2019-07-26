@@ -47,6 +47,7 @@
           </transition>
 
         </div>
+      
     </div>
 
     <div class="NBModal">
