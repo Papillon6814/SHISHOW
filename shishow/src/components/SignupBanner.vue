@@ -2,6 +2,7 @@
   <div class="signupBanner">
 
     <!-- hidden area -->
+    <!--
     <div id="modal" class="modal">
       <div class="modal-content">
         <div class="modal-body">
@@ -11,6 +12,7 @@
         </div>
       </div>
     </div>
+    -->
 
     <div class="SignupTitle"></div>
 
@@ -126,42 +128,16 @@ export default {
       }
     },
 
-      addToDatabase(email, username, image) {
+    addToDatabase(email, username, image) {
 
-        db.collection("USER")
-        .doc(""+email)
-        .set({
-            email: email,
-            username: username,
-            image: image,
-            bio: 'No bio'
-        })
-
-    },
-
-    onFileChange(event) {
-      //file変数定義
-      let files = event.target.files || event.dataTransfer.files;
-      if (files[0].type.match(/image/)) {
-        this.showImage(files[0]);
-      }
-    },
-
-    // 画像表示の関数
-    showImage(file) {
-      // FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
-      let reader = new FileReader();
-      // ファイルが読み込まれたとき、eventを引数とするアロー関数作動
-      let place = this;
-      reader.onload = event => {
-        // htmlにファイルを反映
-        this.uploadedImage = event.target.result;
-        window.setTimeout(place.crop, 1);
-      };
-      // 読み込み開始
-
-      this.modal.style.display = "block";
-      reader.readAsDataURL(file);
+      db.collection("USER")
+      .doc(""+email)
+      .set({
+          email: email,
+          username: username,
+          image: image,
+          bio: 'No bio'
+      })
     },
 
     errorIndication() {
@@ -170,80 +146,6 @@ export default {
         return true;
       }
       return false;
-    },
-
-    crop: function() {
-      var root = this;
-      var image = document.getElementById("image");
-      var button = document.getElementById("button");
-      var result = document.getElementById("result");
-      var close = document.getElementById("closeBtn");
-
-      var croppable = false;
-
-      var cropper = new Cropper(image, {
-        aspectRatio: 1,
-        viewMode: 1,
-
-        ready: function() {
-          croppable = true;
-        }
-      });
-      close.onclick = ()=> {
-        this.modal.style.display = "none";
-        cropper.destroy();
-        this.uploadedImage = "";
-      };
-      button.onclick = ()=> {
-        var croppedCanvas;
-        var roundedImage;
-
-        if (!croppable) {
-          return;
-        }
-        // Crop
-        croppedCanvas = cropper.getCroppedCanvas();
-
-        // Show
-        roundedImage = document.createElement("img");
-
-        var canvas = document.createElement("canvas");
-        var context = canvas.getContext("2d");
-        var width = croppedCanvas.width;
-        var height = croppedCanvas.height;
-        canvas.width = width;
-        canvas.height = height;
-        context.imageSmoothingEnabled = true;
-        context.drawImage(croppedCanvas, 0, 0, width, height);
-        context.globalCompositeOperation = "destination-in";
-        context.beginPath();
-        context.arc(
-          width / 2,
-          height / 2,
-          Math.min(width, height) / 2,
-          0,
-          2 * Math.PI,
-          true
-        );
-        context.fill();
-
-        roundedImage.src = canvas.toDataURL();
-        roundedImage.width = 130;
-        roundedImage.height = 130;
-        result.innerHTML = "";
-
-        root.roundimg = roundedImage.src;
-
-        var del = document.getElementById("delete");
-        if (del != null) {
-          del.textContent = null;
-          del.parentNode.removeChild(del);
-        }
-        cropper.destroy();
-        this.modal.style.display = "none";
-        root.uploadedImage = "";
-        result.appendChild(roundedImage);
-      };
     }
   }
 };

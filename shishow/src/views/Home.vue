@@ -9,7 +9,8 @@
           <div id="myBannerPosition">
             <myBanner
               v-if="userStatus"
-              :loginedUser="getCurrentUserName">
+              :loginedUser="getCurrentUserName"
+              @callEditBanner="showEditBanner()">
             </myBanner>
             <BlurBanner v-else></BlurBanner>
           </div>
@@ -75,6 +76,8 @@
 
     <div class="editModal">
       <div class="editBannerPosition">
+        <EditBanner @close="fadeOut()">
+        </EditBanner>
       </div>
     </div>
 
@@ -88,6 +91,7 @@ import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
 import gameBanner from "../components/GameBanner.vue";
 import BlurBanner from "../components/BlurBanner.vue";
+import EditBanner from "../components/EditBanner.vue";
 import popupNormalBanner from "../components/PopupNormalBanner.vue";
 
 import firebase from "../plugin/firestore";
@@ -99,6 +103,7 @@ const db = firebase.firestore();
 let NBPosition;
 let NBModal;
 let selectModal;
+let editModal;
 
 export default {
   name: "home",
@@ -124,6 +129,7 @@ export default {
     normalBanner,
     gameBanner,
     BlurBanner,
+    EditBanner,
     popupNormalBanner
   },
 
@@ -212,9 +218,16 @@ export default {
       this.$forceUpdate();
     },
 
+    showEditBanner: function() {
+      editModal[0].style.display = "block";
+      console.log("showEditBanner");
+      this.$forceUpdate();
+    },
+
     fadeOut: function() {
       NBModal[0].style.display = "none";
       selectModal[0].style.display = "none";
+      editModal[0].style.display = "none";
       this.$forceUpdate();
     }
   },
@@ -225,6 +238,7 @@ export default {
 
     NBModal = document.getElementsByClassName("NBModal");
     selectModal = document.getElementsByClassName("selectModal");
+    editModal = document.getElementsByClassName("editModal");
 
     const sign_db = db.collection("USER")
                       .doc(this.user.email);
@@ -522,35 +536,35 @@ footer {
       margin-top: 1vw;
     }
   }
+}
 
-  .editModal {
-    display: none;
+.editModal {
+  display: none;
 
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.3);
+
+  z-index: 10000;
+
+  .editBannerPosition {
     position: absolute;
 
-    top: 0;
-    left: 0;
+    top: 110px;
+    left: 50%;
 
-    width: 100%;
-    height: 100%;
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
 
-    background-color: rgba(0, 0, 0, 0.3);
-
-    z-index: 10000;
-
-    .editBannerPosition {
-      position: absolute;
-
-      top: 200px;
-      left: 50%;
-
-      transform: translate(-50%, 0);
-      -webkit-transform: translate(-50%, 0);
-      -ms-transform: translate(-50%, 0);
-
-      width: 80%;
-      height: calc(90% - 200px);
-    }
+    width: 40%;
+    height: calc(92% - 110px);
   }
 }
 </style>
