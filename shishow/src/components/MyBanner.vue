@@ -274,7 +274,7 @@ export default {
     width: 88%;
     height: 24vh;
 
-    bottom: 6vh;
+    bottom: 9.5vh;
     left: 50%;
 
     -webkit-transform: translate(-50%, 0);
@@ -331,7 +331,7 @@ export default {
   .editButton {
     position: absolute;
 
-    bottom: 1vh;
+    bottom: 3vh;
     left: 50%;
 
     -webkit-transform: translate(-50%, 0);

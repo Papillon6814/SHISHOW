@@ -1,25 +1,23 @@
 <template>
-
-    <div id="root">
-
+  <div id="root">
     <div id="wrap">
-        <header>
-          <navi @input="getSearchWord"></navi>
-        </header>
+      <header>
+        <navi @input="getSearchWord"></navi>
+      </header>
 
-          <transition appear name="v">
-            <div id="myBannerPosition">
-              <myBanner
-                v-if="userStatus"
-                :loginedUser="getCurrentUserName">
-              </myBanner>
-              <BlurBanner v-else></BlurBanner>
-            </div>
-          </transition>
+        <transition appear name="v">
+          <div id="myBannerPosition">
+            <myBanner
+              v-if="userStatus"
+              :loginedUser="getCurrentUserName">
+            </myBanner>
+            <BlurBanner v-else></BlurBanner>
+          </div>
+        </transition>
 
-          <div id="moving">
+        <div id="moving">
 
-          <transition appear name="v">
+          <transition appear name="v3">
           <div id="gameBannerPosition">
             <div v-for="N in games.length"
               :key="N" v-bind:class="'g'+N">
@@ -30,9 +28,7 @@
               </gameBanner>
             </div>
           </div>
-            </transition>
-
-          </div>
+          </transition> 
 
           <transition appear name="v2">
             <div class="normalBannerPosition">
@@ -51,7 +47,8 @@
           </transition>
 
         </div>
-      
+    </div>
+
     <div class="NBModal">
       <div class="modalPosition">
         <popupNormalBanner
@@ -76,11 +73,9 @@
         </div>
         </div>
       </div>
-
     </div>
 
-    </div>
-
+  </div>
 </template>
 
 <script>
@@ -103,7 +98,6 @@ let NBModal;
 let selectModal;
 
 export default {
-
   name: "home",
 
   data: function() {
