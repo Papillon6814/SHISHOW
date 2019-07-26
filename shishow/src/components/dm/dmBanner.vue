@@ -100,14 +100,6 @@ export default {
   background-color: $dm_banner_color_hover;
 }
 
-.dmBanner:hover > .dmBannerName{
-  background-color: $dm_banner_color_hover;
-}
-
-.dmBanner:hover > .dmMsgArea{
-  background-color: $dm_banner_color_hover;
-}
-
 
 
 </style>

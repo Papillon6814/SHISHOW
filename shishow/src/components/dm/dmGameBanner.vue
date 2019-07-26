@@ -33,7 +33,7 @@ export default {
   methods: {
     loadGameInfo: function() {
       db.collection("GAME")
-        .doc(gameDocId)
+        .doc(this.gameDocId)
         .then(doc1 => {
           this.gamenames.push(doc1.data().gamename);
         })
@@ -56,6 +56,7 @@ export default {
   margin-bottom: 20px;
 
   background-color: $dm_banner_color;
+  text-align: left;
 
   cursor: pointer;
 
@@ -64,8 +65,10 @@ export default {
 
     position: absolute;
   }
+}
 
-
+.dmGameBanner:hover {
+  background-color: $dm_banner_color_hover;
 }
 
 </style>
