@@ -1,60 +1,66 @@
 <template>
-  <div id="root">
-    <div id="wrap">
-      <header>
-        <navi @input="getSearchWord"></navi>
-      </header>
+  
+    <div id="root">
+      
+      <div id="wrap">
+        <header>
+          <navi @input="getSearchWord"></navi>
+        </header>
 
-        <transition appear name="v">
-          <div id="myBannerPosition">
-            <myBanner
-              v-if="userStatus"
-              :loginedUser="getCurrentUserName">
-            </myBanner>
-            <BlurBanner v-else></BlurBanner>
-          </div>
-        </transition>
-
-        <div id="moving">
-
-          <div id="gameBannerPosition">
-            <div v-for="N in games.length"
-              :key="N" v-bind:class="'g'+N">
-              <gameBanner></gameBanner>
-            </div>
-          </div>
-
-          <transition appear name="v2">
-            <div class="normalBannerPosition">
-              <div v-for="(userinfo, N) in filteredUser"
-                :key="N" v-bind:class="'n'+N">
-                <normalBanner
-                  :user="filteredUser[N]"
-                  :signuser="signuser"
-                  :relations="relation[N]"
-                  @clickNB="NBclick(userinfo)">
-                </normalBanner>
-              </div>
-              <div class="alphaSpace"></div>
+          <transition appear name="v">
+            <div id="myBannerPosition">
+              <myBanner
+                v-if="userStatus"
+                :loginedUser="getCurrentUserName">
+              </myBanner>
+              <BlurBanner v-else></BlurBanner>
             </div>
           </transition>
 
-        </div>
-        <!--
-          <div class="gameBannerPosition">
-            <gameBanner></gameBanner>
-        </div>
-        -->
-    </div>
+          <div id="moving">
 
-    <div class="NBModal">
-      <div class="modalPosition">
-        <popupNormalBanner
-          :userInfo="popupUser"
-          @callFade="fadeOut()"></popupNormalBanner>
+            <transition appear name="v3">
+              <div id="gameBannerPosition">
+                <div v-for="N in games.length"
+                  :key="N" v-bind:class="'g'+N">
+                  <gameBanner></gameBanner>
+                </div>
+              </div>
+            </transition>
+
+            <transition appear name="v2">
+              <div class="normalBannerPosition">
+                <div v-for="(userinfo, N) in filteredUser"
+                  :key="N" v-bind:class="'n'+N">
+                  <normalBanner
+                    :user="filteredUser[N]"
+                    :signuser="signuser"
+                    :relations="relation[N]"
+                    @clickNB="NBclick(userinfo)">
+                  </normalBanner>
+                </div>
+                <div class="alphaSpace"></div>
+              </div>
+            </transition>
+
+          </div>
+          <!--
+            <div class="gameBannerPosition">
+              <gameBanner></gameBanner>
+          </div>
+          -->
       </div>
+
+      <div class="NBModal">
+        <div class="modalPosition">
+          <popupNormalBanner
+            :userInfo="popupUser"
+            @callFade="fadeOut()"></popupNormalBanner>
+        </div>
+      </div>
+      
     </div>
-  </div>
+  
 </template>
 
 <script>
@@ -74,8 +80,11 @@ import store from "../store";
 const db = firebase.firestore();
 let NBPosition;
 let NBModal;
+  
+
 
 export default {
+  
   name: "home",
 
   data: function() {
@@ -118,7 +127,7 @@ export default {
   },
 
   methods: {
-
+    
     getSearchWord(word) {
       this.searchWord = word;
     },
@@ -222,6 +231,18 @@ body {
   background-color: $dark_color;
 }
 
+#B{
+	width: 100%;
+	text-align: center;
+	display: block;
+}
+
+#A{
+	width: 100%;
+	text-align: center;
+	display: none;
+}
+  
 #myBannerPosition {
   position: fixed;
   top: 100px;
@@ -330,7 +351,7 @@ footer {
 }
 
 .v-enter {
-  transform: translate(700px, 0);
+  transform: translate(-500px, 0);
   opacity: 0;
 }
 
@@ -339,25 +360,11 @@ footer {
 }
 
 .v-enter-active {
-  transition: all 1s 0s ease;
-}
-
-.v-leave {
-  transform: translate(0, 0);
-  opacity: 1;
-}
-
-.v-leave-to {
-  transform: translate(-300px, 0);
-  opacity: 0;
-}
-
-.v-leave-active {
-  transition: all 0.5s 0s ease;
+  transition: all 1.2s 1.2s ease;
 }
 
 .v2-enter {
-  transform: translate(1000px, 0);
+  transform: translate(-500px, 0);
   opacity: 0;
 }
 
@@ -366,23 +373,22 @@ footer {
 }
 
 .v2-enter-active {
-  transition: all 1.4s 1s ease;
+  transition: all 1.2s 1.2s ease;
 }
-
-.v2-leave {
-  transform: translate(0, 0);
-  opacity: 1;
-}
-
-.v2-leave-to {
-  transform: translate(-400px, 0);
+  
+.v3-enter {
+  transform: translate(-500px, 0);
   opacity: 0;
 }
 
-.v2-leave-active {
-  transition: all 0.5s 0s ease;
+.v3-enter-to {
+  opacity: 1;
 }
 
+.v3-enter-active {
+  transition: all 1.2s 1.2s ease;
+}
+  
 .NBModal {
   display: none;
 

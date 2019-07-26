@@ -4,11 +4,12 @@
       <div class="iconPic">
         <img id="image" v-show="icon"
          :src="icon" width="130" height="130">
+        
       </div>
     </span>
 
     <div class="username">
-      username
+      {{loginedUser}}
     </div>
 
     <div class="shishowPosition">
@@ -31,7 +32,7 @@
 
     <div class="profilePosition">
       <div class="profile">
-        no bio
+        
       </div>
       <div class="separateLine"></div>
     </div>
@@ -57,7 +58,8 @@ export default {
   name: "myBanner",
 
   props: [
-    "loginedUser"
+    "loginedUser",
+    "getCurrentUserName"
   ],
 
   data: function() {
@@ -68,6 +70,7 @@ export default {
       sign: "",
       icon: "",
       bio: "",
+      friendDocID: ""
     };
   },
 
@@ -79,17 +82,18 @@ export default {
       .get()
       .then(doc => {
         this.icon = doc.data()["image"];
-        this.bio = doc.data()["bio"];
       });
   },
 
   watch: {
+    
     loginedUser: function() {
       this.$forceUpdate();
     }
   },
 
   methods: {
+    
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};
@@ -268,7 +272,7 @@ export default {
     width: 88%;
     height: 240px;
 
-    top: 535px;
+    top: 500px;
     left: 50%;
 
     -webkit-transform: translate(-50%, 0);
@@ -325,7 +329,7 @@ export default {
   .editButton {
     position: absolute;
 
-    top: 805px;
+    top: 770px;
     left: 50%;
 
     -webkit-transform: translate(-50%, 0);
