@@ -20,7 +20,10 @@
           <div id="gameBannerPosition">
             <div v-for="N in games.length"
               :key="N" v-bind:class="'g'+N">
-              <gameBanner></gameBanner>
+              <gameBanner
+                :game="games[N-1]"
+                :signuser="signuser">
+              </gameBanner>
             </div>
           </div>
 
@@ -32,7 +35,8 @@
                   :user="filteredUser[N]"
                   :signuser="signuser"
                   :relations="relation[N]"
-                  @clickNB="NBclick(userinfo)">
+                  @clickNB="NBclick(userinfo)"
+                  @clickReqButton="RBclick(userinfo)">
                 </normalBanner>
               </div>
               <div class="alphaSpace"></div>
@@ -40,20 +44,33 @@
           </transition>
 
         </div>
-        <!--
-          <div class="gameBannerPosition">
-            <gameBanner></gameBanner>
-        </div>
-        -->
     </div>
 
     <div class="NBModal">
       <div class="modalPosition">
         <popupNormalBanner
           :userInfo="popupUser"
-          @callFade="fadeOut()"></popupNormalBanner>
+          @callFade="fadeOut()">
+        </popupNormalBanner>
       </div>
     </div>
+
+    <div class="selectModal">
+      <div class="closeBtn" @click="fadeOut()">
+        <i class="fas fa-times"></i>
+      </div>
+      <div class="selectedBannerPosition">
+        <div v-for="N in hisGames.length" :key="N"
+        v-bind:class="'GameLoops'">
+          <gameBanner
+            :game="hisGames[N-1]"
+            :signuser="signuser"
+            @click="select()">
+          </gamebanner>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -74,6 +91,7 @@ import store from "../store";
 const db = firebase.firestore();
 let NBPosition;
 let NBModal;
+let selectModal;
 
 export default {
   name: "home",
@@ -84,6 +102,7 @@ export default {
       searchWord: "",
       filteredUser: [],
       games: [],
+      hisGames: [],
       currentUser: "",
       signuser: [],
       relation: [],
@@ -104,7 +123,6 @@ export default {
     user() {
       return this.$store.getters.user;
     },
-
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
@@ -118,7 +136,6 @@ export default {
   },
 
   methods: {
-
     getSearchWord(word) {
       this.searchWord = word;
     },
@@ -132,10 +149,29 @@ export default {
     },
 
     NBclick: function(userinfo) {
-      console.log("click");
-      this.showModal();
+      console.log("NBclick");
+      this.showNBModal();
 
       this.popupUser = userinfo;
+    },
+
+    RBclick: function(userinfo) {
+      console.log("RBclick");
+      this.showSelectModal();
+
+      db.collection("USER")
+        .doc(userinfo.email)
+        .collection("GAMES")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc1 => {
+            this.hisGames.push(doc1);
+          })
+        })
+    },
+
+    select: function() {
+      console.log("clickSelection");
     },
 
     placeNB: function() {
@@ -145,22 +181,28 @@ export default {
         .get()
         .then(query => {
           query.forEach(doc1 => {
-            this.games.push(doc1.data());
+            this.games.push(doc1);
           })
 
-          NBPosition[0].style.top = (200 * (this.games.length + 1)) + "px";
+          NBPosition[0].style.top = ((55 / 4) * (this.games.length + 1)) + "vw";
 
           this.$forceUpdate();
         })
     },
 
-    showModal: function() {
+    showNBModal: function() {
       NBModal[0].style.display = "block";
+      this.$forceUpdate();
+    },
+
+    showSelectModal: function() {
+      selectModal[0].style.display = "block";
       this.$forceUpdate();
     },
 
     fadeOut: function() {
       NBModal[0].style.display = "none";
+      selectModal[0].style.display = "none";
       this.$forceUpdate();
     }
   },
@@ -170,6 +212,7 @@ export default {
     this.placeNB();
 
     NBModal = document.getElementsByClassName("NBModal");
+    selectModal = document.getElementsByClassName("selectModal");
 
     const sign_db = db.collection("USER")
                       .doc(this.user.email);
@@ -257,7 +300,7 @@ body {
       .g#{$g} {
         position: absolute;
 
-        top: 200px * $g;
+        top: (55vw / 4) * $g;
         left: 0;
 
         width: 100%;
@@ -283,7 +326,7 @@ body {
 
     @while $i <= 30 {
 
-      $temporary_top: (200px * $i) !global;
+      $temporary_top: ((55vw / 4) * $i) !global;
 
       .n#{$i} {
         position: absolute;
@@ -410,6 +453,62 @@ footer {
     -webkit-transform: translate(-50%, 0);
     -moz-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
+  }
+}
+
+.selectModal {
+  display: none;
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.3);
+
+  z-index: 10000;
+
+  .closeBtn {
+    position: fixed;
+
+    top: 200px;
+    right: 20vw;
+
+    width: 30px;
+    height: 30px;
+
+    font-size: 30px;
+
+    color: $secondary_text;
+    cursor: pointer;
+  }
+
+  .selectedBannerPosition {
+    position: absolute;
+
+    top: 300px;
+    left: 50%;
+
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+
+    width: $n_banner_width;
+    height: auto;
+
+    z-index: 10002;
+
+    .GameLoops {
+      position: relative;
+
+      width: 100%;
+      height: $n_banner_height;
+
+      margin-top: 1vw;
+    }
   }
 }
 </style>

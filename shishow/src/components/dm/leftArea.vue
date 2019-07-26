@@ -50,7 +50,8 @@ let db = firebase.firestore();
 let currentUserEmail;
 let lastMsgDate = [];
 
-let privateDM, globalDM, leftArea;
+let privateDM, globalDM;
+let privateTab, globalTab;
 
 export default {
   name: 'LeftArea',
@@ -64,18 +65,17 @@ export default {
       isPrivate: true,
       DocsId:this.friendsDocID,
       target:[],
+      id:0,
     }
   },
 
   props: [
-    'friendsDocID',
-    "id"
+    'friendsDocID'
   ],
 
   components: {
     dmBanner
   },
-
 
   methods: {
     onAuth: function() {
@@ -89,22 +89,22 @@ export default {
     // 最後にメッセージが送信された日時とその内容を取得する
     // TODO: returnできるようにする
     loadLastMsgAndDate: function() {
-      
       db.collection("USER")
         .doc(currentUserEmail)
         .collection('friends')
         .orderBy('lastChatDate', 'desc')
         .get()
-        .then(friendsSnapshot => {  
+        .then(friendsSnapshot => {
+
           friendsSnapshot.forEach(doc1 => {
-            
+
             db.collection("USER")
               .doc(doc1.data().email)
               .get()
               .then(doc2 => {
                 this.usernames.push(doc2.data().username);
-                this.dmImages.push(doc2.data().image);
-             });
+                this.dmImages.push(doc2.data().image)
+              });
 
             db.collection("PrivateChat")
               .doc(currentUserEmail + doc1.id)
@@ -119,7 +119,7 @@ export default {
                 })
               })
 
-            
+
             })
       })
     },
@@ -128,26 +128,28 @@ export default {
       this.$parent.idFromLeftArea = friend;
       this.target.fill(false);
       this.$set(this.target,N,true)
+      this.id = N;
     },
 
     switchPrivate: function() {
       privateDM[0].style.display = "block";
       globalDM[0].style.display = "none";
 
-      leftArea.style.background = "#b2ebf2";
+      privateTab[0].style.background = "#b2ebf2";
+      globalTab[0].style.background = "#fff";
     },
 
     switchGlobal: function() {
       privateDM[0].style.display = "none";
       globalDM[0].style.display = "block";
 
-      leftArea.style.background = "#fff";
+      privateTab[0].style.background = "#fff";
+      globalTab[0].style.background = "#b2ebf2"
     },
 
     showPopup: function() {
       this.$emit("showPopup");
-    },
-    
+    }
   },
 
   created: function() {
@@ -161,11 +163,12 @@ export default {
   mounted: function() {
     privateDM = document.getElementsByClassName("privateDM");
     globalDM = document.getElementsByClassName("globalDM");
-    leftArea = document.getElementById("leftArea");
+    privateTab = document.getElementsByClassName("private");
+    globalTab = document.getElementsByClassName("global");
   },
 
   watch:{
-    friendsDocID:function(newVal){
+    friendsDocID:function(){
       if(this.id != 0){
       let username = this.usernames[this.id];
       let icon = this.dmImages[this.id];
@@ -177,7 +180,6 @@ export default {
       this.target.unshift(true);
       }
   },
-  
   }
 }
 

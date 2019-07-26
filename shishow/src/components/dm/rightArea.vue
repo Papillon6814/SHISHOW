@@ -3,18 +3,25 @@
     <div class="nameSpace"></div>
     {{ friendDocID }}
     <div v-for="N in msgList.length" v-bind:key="N">
-      <div v-show="isMine(msgList[N-1])" class="myChatBalloon">
-        {{ msgList[N-1].msg }}
+
+      <div v-show="isMine(msgList[N-1])" class="myChatBalloonPosition">
+        <div class="myChatBalloon">
+          {{ msgList[N-1].msg }}
+        </div>
+        <div class="myDatePosition">
+          {{ msgList[N-1].date.toDate().toLocaleString() }}
+        </div>
       </div>
-      <div v-show="isHis(msgList[N-1])" class="hisChatBalloon">
-        {{ msgList[N-1].msg }}
+
+      <div v-show="isHis(msgList[N-1])" class="hisChatBalloonPosition">
+        <div class="hisChatBalloon">
+          {{ msgList[N-1].msg }}
+        </div>
+        <div class="hisDatePosition">
+          {{ msgList[N-1].date.toDate().toLocaleString() }}
+        </div>
       </div>
-      <div v-show="isMine(msgList[N-1])" class="myDatePosition">
-        {{ msgList[N-1].date.toDate().toLocaleString() }}
-      </div>
-      <div v-show="isHis(msgList[N-1])" class="hisDatePosition">
-        {{ msgList[N-1].date.toDate().toLocaleString() }}
-      </div>
+
     </div>
     <div class="scrollSpace"></div>
   </div>
@@ -69,6 +76,7 @@ export default {
 
   watch:{
     friendDocID: function(newval) {
+      if(newval){
       this.msgList = [];
       currentUserEmail = firebase.auth().currentUser.email;
 
@@ -93,7 +101,7 @@ export default {
               })
             })
         })
-    }
+    }}
   },
 
   created: function() {
@@ -122,70 +130,96 @@ export default {
   overflow-x: hidden;
 }
 
-.myChatBalloon {
+.myChatBalloonPosition {
   position: relative;
-  display: inline-block;
 
-  border-radius: 20px;
+  width: 100%;
+  height: auto;
 
-  border: solid 1px #bbb;/*線*/
-  border-radius: 20px;/*角の丸み*/
-
-  left: 38%;
-
-  margin: 1.5em 15px 1.5em 0;
-  padding: 7px 10px;
-
-  min-width: 25px;
-  max-width: 200px;
-
-  color: $main_text_color;
-  font-size: 16px;
-  background: #FFF;
+  overflow-y: visible;
+  overflow-x: hidden;
 
   text-align: right;
-  font-family: 'Noto Sans JP', sans-serif;
+
+  .myChatBalloon {
+    display: inline-block;
+
+    position: relative;
+
+    padding: 5px 6px 5px 6px;
+
+    right: 20px;
+
+    min-width: 10px;
+    max-width: 30%;
+    height: auto;
+
+    border-radius: 20px;
+    border: solid;
+    border-color: $secondary_text;
+
+    word-break: break-all;
+    -ms-word-break: break-all;
+  }
+
+  .myDatePosition {
+    display: block;
+
+    position: relative;
+
+    padding-top: 5px;
+    right: 20px;
+
+    width: auto;
+    height: auto;
+  }
 }
 
-.hisChatBalloon {
+.hisChatBalloonPosition {
   position: relative;
-  display: inline-block;
 
-  border-radius: 20px;
+  padding-top: 20px;
 
-  border: solid 1px #bbb;
-  /* 線 */
-  border-radius: 20px;
-  /* 角の丸み */
+  width: auto;
+  height: auto;
 
-  right: 38%;
-
-  margin: 1.5em 15px 1.5em 0;
-  padding: 7px 10px;
-
-  min-width: 25px;
-  max-width: 200px;
-
-  color: $main_text_color;
-  font-size: 16px;
-  background: #FFF;
+  overflow-y: visible;
+  overflow-x: hidden;
 
   text-align: left;
-  font-family: 'Noto Sans JP', sans-serif;
-}
 
-.myDatePosition {
-  position: relative;
+  .hisChatBalloon {
+    display: inline-block;
 
-  left: 40%;
-  font-size: 13px;
-}
+    position: relative;
 
-.hisDatePosition {
-  position: relative;
+    padding: 5px 6px 5px 6px;
 
-  right: 40%;
-  font-size: 13px;
+    left: 20px;
+
+    min-width: 10px;
+    max-width: 30%;
+    height: auto;
+
+    border-radius: 20px;
+    border: solid;
+    border-color: $secondary_text;
+
+    word-break: break-all;
+    -ms-word-break: break-all;
+  }
+
+  .hisDatePosition {
+    display: block;
+
+    padding-top: 5px;
+    left: 20px;
+
+    position: relative;
+
+    width: auto;
+    height: auto;
+  }
 }
 
 .scrollSpace {

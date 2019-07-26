@@ -84,8 +84,8 @@ $su_pass_height: 30px;
 $n_icon_width: 100px;
 $n_icon_height: $n_icon_width;
 
-$n_banner_width: 55%;
-$n_banner_height: 180px;
+$n_banner_width: 55vw;
+$n_banner_height: $n_banner_width / 4.5;
 
 $n_achievement_width: 32.3125px;
 $n_achievement_height: 15.8125px;

@@ -1,15 +1,7 @@
 <template>
   <div class="GameRequestBanner">
 
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-body">
-          <img id="image" v-show="uploadedImage" :src="uploadedImage">
-          <button id ="button" type="button">Confirm</button>
-          <input type="button" id="closeBtn" value="close">
-        </div>
-      </div>
-    </div>
+
 
     <span class="iconCirclePosition">
       <label>
@@ -45,7 +37,7 @@
 <script>
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
-import Cropper from "cropperjs";
+
 import router from "../router"
 
 const db = firebase.firestore();
@@ -56,17 +48,51 @@ export default{
     return{
       Gamename: "",
       type: "",
-      uploadImage: "",
+      uploadedImage: "",
       roundimg: "",
     }
   },
+  
+  props: [
+    'cropped'
+  ],
 
- methods: {
+  mounted:function(){
+    this.modal = document.getElementById("modal");
+  },
+
+  methods: {
+    onFileChange(event) {
+
+      //file変数定義
+      let files = event.target.files || event.dataTransfer.files;
+      if (files[0].type.match(/image/)) {
+
+        this.showImage(files[0])
+
+      }
+    },
+
+   showImage(file) {
+      // FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
+      let reader = new FileReader();
+      // ファイルが読み込まれたとき、eventを引数とするアロー関数作動
+      let place = this;
+      reader.onload = event => {
+        // htmlにファイルを反映
+        this.uploadedImage = event.target.result;
+        this.$emit('filechange',this.uploadedImage);
+      };
+      // 読み込み開始
+      reader.readAsDataURL(file);
+    },
+
+
    gameCollection: function(){
      if(this.Gamename == ""){
        alert('Fill in your Display Gamename!');
     }else{
-      this.addToDatabase(this.Gamename, this.roundimg);
+      this.addToDatabase(this.Gamename, this.cropped);
       alert("Added a game.");
       this.fade();
     }
@@ -76,8 +102,8 @@ export default{
     db.collection("GameCollection")
       .doc()
       .set({
-        gamename: this.Gamename,
-        type: this.type
+        gamename: Gamename,
+        image:     image,
      })
    },
 
@@ -225,21 +251,5 @@ export default{
   }
 }
 
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-}
 
-.modal-content {
-  background-color: white;
-  width: 500px;
-  margin: 40% auto;
-}
 </style>

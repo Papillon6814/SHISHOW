@@ -42,7 +42,7 @@ export default {
   position: absolute;
 
   width: 100%;
-  height: 380px;
+  height: 400px;
 
   background-color: $dark_color;
 
@@ -120,7 +120,10 @@ export default {
     width: calc(86% - 170px);
     height: 200px;
 
-    background-color: #000;
+    border-top: solid;
+    border-width: 2px;
+    border-color: #bdbdbd;
+
   }
 }
 </style>
