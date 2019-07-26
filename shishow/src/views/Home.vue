@@ -17,6 +17,7 @@
 
         <div id="moving">
 
+          <transition appear name="v3">
           <div id="gameBannerPosition">
             <div v-for="N in games.length"
               :key="N" v-bind:class="'g'+N">
@@ -27,6 +28,7 @@
               </gameBanner>
             </div>
           </div>
+          </transition> 
 
           <transition appear name="v2">
             <div class="normalBannerPosition">
@@ -45,6 +47,7 @@
           </transition>
 
         </div>
+      
     </div>
 
     <div class="NBModal">
@@ -67,7 +70,7 @@
           <gameBanner
             :game="hisGames[N-1]"
             :signuser="signuser">
-          </gamebanner>
+          </gameBanner>
         </div>
         </div>
       </div>
@@ -380,7 +383,7 @@ footer {
 }
 
 .v-enter {
-  transform: translate(700px, 0);
+  transform: translate(-500px, 0);
   opacity: 0;
 }
 
@@ -389,25 +392,11 @@ footer {
 }
 
 .v-enter-active {
-  transition: all 1s 0s ease;
-}
-
-.v-leave {
-  transform: translate(0, 0);
-  opacity: 1;
-}
-
-.v-leave-to {
-  transform: translate(-300px, 0);
-  opacity: 0;
-}
-
-.v-leave-active {
-  transition: all 0.5s 0s ease;
+  transition: all 1.2s 1.2s ease;
 }
 
 .v2-enter {
-  transform: translate(1000px, 0);
+  transform: translate(-500px, 0);
   opacity: 0;
 }
 
@@ -416,21 +405,20 @@ footer {
 }
 
 .v2-enter-active {
-  transition: all 1.4s 1s ease;
+  transition: all 1.2s 1.2s ease;
 }
 
-.v2-leave {
-  transform: translate(0, 0);
-  opacity: 1;
-}
-
-.v2-leave-to {
-  transform: translate(-400px, 0);
+.v3-enter {
+  transform: translate(-500px, 0);
   opacity: 0;
 }
 
-.v2-leave-active {
-  transition: all 0.5s 0s ease;
+.v3-enter-to {
+  opacity: 1;
+}
+
+.v3-enter-active {
+  transition: all 1.2s 1.2s ease;
 }
 
 .NBModal {
