@@ -144,9 +144,9 @@ export default {
   .incoming {
     position: relative;
 
-    width: $n_banner_width;
+    width: 930px;
     //temporary height
-    height: $n_banner_height;
+    height: 130px;
 
     background-color: #dbdbdb;
 
@@ -182,10 +182,8 @@ export default {
 
     .username{
       width: $user_width;
+
       height: $n_user_height;
-
-      background-color: #fff;
-
       font-size: 25px;
       text-align: left;
     }
