@@ -144,9 +144,9 @@ export default {
   .incoming {
     position: relative;
 
-    width: 930px;
+    width: $f_banner_width;
     //temporary height
-    height: 130px;
+    height: $f_banner_height;
 
     background-color: #dbdbdb;
 
@@ -176,7 +176,7 @@ export default {
       position: absolute;
 
       top: 15px;
-      left: 34.1611111px;
+      left: 33px;
     }
 
 
