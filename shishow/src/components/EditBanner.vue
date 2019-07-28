@@ -5,12 +5,21 @@
     </div>
 
     <input class="username" type="text"
-      placeholder="Display name" v-model="username" />
+      :value="username"/>
+
+    <div class="placeGames">
+    </div>
 
   </div>
 </template>
 
 <script>
+import firebase from "../plugin/firestore";
+import "firebase/firestore";
+import "@firebase/auth";
+import store from '../store'
+
+const db = firebase.firestore();
 
 export default {
   name: "EditBanner",
@@ -22,9 +31,34 @@ export default {
   },
 
   methods: {
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false);
+      })
+    },
+
     close: function() {
       this.$emit("close");
     }
+  },
+
+  created: function () {
+    this.onAuth();
+    let currentUser = firebase.auth().currentUser;
+
+    if (currentUser == null) {
+      currentUser = this.$store.getters.user;
+    }
+
+    // ユーザーネーム取得
+    db.collection("USER")
+      .doc(currentUser.email)
+      .get()
+      .then(doc1 => {
+        this.username = doc1.data().username;
+      })
   }
 }
 
