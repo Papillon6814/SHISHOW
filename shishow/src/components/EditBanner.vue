@@ -10,6 +10,10 @@
     <div class="placeGames">
     </div>
 
+    <div class="applyChangeButton">
+      Apply
+    </div>
+
   </div>
 </template>
 
@@ -106,6 +110,31 @@ export default {
     width: 80%;
 
     font-size: 35px;
+  }
+
+  .applyChangeButton {
+    position: absolute;
+
+    bottom: 10px;
+    left: 50%;
+
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+
+    width: 120px;
+    height: 30px;
+
+    background-color: $accent_color;
+
+    border-radius: 15px;
+
+    color: $primary_text;
+
+    text-align: center;
+    line-height: 30px;
+
+    cursor: pointer;
   }
 }
 </style>
