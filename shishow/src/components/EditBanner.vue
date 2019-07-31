@@ -10,6 +10,10 @@
     <div class="placeGames">
     </div>
 
+    <div class="bioPosition">
+      <textarea rows="1" name="bio">bio</textarea>
+    </div>
+
     <div class="applyChangeButton">
       Apply
     </div>
@@ -115,7 +119,7 @@ export default {
   .applyChangeButton {
     position: absolute;
 
-    bottom: 10px;
+    bottom: 1vh;
     left: 50%;
 
     transform: translate(-50%, 0);
@@ -135,6 +139,28 @@ export default {
     line-height: 30px;
 
     cursor: pointer;
+  }
+
+  .bioPosition {
+    position: absolute;
+
+    bottom: 10vh;
+    left: 10%;
+
+    width: 80%;
+    height: auto;
+
+    textarea {
+      position: absolute;
+
+      left: 0;
+      top: 0;
+
+      width: 100%;
+      height: auto;
+
+      font-size: 35px;
+    }
   }
 }
 </style>
