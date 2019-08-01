@@ -7,11 +7,10 @@
     <input class="username" type="text"
       :value="username"/>
 
-    <div class="placeGames">
-    </div>
+    <input class="placeGames" type="text" />
 
     <div class="bioPosition">
-      <textarea rows="1" name="bio">bio</textarea>
+      <textarea v-model="value" :rows="rows">bio</textarea>
     </div>
 
     <div class="applyChangeButton">
@@ -34,7 +33,15 @@ export default {
 
   data: function() {
     return {
-      username: ''
+      username: '',
+      value: ''
+    }
+  },
+
+  computed: {
+    rows: function() {
+      var num = this.value.split("\n").length;
+      return (num > 3) ? 3 : num;
     }
   },
 
@@ -85,6 +92,30 @@ export default {
 
   background-color: #fff;
 
+  input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+
+    color: $primary_text;
+  }
+
+  textarea {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    resize: none;
+
+    color: $primary_text;
+
+    transition: 0.3s;
+  }
+
+  textarea:focus {
+    outline: none;
+  }
+
   .closeBtn {
     position: absolute;
 
@@ -104,6 +135,22 @@ export default {
     position: absolute;
 
     top: 35%;
+    left: 50%;
+
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+
+    height: 40px;
+    width: 80%;
+
+    font-size: 35px;
+  }
+
+  .placeGames {
+    position: absolute;
+
+    top: 50%;
     left: 50%;
 
     transform: translate(-50%, 0);
@@ -144,7 +191,7 @@ export default {
   .bioPosition {
     position: absolute;
 
-    bottom: 10vh;
+    top: 65%;
     left: 10%;
 
     width: 80%;
