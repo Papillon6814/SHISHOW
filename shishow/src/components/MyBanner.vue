@@ -9,7 +9,7 @@
     </span>
 
     <div class="username">
-      {{loginedUser}}
+      {{username}}
     </div>
 
     <div class="shishowPosition">
@@ -32,7 +32,7 @@
 
     <div class="profilePosition">
       <div class="profile">
-
+        {{this.bio}}
       </div>
       <div class="separateLine"></div>
     </div>
@@ -73,19 +73,9 @@ export default {
       sign: "",
       icon: "",
       bio: "",
+      username:"",
       friendDocID: ""
     };
-  },
-
-  created:function(){
-    this.onAuth();
-
-    db.collection("USER")
-      .doc(email)
-      .get()
-      .then(doc => {
-        this.icon = doc.data()["image"];
-      });
   },
 
   watch: {
@@ -123,22 +113,31 @@ export default {
   },
 
   created:function(){
+    var email;
     this.onAuth();
-
-    db.collection("USER")
-      .doc(email)
-      .get()
-      .then(doc => {
-        this.icon = doc.data()["image"];
-        this.bio = doc.data()["bio"];
-      });
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        email = user.email;
+        console.log(email);
+        db.collection("USER")
+          .doc(email)
+          .get()
+          .then(doc => {
+            this.username = doc.data()["username"];
+            this.icon = doc.data()["image"];
+            this.bio = doc.data()["bio"];
+          });
+      } else {
+      }
+    });
+    
   }
 };
 
 </script>
 
 <style lang="scss" scoped>
-
+                 
 .banner {
   overflow-y: hidden;
   overflow-x: hidden;
