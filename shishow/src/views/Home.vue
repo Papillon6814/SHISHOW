@@ -1,6 +1,6 @@
 <template>
   <div id="root">
-    
+
     <div id="modal" class="modal">
       <div class="modal-content">
         <div class="modal-body">
@@ -10,7 +10,7 @@
         </div>
       </div>
     </div>
-    
+
     <div id="wrap">
       <header>
         <navi @input="getSearchWord"></navi>
@@ -40,7 +40,7 @@
               </gameBanner>
             </div>
           </div>
-          </transition> 
+          </transition>
 
           <transition appear name="v2">
             <div class="normalBannerPosition">
@@ -59,7 +59,7 @@
           </transition>
 
         </div>
-      
+
     </div>
 
     <div class="NBModal">
@@ -290,6 +290,7 @@ export default {
       NBPosition = document.getElementsByClassName("normalBannerPosition");
 
       db.collection("GameCollection")
+        .limit(3)
         .get()
         .then(query => {
           query.forEach(doc1 => {

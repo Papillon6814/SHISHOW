@@ -27,7 +27,8 @@ export default {
 
   props: [
     // leftAreaでクリックされたフレンドのドキュメントID
-    "friendDocID"
+    "friendDocID",
+    "isGame"
   ],
 
   created: function() {
@@ -42,41 +43,60 @@ export default {
       // 現在の日時を取得(文字列型)
       let now = new Date();
 
-      db.collection("USER")
-        .doc(currentUser.email)
-        .collection("friends")
-        .doc(this.friendDocID)
-        .get()
-        .then(doc => {
-          this.chatID = doc.data()["chatID"];
+      if(this.isGame) {
 
-
-        if (msg) {
-        db.collection("PrivateChat")
-          .doc(this.chatID)
-          .collection("contents")
+        db.collection("GameCollection")
+          .doc(this.friendDocID)
+          .collection("GlobalChat")
           .add({
             msg: this.msg,
             date: now,
             sender: currentUser.email
           })
           .then(() => {
-            db.collection("USER")
-              .doc(currentUser.email)
-              .collection("friends")
+            db.collection("GameCollection")
               .doc(this.friendDocID)
               .update({
                 lastChatDate: now
               })
-
-            this.$emit('scrollRightArea');
           })
 
-        this.msg = "";
-      }
-        });
+          this.msg = '';
 
-      
+      } else {
+
+        db.collection("USER")
+          .doc(currentUser.email)
+          .collection("friends")
+          .doc(this.friendDocID)
+          .get()
+          .then(doc => {
+            this.chatID = doc.data()["chatID"];
+
+          if (msg) {
+            db.collection("PrivateChat")
+              .doc(this.chatID)
+              .collection("contents")
+              .add({
+                msg: this.msg,
+                date: now,
+                sender: currentUser.email
+              })
+              .then(() => {
+                db.collection("USER")
+                  .doc(currentUser.email)
+                  .collection("friends")
+                  .doc(this.friendDocID)
+                  .update({
+                    lastChatDate: now
+                  })
+
+                this.$emit('scrollRightArea');
+              })
+            this.msg = "";
+          }
+        });
+      }
     }
   }
 };

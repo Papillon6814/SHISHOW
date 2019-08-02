@@ -34,9 +34,9 @@
 
     <div class="globalDM">
       <div class="dmBannerPosition">
-        <div v-for="(game, N) in games.length"
+        <div v-for="(game, N) in games"
           :key="N" v-bind:class="enumGameBanner">
-          <div @click="click(game, N)">
+          <div @click="click(game, N, true)">
             <dmGameBanner
               :gameDocId="game">
             </dmGameBanner>
@@ -166,8 +166,9 @@ export default {
       })
     },
 
-    click: function(friend,N) {
+    click: function(friend, N, isGame = false) {
       this.$parent.idFromLeftArea = friend;
+      this.$parent.isGame = isGame;
       this.target.fill(false);
       this.$set(this.target,N,true)
       this.id = N;

@@ -30,7 +30,8 @@
       <div class="inputArea">
         <inputArea
           @scrollRightArea="callScroll()"
-          :friendDocID="idFromLeftArea">
+          :friendDocID="idFromLeftArea"
+          :isGame="isGame">
         </inputArea>
       </div>
     </div>
@@ -83,7 +84,7 @@ export default {
       usernameFromLeftArea: '',
       croppedimg:"",
       uploadedImage:'',
-
+      isGame: false
     }
   },
 
@@ -98,21 +99,36 @@ export default {
   watch: {
     idFromLeftArea: function(newval) {
       if(newval){
-      db.collection("USER")
-        .doc(currentUser.email)
-        .collection("friends")
-        .doc(newval)
-        .get()
-        .then(doc1 => {
+
+        if(this.isGame) {
+
+          db.collection("GameCollection")
+            .doc(newval)
+            .get()
+            .then(doc1 => {
+              this.usernameFromLeftArea = doc1.data().gamename;
+            })
+
+        } else {
 
           db.collection("USER")
-            .doc(doc1.data().email)
+            .doc(currentUser.email)
+            .collection("friends")
+            .doc(newval)
             .get()
-            .then(doc2 => {
-              this.usernameFromLeftArea = doc2.data().username;
+            .then(doc1 => {
+
+              db.collection("USER")
+                .doc(doc1.data().email)
+                .get()
+                .then(doc2 => {
+                  this.usernameFromLeftArea = doc2.data().username;
+                })
             })
-        })
-    }}
+
+        }
+      }
+    }
   },
 
   methods: {

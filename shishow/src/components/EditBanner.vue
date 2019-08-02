@@ -195,7 +195,7 @@ export default {
 
     font-size: 30px;
 
-    color: $secondary_text;
+    color: #fafafa;
     cursor: pointer;
   }
 
