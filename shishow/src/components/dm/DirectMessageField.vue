@@ -61,7 +61,7 @@ import firebase from "../../plugin/firestore";
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
-import Cropper from "cropperjs";
+
 
 let db = firebase.firestore();
 
