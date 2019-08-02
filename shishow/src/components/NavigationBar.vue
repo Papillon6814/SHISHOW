@@ -35,7 +35,7 @@
         <router-link to="/notification">
           <i class="fas fa-bell fa-3x bell"></i>
         </router-link>
-        <router-link to="/">
+        <router-link to="/home">
           <i class="fas fa-home fa-3x home"></i>
         </router-link>
       </div>
@@ -62,7 +62,7 @@
                 <i class="fas fa-bell fa-3x"></i>
               </div>
             </router-link>
-            <router-link to="/">
+            <router-link to="/home">
               <i class="fas fa-home fa-3x home"></i>
             </router-link>
           </div>

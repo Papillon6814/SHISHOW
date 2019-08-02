@@ -72,15 +72,17 @@ export default {
           req.user.getIdToken().then(token=>{
             console.log(token.toString())
           })
-
-
           alert("Signed in.");
-          router.push("/");
+          router.push("/home");
         })
         .catch(()=> {
           alert('Could not signed in.');
-
         });
+
+        let signinButton = document.getElementsByClassName('signin_button');
+        signinButton[0].style.background = "#b2ebf2";
+        signinButton[0].style.color= "#fff";
+        this.$forceUpdate();
     },
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
@@ -164,7 +166,7 @@ export default {
       height: 35px; //$id_height
     }
   }
-  
+
   .signin_button {
     position: absolute;
 
