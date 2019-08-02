@@ -37,7 +37,8 @@
       <div class="separateLine"></div>
     </div>
 
-    <div class="editButton">
+    <div class="editButton"
+      @click="showEditBanner()">
       Edit
     </div>
 
@@ -114,7 +115,23 @@ export default {
         })
         .catch(() => {
         });
+    },
+
+    showEditBanner: function() {
+      this.$emit("callEditBanner");
     }
+  },
+
+  created:function(){
+    this.onAuth();
+
+    db.collection("USER")
+      .doc(email)
+      .get()
+      .then(doc => {
+        this.icon = doc.data()["image"];
+        this.bio = doc.data()["bio"];
+      });
   }
 };
 
