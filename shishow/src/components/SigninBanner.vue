@@ -73,7 +73,7 @@ export default {
             console.log(token.toString())
           })
           alert("Signed in.");
-          router.push("/");
+          router.push("/home");
         })
         .catch(()=> {
           alert('Could not signed in.');
