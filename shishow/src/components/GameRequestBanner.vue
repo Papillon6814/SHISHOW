@@ -1,8 +1,5 @@
 <template>
   <div class="GameRequestBanner">
-
-
-
     <span class="iconCirclePosition">
       <label>
         <div class="iconCircle">

@@ -15,13 +15,11 @@
       <div class="dmbannerPosition">
         <div v-for="(friend, N) in friendsDocID"
              :key="N" v-bind:class="'b' + N">
-          <div @click="click(friend, N)">
+          <div @click="click_f(friend, N)">
             <dmBanner
               :dmBannerUsername="usernames[N]"
               :dmMsg="lastMsg[N]"
-              :iconPic="dmImages[N]"
-              :target="target[N]"
-              :N="N">
+              :iconPic="dmImages[N]">
             </dmBanner>
           </div>
         </div>
@@ -32,8 +30,8 @@
     <div class="globalDM">
       <div class="dmBannerPosition">
         <div v-for="(game, N) in games"
-          :key="N" v-bind:class="enumGameBanner">
-          <div @click="click(game, N, true)">
+          :key="N" v-bind:class="'enumGameBanner'+N">
+          <div @click="click_g(game, N)">
             <dmGameBanner
               :gameDocId="game">
             </dmGameBanner>
@@ -110,16 +108,7 @@ export default {
           this.target.unshift(true);
         }
 
-      db.collection("USER")
-        .doc(currentUserEmail)
-        .collection("GAMES")
-        .get()
-        .then(querySnapshot => {
-
-          querySnapshot.forEach(doc1 => {
-            this.games.push(doc1.id);
-          })
-        })
+      
     }
   },
 
@@ -168,12 +157,23 @@ export default {
       })
     },
 
-    click: function(friend, N, isGame = false) {
+
+    click_f: function(friend,N) {
       this.$parent.idFromLeftArea = friend;
-      this.$parent.isGame = isGame;
-      this.target.fill(false);
-      this.$set(this.target,N,true)
+      let dmBan = document.getElementsByClassName("dmBanner")[this.id]
+      dmBan.style.background = "#FFF"
       this.id = N;
+      dmBan = document.getElementsByClassName("dmBanner")[N]
+      dmBan.style.background = "red"
+    },
+
+    click_g: function(game,N) {
+      let gameBan = document.getElementsByClassName("dmGameBanner")[this.id]
+      gameBan.style.background = "#FFF"
+      this.id = N;
+      gameBan = document.getElementsByClassName("dmGameBanner")[N]
+      gameBan.style.background = "red"
+      
     },
 
     switchPrivate: function() {
@@ -182,6 +182,9 @@ export default {
 
       privateTab[0].style.background = "#b2ebf2";
       globalTab[0].style.background = "#fff";
+
+      let dmBan = document.getElementsByClassName("dmBanner")[this.id]
+      dmBan.style.background = "#FFF"
     },
 
     switchGlobal: function() {
@@ -190,6 +193,9 @@ export default {
 
       privateTab[0].style.background = "#fff";
       globalTab[0].style.background = "#b2ebf2"
+      
+       let gameBan = document.getElementsByClassName("dmGameBanner")[this.id]
+      gameBan.style.background = "#FFF"
     },
 
     showPopup: function() {
@@ -203,6 +209,17 @@ export default {
     currentUserEmail = firebase.auth().currentUser.email;
     this.loadLastMsgAndDate();
     for(let i=0;i<this.friendsDocID.length;i++){this.target.push(false)}
+
+    db.collection("USER")
+        .doc(currentUserEmail)
+        .collection("GAMES")
+        .get()
+        .then(querySnapshot => {
+
+          querySnapshot.forEach(doc1 => {
+            this.games.push(doc1.id);
+          })
+        })
   },
 
   mounted: function() {
