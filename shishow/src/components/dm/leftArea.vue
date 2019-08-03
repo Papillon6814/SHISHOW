@@ -38,6 +38,7 @@
           </div>
         </div>
       </div>
+
       <div class="addGamePosition">
         <div class="textPosition" @click="showPopup()">
         New Game
@@ -108,7 +109,7 @@ export default {
           this.target.unshift(true);
         }
 
-      
+
     }
   },
 
@@ -160,20 +161,26 @@ export default {
 
     click_f: function(friend,N) {
       this.$parent.idFromLeftArea = friend;
+
       let dmBan = document.getElementsByClassName("dmBanner")[this.id]
       dmBan.style.background = "#FFF"
       this.id = N;
       dmBan = document.getElementsByClassName("dmBanner")[N]
       dmBan.style.background = "red"
+
+      this.$parent.isGame = false;
     },
 
     click_g: function(game,N) {
+      this.$parent.idFromLeftArea = game;
+      
       let gameBan = document.getElementsByClassName("dmGameBanner")[this.id]
       gameBan.style.background = "#FFF"
       this.id = N;
       gameBan = document.getElementsByClassName("dmGameBanner")[N]
-      gameBan.style.background = "red"
-      
+      gameBan.style.background = "red";
+
+      this.$parent.isGame = true;
     },
 
     switchPrivate: function() {
@@ -193,8 +200,8 @@ export default {
 
       privateTab[0].style.background = "#fff";
       globalTab[0].style.background = "#b2ebf2"
-      
-       let gameBan = document.getElementsByClassName("dmGameBanner")[this.id]
+
+      let gameBan = document.getElementsByClassName("dmGameBanner")[this.id]
       gameBan.style.background = "#FFF"
     },
 

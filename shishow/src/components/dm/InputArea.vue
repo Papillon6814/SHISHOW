@@ -22,7 +22,7 @@ export default {
     return {
       msg: "",
       chatID: "",
-      chatable: true
+      chattable: true
     };
   },
 
@@ -37,27 +37,26 @@ export default {
   },
 
   methods: {
-    
+
     //メッセージを送る
     sendMsg() {
       var root = this;
-      if(this.chatable){
-        this.chatable = false;
+      if(this.chattable){
+        this.chattable = false;
         // 文字が入力されているときにのみ送信
         let msg = this.msg;
         this.msg = "";
-        this.chatable = true;
+        this.chattable = true;
         msg.replace(/\r?\n/g, '');
         // 現在の日時を取得(文字列型)
         let now = new Date();
-
 
         if(this.isGame) {
           db.collection("GameCollection")
           .doc(this.friendDocID)
           .collection("GlobalChat")
           .add({
-            msg: this.msg,
+            msg: msg,
             date: now,
             sender: currentUser.email
           })
@@ -78,9 +77,9 @@ export default {
           .get()
           .then(doc => {
             root.chatID = doc.data()["chatID"];
-             
+
             if (msg) {
-              
+
               db.collection("PrivateChat")
               .doc(root.chatID)
               .collection("contents")
@@ -90,7 +89,7 @@ export default {
                 sender: currentUser.email
               })
               .then(() => {
-               
+
                 db
                 .collection("USER")
                 .doc(currentUser.email)
@@ -102,15 +101,15 @@ export default {
 
                 root.$emit('scrollRightArea');
                 msg = "";
-                
-                
+
+
               })
-              
+
             }
-            
-          }); 
-        }   
-      }  
+
+          });
+        }
+      }
     }
   }
 };

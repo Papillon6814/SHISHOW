@@ -81,7 +81,8 @@
         <div @click="select(hisGames[N-1])">
           <gameBanner
             :game="hisGames[N-1]"
-            :signuser="signuser">
+            :signuser="signuser"
+            :count="N-1">
           </gameBanner>
         </div>
         </div>

@@ -127,37 +127,46 @@ export default {
     border-radius: 3px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    .iconPic {
-      width: 100%;
-      height: 100%;
-
-      //temporary color
-      background-color: #fff;
-    }
 
     .iconPicPosition {
       position: absolute;
 
-      width: $n_banner_width;
-      height: $n_banner_width / 7;
+      width: $n_icon_width;
+      height: $n_icon_height;
 
-      background: #ddd;
+      top: 10px;
+      left: 20px;
 
-      top: 0;
-      left: 0;
-    }
+      .iconPic {
+        width: 100%;
+        height: 100%;
 
-    .gamename{
-      width: $user_width;
-      height: $user_height;
+        //temporary color
+        background-color: #fff;
+
+        border-radius: 15px;
+        border-style: solid;
+        border-width: 1px;
+      }
     }
 
     .gamenamePosition{
       position: absolute;
 
       top: 30px;
-      left: 202px;
-      right: 0px;
+      left: 140px;
+
+      .gamename{
+        position: absolute;
+
+        left: 0;
+        top: 0;
+
+        width: $user_width;
+        height: $user_height;
+
+        font-size: 22px;
+      }
     }
 
     .subscribeButton {
@@ -170,8 +179,8 @@ export default {
 
       padding: 0.3em 1em;
       text-decoration: none;
-      color: #9aa5ef;
-      border: solid 2px #9aa5ef;
+      color: #abbffb;
+      border: solid 2px #abbffb;
       border-radius: 3px;
       transition: .4s;
 
@@ -179,12 +188,12 @@ export default {
     }
 
     .subscribeButton:hover{
-      background: #9aa5ef;
+      background: #abbffb;
       color: white;
     }
 
     .subscribeButton:active {
-      background-color: #9aa5ef;
+      background-color: #abbffb;
       color: white;
     }
   }
