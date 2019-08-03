@@ -52,6 +52,7 @@ export default {
         console.log(currentUser.email);
         console.log(root.friendDocID);
         console.log(root.chatID);
+        //ここまでmsgある
 
         if(this.isGame) {
           db.collection("GameCollection")
@@ -64,12 +65,17 @@ export default {
           })
           .then(() => {
             db.collection("GameCollection")
-              .doc(this.friendDocID)
-              .update({
-                lastChatDate: now
-              })
+            .doc(this.friendDocID)
+            .update({
+              lastChatDate: now
+            })
+            msg = "";
+            this.msg = "";
           })
         } else {
+          if (msg) {
+            console.log("追加するよ！"+msg)
+          }
           db.collection("USER")
           .doc(currentUser.email)
           .collection("friends")
@@ -77,8 +83,9 @@ export default {
           .get()
           .then(doc => {
             root.chatID = doc.data()["chatID"];
-
+             
             if (msg) {
+              
               db.collection("PrivateChat")
               .doc(root.chatID)
               .collection("contents")
@@ -88,6 +95,7 @@ export default {
                 sender: currentUser.email
               })
               .then(() => {
+               
                 db.collection("USER")
                   .doc(currentUser.email)
                   .collection("friends")
@@ -97,14 +105,15 @@ export default {
                   })
 
                 root.$emit('scrollRightArea');
+                msg = "";
+                this.msg = "";
               })
               
             }
             
           }); 
         }
-        msg = "";
-        this.msg = "";
+
         this.chatable = true;
       }  
     }
