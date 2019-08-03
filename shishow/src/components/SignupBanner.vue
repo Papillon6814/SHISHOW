@@ -18,7 +18,7 @@
 
     <div class="usernamePosition">
       <input class="username" type="text" placeholder="Display name"
-      v-model="username" required>
+      v-model="username" maxlength="12" required>
     </div>
 
     <div class="emailPosition">
@@ -105,7 +105,7 @@ export default {
                 .then(doc => {
                   url = doc.data()["image"];
                 })
-              
+
             }
           }
 

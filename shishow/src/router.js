@@ -13,6 +13,8 @@ import GameRequest from './views/GameRequest.vue'
 import Sample from "./test/sample.vue"
 import uploader from "./test/uploader.vue";
 import Prehome from './views/prehome.vue';
+import PrivacyPolicy from './components/PrivacyPolicy.vue';
+import Terms from './components/Terms.vue'
 
 
 import firebase from 'firebase'
@@ -98,6 +100,18 @@ let router = new Router({
     path:"/sample",
     name: "Sample",
     component: Sample
+  },
+
+  {
+    path: "/privacypolicy",
+    name: "PrivacyPolicy",
+    component: PrivacyPolicy
+  },
+
+  {
+    path: "/terms",
+    name: "Terms",
+    component: Terms
   },
 
   {
