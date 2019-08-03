@@ -133,6 +133,7 @@ export default {
       .set({
           email: email,
           username: username,
+          favoriteGame: '',
           image: image,
           bio: 'No bio'
       })

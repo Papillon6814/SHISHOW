@@ -194,6 +194,7 @@ export default {
           croppable = true;
         }
       });
+
       close.onclick = ()=> {
         modal.style.display = "none";
         cropper.destroy();
