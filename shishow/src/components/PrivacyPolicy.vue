@@ -141,6 +141,12 @@ Eメールアドレス：papillonp@icloud.com<!-- TODO: 事業用のメールア
 
 <style lang="scss" scoped>
 #root {
-  font-size: 12px;
+  position: absolute;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  width: 100%;
+  height: 100%;
 }
 </style>
