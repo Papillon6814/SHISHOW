@@ -226,7 +226,7 @@ html {
   padding-top: 165px;
   margin-left: 10%;
 
-  $i: 1;
+  $i: 0;
 
   list-style: none;
   @while $i <= 30 {
@@ -244,7 +244,7 @@ html {
       transition: 0.3s;
     }
 
-    $i: 0;
+    $i: $i + 1;
   }
 }
 
