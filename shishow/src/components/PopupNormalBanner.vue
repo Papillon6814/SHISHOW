@@ -33,7 +33,7 @@ const db = firebase.firestore();
 export default {
   name: 'popupNormalBanner',
 
-  data: function(){
+  data: function() {
     return {
       enumGames: ''
     }
@@ -45,6 +45,7 @@ export default {
 
   watch: {
     userInfo: function() {
+      this.enumGames = '';
       this.loadGames();
     }
   },
