@@ -91,7 +91,8 @@
     <div class="editModal">
       <div class="editBannerPosition">
         <EditBanner @close="fadeOut()"
-        @filechange="prepare">
+        @filechange="prepare"
+        :roundimg='croppedimg'>
         </EditBanner>
       </div>
     </div>
