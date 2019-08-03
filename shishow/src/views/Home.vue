@@ -294,9 +294,21 @@ export default {
       db.collection("GameCollection")
         .get()
         .then(query => {
-          query.forEach(doc1 => {
-            this.games.push(doc1);
-          })
+          let i=0
+          let j;
+          
+          while(i<5 && i<query.docs.length){
+            
+            let num = Math.floor(Math.random()*query.docs.length);
+            console.log(num)
+            for(j=0;j<i&&this.games[j].id != query.docs[num].id ;j++);
+            if(j==i){
+              this.games.push(query.docs[num]);
+              console.log(this.games[0].id);
+              i++
+            }
+            
+          }
 
           NBPosition[0].style.top = ((55 / 4) * (this.games.length + 1)) + "vw";
 
