@@ -480,18 +480,6 @@ body {
 
       $i: $i + 1;
     }
-
-    .alphaSpace {
-      position: absolute;
-
-      left: 0;
-      top: 180px * 20;
-
-      height: 140px;
-      width: 100%;
-
-      background-color: rgba(0, 0, 0, 0);
-    }
   }
 }
 
