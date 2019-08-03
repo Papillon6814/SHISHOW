@@ -73,6 +73,7 @@ export default {
     },
 
     remove: function() {
+      console.log("remove")
       db.collection("USER")
         .doc(this.signuser.email)
         .collection("GAMES")
@@ -80,6 +81,7 @@ export default {
         .delete()
 
       this.isSubscribed = false;
+      this.$forceUpdate();
     },
 
     checkSubscription: function() {
