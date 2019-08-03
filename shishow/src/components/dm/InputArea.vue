@@ -45,14 +45,12 @@ export default {
         this.chatable = false;
         // 文字が入力されているときにのみ送信
         let msg = this.msg;
+        this.msg = "";
+        this.chatable = true;
         msg.replace(/\r?\n/g, '');
         // 現在の日時を取得(文字列型)
         let now = new Date();
 
-        console.log(currentUser.email);
-        console.log(root.friendDocID);
-        console.log(root.chatID);
-        //ここまでmsgある
 
         if(this.isGame) {
           db.collection("GameCollection")
@@ -70,12 +68,9 @@ export default {
               lastChatDate: now
             })
             msg = "";
-            this.msg = "";
           })
         } else {
-          if (msg) {
-            console.log("追加するよ！"+msg)
-          }
+
           db.collection("USER")
           .doc(currentUser.email)
           .collection("friends")
@@ -96,25 +91,25 @@ export default {
               })
               .then(() => {
                
-                db.collection("USER")
-                  .doc(currentUser.email)
-                  .collection("friends")
-                  .doc(root.friendDocID)
-                  .update({
-                    lastChatDate: now
-                  })
+                db
+                .collection("USER")
+                .doc(currentUser.email)
+                .collection("friends")
+                .doc(root.friendDocID)
+                .update({
+                  lastChatDate: now
+                })
 
                 root.$emit('scrollRightArea');
                 msg = "";
-                this.msg = "";
+                
+                
               })
               
             }
             
           }); 
-        }
-
-        this.chatable = true;
+        }   
       }  
     }
   }
