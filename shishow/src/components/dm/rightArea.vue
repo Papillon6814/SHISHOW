@@ -48,7 +48,8 @@ export default {
   },
 
   props: [
-    'friendDocID'
+    'friendDocID',
+    'isGame'
   ],
 
   methods: {
@@ -80,26 +81,43 @@ export default {
       this.msgList = [];
       currentUserEmail = firebase.auth().currentUser.email;
 
-      db.collection("USER")
-        .doc(currentUserEmail)
-        .collection('friends')
-        .doc(newval)
-        .get()
-        .then(doc1 => {
-          chatID = doc1.data()['chatID'];
+      if(this.isGame) {
 
-          db.collection("PrivateChat")
-            .doc(chatID)
-            .collection("contents")
-            .orderBy('date')
-            .onSnapshot(querySnapshot => {
-              this.msgList = [];
+        db.collection("GameCollection")
+          .doc(newval)
+          .collection("GlobalChat")
+          .orderBy('date')
+          .onSnapshot(querySnapshot => {
+            this.msgList = [];
 
-              querySnapshot.forEach(doc2 => {
-                this.msgList.push(doc2.data());
-              })
+            querySnapshot.forEach(doc1 => {
+              this.msgList.push(doc1.data());
             })
-        })
+          })
+
+      } else {
+
+        db.collection("USER")
+          .doc(currentUserEmail)
+          .collection('friends')
+          .doc(newval)
+          .get()
+          .then(doc1 => {
+            chatID = doc1.data()['chatID'];
+
+            db.collection("PrivateChat")
+              .doc(chatID)
+              .collection("contents")
+              .orderBy('date')
+              .onSnapshot(querySnapshot => {
+                this.msgList = [];
+
+                querySnapshot.forEach(doc2 => {
+                  this.msgList.push(doc2.data());
+                })
+              })
+          })
+      }
     }}
   },
 

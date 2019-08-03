@@ -25,7 +25,8 @@
       </div>
       <rightArea
       ref="rightArea"
-      :friendDocID="idFromLeftArea">
+      :friendDocID="idFromLeftArea"
+      :isGame="isGame">
       </rightArea>
       <div class="inputArea">
         <inputArea
