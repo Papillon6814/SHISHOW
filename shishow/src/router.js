@@ -11,6 +11,8 @@ import Friend from './views/friend.vue'
 import GlobalChat from "./views/GlobalChat.vue"
 import GameRequest from './views/GameRequest.vue'
 import Sample from "./test/sample.vue"
+import uploader from "./test/uploader.vue";
+import Prehome from './views/prehome.vue';
 
 
 import firebase from 'firebase'
@@ -22,8 +24,17 @@ let router = new Router({
   base: process.env.BASE_URL,
   routes: [{
       path: '/',
+      name: 'prehome',
+      component: Prehome
+    },
+
+    {
+      path: '/home',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: {
+        requiresAuth: true
+      }
     },
 
     {
@@ -88,6 +99,12 @@ let router = new Router({
     name: "Sample",
     component: Sample
   },
+
+  {
+    path:'/uploader',
+    name: 'uploader',
+    component: uploader
+  }
   ]
 })
 

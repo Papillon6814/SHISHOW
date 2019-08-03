@@ -9,9 +9,6 @@
       <div class="global" @click="switchGlobal()">
         Global
       </div>
-      <div class="RegisterGame"
-           @click="showPopup()">
-      </div>
     </div>
 
     <div class="privateDM">
@@ -34,13 +31,18 @@
 
     <div class="globalDM">
       <div class="dmBannerPosition">
-        <div v-for="(game, N) in games.length"
+        <div v-for="(game, N) in games"
           :key="N" v-bind:class="enumGameBanner">
-          <div @click="click(game, N)">
+          <div @click="click(game, N, true)">
             <dmGameBanner
               :gameDocId="game">
             </dmGameBanner>
           </div>
+        </div>
+      </div>
+      <div class="addGamePosition">
+        <div class="textPosition" @click="showPopup()">
+        New Game
         </div>
       </div>
     </div>
@@ -166,8 +168,9 @@ export default {
       })
     },
 
-    click: function(friend,N) {
+    click: function(friend, N, isGame = false) {
       this.$parent.idFromLeftArea = friend;
+      this.$parent.isGame = isGame;
       this.target.fill(false);
       this.$set(this.target,N,true)
       this.id = N;
@@ -313,7 +316,7 @@ export default {
       left: 0;
 
       width: 100%;
-      height: calc(100% - 90px);
+      height: calc(100% - 150px);
 
       .dmBannerPosition {
         position: absolute;
@@ -330,22 +333,35 @@ export default {
           top: 20px;
         }
       }
-    }
 
-    .RegisterGame {
-      z-index: 4;
+      .addGamePosition {
+        position: fixed;
 
-      position: absolute;
+        bottom: 0;
+        left: 0;
 
-      top: 0;
-      right: 0;
+        height: 60px;
+        width: 100%;
 
-      height: 40px;
-      width: 40px;
+        .textPosition {
+          position: absolute;
 
-      background-color: #212121;
+          width: 100%;
+          height: 100%;
 
-      cursor: pointer;
+          top: 0;
+          left: 0;
+
+          font-size: 40px;
+          color: $primary_text;
+
+          background-color: $accent_color;
+
+          text-align: center;
+
+          cursor: pointer;
+        }
+      }
     }
   }
 

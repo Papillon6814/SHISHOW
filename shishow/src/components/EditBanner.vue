@@ -8,22 +8,27 @@
           <input hidden class="iconFile" type="file" @change="onFileChange">
         </div>
       </label>
-
     </span>
+
     <div class="closeBtn" @click="close()">
       <i class="fas fa-times"></i>
     </div>
 
-    <input class="username" type="text"
-      :value="username"/>
+    <input class="favoriteGame" type="text"
+      maxlength="30" v-model="favoriteGame" />
 
-    <input class="placeGames" type="text" />
+    <input class="username" type="text"
+      maxlength="12" v-model="username"/>
+
+    <input class="placeGames" type="text"
+      v-model="enumGames" readonly="readonly" />
 
     <div class="bioPosition">
-      <textarea v-model="value" :rows="rows">bio</textarea>
+      <textarea v-model="userBio" :rows="rows"
+        maxlength="50">{{ userBio }}</textarea>
     </div>
 
-    <div class="applyChangeButton">
+    <div class="applyChangeButton" @click="apply()">
       Apply
     </div>
 
@@ -35,8 +40,10 @@ import firebase from "../plugin/firestore";
 import "firebase/firestore";
 import "@firebase/auth";
 import store from '../store'
+import router from '../router';
 
 const db = firebase.firestore();
+let currentUser;
 
 export default {
   name: "EditBanner",
@@ -44,7 +51,11 @@ export default {
   data: function() {
     return {
       username: '',
-      value: ''
+      userBio: '',
+      enumGames: '',
+      favoriteGame: '',
+      value: '',
+      uploadedImage: ''
     }
   },
 
@@ -53,9 +64,6 @@ export default {
       var num = this.value.split("\n").length;
       return (num > 3) ? 3 : num;
     }
-  },
-  mounted: function(){
-    this.modal = document.getElementById("modal");
   },
 
   methods: {
@@ -95,12 +103,61 @@ export default {
 
     close: function() {
       this.$emit("close");
+    },
+
+    loadGames: function() {
+      db.collection("USER")
+        .doc(currentUser.email)
+        .collection("GAMES")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc1 => {
+            this.enumGames += doc1.data().gamename + ' / '
+          })
+          this.enumGames = this.enumGames.slice(0, -2);
+        })
+    },
+
+    apply: function() {
+
+      if(this.uploadedImage == '') {
+
+        db.collection("USER")
+          .doc(currentUser.email)
+          .update({
+            username: this.username,
+            bio: this.userBio,
+            favoriteGame: this.favoriteGame
+          })
+          .then(() => {
+            router.go({
+              path: this.$router.currentRoute.path, force: true
+            });
+          })
+
+      } else {
+
+        db.collection("USER")
+          .doc(currentUser.email)
+          .update({
+            username: this.username,
+            bio: this.userBio,
+            favoriteGame: this.favoriteGame,
+            image: this.uploadedImage
+          })
+          .then(() => {
+            router.go({
+              path: this.$router.currentRoute.path, force: true
+            });
+          })
+
+      }
     }
   },
 
   created: function () {
     this.onAuth();
-    let currentUser = firebase.auth().currentUser;
+    currentUser = firebase.auth().currentUser;
 
     if (currentUser == null) {
       currentUser = this.$store.getters.user;
@@ -112,8 +169,15 @@ export default {
       .get()
       .then(doc1 => {
         this.username = doc1.data().username;
+        this.userBio = doc1.data().bio;
+        this.favoriteGame = doc1.data().favoriteGame;
       })
-  }
+  },
+
+  mounted: function(){
+    this.modal = document.getElementById("modal");
+    this.loadGames();
+  },
 }
 
 </script>
@@ -122,21 +186,27 @@ export default {
 
 .iconCirclePosition {
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 150px;
+
+    left: 7%;
+    top: 5%;
+    width: 140px;
+    height: 140px;
 
     .iconCircle {
       width: 100%;
       height: 100%;
 
-      background-color: #000;
+      background-color: #fff;
+
+      border-radius: 50%;
+
+      border-style: solid;
+      border-width: 1px;
 
       cursor: pointer;
 
       #result {
-        z-index: 7;
+        z-index: 8;
       }
 
       .iconFile {
@@ -195,8 +265,20 @@ export default {
 
     font-size: 30px;
 
-    color: $secondary_text;
+    color: #bdbdbd;
     cursor: pointer;
+  }
+
+  .favoriteGame {
+    position: absolute;
+
+    top: 10%;
+    right: 9%;
+
+    height: 40px;
+    width: 50%;
+
+    font-size: 35px;
   }
 
   .username {
@@ -227,6 +309,8 @@ export default {
 
     height: 40px;
     width: 80%;
+
+    color: $secondary_text;
 
     font-size: 35px;
   }

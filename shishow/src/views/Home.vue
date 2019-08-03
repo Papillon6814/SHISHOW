@@ -1,6 +1,6 @@
 <template>
   <div id="root">
-    
+
     <div id="modal" class="modal">
       <div class="modal-content">
         <div class="modal-body">
@@ -10,7 +10,7 @@
         </div>
       </div>
     </div>
-    
+
     <div id="wrap">
       <header>
         <navi @input="getSearchWord"></navi>
@@ -40,7 +40,7 @@
               </gameBanner>
             </div>
           </div>
-          </transition> 
+          </transition>
 
           <transition appear name="v2">
             <div class="normalBannerPosition">
@@ -59,7 +59,7 @@
           </transition>
 
         </div>
-      
+
     </div>
 
     <div class="NBModal">
@@ -226,8 +226,8 @@ export default {
         context.fill();
 
         roundedImage.src = canvas.toDataURL();
-        roundedImage.width = 130;
-        roundedImage.height = 130;
+        roundedImage.width = 140;
+        roundedImage.height = 140;
         result.innerHTML = "";
 
         root.croppedimg = roundedImage.src;

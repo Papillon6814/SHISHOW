@@ -28,7 +28,8 @@ export default {
 
   props: [
     // leftAreaでクリックされたフレンドのドキュメントID
-    "friendDocID"
+    "friendDocID",
+    "isGame"
   ],
 
   created: function() {
@@ -39,6 +40,7 @@ export default {
     
     //メッセージを送る
     sendMsg() {
+      var root = this;
       if(this.chatable){
         this.chatable = false;
         // 文字が入力されているときにのみ送信
@@ -46,40 +48,64 @@ export default {
         msg.replace(/\r?\n/g, '');
         // 現在の日時を取得(文字列型)
         let now = new Date();
-        console.log(msg);
-        db.collection("USER")
-        .doc(currentUser.email)
-        .collection("friends")
-        .doc(this.friendDocID)
-        .get()
-        .then(doc => {
-          this.chatID = doc.data()["chatID"];
 
-          if (msg) {
-            db.collection("PrivateChat")
-            .doc(this.chatID)
-            .collection("contents")
-            .add({
-              msg: msg,
-              date: now,
-              sender: currentUser.email
-            })
-            .then(() => {
-              db.collection("USER")
-                .doc(currentUser.email)
-                .collection("friends")
-                .doc(this.friendDocID)
-                .update({
-                  lastChatDate: now
-                })
+        console.log(currentUser.email);
+        console.log(root.friendDocID);
+        console.log(root.chatID);
 
-              this.$emit('scrollRightArea');
-            })
-            msg = "";
-            this.msg = "";
-          }
-          this.chatable = true;
-        }); 
+        if(this.isGame) {
+          db.collection("GameCollection")
+          .doc(this.friendDocID)
+          .collection("GlobalChat")
+          .add({
+            msg: this.msg,
+            date: now,
+            sender: currentUser.email
+          })
+          .then(() => {
+            db.collection("GameCollection")
+              .doc(this.friendDocID)
+              .update({
+                lastChatDate: now
+              })
+          })
+        } else {
+          db.collection("USER")
+          .doc(currentUser.email)
+          .collection("friends")
+          .doc(root.friendDocID)
+          .get()
+          .then(doc => {
+            root.chatID = doc.data()["chatID"];
+
+            if (msg) {
+              db.collection("PrivateChat")
+              .doc(root.chatID)
+              .collection("contents")
+              .add({
+                msg: msg,
+                date: now,
+                sender: currentUser.email
+              })
+              .then(() => {
+                db.collection("USER")
+                  .doc(currentUser.email)
+                  .collection("friends")
+                  .doc(root.friendDocID)
+                  .update({
+                    lastChatDate: now
+                  })
+
+                root.$emit('scrollRightArea');
+              })
+              
+            }
+            
+          }); 
+        }
+        msg = "";
+        this.msg = "";
+        this.chatable = true;
       }  
     }
   }

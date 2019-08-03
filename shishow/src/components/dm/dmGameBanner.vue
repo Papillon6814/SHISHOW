@@ -2,7 +2,7 @@
   <div class="dmGameBanner">
     <img :src="iconPic" class="iconPosition" />
     <div class="dmGameName">
-
+      {{ gamename }}
     </div>
     <div class="globalMsgArea">
     </div>
@@ -22,7 +22,7 @@ export default {
   data: function() {
     return {
       iconPic: '',
-      gamenames: [],
+      gamename: '',
     }
   },
 
@@ -30,14 +30,13 @@ export default {
     'gameDocId'
   ],
 
-  methods: {
-    loadGameInfo: function() {
-      db.collection("GAME")
-        .doc(this.gameDocId)
-        .then(doc1 => {
-          this.gamenames.push(doc1.data().gamename);
-        })
-    }
+  mounted: function() {
+    db.collection("GameCollection")
+      .doc(this.gameDocId)
+      .get()
+      .then(doc1 => {
+        this.gamename = doc1.data().gamename;
+      })
   }
 }
 
