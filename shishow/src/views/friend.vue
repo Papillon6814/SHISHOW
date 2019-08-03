@@ -2,41 +2,42 @@
   <div>
     <navi></navi>
     <div class="friend">
-
-        <div class="tabWrapper">
-            <div class="tab1" id="in" @click="I">incoming<span style="color:white;"></span></div>
-            <div class="tab2" id="out" @click="O">outgoing</div>
-            <div class="tab3" id="fri" @click="S">shishow</div>
-            <div class="tab4" id="fri" @click="D">deshi</div>
-            <div class="tabSpace"></div>
-
-            <div class="whiteLine"></div>
+      <div class="tabWrapper">
+        <div class="tab1" id="in" @click="I">
+          incoming
+          <span style="color:white;"></span>
         </div>
+        <div class="tab2" id="out" @click="O">outgoing</div>
+        <div class="tab3" id="fri" @click="S">shishow</div>
+        <div class="tab4" id="fri" @click="D">deshi</div>
+        <div class="tabSpace"></div>
 
-        <div class="mainobject" v-if="IOSD==0" style="background-color:white">
-            <div v-for="N in income.length" :key="N" v-bind:class="'n'+N">
-                <incoming :user="income[N-1].data()" :signuser="signuser"></incoming>
-            </div>
-        </div>
-
-        <div class="mainobject" v-else-if="IOSD==1" style="background-color:white">
-            <div v-for="N in outgo.length" :key="N" v-bind:class="'n'+N">
-                <outgoing :user="outgo[N-1].data()" :signuser="signuser"></outgoing>
-            </div>
-        </div>
-
-        <div class="mainobject" v-else-if="IOSD==2" style="background-color:white">
-            <div v-for="N in shi.length" :key="N" v-bind:class="'n'+N">
-                <friends :user="shi[N-1]" :signuser="signuser"></friends>
-            </div>
-        </div>
-
-        <div class="mainobject" v-else-if="IOSD==3" style="background-color:white">
-          <div v-for="N in de.length" :key="N" v-bind:class="'n'+N">
-              <friends :user="de[N-1]" :signuser="signuser"></friends>
-          </div>
+        <div class="whiteLine"></div>
       </div>
 
+      <div class="mainobject" v-if="IOSD==0" style="background-color:white">
+        <div v-for="N in income.length" :key="N" v-bind:class="'n'+N">
+          <incoming :user="income[N-1].data()" :signuser="signuser"></incoming>
+        </div>
+      </div>
+
+      <div class="mainobject" v-else-if="IOSD==1" style="background-color:white">
+        <div v-for="N in outgo.length" :key="N" v-bind:class="'n'+N">
+          <outgoing :user="outgo[N-1].data()" :signuser="signuser"></outgoing>
+        </div>
+      </div>
+
+      <div class="mainobject" v-else-if="IOSD==2" style="background-color:white">
+        <div v-for="N in shi.length" :key="N" v-bind:class="'n'+N">
+          <friends :user="shi[N-1]" :signuser="signuser"></friends>
+        </div>
+      </div>
+
+      <div class="mainobject" v-else-if="IOSD==3" style="background-color:white">
+        <div v-for="N in de.length" :key="N" v-bind:class="'n'+N">
+          <friends :user="de[N-1]" :signuser="signuser"></friends>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -44,13 +45,13 @@
 <script>
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
-import '@firebase/auth'
+import "@firebase/auth";
 
-import navi from '../components/NavigationBar.vue';
-import incoming from "../components/incoming.vue"
-import outgoing from "../components/outgoing.vue"
-import friends from "../components/friends.vue"
-import store from '../store'
+import navi from "../components/NavigationBar.vue";
+import incoming from "../components/incoming.vue";
+import outgoing from "../components/outgoing.vue";
+import friends from "../components/friends.vue";
+import store from "../store";
 
 const db = firebase.firestore();
 
@@ -58,164 +59,167 @@ let tab1, tab2, tab3, tab4;
 let whiteLine;
 
 export default {
-    name:"friend",
+  name: "friend",
 
-    data: function(){
-      return{
-          IOSD: 0,
-          income: "",
-          outgo: "",
-          signuser: "",
-          shi: [],
-          de: []
-      }
+  data: function() {
+    return {
+      IOSD: 0,
+      income: "",
+      outgo: "",
+      signuser: "",
+      shi: [],
+      de: []
+    };
+  },
+
+  components: {
+    incoming,
+    outgoing,
+    navi,
+    friends
+  },
+
+  computed: {
+    user() {
+      return this.$store.getters.user;
     },
-
-    components: {
-        incoming,
-        outgoing,
-        navi,
-        friends,
-    },
-
-    computed: {
-      user() {
-        return this.$store.getters.user;
-      },
-      userStatus() {
-        return this.$store.getters.isSignedIn;
-      }
-    },
-
-    methods:{
-        I() {
-          this.IOSD = 0;
-
-          tab1[0].style.color = "#212121";
-          tab2[0].style.color = "#757575";
-          tab3[0].style.color = "#757575";
-          tab4[0].style.color = "#757575";
-
-          whiteLine[0].style.left = "0px";
-
-          this.$forceUpdate();
-        },
-
-        O() {
-          this.IOSD = 1;
-
-          tab1[0].style.color = "#757575";
-          tab2[0].style.color = "#212121";
-          tab3[0].style.color = "#757575";
-          tab4[0].style.color = "#757575";
-
-          whiteLine[0].style.left = "16%";
-
-          this.$forceUpdate();
-        },
-
-        S() {
-          this.IOSD = 2;
-
-          tab1[0].style.color = "#757575";
-          tab2[0].style.color = "#757575";
-          tab3[0].style.color = "#212121";
-          tab4[0].style.color = "#757575";
-
-          whiteLine[0].style.left = "32%";
-
-          this.$forceUpdate();
-        },
-
-        D() {
-          this.IOSD = 3;
-
-          tab1[0].style.color = "#757575";
-          tab2[0].style.color = "#757575";
-          tab3[0].style.color = "#757575";
-          tab4[0].style.color = "#212121";
-
-          whiteLine[0].style.left = "48%"
-
-          this.$forceUpdate();
-        },
-
-        onAuth: function () {
-        firebase.auth().onAuthStateChanged(user => {
-        user = user ? user : {};
-        store.commit('onAuthStateChanged', user);
-        store.commit('onUserStatusChanged', user.uid ? true : false);
-      })
-    },
-
-
-    },
-
-    created: function() {
-            this.onAuth();
-            db.collection("USER")
-              .doc(this.user.email)
-              .collection("incoming")
-              .get()
-              .then(doc =>{
-                this.income = doc.docs;
-              })
-
-            db.collection("USER")
-              .doc(this.user.email)
-              .collection("outgoing")
-              .get()
-              .then(doc => {
-                this.outgo = doc.docs;
-              })
-
-            db.collection("USER")
-              .doc(this.user.email)
-              .collection("friends")
-              .get()
-              .then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-                  if(doc.data().isSHISHOW) {
-                    this.shi.push(doc.data());
-                  }
-                })
-              })
-
-            db.collection("USER")
-              .doc(this.user.email)
-              .collection("friends")
-              .get()
-              .then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-                  if(!doc.data().isSHISHOW) {
-                    this.de.push(doc.data());
-                  }
-                })
-              })
-
-            db.collection("USER")
-              .doc(this.user.email)
-              .get()
-              .then(doc => {
-                this.signuser = doc.data();
-              })
-    },
-
-    mounted: function() {
-      tab1 = document.getElementsByClassName('tab1');
-      tab2 = document.getElementsByClassName('tab2');
-      tab3 = document.getElementsByClassName('tab3');
-      tab4 = document.getElementsByClassName('tab4');
-
-      whiteLine = document.getElementsByClassName('whiteLine');
+    userStatus() {
+      return this.$store.getters.isSignedIn;
     }
-}
+  },
+
+  methods: {
+    I() {
+      this.IOSD = 0;
+
+      tab1[0].style.color = "#212121";
+      tab2[0].style.color = "#757575";
+      tab3[0].style.color = "#757575";
+      tab4[0].style.color = "#757575";
+
+      whiteLine[0].style.left = "0px";
+
+      this.$forceUpdate();
+    },
+
+    O() {
+      this.IOSD = 1;
+
+      tab1[0].style.color = "#757575";
+      tab2[0].style.color = "#212121";
+      tab3[0].style.color = "#757575";
+      tab4[0].style.color = "#757575";
+
+      whiteLine[0].style.left = "16%";
+
+      this.$forceUpdate();
+    },
+
+    S() {
+      this.IOSD = 2;
+
+      tab1[0].style.color = "#757575";
+      tab2[0].style.color = "#757575";
+      tab3[0].style.color = "#212121";
+      tab4[0].style.color = "#757575";
+
+      whiteLine[0].style.left = "32%";
+
+      this.$forceUpdate();
+    },
+
+    D() {
+      this.IOSD = 3;
+
+      tab1[0].style.color = "#757575";
+      tab2[0].style.color = "#757575";
+      tab3[0].style.color = "#757575";
+      tab4[0].style.color = "#212121";
+
+      whiteLine[0].style.left = "48%";
+
+      this.$forceUpdate();
+    },
+
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit("onAuthStateChanged", user);
+        store.commit("onUserStatusChanged", user.uid ? true : false);
+      });
+    },
+
+    getDeshiData() {
+      db.collection("USER")
+        .doc(this.user.email)
+        .collection("friends")
+        .onSnapshot(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            if (!doc.data().isSHISHOW) {
+              this.de.push(doc.data());
+            }
+          });
+        });
+    },
+    getIncomingData() {
+      db.collection("USER")
+        .doc(this.user.email)
+        .collection("incoming")
+        .onSnapshot(doc => {
+          this.income = doc.docs;
+        });
+    },
+    getOutgoingData() {
+      db.collection("USER")
+        .doc(this.user.email)
+        .collection("outgoing")
+        .onSnapshot(doc => {
+          this.outgo = doc.docs;
+        });
+    },
+    getFriendsData() {
+      db.collection("USER")
+        .doc(this.user.email)
+        .collection("friends")
+        .onSnapshot(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            if (doc.data().isSHISHOW) {
+              this.shi.push(doc.data());
+            }
+          });
+        });
+    }
+  },
+
+  created: function() {
+    this.onAuth();
+    this.getIncomingData();
+    this.getOutgoingData();
+    this.getFriendsData();
+
+    db.collection("USER")
+      .doc(this.user.email)
+      .get()
+      .then(doc => {
+        this.signuser = doc.data();
+      });
+    this.getDeshiData();
+  },
+
+  mounted: function() {
+    tab1 = document.getElementsByClassName("tab1");
+    tab2 = document.getElementsByClassName("tab2");
+    tab3 = document.getElementsByClassName("tab3");
+    tab4 = document.getElementsByClassName("tab4");
+
+    whiteLine = document.getElementsByClassName("whiteLine");
+  }
+};
 </script>
 
 
 <style lang="scss">
 .friend {
-
   position: absolute;
 
   width: 100%;
@@ -225,7 +229,6 @@ export default {
 
   $i: 1;
   @while $i <= 30 {
-
     .n#{$i} {
       padding-top: 10px; /* + (200px * $i);*/
       padding-bottom: 10px;
@@ -343,19 +346,18 @@ export default {
   }
 }
 
-  .mainobject{
-    position: absolute;
+.mainobject {
+  position: absolute;
 
-    top: 100px;
-    left: 10%;
+  top: 100px;
+  left: 10%;
 
-    width: 80%;
-    height: 100%;
+  width: 80%;
+  height: 100%;
 
-    margin: 0 auto;
+  margin: 0 auto;
 
-    overflow-x: hidden;
-    overflow-y: scroll;
-  }
-
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
 </style>
