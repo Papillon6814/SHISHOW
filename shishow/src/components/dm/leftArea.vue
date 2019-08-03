@@ -43,6 +43,8 @@
           </div>
         </div>
       </div>
+      <div class="addGamePosition">
+      </div>
     </div>
 
   </div>

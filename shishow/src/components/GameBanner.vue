@@ -41,12 +41,14 @@ export default {
     "count"
   ],
 
+/*
   watch: {
     signuser: function () {
       console.log("dubug")
       this.checkSubscription();
     }
   },
+*/
 
   methods: {
     onAuth: function() {
@@ -95,6 +97,7 @@ export default {
 
   mounted: function() {
     subscribeButton = document.getElementsByClassName("subscribeButton");
+    this.checkSubscription();
   }
 }
 

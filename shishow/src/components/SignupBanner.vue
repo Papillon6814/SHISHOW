@@ -111,13 +111,11 @@ export default {
 
                 if (!this.roundimg) {
 
-
                   this.roundimg = url;
-
                 }
 
                 this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
-                router.push("/")
+                router.push("/home")
               });
             })
             .catch(error => {
