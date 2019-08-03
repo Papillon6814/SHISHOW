@@ -244,7 +244,7 @@ html {
       transition: 0.3s;
     }
 
-    $i: $i + 1;
+    $i: 0;
   }
 }
 

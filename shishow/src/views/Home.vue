@@ -13,7 +13,7 @@
 
     <div id="wrap">
       <header>
-        <navi @input="getSearchWord"></navi>
+        <navi @search="getSearchWord"></navi>
       </header>
 
         <transition appear name="v">
@@ -114,6 +114,8 @@ import firebase from "../plugin/firestore";
 import "firebase/firestore";
 import "@firebase/auth";
 import store from "../store";
+import router from "../router";
+
 
 const db = firebase.firestore();
 let NBPosition;
@@ -247,7 +249,7 @@ export default {
     },
 
     getSearchWord(word) {
-      this.searchWord = word;
+      router.push("/home");
     },
 
     onAuth: function() {
