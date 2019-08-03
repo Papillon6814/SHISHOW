@@ -23,21 +23,7 @@ export default {
     'dmBannerUsername',
     'dmMsg',
     'iconPic',
-    'target',
-    'N',
   ],
-
-  watch:{
-    target:function(newVal){
-      console.log(this.N)
-      let dmBan = document.getElementsByClassName("dmBanner")[this.N]
-      if(newVal){
-        dmBan.style.background = "red"
-      }else{
-        dmBan.style.background = "#FFF"
-      }
-    }
-  }
 }
 
 </script>
