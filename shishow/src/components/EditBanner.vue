@@ -32,6 +32,14 @@
       Apply
     </div>
 
+    <router-link to="/terms">
+      <div class="terms">!</div>
+    </router-link>
+
+    <router-link to="/privacypolicy">
+      <div class="privacyPolicy">?</div>
+    </router-link>
+
   </div>
 </template>
 
@@ -363,6 +371,40 @@ export default {
 
       font-size: 35px;
     }
+  }
+
+  .privacyPolicy {
+    position: absolute;
+
+    right: 10px;
+    bottom: 10px;
+
+    width: 25px;
+    height: 25px;
+
+    font-size: 20px;
+    color: white;
+
+    border-radius: 50%;
+
+    background-color: #212121;
+  }
+
+  .terms {
+    position: absolute;
+
+    right: 45px;
+    bottom: 10px;
+
+    width: 25px;
+    height: 25px;
+
+    font-size: 20px;
+    color: white;
+
+    border-radius: 50%;
+
+    background-color: #212121;
   }
 }
 </style>
