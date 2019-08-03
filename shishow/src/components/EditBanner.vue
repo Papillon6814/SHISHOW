@@ -1,128 +1,281 @@
 <template>
-    <div>
-        <textarea v-model="bio" name="freeans" rows="4" cols="40"></textarea>
+  <div class="editBanner">
 
-        <router-link to="/">
-        <div class="refresh" type="button" @click="txtchange()">更新</div>
-        </router-link>
-        <input class="email" v-model="username" name="username">
+      <span class="iconCirclePosition">
+      <label>
+        <div class="iconCircle">
+          <div id="result"></div>
+          <input hidden class="iconFile" type="file" @change="onFileChange">
+        </div>
+      </label>
+
+    </span>
+    <div class="closeBtn" @click="close()">
+      <i class="fas fa-times"></i>
     </div>
+
+    <input class="username" type="text"
+      :value="username"/>
+
+    <input class="placeGames" type="text" />
+
+    <div class="bioPosition">
+      <textarea v-model="value" :rows="rows">bio</textarea>
+    </div>
+
+    <div class="applyChangeButton">
+      Apply
+    </div>
+
+  </div>
 </template>
+
 <script>
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
 import "@firebase/auth";
+import store from '../store'
 
 const db = firebase.firestore();
 
 export default {
-    name: "Edit",
+  name: "EditBanner",
 
-    data:function(){
-        return{
-            bio: " 自由に意見を記述してください ",
-            username: ""
-        }
-    },
-    computed: {
-        user() {
-            return this.$store.getters.user;
-        },
-        userStatus() {
-            return this.$store.getters.isSignedIn;
-        },
-
-        getCurrentUserName: function() {
-            return this.$store.getters.user.displayName;
-        },
-        getCurrentUserId: function() {
-            return this.$store.getters.user.uid;
-        }
-    },
-    created:function(){
-
-        var User = this.user;
-        var email;
-        
-        email = User.email;
-
-
-        db.collection("USER").doc(email).get()
-        .then(doc =>{
-
-            if(doc.data()["bio"] != ""){
-                this.bio =  doc.data()["bio"];
-            }
-
-            if(doc.data()["username"] != ""){
-                this.username =  doc.data()["username"];
-            }
-
-        })
-    },
-    methods:{
-        txtchange(){
-            var User = firebase.auth().currentUser;
-            var email;
-
-            email = User.email;
-            var root = this;
-            db.collection("USER").doc(email).update({
-                bio: root.bio,
-                username: root.username
-            });
-
-
-        }
+  data: function() {
+    return {
+      username: '',
+      value: ''
     }
+  },
+
+  computed: {
+    rows: function() {
+      var num = this.value.split("\n").length;
+      return (num > 3) ? 3 : num;
+    }
+  },
+  mounted: function(){
+    this.modal = document.getElementById("modal");
+  },
+
+  methods: {
+
+    onFileChange(event) {
+
+      //file変数定義
+      let files = event.target.files || event.dataTransfer.files;
+      if (files[0].type.match(/image/)) {
+
+        this.showImage(files[0])
+
+      }
+    },
+
+    showImage(file) {
+      // FileReaderオブジェクトの変数を定義file、外部ファイルを読み込むのに使用
+      let reader = new FileReader();
+      // ファイルが読み込まれたとき、eventを引数とするアロー関数作動
+      let place = this;
+      reader.onload = event => {
+        // htmlにファイルを反映
+        this.uploadedImage = event.target.result;
+        this.$emit('filechange',this.uploadedImage);
+      };
+      // 読み込み開始
+      reader.readAsDataURL(file);
+    },
+
+    onAuth: function() {
+      firebase.auth().onAuthStateChanged(user => {
+        user = user ? user : {};
+        store.commit('onAuthStateChanged', user);
+        store.commit('onUserStatusChanged', user.uid ? true : false);
+      })
+    },
+
+    close: function() {
+      this.$emit("close");
+    }
+  },
+
+  created: function () {
+    this.onAuth();
+    let currentUser = firebase.auth().currentUser;
+
+    if (currentUser == null) {
+      currentUser = this.$store.getters.user;
+    }
+
+    // ユーザーネーム取得
+    db.collection("USER")
+      .doc(currentUser.email)
+      .get()
+      .then(doc1 => {
+        this.username = doc1.data().username;
+      })
+  }
 }
+
 </script>
 
 <style lang="scss" scoped>
-    textarea{
-        position: relative;
 
-        resize: none;
-        width: 1293px;
-        height: 125px;
-    }
+.iconCirclePosition {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 150px;
 
-    .refresh{
-        position: absolute;
-        top: 30px;
-        right: 5%;
-        display: inline-block;
-        text-decoration: none;
-        background: #ff8181;
-        color: #fff;
-        width: 130px;
-        height: 80px;
-        line-height: 79px;
-        border-radius: 50%;
-        text-align: center;
-        font-weight: bold;
-        overflow: hidden;
-        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-        border-bottom: solid 3px #bd6565;
-        transition: 0.4s;
+    .iconCircle {
+      width: 100%;
+      height: 100%;
+
+      background-color: #000;
+
+      cursor: pointer;
+
+      #result {
+        z-index: 7;
+      }
+
+      .iconFile {
+        height: 100%;
+        width: 100%;
+        opacity: 0;
 
         cursor: pointer;
-
+      }
     }
+  }
+// editBannerPositionに適した形に整形してあります
+.editBanner {
+  position: absolute;
 
-    .refresh:active{
-        -webkit-transform: translateY(2px);
-        transform: translateY(2px);
-        box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-        border-bottom: none;
-    }
+  top: 0;
+  left: 0;
 
-    .email{
-        position: absolute;
-        height:48%;
-        width: 64.5%;
-        top: -100px;
-        left: 0%;
+  width: 100%;
+  height: 100%;
+
+  background-color: #fff;
+
+  input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+
+    color: $primary_text;
+  }
+
+  textarea {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    resize: none;
+
+    color: $primary_text;
+
+    transition: 0.3s;
+  }
+
+  textarea:focus {
+    outline: none;
+  }
+
+  .closeBtn {
+    position: absolute;
+
+    top: 20px;
+    right: 20px;
+
+    width: 30px;
+    height: 30px;
+
+    font-size: 30px;
+
+    color: #fafafa;
+    cursor: pointer;
+  }
+
+  .username {
+    position: absolute;
+
+    top: 35%;
+    left: 50%;
+
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+
+    height: 40px;
+    width: 80%;
+
+    font-size: 35px;
+  }
+
+  .placeGames {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+
+    height: 40px;
+    width: 80%;
+
+    font-size: 35px;
+  }
+
+  .applyChangeButton {
+    position: absolute;
+
+    bottom: 1vh;
+    left: 50%;
+
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+
+    width: 120px;
+    height: 30px;
+
+    background-color: $accent_color;
+
+    border-radius: 15px;
+
+    color: $primary_text;
+
+    text-align: center;
+    line-height: 30px;
+
+    cursor: pointer;
+  }
+
+  .bioPosition {
+    position: absolute;
+
+    top: 65%;
+    left: 10%;
+
+    width: 80%;
+    height: auto;
+
+    textarea {
+      position: absolute;
+
+      left: 0;
+      top: 0;
+
+      width: 100%;
+      height: auto;
+
+      font-size: 35px;
     }
+  }
+}
 </style>
-

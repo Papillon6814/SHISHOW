@@ -1,4 +1,5 @@
 <template>
+
   <div id="leftArea">
 
     <div class="switchTab">
@@ -17,7 +18,7 @@
       <div class="dmbannerPosition">
         <div v-for="(friend, N) in friendsDocID"
              :key="N" v-bind:class="'b' + N">
-          <div @click="click(friend,N)">
+          <div @click="click(friend, N)">
             <dmBanner
               :dmBannerUsername="usernames[N]"
               :dmMsg="lastMsg[N]"
@@ -28,22 +29,37 @@
           </div>
         </div>
       </div>
+
     </div>
 
     <div class="globalDM">
-
+      <div class="dmBannerPosition">
+        <div v-for="(game, N) in games"
+          :key="N" v-bind:class="enumGameBanner">
+          <div @click="click(game, N, true)">
+            <dmGameBanner
+              :gameDocId="game">
+            </dmGameBanner>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
+
 </template>
 
 <script>
 // directMessageFieldからフレンドのIDを受け取ってleftareaの内容を表示する
-import dmBanner from'./dmBanner.vue'
+import dmBanner from'./dmBanner.vue';
+import dmGameBanner from "./dmGameBanner.vue";
 
 import firebase from '../../plugin/firestore';
 import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
+
+import draggable from 'vuedraggable';
 
 let db = firebase.firestore();
 
@@ -54,6 +70,7 @@ let privateDM, globalDM;
 let privateTab, globalTab;
 
 export default {
+
   name: 'LeftArea',
 
   data() {
@@ -63,8 +80,9 @@ export default {
       usernames: [],
       dmImages: [],
       isPrivate: true,
-      DocsId:this.friendsDocID,
       target:[],
+      id:0,
+      games: []
     }
   },
 
@@ -73,7 +91,34 @@ export default {
   ],
 
   components: {
-    dmBanner
+    dmBanner,
+    dmGameBanner
+  },
+
+  watch: {
+    friendsDocID: function() {
+        if(this.id != 0){
+          let username = this.usernames[this.id];
+          let icon = this.dmImages[this.id];
+          this.usernames.splice(this.id,1);
+          this.dmImages.splice(this.id,1);
+          this.target.splice(this.id,1);
+          this.usernames.unshift(username);
+          this.dmImages.unshift(icon);
+          this.target.unshift(true);
+        }
+
+      db.collection("USER")
+        .doc(currentUserEmail)
+        .collection("GAMES")
+        .get()
+        .then(querySnapshot => {
+
+          querySnapshot.forEach(doc1 => {
+            this.games.push(doc1.id);
+          })
+        })
+    }
   },
 
   methods: {
@@ -117,16 +162,16 @@ export default {
                   lastMsgDate.push(doc2.data().date);
                 })
               })
-
-
             })
       })
     },
 
-    click: function(friend,N) {
+    click: function(friend, N, isGame = false) {
       this.$parent.idFromLeftArea = friend;
+      this.$parent.isGame = isGame;
       this.target.fill(false);
       this.$set(this.target,N,true)
+      this.id = N;
     },
 
     switchPrivate: function() {
@@ -236,6 +281,8 @@ export default {
 
         width: 100%;
 
+        float:left;
+
         @while $i <= 30{
           .b#{$i}{
             position: absolute;
@@ -246,11 +293,44 @@ export default {
           }
           $i: $i + 1;
         }
+
+        /*.notion{
+          border:1px solid #000;
+        }*/
+
       }
+
     }
 
     .globalDM {
       display: none;
+
+      overflow-y: scroll;
+      overflow-x: hidden;
+
+      position: absolute;
+
+      top: 90px;
+      left: 0;
+
+      width: 100%;
+      height: calc(100% - 90px);
+
+      .dmBannerPosition {
+        position: absolute;
+
+        width: 88%;
+        height: auto;
+
+        left: 6%;
+        top: 70px;
+
+        .enumGameBanner {
+          position: relative;
+
+          top: 20px;
+        }
+      }
     }
 
     .RegisterGame {

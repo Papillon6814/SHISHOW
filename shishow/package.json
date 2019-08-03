@@ -24,7 +24,9 @@
     "v-blur": "^1.0.2",
     "vue": "^2.6.10",
     "vue-cropperjs": "^4.0.0",
+    "vue-head": "^2.1.2",
     "vue-router": "^3.0.3",
+    "vuedraggable": "^2.23.0",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4"
   },

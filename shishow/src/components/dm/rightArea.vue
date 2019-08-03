@@ -2,23 +2,23 @@
   <div class="rightArea">
     <div class="nameSpace"></div>
     {{ friendDocID }}
-    <div v-for="N in msgList" v-bind:key="N">
+    <div v-for="N in msgList.length" v-bind:key="N">
 
-      <div v-show="isMine(N)" class="myChatBalloonPosition">
+      <div v-show="isMine(msgList[N-1])" class="myChatBalloonPosition">
         <div class="myChatBalloon">
-          {{ N.msg }}
+          {{ msgList[N-1].msg }}
         </div>
         <div class="myDatePosition">
-          {{ N.date.toDate().toLocaleString() }}
+          {{ msgList[N-1].date.toDate().toLocaleString() }}
         </div>
       </div>
 
-      <div v-show="isHis(N)" class="hisChatBalloonPosition">
+      <div v-show="isHis(msgList[N-1])" class="hisChatBalloonPosition">
         <div class="hisChatBalloon">
-          {{ N.msg }}
+          {{ msgList[N-1].msg }}
         </div>
         <div class="hisDatePosition">
-          {{ N.date.toDate().toLocaleString() }}
+          {{ msgList[N-1].date.toDate().toLocaleString() }}
         </div>
       </div>
 
@@ -38,11 +38,12 @@ let currentUserEmail;
 let chatID;
 
 export default {
+
   name: 'rightArea',
 
   data() {
     return {
-      msgList: [],
+      msgList: []
     }
   },
 
@@ -60,7 +61,6 @@ export default {
     },
 
     isMine: function(msg) {
-
       return (msg.sender == currentUserEmail);
     },
 
@@ -76,6 +76,7 @@ export default {
 
   watch:{
     friendDocID: function(newval) {
+      if(newval){
       this.msgList = [];
       currentUserEmail = firebase.auth().currentUser.email;
 
@@ -86,7 +87,6 @@ export default {
         .get()
         .then(doc1 => {
           chatID = doc1.data()['chatID'];
-
 
           db.collection("PrivateChat")
             .doc(chatID)
@@ -100,12 +100,11 @@ export default {
               })
             })
         })
-    }
+    }}
   },
 
   created: function() {
     this.onAuth();
-
 
     currentUserEmail = firebase.auth().currentUser.email;
   }

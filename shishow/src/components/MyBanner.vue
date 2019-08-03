@@ -4,11 +4,12 @@
       <div class="iconPic">
         <img id="image" v-show="icon"
          :src="icon" width="130" height="130">
+
       </div>
     </span>
 
     <div class="username">
-      username
+      {{username}}
     </div>
 
     <div class="shishowPosition">
@@ -31,15 +32,18 @@
 
     <div class="profilePosition">
       <div class="profile">
-        no bio
+        {{this.bio}}
       </div>
       <div class="separateLine"></div>
     </div>
 
-    <div class="editButton">Edit</div>
+    <div class="editButton"
+      @click="showEditBanner()">
+      Edit
+    </div>
 
-    <div class="logout">
-      <div @click="logout">Logout</div>
+    <div class="logout" @click="logout">
+      Logout
     </div>
   </div>
 </template>
@@ -57,7 +61,8 @@ export default {
   name: "myBanner",
 
   props: [
-    "loginedUser"
+    "loginedUser",
+    "getCurrentUserName"
   ],
 
   data: function() {
@@ -68,28 +73,20 @@ export default {
       sign: "",
       icon: "",
       bio: "",
+      username:"",
+      friendDocID: ""
     };
   },
 
-  created:function(){
-    this.onAuth();
-
-    db.collection("USER")
-      .doc(email)
-      .get()
-      .then(doc => {
-        this.icon = doc.data()["image"];
-        this.bio = doc.data()["bio"];
-      });
-  },
-
   watch: {
+
     loginedUser: function() {
       this.$forceUpdate();
     }
   },
 
   methods: {
+
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};
@@ -108,14 +105,39 @@ export default {
         })
         .catch(() => {
         });
+    },
+
+    showEditBanner: function() {
+      this.$emit("callEditBanner");
     }
+  },
+
+  created:function(){
+    var email;
+    this.onAuth();
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        email = user.email;
+        console.log(email);
+        db.collection("USER")
+          .doc(email)
+          .get()
+          .then(doc => {
+            this.username = doc.data()["username"];
+            this.icon = doc.data()["image"];
+            this.bio = doc.data()["bio"];
+          });
+      } else {
+      }
+    });
+    
   }
 };
 
 </script>
 
 <style lang="scss" scoped>
-
+                 
 .banner {
   overflow-y: hidden;
   overflow-x: hidden;
@@ -268,7 +290,7 @@ export default {
     width: 88%;
     height: 24vh;
 
-    bottom: 6vh;
+    bottom: 9.5vh;
     left: 50%;
 
     -webkit-transform: translate(-50%, 0);
@@ -325,7 +347,7 @@ export default {
   .editButton {
     position: absolute;
 
-    top: 805px;
+    bottom: 3vh;
     left: 50%;
 
     -webkit-transform: translate(-50%, 0);
@@ -349,7 +371,7 @@ export default {
   .logout {
     position: absolute;
 
-    width: 350px;
+    width: 80px;
     height: 18px;
 
     bottom: 18px;

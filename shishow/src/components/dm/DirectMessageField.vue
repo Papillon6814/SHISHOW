@@ -1,6 +1,16 @@
 <template>
   <div id="r">
 
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-body">
+          <img id="image" v-show="uploadedImage" :src="uploadedImage">
+          <button id ="button" type="button">Confirm</button>
+          <input type="button" id="closeBtn" value="close">
+        </div>
+      </div>
+    </div>
+
     <div id="directMessageField">
       <leftArea
       :friendsDocID="leftAreaData"
@@ -19,8 +29,9 @@
       </rightArea>
       <div class="inputArea">
         <inputArea
-        @scrollRightArea="callScroll()"
-        :friendDocID="idFromLeftArea">
+          @scrollRightArea="callScroll()"
+          :friendDocID="idFromLeftArea"
+          :isGame="isGame">
         </inputArea>
       </div>
     </div>
@@ -28,7 +39,9 @@
     <div class="entireBox">
       <div class="GameRequestBannerPosition">
         <GameRequestBanner
-        @callFade="fadeOut()">
+        @callFade="fadeOut()"
+        :cropped = "croppedimg"
+        @filechange="prepare">
       </GameRequestBanner>
       </div>
     </div>
@@ -50,14 +63,16 @@ import 'firebase/firestore'
 import '@firebase/auth'
 import store from '../../store'
 
+
 let db = firebase.firestore();
 
 let currentUser;
 let friendsDocID = [];
 
-let entireBox;
+let entireBox,modal;
 
 export default {
+
   name: 'directMessageField',
 
   data() {
@@ -66,9 +81,13 @@ export default {
       leftAreaData: [],
       inputAreaData: '',
       idFromLeftArea: '',
-      usernameFromLeftArea: ''
+      usernameFromLeftArea: '',
+      croppedimg:"",
+      uploadedImage:'',
+      isGame: false
     }
   },
+
 
   components: {
     leftArea,
@@ -79,24 +98,114 @@ export default {
 
   watch: {
     idFromLeftArea: function(newval) {
-      db.collection("USER")
-        .doc(currentUser.email)
-        .collection("friends")
-        .doc(newval)
-        .get()
-        .then(doc1 => {
+      if(newval){
+
+        if(this.isGame) {
+
+          db.collection("GameCollection")
+            .doc(newval)
+            .get()
+            .then(doc1 => {
+              this.usernameFromLeftArea = doc1.data().gamename;
+            })
+
+        } else {
 
           db.collection("USER")
-            .doc(doc1.data().email)
+            .doc(currentUser.email)
+            .collection("friends")
+            .doc(newval)
             .get()
-            .then(doc2 => {
-              this.usernameFromLeftArea = doc2.data().username;
+            .then(doc1 => {
+
+              db.collection("USER")
+                .doc(doc1.data().email)
+                .get()
+                .then(doc2 => {
+                  this.usernameFromLeftArea = doc2.data().username;
+                })
             })
-        })
+
+        }
+      }
     }
   },
 
   methods: {
+    prepare(img){
+
+      this.uploadedImage = img;
+      modal.style.display = "block";
+      setTimeout(this.crop,1);
+
+    },
+
+    crop(){
+      //変数定義
+      var root = this;
+      var image = document.getElementById("image");
+      var button = document.getElementById("button");
+      var result = document.getElementById("result");
+      var close = document.getElementById("closeBtn");
+
+      var croppable = false;
+
+      var cropper = new Cropper(image, {
+        aspectRatio: 4.5,
+        viewMode: 1,
+
+        ready: function() {
+          croppable = true;
+        }
+      });
+      close.onclick = ()=> {
+        modal.style.display = "none";
+        cropper.destroy();
+        this.uploadedImage = "";
+      };
+      button.onclick = ()=> {
+        var croppedCanvas;
+        var roundedImage;
+
+        if (!croppable) {
+          return;
+        }
+        // Crop
+        croppedCanvas = cropper.getCroppedCanvas();
+
+        // Show
+        roundedImage = document.createElement("img");
+
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
+        var width = croppedCanvas.width;
+        var height = croppedCanvas.height;
+        canvas.width = width;
+        canvas.height = height;
+        context.imageSmoothingEnabled = true;
+        context.drawImage(croppedCanvas, 0, 0, width, height);
+        context.globalCompositeOperation = "destination-in";
+        context.beginPath();
+        context.fill();
+
+        roundedImage.src = canvas.toDataURL();
+        roundedImage.width = 150*4.5;
+        roundedImage.height = 150;
+        result.innerHTML = "";
+
+        root.croppedimg = roundedImage.src;
+
+        var del = document.getElementById("delete");
+        if (del != null) {
+          del.textContent = null;
+          del.parentNode.removeChild(del);
+        }
+        cropper.destroy();
+        modal.style.display = "none";
+        root.uploadedImage = "";
+        result.appendChild(roundedImage);
+      };
+    },
     onAuth: function() {
       firebase.auth().onAuthStateChanged(user => {
         user = user ? user : {};
@@ -153,12 +262,31 @@ export default {
 
   mounted: function() {
     entireBox = document.getElementsByClassName("entireBox");
+    modal = document.getElementById("modal");
   }
 }
 
 </script>
 
 <style lang='scss' scoped>
+.modal {
+  display: none;
+  position: absolute;
+  z-index: 20000;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: white;
+  width: 500px;
+  margin: 40% auto;
+}
+
 #directMessageField {
   position: absolute;
 

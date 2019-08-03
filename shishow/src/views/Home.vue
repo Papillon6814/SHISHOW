@@ -1,5 +1,16 @@
 <template>
   <div id="root">
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-body">
+          <img id="image" v-show="uploadedImage" :src="uploadedImage">
+          <button id ="button" type="button">Confirm</button>
+          <input type="button" id="closeBtn" value="close">
+        </div>
+      </div>
+    </div>
+
     <div id="wrap">
       <header>
         <navi @input="getSearchWord"></navi>
@@ -9,7 +20,8 @@
           <div id="myBannerPosition">
             <myBanner
               v-if="userStatus"
-              :loginedUser="getCurrentUserName">
+              :loginedUser="getCurrentUserName"
+              @callEditBanner="showEditBanner()">
             </myBanner>
             <BlurBanner v-else></BlurBanner>
           </div>
@@ -17,15 +29,18 @@
 
         <div id="moving">
 
+          <transition appear name="v3">
           <div id="gameBannerPosition">
             <div v-for="N in games.length"
               :key="N" v-bind:class="'g'+N">
               <gameBanner
                 :game="games[N-1]"
-                :signuser="signuser">
+                :signuser="signuser"
+                :count="N-1">
               </gameBanner>
             </div>
           </div>
+          </transition>
 
           <transition appear name="v2">
             <div class="normalBannerPosition">
@@ -36,14 +51,15 @@
                   :signuser="signuser"
                   :relations="relation[N]"
                   @clickNB="NBclick(userinfo)"
-                  @clickReqButton="RBclick(userinfo)">
+                  @clickReqButton="RBclick(userinfo,N)"
+                  ref="normal">
                 </normalBanner>
               </div>
-              <div class="alphaSpace"></div>
             </div>
           </transition>
 
         </div>
+
     </div>
 
     <div class="NBModal">
@@ -56,12 +72,27 @@
     </div>
 
     <div class="selectModal">
-      <div class="closeBtn"></div>
-        <div v-for="N in hisGames.length" :key="N">
-        <gameBanner
-          :game="hisGames[N-1]"
-          :signuser="signuser">
-        </gamebanner>
+      <div class="closeBtn" @click="fadeOut()">
+        <i class="fas fa-times"></i>
+      </div>
+      <div class="selectedBannerPosition">
+        <div v-for="N in hisGames.length" :key="N"
+        v-bind:class="'GameLoops'">
+        <div @click="select(hisGames[N-1])">
+          <gameBanner
+            :game="hisGames[N-1]"
+            :signuser="signuser">
+          </gameBanner>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="editModal">
+      <div class="editBannerPosition">
+        <EditBanner @close="fadeOut()"
+        @filechange="prepare">
+        </EditBanner>
       </div>
     </div>
 
@@ -75,6 +106,7 @@ import myBanner from "../components/MyBanner.vue";
 import normalBanner from "../components/NormalBanner.vue";
 import gameBanner from "../components/GameBanner.vue";
 import BlurBanner from "../components/BlurBanner.vue";
+import EditBanner from "../components/EditBanner.vue";
 import popupNormalBanner from "../components/PopupNormalBanner.vue";
 
 import firebase from "../plugin/firestore";
@@ -86,6 +118,8 @@ const db = firebase.firestore();
 let NBPosition;
 let NBModal;
 let selectModal;
+let editModal;
+let modal;
 
 export default {
   name: "home",
@@ -98,9 +132,12 @@ export default {
       games: [],
       hisGames: [],
       currentUser: "",
-      signuser: [],
+      signuser: '',
       relation: [],
-      popupUser: ''
+      popupUser: '',
+      userId:'',
+      croppedimg:"",
+      uploadedImage:'',
     };
   },
 
@@ -110,6 +147,7 @@ export default {
     normalBanner,
     gameBanner,
     BlurBanner,
+    EditBanner,
     popupNormalBanner
   },
 
@@ -117,7 +155,6 @@ export default {
     user() {
       return this.$store.getters.user;
     },
-
     userStatus() {
       return this.$store.getters.isSignedIn;
     },
@@ -131,6 +168,82 @@ export default {
   },
 
   methods: {
+
+    prepare(img){
+
+      this.uploadedImage = img;
+      modal.style.display = "block";
+      setTimeout(this.crop,1);
+
+    },
+    crop(){
+      //変数定義
+      var root = this;
+      var image = document.getElementById("image");
+      var button = document.getElementById("button");
+      var result = document.getElementById("result");
+      var close = document.getElementById("closeBtn");
+
+      var croppable = false;
+
+      var cropper = new Cropper(image, {
+        aspectRatio: 1,
+        viewMode: 1,
+
+        ready: function() {
+          croppable = true;
+        }
+      });
+      close.onclick = ()=> {
+        modal.style.display = "none";
+        cropper.destroy();
+        this.uploadedImage = "";
+      };
+      button.onclick = ()=> {
+        var croppedCanvas;
+        var roundedImage;
+
+        if (!croppable) {
+          return;
+        }
+        // Crop
+        croppedCanvas = cropper.getCroppedCanvas();
+
+        // Show
+        roundedImage = document.createElement("img");
+
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
+        var width = croppedCanvas.width;
+        var height = croppedCanvas.height;
+        canvas.width = width;
+        canvas.height = height;
+        context.imageSmoothingEnabled = true;
+        context.drawImage(croppedCanvas, 0, 0, width, height);
+        context.globalCompositeOperation = "destination-in";
+        context.beginPath();
+        context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
+        context.fill();
+
+        roundedImage.src = canvas.toDataURL();
+        roundedImage.width = 130;
+        roundedImage.height = 130;
+        result.innerHTML = "";
+
+        root.croppedimg = roundedImage.src;
+
+        var del = document.getElementById("delete");
+        if (del != null) {
+          del.textContent = null;
+          del.parentNode.removeChild(del);
+        }
+        cropper.destroy();
+        modal.style.display = "none";
+        root.uploadedImage = "";
+        result.appendChild(roundedImage);
+      };
+    },
+
     getSearchWord(word) {
       this.searchWord = word;
     },
@@ -150,8 +263,9 @@ export default {
       this.popupUser = userinfo;
     },
 
-    RBclick: function(userinfo) {
+    RBclick: function(userinfo,N) {
       console.log("RBclick");
+      this.hisGames = [];
       this.showSelectModal();
 
       db.collection("USER")
@@ -163,12 +277,20 @@ export default {
             this.hisGames.push(doc1);
           })
         })
+        this.userId = N;
+    },
+
+    select: function(game) {
+      console.log(game.data().gamename);
+      this.$refs.normal[this.userId].sendFriendReq(game.id);
+      this.fadeOut()
     },
 
     placeNB: function() {
       NBPosition = document.getElementsByClassName("normalBannerPosition");
 
       db.collection("GameCollection")
+        .limit(3)
         .get()
         .then(query => {
           query.forEach(doc1 => {
@@ -191,19 +313,28 @@ export default {
       this.$forceUpdate();
     },
 
+    showEditBanner: function() {
+      editModal[0].style.display = "block";
+      console.log("showEditBanner");
+      this.$forceUpdate();
+    },
+
     fadeOut: function() {
       NBModal[0].style.display = "none";
       selectModal[0].style.display = "none";
+      editModal[0].style.display = "none";
       this.$forceUpdate();
     }
   },
 
   mounted: function() {
+    modal = document.getElementById("modal");
     this.onAuth();
     this.placeNB();
 
     NBModal = document.getElementsByClassName("NBModal");
     selectModal = document.getElementsByClassName("selectModal");
+    editModal = document.getElementsByClassName("editModal");
 
     const sign_db = db.collection("USER")
                       .doc(this.user.email);
@@ -247,6 +378,23 @@ export default {
 </script>
 
 <style lang="scss">
+.modal {
+  display: none;
+  position: absolute;
+  z-index: 20000;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: white;
+  width: 500px;
+  margin: 40% auto;
+}
 
 body {
   padding: 0;
@@ -364,7 +512,7 @@ footer {
 }
 
 .v-enter {
-  transform: translate(700px, 0);
+  transform: translate(-500px, 0);
   opacity: 0;
 }
 
@@ -373,25 +521,11 @@ footer {
 }
 
 .v-enter-active {
-  transition: all 1s 0s ease;
-}
-
-.v-leave {
-  transform: translate(0, 0);
-  opacity: 1;
-}
-
-.v-leave-to {
-  transform: translate(-300px, 0);
-  opacity: 0;
-}
-
-.v-leave-active {
-  transition: all 0.5s 0s ease;
+  transition: all 1.2s 1.2s ease;
 }
 
 .v2-enter {
-  transform: translate(1000px, 0);
+  transform: translate(-500px, 0);
   opacity: 0;
 }
 
@@ -400,21 +534,20 @@ footer {
 }
 
 .v2-enter-active {
-  transition: all 1.4s 1s ease;
+  transition: all 1.2s 1.2s ease;
 }
 
-.v2-leave {
-  transform: translate(0, 0);
-  opacity: 1;
-}
-
-.v2-leave-to {
-  transform: translate(-400px, 0);
+.v3-enter {
+  transform: translate(-500px, 0);
   opacity: 0;
 }
 
-.v2-leave-active {
-  transition: all 0.5s 0s ease;
+.v3-enter-to {
+  opacity: 1;
+}
+
+.v3-enter-active {
+  transition: all 1.2s 1.2s ease;
 }
 
 .NBModal {
@@ -461,5 +594,75 @@ footer {
   background-color: rgba(0, 0, 0, 0.3);
 
   z-index: 10000;
+
+  .closeBtn {
+    position: fixed;
+
+    top: 200px;
+    right: 20vw;
+
+    width: 30px;
+    height: 30px;
+
+    font-size: 30px;
+
+    color: $secondary_text;
+    cursor: pointer;
+  }
+
+  .selectedBannerPosition {
+    position: absolute;
+
+    top: 300px;
+    left: 50%;
+
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+
+    width: $n_banner_width;
+    height: auto;
+
+    z-index: 10002;
+
+    .GameLoops {
+      position: relative;
+
+      width: 100%;
+      height: $n_banner_height;
+
+      margin-top: 1vw;
+    }
+  }
+}
+
+.editModal {
+  display: none;
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.3);
+
+  z-index: 10000;
+
+  .editBannerPosition {
+    position: absolute;
+
+    top: 110px;
+    left: 50%;
+
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+
+    width: 40%;
+    height: calc(92% - 110px);
+  }
 }
 </style>

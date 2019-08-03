@@ -1,13 +1,17 @@
 <template>
+
   <div class="dmBanner">
     <img :src="iconPic" class="dmBannerIconPosition" />
     <div class="dmBannerName">
       {{ dmBannerUsername }}
     </div>
+    <div class="dmTimeArea">
+    </div>
     <div class="dmMsgArea">
       {{ dmMsg }}
     </div>
   </div>
+
 </template>
 
 <script>
@@ -42,8 +46,6 @@ export default {
 
 .dmBanner {
   display: block;
-
-  
 
   width: 88%;
   height: 120px;
@@ -99,14 +101,6 @@ export default {
 }
 
 .dmBanner:hover {
-  background-color: $dm_banner_color_hover;
-}
-
-.dmBanner:hover > .dmBannerName{
-  background-color: $dm_banner_color_hover;
-}
-
-.dmBanner:hover > .dmMsgArea{
   background-color: $dm_banner_color_hover;
 }
 

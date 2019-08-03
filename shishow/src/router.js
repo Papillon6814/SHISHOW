@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
-import Edit from './views/Edit.vue'
 import SearchResult from './views/SearchResult.vue'
 import Notification from './views/Notification.vue'
 import DirectMessage from './views/DirectMessage.vue'
@@ -12,6 +11,7 @@ import Friend from './views/friend.vue'
 import GlobalChat from "./views/GlobalChat.vue"
 import GameRequest from './views/GameRequest.vue'
 import Sample from "./test/sample.vue"
+import Prehome from './views/prehome.vue';
 
 
 import firebase from 'firebase'
@@ -23,8 +23,17 @@ let router = new Router({
   base: process.env.BASE_URL,
   routes: [{
       path: '/',
+      name: 'prehome',
+      component: Prehome
+    },
+
+    {
+      path: '/home',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: {
+        requiresAuth: true
+      }
     },
 
     {
@@ -75,17 +84,11 @@ let router = new Router({
       component: SearchResult
     },
     {
-      path: '/edit',
-      name: 'edit',
-      component: Edit
-    },
-    {
       path: "/GlobalChat",
       name: 'GlobalChat',
       component: GlobalChat
     },
     {
-
      path: '/gamerequest',
      name: 'gamerequest',
      component: GameRequest
@@ -95,7 +98,6 @@ let router = new Router({
     name: "Sample",
     component: Sample
   },
-
   ]
 })
 
@@ -104,7 +106,6 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth) {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-
         next()
       } else {
 
