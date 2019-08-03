@@ -21,7 +21,8 @@ export default {
   data() {
     return {
       msg: "",
-      chatID: ""
+      chatID: "",
+      chatable: true
     };
   },
 
@@ -35,14 +36,18 @@ export default {
   },
 
   methods: {
+    
     //メッセージを送る
     sendMsg() {
-      // 文字が入力されているときにのみ送信
-      let msg = this.msg;
-      // 現在の日時を取得(文字列型)
-      let now = new Date();
-
-      db.collection("USER")
+      if(this.chatable){
+        this.chatable = false;
+        // 文字が入力されているときにのみ送信
+        let msg = this.msg;
+        msg.replace(/\r?\n/g, '');
+        // 現在の日時を取得(文字列型)
+        let now = new Date();
+        console.log(msg);
+        db.collection("USER")
         .doc(currentUser.email)
         .collection("friends")
         .doc(this.friendDocID)
@@ -50,33 +55,32 @@ export default {
         .then(doc => {
           this.chatID = doc.data()["chatID"];
 
+          if (msg) {
+            db.collection("PrivateChat")
+            .doc(this.chatID)
+            .collection("contents")
+            .add({
+              msg: msg,
+              date: now,
+              sender: currentUser.email
+            })
+            .then(() => {
+              db.collection("USER")
+                .doc(currentUser.email)
+                .collection("friends")
+                .doc(this.friendDocID)
+                .update({
+                  lastChatDate: now
+                })
 
-        if (msg) {
-        db.collection("PrivateChat")
-          .doc(this.chatID)
-          .collection("contents")
-          .add({
-            msg: this.msg,
-            date: now,
-            sender: currentUser.email
-          })
-          .then(() => {
-            db.collection("USER")
-              .doc(currentUser.email)
-              .collection("friends")
-              .doc(this.friendDocID)
-              .update({
-                lastChatDate: now
-              })
-
-            this.$emit('scrollRightArea');
-          })
-
-        this.msg = "";
-      }
-        });
-
-      
+              this.$emit('scrollRightArea');
+            })
+            msg = "";
+            this.msg = "";
+          }
+          this.chatable = true;
+        }); 
+      }  
     }
   }
 };
