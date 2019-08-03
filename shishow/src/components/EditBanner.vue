@@ -58,6 +58,9 @@ export default {
       uploadedImage: ''
     }
   },
+  props:[
+    'roundimg'
+  ],
 
   computed: {
     rows: function() {
@@ -143,7 +146,7 @@ export default {
             username: this.username,
             bio: this.userBio,
             favoriteGame: this.favoriteGame,
-            image: this.uploadedImage
+            image: this.roundimg
           })
           .then(() => {
             router.go({
