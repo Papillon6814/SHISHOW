@@ -125,6 +125,10 @@ export default {
     this.onAuth();
 
     currentUserEmail = firebase.auth().currentUser.email;
+  },
+
+  mounted: function() {
+    this.chatScroll();
   }
 };
 
