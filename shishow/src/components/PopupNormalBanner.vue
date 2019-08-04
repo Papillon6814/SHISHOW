@@ -14,6 +14,9 @@
     </div>
 
     <div class="profilePosition">
+      <div v-for="N in textLine" :key="N" class="bioText">
+        {{ userBio(N) }}
+      </div>
     </div>
 
     <div class="gamesPosition">
@@ -35,7 +38,8 @@ export default {
 
   data: function() {
     return {
-      enumGames: ''
+      enumGames: '',
+      maxChar:16
     }
   },
 
@@ -66,6 +70,16 @@ export default {
           })
           this.enumGames = this.enumGames.slice(0, -2);
         })
+    },
+
+    userBio: function(N){
+      return this.userInfo.bio.substr(0+(N-1)*this.maxChar,this.maxChar)
+    }
+  },
+
+  computed:{
+    textLine(){
+      return Math.ceil(this.userInfo.bio.length/this.maxChar)
     }
   }
 }
@@ -149,16 +163,26 @@ export default {
   .profilePosition {
     position: absolute;
 
+    
+
     top: 115px;
     left: calc(7% + 170px);
 
     width: calc(86% - 170px);
     height: 200px;
 
-    border-top: solid;
-    border-width: 2px;
-    border-color: #bdbdbd;
+    padding:5px;
 
+    border: solid;
+    border-width: 2px;
+    border-color: #000000;
+    border-radius: 15px;
+
+    .bioText{
+      font-size:40px;
+      padding-bottom: 5px;
+    }
+    
   }
 
   .gamesPosition {
