@@ -17,30 +17,30 @@
     <div class="SignupTitle"></div>
 
     <div class="usernamePosition">
-      <input class="username" type="text" placeholder="Display name"
+      <input class="username" type="text" placeholder="ユーザー名"
       v-model="username" maxlength="12" required>
     </div>
 
     <div class="emailPosition">
-      <input class="email" type="text" placeholder="E-mail" v-model="email">
+      <input class="email" type="text" placeholder="メールアドレス" v-model="email">
     </div>
 
     <div class="passwordPosition">
-      <input class="password" type="password" placeholder="PASSWORD" v-model="password">
+      <input class="password" type="password" placeholder="パスワード" v-model="password">
     </div>
 
     <div class="passwordConfirmPosition">
       <input
         class="passwordConfirm"
         type="password"
-        placeholder="CONFIRM PASSWORD"
+        placeholder="パスワード確認"
         v-model="p_confirm"
         @keydown.enter="signUp"
       >
     </div>
 
     <button @click="signUp" class="signup_button">
-      Sign up
+      アカウント作成
     </button>
   </div>
 </template>

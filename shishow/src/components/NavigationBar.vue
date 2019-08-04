@@ -15,7 +15,7 @@
             required="required"
             @keydown.enter="onChangeInput()"
           />
-          <label for="search">Search...</label>
+          <label for="search">キーワード検索</label>
           <div class="bar"></div>
           <!-- <img class="sch" src="../assets/search-button.png" @click="onChangeInput"> -->
           <router-link to="search">
