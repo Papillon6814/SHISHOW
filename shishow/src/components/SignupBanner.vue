@@ -52,6 +52,7 @@ import Cropper from "cropperjs";
 import router from "../router"
 
 const db = firebase.firestore();
+let countUsers = 0;
 
 //使用するオリジナルの関数を定義
 export default {
@@ -78,52 +79,76 @@ export default {
     signUp: function() {
       let url;
 
-      if(!this.roundimg){
-        db.collection("Image")
-        .doc("SampleImage")
+      db.collection("USER")
         .get()
-        .then(doc =>{
-          url = doc.data()["image"];
-        });
-      }
+        .then(query => {
+          query.forEach(() => {
+            countUsers++;
+          })
 
-      if(this.username == "") {
-        alert('Fill in your Display Name!');
-      } else {
+          if(!this.roundimg){
 
-        if(this.p_confirm != this.password) {
-          alert('Password does not match!');
-        }
-        else if(this.errorIndication());
-        else {
-          firebase
-            .auth()
-            .createUserWithEmailAndPassword(this.email, this.password)
-            .then(() => {
-              var User = firebase.auth().currentUser;
-              var email;
-              User.updateProfile({
-                displayName: this.username
-              }).then(() => {
-                //変数に情報を格納
-                email = User.email;
-                alert("Create account: " + email);
+            if(countUsers % 2 == 0) {
 
-                if (!this.roundimg) {
+              db.collection("Image")
+                .doc("SampleImage2")
+                .get()
+                .then(doc =>{
+                  url = doc.data()["image"];
+                })
 
-                  this.roundimg = url;
-                }
+            } else {
 
-                this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
-                router.push("/home")
-              });
-            })
-            .catch(error => {
-              alert(error.message);
-
-            });
+              db.collection("Image")
+                .doc("SampleImage")
+                .get()
+                .then(doc => {
+                  url = doc.data()["image"];
+                })
+              
+            }
           }
-      }
+
+          if(this.username == "") {
+            alert('Fill in your Display Name!');
+          } else {
+
+            if(this.p_confirm != this.password) {
+              alert('Password does not match!');
+            }
+            else if(this.errorIndication());
+            else {
+              firebase
+                .auth()
+                .createUserWithEmailAndPassword(this.email, this.password)
+                .then(() => {
+                  var User = firebase.auth().currentUser;
+                  var email;
+                  User.updateProfile({
+                    displayName: this.username
+                  }).then(() => {
+                    //変数に情報を格納
+                    email = User.email;
+                    alert("Create account: " + email);
+
+                    if (!this.roundimg) {
+
+                      this.roundimg = url;
+                    }
+
+                    this.addToDatabase(this.email.toLowerCase(), this.username, this.roundimg);
+                    router.push("/home")
+                  });
+                })
+                .catch(error => {
+                  alert(error.message);
+
+                });
+              }
+          }
+        })
+
+
     },
 
     addToDatabase(email, username, image) {
