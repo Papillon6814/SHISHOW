@@ -99,9 +99,7 @@ export default {
     },
 
     commitChange(newValue) {
-      //this.$emit("input", newValue);
-      console.log(location.href.indexOf("/search")==-1);
-            
+      //this.$emit("input", newValue);    
       
       if(location.href.indexOf("/search")==-1){
         router.push("/search");
