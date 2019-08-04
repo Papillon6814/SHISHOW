@@ -17,7 +17,7 @@
         SHISHOW
       </div>
       <div class="shishowNumber">
-        num
+        {{shishow}}
       </div>
     </div>
 
@@ -26,7 +26,7 @@
         Deshi
       </div>
       <div class="deshiNumber">
-        num
+        {{deshi}}
       </div>
     </div>
 
@@ -74,7 +74,9 @@ export default {
       icon: "",
       bio: "",
       username:"",
-      friendDocID: ""
+      friendDocID: "",
+      shishow: "",
+      deshi: ""
     };
   },
 
@@ -114,11 +116,12 @@ export default {
 
   created:function(){
     var email;
+    var shishowBox = 0;
+    var deshiBox = 0;
     this.onAuth();
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         email = user.email;
-        console.log(email);
         db.collection("USER")
           .doc(email)
           .get()
@@ -127,8 +130,35 @@ export default {
             this.icon = doc.data()["image"];
             this.bio = doc.data()["bio"];
           });
+        
+        db.collection("USER")
+          .doc(email)
+          .collection("friends")
+          .get()
+          .then(querySnapshot => {
+              querySnapshot.forEach(doc =>{
+                  // doc.data() is never undefined for query doc snapshots
+                  console.log(doc.id, " => ", doc.data());
+                  if(doc.data()["isSHISHOW"] === true){
+                    shishowBox += 1;
+                    console.log(shishowBox);
+                  }
+                  else if(doc.data()["isSHISHOW"] === false){
+                    deshiBox += 1;
+                    console.log(deshiBox);
+                  }
+              });
+              this.shishow = shishowBox;
+              this.deshi = deshiBox;
+          })
+          .catch(function(error) {
+              console.log("Error getting documents: ", error);
+          });
+
       } else {
+        
       }
+      
     });
     
   }
