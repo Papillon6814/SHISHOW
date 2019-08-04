@@ -4,10 +4,10 @@
 
     <div class="switchTab">
       <div class="private" @click="switchPrivate()">
-        Private
+        メッセージ
       </div>
       <div class="global" @click="switchGlobal()">
-        Global
+        グローバル
       </div>
     </div>
 

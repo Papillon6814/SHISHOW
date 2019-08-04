@@ -14,7 +14,7 @@
 
     <div class="shishowPosition">
       <div class="shishowText">
-        SHISHOW
+      師匠
       </div>
       <div class="shishowNumber">
         {{shishow}}
@@ -23,7 +23,7 @@
 
     <div class="deshiPosition">
       <div class="deshiText">
-        Deshi
+        弟子
       </div>
       <div class="deshiNumber">
         {{deshi}}
@@ -39,11 +39,11 @@
 
     <div class="editButton"
       @click="showEditBanner()">
-      Edit
+      編集
     </div>
 
     <div class="logout" @click="logout">
-      Logout
+      ログアウト
     </div>
   </div>
 </template>
@@ -405,11 +405,11 @@ export default {
     height: 18px;
 
     bottom: 18px;
-    right: 4px;
+    right: 0px;
 
     color: $secondary_text;
     text-align: right;
-    font-size: 18px;
+    font-size: 14px;
 
     cursor: pointer;
   }
