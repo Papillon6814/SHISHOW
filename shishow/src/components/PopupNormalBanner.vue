@@ -163,7 +163,7 @@ export default {
   .profilePosition {
     position: absolute;
 
-    
+
 
     top: 115px;
     left: calc(7% + 170px);
@@ -182,7 +182,7 @@ export default {
       font-size:40px;
       padding-bottom: 5px;
     }
-    
+
   }
 
   .gamesPosition {

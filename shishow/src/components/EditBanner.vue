@@ -1,7 +1,7 @@
 <template>
   <div class="editBanner">
 
-      <span class="iconCirclePosition">
+    <span class="iconCirclePosition">
       <label>
         <div class="iconCircle">
           <div id="result"></div>
