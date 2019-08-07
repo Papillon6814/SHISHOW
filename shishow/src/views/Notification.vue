@@ -2,10 +2,10 @@
   <div id="root">
     <navi></navi>
     <div id="notificationTitle" align="left">
-      <div class="notificationText">Notification</div>
+      <div class="notificationText">通知</div>
     </div>
     <div id="notificationField">
-      <span v-if="!notice.length" class="no_notification">no notification</span>
+      <span v-if="!notice.length" class="no_notification">通知はありません</span>
       <div v-if="notice.length">
       <div v-for="N in notice.length"
       :key="N"

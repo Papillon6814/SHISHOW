@@ -18,11 +18,6 @@
         v-model="Gamename" required>
     </div>
 
-    <div class="TypenamePosition">
-      <input class="Typename" type="text" placeholder="type"
-        v-model="type" required>
-    </div>
-
     <div @click="gameCollection()" class="create_button">
       Create
     </div>
@@ -96,7 +91,8 @@ export default{
       .doc()
       .set({
         gamename: Gamename,
-        image:     image,
+        image: image,
+        lastChatDate: ''
      })
    },
 
@@ -126,16 +122,20 @@ export default{
 
   .iconCirclePosition {
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 150px;
+    left: 40px;
+    top: 40px;
+    width: 140px;
+    height: 140px;
 
     .iconCircle {
       width: 100%;
       height: 100%;
 
-      background-color: #000;
+      background-color: #fff;
+
+      border-radius: 15px;
+      border-style: solid;
+      border-width: 1px;
 
       cursor: pointer;
 
@@ -172,7 +172,7 @@ export default{
   .GamenamePosition {
     position: absolute;
 
-    top: 170px;
+    top: 250px;
     left: 50%;
 
     -webkit-transform: translate(-50%, 0);
@@ -187,23 +187,6 @@ export default{
     }
   }
 
-  .TypenamePosition {
-    position: absolute;
-
-    top: 250px;
-    left: 50%;
-
-    -webkit-transform: translate(-50%, 0);
-    -moz-transform: translate(-50%, 0);
-    transform: translate(-50%, 0);
-
-    width: 65%;
-
-    .Typename {
-      width: 100%;
-      height: $su_user_height;
-    }
-  }
 
   .create_button {
     position: absolute;
