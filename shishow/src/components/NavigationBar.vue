@@ -422,13 +422,13 @@ export default {
 
 }
 
-/*
+
 @media(min-width: 1050px){
   #nav-open .notification{
     display: none;
   }
 }
-*/
+
 
 @media (max-width: 1050px) {
   #nav-drawer {
