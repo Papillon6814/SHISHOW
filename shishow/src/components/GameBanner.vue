@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div v-if="isSubscribed" class="subscribeButton">登録済み</div>
+    <div v-if="isSubscribed" class="subscribeButton" @click="remove()">登録済み</div>
     <div v-else class="subscribeButton" @click="subscribe()">登録</div>
   </div>
 </template>
@@ -68,9 +68,18 @@ export default {
           .set({
             gamename: this.game.data().gamename
           })
-
         this.isSubscribed = true;
       }
+    },
+
+    remove: function() {
+      db.collection("USER")
+        .doc(this.signuser.email)
+        .collection("GAMES")
+        .doc(this.game.id)
+        .delete()
+
+      this.isSubscribed = false;
     },
 
     checkSubscription: function() {

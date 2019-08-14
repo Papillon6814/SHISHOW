@@ -226,8 +226,8 @@ export default {
         context.fill();
 
         roundedImage.src = canvas.toDataURL();
-        roundedImage.width = 130;
-        roundedImage.height = 130;
+        roundedImage.width = 140;
+        roundedImage.height = 140;
         result.innerHTML = "";
 
         root.croppedimg = roundedImage.src;
@@ -290,7 +290,6 @@ export default {
       NBPosition = document.getElementsByClassName("normalBannerPosition");
 
       db.collection("GameCollection")
-        .limit(3)
         .get()
         .then(query => {
           query.forEach(doc1 => {
