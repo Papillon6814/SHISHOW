@@ -4,12 +4,12 @@
     <div class="friend">
       <div class="tabWrapper">
         <div class="tab1" id="in" @click="I">
-          incoming
+          承認
           <span style="color:white;"></span>
         </div>
-        <div class="tab2" id="out" @click="O">outgoing</div>
-        <div class="tab3" id="fri" @click="S">shishow</div>
-        <div class="tab4" id="fri" @click="D">deshi</div>
+        <div class="tab2" id="out" @click="O">申請</div>
+        <div class="tab3" id="fri" @click="S">師匠</div>
+        <div class="tab4" id="fri" @click="D">弟子</div>
         <div class="tabSpace"></div>
 
         <div class="whiteLine"></div>

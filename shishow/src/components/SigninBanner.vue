@@ -6,7 +6,7 @@
     </div>
 
     <div class="usernamePosition">
-      <input class="username" type="text" placeholder="E-mail" v-model="e_mail" />
+      <input class="username" type="text" placeholder="メールアドレス" v-model="e_mail" />
     </div>
 
     <div class="divideLine"></div>
@@ -15,18 +15,18 @@
       <input
         class="password"
         type="password"
-        placeholder="PASSWORD"
+        placeholder="パスワード"
         v-model="password"
         @keydown.enter="login"
       />
     </div>
 
     <router-link to="/signup">
-      <div class="signupArea">Sign up</div>
+      <div class="signupArea">アカウント作成</div>
     </router-link>
 
     <div class="signin_button" @click="login">
-      Sign in
+      ログイン
     </div>
   </div>
 </template>

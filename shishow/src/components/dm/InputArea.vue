@@ -21,7 +21,8 @@ export default {
   data() {
     return {
       msg: "",
-      chatID: ""
+      chatID: "",
+      chattable: true
     };
   },
 
@@ -36,66 +37,78 @@ export default {
   },
 
   methods: {
+
     //メッセージを送る
     sendMsg() {
-      // 文字が入力されているときにのみ送信
-      let msg = this.msg;
-      // 現在の日時を取得(文字列型)
-      let now = new Date();
+      var root = this;
+      if(this.chattable){
+        this.chattable = false;
+        // 文字が入力されているときにのみ送信
+        let msg = this.msg;
+        this.msg = "";
+        this.chattable = true;
+        msg.replace(/\r?\n/g, '');
+        // 現在の日時を取得(文字列型)
+        let now = new Date();
 
-      if(this.isGame) {
-
-        db.collection("GameCollection")
+        if(this.isGame) {
+          db.collection("GameCollection")
           .doc(this.friendDocID)
           .collection("GlobalChat")
           .add({
-            msg: this.msg,
+            msg: msg,
             date: now,
             sender: currentUser.email
           })
           .then(() => {
             db.collection("GameCollection")
-              .doc(this.friendDocID)
-              .update({
-                lastChatDate: now
-              })
+            .doc(this.friendDocID)
+            .update({
+              lastChatDate: now
+            })
+            msg = "";
           })
+        } else {
 
-          this.msg = '';
-
-      } else {
-
-        db.collection("USER")
+          db.collection("USER")
           .doc(currentUser.email)
           .collection("friends")
-          .doc(this.friendDocID)
+          .doc(root.friendDocID)
           .get()
           .then(doc => {
-            this.chatID = doc.data()["chatID"];
+            root.chatID = doc.data()["chatID"];
 
-          if (msg) {
-            db.collection("PrivateChat")
-              .doc(this.chatID)
+            if (msg) {
+
+              db.collection("PrivateChat")
+              .doc(root.chatID)
               .collection("contents")
               .add({
-                msg: this.msg,
+                msg: msg,
                 date: now,
                 sender: currentUser.email
               })
               .then(() => {
-                db.collection("USER")
-                  .doc(currentUser.email)
-                  .collection("friends")
-                  .doc(this.friendDocID)
-                  .update({
-                    lastChatDate: now
-                  })
 
-                this.$emit('scrollRightArea');
+                db
+                .collection("USER")
+                .doc(currentUser.email)
+                .collection("friends")
+                .doc(root.friendDocID)
+                .update({
+                  lastChatDate: now
+                })
+
+                root.$emit('scrollRightArea');
+                msg = "";
+
+
               })
-            this.msg = "";
-          }
-        });
+
+            }
+
+          });
+        }
       }
     }
   }

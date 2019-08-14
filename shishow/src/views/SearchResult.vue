@@ -100,6 +100,7 @@ export default {
       let index = 0;
       let relat;
       if (word) {
+        this.searchResults = [];
         db.collection("USER").doc(this.$store.getters.user.email).collection("relation").get().then(docs=>{
         for (users_i in this.users) {
           //ユーザーネームの走査
@@ -217,7 +218,7 @@ html {
 .searchBannerPosition {
   position: absolute;
 
-  top: 0px;
+  top: 100px;
   left: 0;
 
   width: 100%;
@@ -226,7 +227,7 @@ html {
   padding-top: 165px;
   margin-left: 10%;
 
-  $i: 1;
+  $i: 0;
 
   list-style: none;
   @while $i <= 30 {

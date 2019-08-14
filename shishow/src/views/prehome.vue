@@ -6,13 +6,13 @@
 
     <router-link to="/home">
         <div class="enterButton">
-      Get Started
+      アカウントを作成
       </div>
     </router-link>
 
     <router-link to="/signin">
       <div class="loginButton">
-        Sign in
+        ログイン
       </div>
     </router-link>
 

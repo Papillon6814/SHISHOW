@@ -13,7 +13,7 @@
 
     <div id="wrap">
       <header>
-        <navi @input="getSearchWord"></navi>
+        <navi @search="getSearchWord"></navi>
       </header>
 
         <transition appear name="v">
@@ -81,7 +81,8 @@
         <div @click="select(hisGames[N-1])">
           <gameBanner
             :game="hisGames[N-1]"
-            :signuser="signuser">
+            :signuser="signuser"
+            :count="N-1">
           </gameBanner>
         </div>
         </div>
@@ -91,7 +92,8 @@
     <div class="editModal">
       <div class="editBannerPosition">
         <EditBanner @close="fadeOut()"
-        @filechange="prepare">
+        @filechange="prepare"
+        :roundimg='croppedimg'>
         </EditBanner>
       </div>
     </div>
@@ -113,6 +115,8 @@ import firebase from "../plugin/firestore";
 import "firebase/firestore";
 import "@firebase/auth";
 import store from "../store";
+import router from "../router";
+
 
 const db = firebase.firestore();
 let NBPosition;
@@ -194,6 +198,7 @@ export default {
           croppable = true;
         }
       });
+
       close.onclick = ()=> {
         modal.style.display = "none";
         cropper.destroy();
@@ -245,7 +250,7 @@ export default {
     },
 
     getSearchWord(word) {
-      this.searchWord = word;
+      router.push("/home");
     },
 
     onAuth: function() {
@@ -292,9 +297,21 @@ export default {
       db.collection("GameCollection")
         .get()
         .then(query => {
-          query.forEach(doc1 => {
-            this.games.push(doc1);
-          })
+          let i=0
+          let j;
+          
+          while(i<5 && i<query.docs.length){
+            
+            let num = Math.floor(Math.random()*query.docs.length);
+            console.log(num)
+            for(j=0;j<i&&this.games[j].id != query.docs[num].id ;j++);
+            if(j==i){
+              this.games.push(query.docs[num]);
+              console.log(this.games[0].id);
+              i++
+            }
+            
+          }
 
           NBPosition[0].style.top = ((55 / 4) * (this.games.length + 1)) + "vw";
 

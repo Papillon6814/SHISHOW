@@ -15,12 +15,10 @@
             required="required"
             @keydown.enter="onChangeInput()"
           />
-          <label for="search">Search...</label>
+          <label for="search">キーワード検索</label>
           <div class="bar"></div>
           <!-- <img class="sch" src="../assets/search-button.png" @click="onChangeInput"> -->
-          <router-link to="search">
             <i class="fas fa-search fa-2x sch" @click="onChangeInput()"></i>
-          </router-link>
         </div>
       </div>
     </div>
@@ -76,6 +74,7 @@
 import store from "../store";
 import firebase from "../plugin/firestore";
 import "firebase/firestore";
+import router from "../router";
 
 const db = firebase.firestore();
 
@@ -100,9 +99,16 @@ export default {
     },
 
     commitChange(newValue) {
-      //this.$emit("input", newValue);
-      this.$emit("search", newValue);
-      store.commit("onSearchWordInput", newValue);
+      //this.$emit("input", newValue);    
+      
+      if(location.href.indexOf("/search")==-1){
+        router.push("/search");
+      }else{
+        this.$emit("search", newValue);
+        store.commit("onSearchWordInput", newValue);
+
+      }
+      
     }
   },
 

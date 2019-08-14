@@ -12,17 +12,6 @@
         {{user.username}}
       </div>
     </div>
-    <div class="idPosition">
-      <div class="id">
-        qawsedrftgyhujkolp
-      </div>
-    </div>
-    <div class="profilePosition">
-      <div class="profile">
-        新しいことにチャレンジすることが好き!
-        テニス、スキー、スノーボード、ゴルフ、
-      </div>
-    </div>
     <div v-if="signuser">
     <div class="n_btn-circle-3d" @click="doExtend">削除</div>
     </div>
@@ -100,14 +89,14 @@ export default {
     //temporary height
     height: $f_banner_height;
 
-    background-color: $n_banner_color;
+    background-color: #dbdbdb;
 
     z-index: 2;
 
     margin: 0px auto;
 
     transition: 0.3s;
-    //children
+
 
 
     .iconPic {
@@ -135,9 +124,10 @@ export default {
 
     .username{
       width: $user_width;
-      height: $n_user_height;
 
-      background-color: #fff;
+      height: $n_user_height;
+      font-size: 25px;
+      text-align: left;
 
     }
 
