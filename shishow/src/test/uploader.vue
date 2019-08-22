@@ -48,7 +48,7 @@ export default {
 
     click: function () {
       db.collection("Image")
-        .doc("SampleImage2")
+        .doc("GameSampleImage")
         .set({
           image: dataUri
         })
