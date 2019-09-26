@@ -14,6 +14,8 @@ import 'firebase/firestore';
 import '@firebase/auth';
 import store from '../store';
 
+import axios from 'axios';
+
 const db = firebase.firestore();
 var dataUri;
 
@@ -47,17 +49,22 @@ export default {
     },
 
     click: function () {
-      db.collection("Image")
-        .doc("GameSampleImage")
-        .set({
-          image: dataUri
-        })
+      let url = 'https://thawing-earth-80470.herokuapp.com/image'
+
+      let params = new URLSearchParams();
+      params.append('image', dataUri)
+
+      axios.post(url, params, {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      })
+      .then(res => {
+        //do nothing
+      })
     }
   },
 
   created: function () {
     this.onAuth();
-
   }
 }
 
