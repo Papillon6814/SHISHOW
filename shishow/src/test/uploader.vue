@@ -55,7 +55,7 @@ export default {
       params.append('image', dataUri)
 
       axios.post(url, params, {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'multipart/form-data'
       })
       .then(res => {
         //do nothing
